@@ -1,0 +1,36 @@
+<project name="maintainablejs" default="concatenate">
+	<import file="lib/buildr/buildr.xml" />
+	<loadproperties srcfile="build.properties" />
+	<tstamp>
+		<format property="build.time"
+			pattern = "MMM d, yyyy hh:mm:ss"
+			locale="en,US"/>
+	</tstamp>
+	<target name="validate">
+		<jshint>
+			<fileset dir="${src.dir}" includes="**/shared/*.js" />
+		</jshint>
+	</target>	
+	<target name="concatenate">
+		<concat destfile="${build.dir}/MOEMap2.0.js" >
+			<header> /* Build Time: ${build.time} */ </header>
+			<filelist  dir="${src.dir}/shared" >
+				<file name="LANGUAGE.js" />
+				<file name="prototype.js" />
+				<file name="LOCATOR.js" />
+				<file name="TABS_CALCULATOR.js" />
+				<file name="INITIALIZATION.js" />
+				<file name="TOOLSLEGEND.js" />
+				<!--<file name="QUERYLAYER.js" />-->
+				<file name="MOEMAP.js" />
+			</filelist>			
+			<footer> /* Build Time: ${build.time} */ </footer>			
+		</concat>
+	</target>
+	<target name="minify" depends="concatenate">
+		<uglifyjs outputdir="${build.dir}" no-mangle-functions="true">
+			<fileset dir="${build.dir}" includes="*.js" />
+		</uglifyjs>
+	</target>
+	
+</project>

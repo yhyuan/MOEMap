@@ -1,0 +1,6 @@
+globalConfig = {};
+globalConfig.language = "FR";
+globalConfig.searchHelpTxt = "Par exemple: <strong>Adresse</strong>, <strong>No de la plaque d\u0027identification du puits</strong>, <strong>num\u00e9ro d\u0027identification du puits</strong> ou consulter l\u0027aide pour de l\u0027information sur les recherches avanc\u00e9es.";
+globalConfig.tableSimpleTemplateTitleLang = "\u00c0 noter : La colonne de distance (en km) donne la distance entre le lieu de votre recherche et le lieu du puits dans la rang\u00e9e donn\u00e9e. Les donn\u00e9es sont en anglais seulement.";
+globalConfig.otherInfoHTML = "<br><br><br>"; 
+//globalConfig.searchControlHTML = '<input id="map_query" type="text" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100" title="Terme"></input>&nbsp;<input type="submit" onclick="globalConfig.search()" value="Recherche" title="Recherche"></input><input id="currentMapExtent" type="checkbox" name="currentExtent" title="\u00c9tendue de la carte courante"><span title="Afficher la carte : Limiter la recherche \u00e0 la carte donn\u00e9e" class="tooltip">\u00c9tendue de la carte courante</span><br><div id="information" style="margin-top:10px;">' + globalConfig.searchHelpTxt + '</div>';

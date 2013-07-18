@@ -1,0 +1,15 @@
+globalConfig = {};
+globalConfig.accessible = true;
+globalConfig.language = "EN";
+globalConfig.searchHelpTxt = "Search <b>Stream</b>, <b>Station ID</b>, or see help for more advanced options."; 
+globalConfig.tableSimpleTemplateTitleLang = "";
+globalConfig.otherInfoHTML = "Some scientific/monitoring data are only provided in English."; 
+globalConfig.searchControlHTML = '<center><input id="map_query" type="text" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100" title="Term"></input>&nbsp;<input type="submit" onclick="globalConfig.search()" value="Search" title="Search"></input><br><div id="information" style="margin-top:10px;">' + globalConfig.searchHelpTxt + '</div></center>';
+globalConfig.StationIDLang = "Station ID";
+globalConfig.StreamLang = "Stream";
+globalConfig.LocationLang = "Location";
+globalConfig.StatusLang = "Status";
+globalConfig.FirstYearLang = "First Year Sampled";
+globalConfig.LastYearLang = "Last Year Sampled";
+globalConfig.LatitudeLang = "Latitude";
+globalConfig.LongitudeLang = "Longitude";
