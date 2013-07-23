@@ -16,7 +16,7 @@
 			<header> /* Build Time: ${build.time} */ </header>
 			<filelist  dir="${src.dir}/shared" >
 				<file name="LANGUAGE.js" />
-				<file name="prototype.js" />
+				<file name="PROTOTYPE.js" />
 				<file name="LOCATOR.js" />
 				<file name="TABS_CALCULATOR.js" />
 				<file name="INITIALIZATION.js" />
