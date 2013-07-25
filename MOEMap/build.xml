@@ -1,5 +1,5 @@
 <project name="maintainablejs" default="concatenate">
-	<import file="lib/buildr/buildr.xml" />
+	<!--<import file="lib/buildr/buildr.xml" />-->
 	<loadproperties srcfile="build.properties" />
 	<tstamp>
 		<format property="build.time"
