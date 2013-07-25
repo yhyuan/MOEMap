@@ -31,7 +31,7 @@ globalConfig.resultFoundSimple = globalConfig.resultFoundSimple || function(quer
 	if (typeof(queryParams.withinExtent) !== "undefined") {
 		regionName = " " + (queryParams.withinExtent ? globalConfig.inCurrentMapExtentLang : globalConfig.inGobalRegionLang);
 	}
-	var searchString = " ";
+	//var searchString = " ";
 	if (typeof(queryParams.searchString) !== "undefined") {
 		searchString = " " + globalConfig.forLang + " <strong>"  + queryParams.searchString + "</strong> ";
 	}
@@ -39,7 +39,7 @@ globalConfig.resultFoundSimple = globalConfig.resultFoundSimple || function(quer
 	var message = "";
 	if(totalCount === 0){
 		message = globalConfig.yourSearchLang + searchString + globalConfig.returnedNoResultLang + regionName + ". " + globalConfig.pleaseRefineSearchLang + ".";
-	} else if(totalCount == 1){
+	} else if(totalCount === 1){
 		message = globalConfig.oneResultFoundLang  + searchString + regionName + ".";
 	} else if(totalCount >= globalConfig.maxQueryReturn){
 		message = globalConfig.moreThanLang + " " + globalConfig.maxQueryReturn + " " + globalConfig.resultsFoundLang + searchString + regionName + ". " + globalConfig.onlyLang + " " + globalConfig.maxQueryReturn + " " + globalConfig.returnedLang + ". " + globalConfig.seeHelpLang + ".";
@@ -62,8 +62,6 @@ if (typeof globalConfig.usejQueryUITable === "undefined"){
 	globalConfig.usejQueryUITable = true;   //whether want to use the predefined multiple tab supports. If it is false, it will only support one tab. 
 }
 globalConfig.supportTableDownload = globalConfig.supportTableDownload || true;	
-if(globalConfig.usejQueryUITable){	
-}
 
 //whether want to use the predefined multiple tab supports. If it is false, it will only support one tab. 
 if (typeof globalConfig.usePredefinedMultipleTabs === "undefined"){
@@ -225,7 +223,7 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 			geocoder.geocode({
 				'address': latlng.lat() + ',' + latlng.lng()
 			}, function (results, status) {
-				if (status == google.maps.GeocoderStatus.OK) {
+				if (status === google.maps.GeocoderStatus.OK) {
 					globalConfig.returnedAddress = results[0].formatted_address.toString();
 					MOEMAP.mouseClickHandler({latLng: latlng});
 				} else {
@@ -233,7 +231,7 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 				}
 			});					
 
-		});  					
+		});
 		
 		for (var i = 0; i<layerList.length; i++) {
 			if (layerList[i].hasOwnProperty('displayPolygon') && (layerList[i].displayPolygon)) {
@@ -540,7 +538,7 @@ globalConfig.addressGeocodingCallbackList = globalConfig.addressGeocodingCallbac
 			MOEMAP.addPolylinesToMap(queryParams.polylines);
 		}
 		var gLatLng = queryParams.gLatLng;
-		var address = queryParams.address;  //returnedAddress
+		//var address = queryParams.address;  //returnedAddress
 		if (queryParams.hasOwnProperty('returnedAddress')) {
 			globalConfig.returnedAddress = queryParams.returnedAddress;			
 		} else {
@@ -589,7 +587,7 @@ globalConfig.calculateClusters = globalConfig.calculateClusters || function (fea
 	var pointClusters = [];
 	for (var x = 0; x < size; x++) {
 		var findResult = features[x];
-		var attributes = findResult.attributes;
+		//var attributes = findResult.attributes;
 		var gLatLng = findResult.geometry[0].getPosition();
 		if (Math.abs(gLatLng.lng()) + Math.abs(gLatLng.lat()) > 0.001) {
 			var foundCluster = false;
@@ -639,8 +637,8 @@ globalConfig.calculateMulitpleTabsOneFeature = globalConfig.calculateMulitpleTab
 		Called by: calculateMulitpleTabsOneFeature
 	*/	
 	var createTabBar = function (tabs){
-	    // the following code based on ESRI sample
-        // create and show the info-window with tabs, one for each map service layer		  
+		// the following code based on ESRI sample
+		// create and show the info-window with tabs, one for each map service layer		  
 		var container = document.createElement('div');
 		container.style.width = globalConfig.infoWindowWidth;
 		if (globalConfig.hasOwnProperty('infoWindowHeight')){ 
@@ -755,10 +753,10 @@ globalConfig.calculatePolylineBounds = globalConfig.calculatePolylineBounds || f
 	return bounds;
 };
 
-globalConfig.disallowMouseClick = globalConfig.disallowMouseClick || false; 	
+globalConfig.disallowMouseClick = globalConfig.disallowMouseClick || false;
 
 MOEMAP = (function () {
-	var mapService, map, identifyResults, identifyMarker, infoWindow, gOverlays = [], isCenterSet = false, center, bufferCircle; //, overlays = [], layers;
+	var map, identifyResults, identifyMarker, infoWindow, gOverlays = [], isCenterSet = false, center, bufferCircle; //, overlays = [], layers;
 
 	/*
 		Usage: If the info window is open, it will be closed. 
@@ -843,14 +841,14 @@ MOEMAP = (function () {
 		}
 		/*Make sure the user is in the middle of drawing.*/
 		if(isCenterSet){							
-			if(typeof(event) != "undefined"){
+			if(typeof(event) !== "undefined"){
 				//Calculate the current radius
 				var distance = google.maps.geometry.spherical.computeDistanceBetween(center, event.latLng);								
 				//Remove the old circle
 				if(bufferCircle){
 					bufferCircle.setMap(null);
 				}
-				bufferCircle = globalConfig.calculateCirclePolyline(center, distance)
+				bufferCircle = globalConfig.calculateCirclePolyline(center, distance);
 				bufferCircle.setMap(map);
 				google.maps.event.addListener(bufferCircle, 'click', finishBufferSearch);
 				//update the message to give the user the current circle's centre and radius. 
@@ -930,7 +928,7 @@ MOEMAP = (function () {
 			preQueryCallback: globalConfig.preIdentifyCallback,
 			postQueryCallback: globalConfig.postIdentifyCallback,
 			layerList: globalConfig.queryLayerList
-		}
+		};
 		if (globalConfig.hasOwnProperty('mergeFunction')) {
 			queryParams.mergeFunction = globalConfig.mergeFunction;
 		}
