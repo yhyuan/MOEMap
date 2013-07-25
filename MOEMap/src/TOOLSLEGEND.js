@@ -5,7 +5,7 @@
 
 	var globalConfig = globalConfig || {};
 	/*globalConfig.selectTooltip is defined in LANGUAGE.js*/
-	globalConfig.imageURL = "http://www.downloads.ene.gov.on.ca/files/mapping/js/MOEMap/images/";
+	globalConfig.imageURL = "../images/";
 	globalConfig.legend = globalConfig.legend || {
 		available: false,	
 		url: globalConfig.imageURL + "legend.png", 

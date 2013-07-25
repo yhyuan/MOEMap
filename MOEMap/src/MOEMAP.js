@@ -202,15 +202,18 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 				icon: globalConfig.searchedLocationIcon,				
 				draggable: true
 			}));
-		MOEMAP.addOverlay(identifyMarker);	
-		MOEMAP.openInfoWindow(queryParams.gLatLng, container);	
-
-		(function (container, identifyMarker) {
-			google.maps.event.addListener(identifyMarker, 'click', function () {
-				MOEMAP.openInfoWindow(identifyMarker.getPosition(), container);
-			});
-		})(container, identifyMarker);
+		MOEMAP.addOverlay(identifyMarker);
 		
+		if (globalConfig.identifyMultiplePolygonLayersServicesTemplate.hasOwnProperty('displayResultBelowMap') && (globalConfig.identifyMultiplePolygonLayersServicesTemplate.displayResultBelowMap)) {
+			
+		} else {
+			MOEMAP.openInfoWindow(queryParams.gLatLng, container);	
+			(function (container, identifyMarker) {
+				google.maps.event.addListener(identifyMarker, 'click', function () {
+					MOEMAP.openInfoWindow(identifyMarker.getPosition(), container);
+				});
+			})(container, identifyMarker);
+		}
 		google.maps.event.addListener(identifyMarker, 'dragend', function () {
 			MOEMAP.clearOverlays();
 			if(document.getElementById(globalConfig.searchInputBoxDivId)){
