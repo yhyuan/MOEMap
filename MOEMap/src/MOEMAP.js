@@ -205,7 +205,8 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 		MOEMAP.addOverlay(identifyMarker);
 		
 		if (globalConfig.identifyMultiplePolygonLayersServicesTemplate.hasOwnProperty('displayResultBelowMap') && (globalConfig.identifyMultiplePolygonLayersServicesTemplate.displayResultBelowMap)) {
-			console.log(container);
+			var template = $("#QueryTableTemplate").html();		
+			$("#query_table").html(_.template(template, globalConfig.identifyResults));
 		} else {
 			MOEMAP.openInfoWindow(queryParams.gLatLng, container);	
 			(function (container, identifyMarker) {
