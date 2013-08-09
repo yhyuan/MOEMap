@@ -132,6 +132,9 @@ globalConfig.preIdentifyCallbackList = globalConfig.preIdentifyCallbackList || {
 		return params;
 	},
 	"SWPLocator": function (queryParams) {
+		if (globalConfig.identifyMultiplePolygonLayersServicesTemplate.hasOwnProperty('displayResultBelowMap') && (globalConfig.identifyMultiplePolygonLayersServicesTemplate.displayResultBelowMap)) {
+			globalConfig.identifyResults = {};
+		}	
 		var layerSetting = queryParams.layerList[queryParams.currentLayerId];
 		var params = {
 			returnGeometry: layerSetting.hasOwnProperty('returnGeometry') ? layerSetting.returnGeometry : false,

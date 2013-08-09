@@ -143,6 +143,104 @@
    <script type="text/javascript" src="SourceProtectionECAScreeningandPolicySearchMap.js"></script>    
    <script type="text/javascript" src="../Development/build/MOEMap2.0.js"></script>    
    <script type="text/html" id='QueryTableTemplate'>
+	<% 
+		if (!globalConfig.identifyResults.hasOwnProperty("Source Protection Area - 2011")) {
+			globalConfig.identifyResults["Source Protection Area - 2011"] = {
+				LABEL: "N/A",
+				SPP_ID: "N/A"
+			};
+		}
+		console.log(globalConfig.identifyResults); 
+	%>
+	<table class='lakepartner' border='1'>
+		<caption>Latitude and Longitude</caption>
+		<tbody>
+			<tr><th scope='col' class="shaded" >Latitude</th><th class="shaded" scope='col'>Longitude</th></tr>
+			<tr><td><%= globalConfig.identifyResults["LatLng"].lat().toFixed(6) %></td><td><%= globalConfig.identifyResults["LatLng"].lng().toFixed(6) %></td></tr>
+		</tbody>
+	</table>
+	<br>
+	<table class='lakepartner' border='1'>
+		<caption>UTM Coordinates</caption>
+		<tbody>
+			<tr><th class="shaded" scope='col'>UTM Zone</th><th class="shaded" scope='col'>Easting</th><th class="shaded" scope='col'>Northing</th></tr>
+			<tr><td><%= globalConfig.identifyResults["UTM"].Zone %></td><td><%= globalConfig.identifyResults["UTM"].Easting %></td><td><%= globalConfig.identifyResults["UTM"].Northing %></td></tr>
+		</tbody>
+	</table>
+	<br>
+	<% 
+		if (globalConfig.identifyResults.hasOwnProperty("Source Protection Area - 2011")) {
+	%>	
+		<table class='lakepartner' border='1'>
+			<caption>Source Protection Area</caption>
+			<tbody>
+				<tr><th class="shaded" scope='col'>Name</th><th class="shaded" scope='col'>SPP ID</th></tr>
+				<tr><td><%= globalConfig.identifyResults["Source Protection Area - 2011"]["LABEL"] %></td><td><%= globalConfig.identifyResults["Source Protection Area - 2011"]["SPP_ID"] %></td></tr>
+			</tbody>
+		</table>
+	<br>
+	<% 
+		}
+	%>
+	<% 
+		if (globalConfig.identifyResults.hasOwnProperty("Lots and Concessions")) {
+	%>	
+		<table class='lakepartner' border='1'>
+			<caption>Lots and Concessions</caption>
+			<tbody>
+				<tr><th class="shaded" scope='col'>Name</th></tr>
+				<tr><td><%= globalConfig.identifyResults["Lots and Concessions"]["LABEL"] %></td></tr>
+			</tbody>
+		</table>
+	<br>
+	<% 
+		}
+	%>	
+	
+	<% 
+		if (globalConfig.identifyResults.hasOwnProperty("Ownership Parcels")) {
+	%>	
+		<table class='lakepartner' border='1'>
+			<caption>Ownership Parcels</caption>
+			<tbody>
+				<tr><th class="shaded" scope='col'>PIN</th></tr>
+				<tr><td><%= globalConfig.identifyResults["Ownership Parcels"]["PIN"] %></td></tr>
+			</tbody>
+		</table>
+	<br>
+	<% 
+		}
+	%>	
+	
+	<% 
+		if (globalConfig.identifyResults.hasOwnProperty("Assessment Parcels")) {
+	%>	
+		<table class='lakepartner' border='1'>
+			<caption>Assessment Parcels</caption>
+			<tbody>
+				<tr><th class="shaded" scope='col'>Roll Number</th><th class="shaded" scope='col'>Address</th><th class="shaded" scope='col'>Municipality</th></tr>
+				<tr><td><%= globalConfig.identifyResults["Assessment Parcels"]["ASSESSMENT_ROLL_NUMBER_PRIMARY"] %></td><td><%= globalConfig.identifyResults["Assessment Parcels"]["MPAC_STREET_ADDRESS"] %></td><td><%= globalConfig.identifyResults["Assessment Parcels"]["MUNICIPALITY_NAME"] %></td></tr>
+			</tbody>
+		</table>
+	<br>
+	<% 
+		}
+	%>
+
+	<% 
+		if (globalConfig.identifyResults.hasOwnProperty("Intake Protection Zones")) {
+	%>	
+		<table class='lakepartner' border='1'>
+			<caption>Intake Protection Zones</caption>
+			<tbody>
+				<tr><th class="shaded" scope='col'>IPZType</th></tr>
+				<tr><td><%= globalConfig.identifyResults["Intake Protection Zones"]["IPZType"] %></td></tr>
+			</tbody>
+		</table>
+	<br>
+	<% 
+		}
+	%>		
 	Latitude, Longitde: <%= globalConfig.identifyResults["LatLng"].lat().toFixed(6) %>, <%= globalConfig.identifyResults["LatLng"].lng().toFixed(6) %> <br>
 	UTM Zone, Easting, Northing: <%= globalConfig.identifyResults["UTM"].Zone %>, <%= globalConfig.identifyResults["UTM"].Easting %>, <%= globalConfig.identifyResults["UTM"].Northing %> <br>
 	<% if (globalConfig.identifyResults.hasOwnProperty("Source Protection Area - 2011")) { %> Source Protection Area: <%= globalConfig.identifyResults["Source Protection Area - 2011"]["LABEL"] %> (<%= globalConfig.identifyResults["Source Protection Area - 2011"]["SPP_ID"] %>) <br><% } %>
