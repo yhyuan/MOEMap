@@ -58,6 +58,8 @@ globalConfig.maxQueryZoomLevel = globalConfig.maxQueryZoomLevel || 17;
 globalConfig.maxQueryZoomLevelTWPSearch = globalConfig.maxQueryZoomLevelTWPSearch || 11;  //Zoom Level for Township search
 globalConfig.maxQueryZoomLevelTWPLotConSearch = globalConfig.maxQueryZoomLevelTWPLotConSearch || 14;	// Zoom Level for Township with Lot and Concession search
 globalConfig.queryTableDivId = globalConfig.queryTableDivId || 'query_table';
+globalConfig.queryTableTemplateDivId = globalConfig.queryTableTemplateDivId || 'QueryTableTemplate';
+
 if (typeof globalConfig.usejQueryUITable === "undefined"){
 	globalConfig.usejQueryUITable = true;   //whether want to use the predefined multiple tab supports. If it is false, it will only support one tab. 
 }
@@ -205,8 +207,10 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 		MOEMAP.addOverlay(identifyMarker);
 		
 		if (globalConfig.identifyMultiplePolygonLayersServicesTemplate.hasOwnProperty('displayResultBelowMap') && (globalConfig.identifyMultiplePolygonLayersServicesTemplate.displayResultBelowMap)) {
-			var template = $("#QueryTableTemplate").html();		
-			$("#query_table").html(_.template(template, globalConfig.identifyResults));
+			globalConfig.identifyResults["LatLng"] = queryParams.gLatLng;
+			globalConfig.identifyResults["UTM"] = globalConfig.convertLatLngtoUTM(queryParams.gLatLng.lat(), queryParams.gLatLng.lng());		
+			var template = document.getElementById(globalConfig.queryTableTemplateDivId).innerHTML;
+			document.getElementById(globalConfig.queryTableDivId).innerHTML = _.template(template, globalConfig.identifyResults);
 		} else {
 			MOEMAP.openInfoWindow(queryParams.gLatLng, container);	
 			(function (container, identifyMarker) {

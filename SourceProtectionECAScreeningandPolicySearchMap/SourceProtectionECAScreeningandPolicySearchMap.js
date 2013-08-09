@@ -203,6 +203,17 @@ globalConfig.identifyMultiplePolygonLayersServicesTemplate.layerList = globalCon
 		url: globalConfig.url + "/" + layer.id,
 		returnFields: layer.returnFields,
 		callback: function(record){
+			console.log (record);
+			/*
+			globalConfig.identifyResults[layer.name] = {};
+			layer.returnFields.map(function(field) {
+				if(record.hasOwnProperty(field)) {
+					globalConfig.identifyResults[layer.name][field] = record[field];
+				} else {
+					globalConfig.identifyResults[layer.name][field] = "";
+				}
+			});
+			*/
 			globalConfig.identifyResults[layer.name] = record;
 			return "";
 		}	
