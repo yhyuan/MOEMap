@@ -100,3 +100,53 @@ globalConfig.identifyMultiplePolygonLayersServicesTemplate = {
 		}
 	})
 };
+
+globalConfig.layerNameIdDict = {};
+globalConfig.identifyLayerList.map(function (layer) {
+	globalConfig.layerNameIdDict[layer.name] = layer.id;
+});
+
+globalConfig.locationServicesList = globalConfig.locationServicesList || [
+	{
+		mapService: globalConfig.url,
+		layerID: globalConfig.layerNameIdDict["Assessment Parcels"],
+		displayPolygon: true,  //For non-polygon layers, it is always false. For polygon layers, you can turn on and off to visualize the polygon.  
+		fieldsInInfoWindow: ["ASSESSMENT_ROLL_NUMBER_PRIMARY"], 
+		getInfoWindow: function(attributes){
+			return "Assessment Parcel Number: <strong>" + attributes.ASSESSMENT_ROLL_NUMBER_PRIMARY + "</strong>";
+		}, 
+		latitude: "Latitude",
+		longitude: "Longitude",
+		getSearchCondition: function(searchString){
+			return "ASSESSMENT_ROLL_NUMBER_PRIMARY = '" + searchString + "'";
+		}, 
+		isInputFitRequirements: function(searchString){
+			var reg_isInteger = /^\d+$/;
+			if ((searchString.length === 15) && (reg_isInteger.test(searchString))) {
+				return true;
+			}
+			return false;				
+		}
+	},
+	{
+		mapService: globalConfig.url,
+		layerID: globalConfig.layerNameIdDict["Ownership Parcels"],
+		displayPolygon: true,  //For non-polygon layers, it is always false. For polygon layers, you can turn on and off to visualize the polygon.  
+		fieldsInInfoWindow: ["PIN"], 
+		getInfoWindow: function(attributes){
+			return "Ownership Parcel PIN: <strong>" + attributes.PIN + "</strong>";
+		}, 
+		latitude: "Latitude",
+		longitude: "Longitude",
+		getSearchCondition: function(searchString){
+			return "PIN = '" + searchString + "'";
+		}, 
+		isInputFitRequirements: function(searchString){
+			var reg_isInteger = /^\d+$/;
+			if ((searchString.length === 9) && (reg_isInteger.test(searchString))) {
+				return true;
+			}
+			return false;				
+		}
+	}
+];

@@ -131,7 +131,7 @@
 	<style type="text/css">
 		.lakepartner { width:700px; margin-right:-3px; border-spacing:1px; border-collapse:separate !important; border:1px #000000 solid; }	
 		.lakepartner th { padding:2px; font-size:11px; border:1px #000000 solid; vertical-align:middle; text-align:center; }	  
-		.lakepartner td { padding:2px; font-size:11px; border:1px #000000 solid; text-align:center; }
+		.lakepartner td { padding:2px; font-size:11px; border:1px #000000 solid; text-align:left; }
 		.lakepartner caption {font-size:1.2em;}
 		.shaded { background-color:#CCCCCC; }
 	</style>
@@ -143,25 +143,29 @@
    <script type="text/javascript" src="SourceProtectionECAScreeningandPolicySearchMap.js"></script>    
    <script type="text/javascript" src="../Development/build/MOEMap2.0.js"></script>    
    <script type="text/html" id='QueryTableTemplate'>	
-	<br><br>
-	Latitude: <strong><%= globalConfig.identifyResults["LatLng"].lat().toFixed(6) %></strong>  Longitde:<strong><%= globalConfig.identifyResults["LatLng"].lng().toFixed(6) %></strong> <br>
-	UTM Zone: <strong><%= globalConfig.identifyResults["UTM"].Zone %></strong>   Easting: <strong><%= globalConfig.identifyResults["UTM"].Easting %></strong>     Northing: <strong><%= globalConfig.identifyResults["UTM"].Northing %></strong> <br>	
-	Source Protection Area Name: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Source Protection Area - 2011")) ? globalConfig.identifyResults["Source Protection Area - 2011"]["LABEL"] : "N/A " %></strong> <br>
-	Township, Concession and Lot: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Lots and Concessions")) ? globalConfig.identifyResults["Lots and Concessions"]["LABEL"] : "N/A " %></strong> <br>
-	Assessment Roll Number: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Assessment Parcels")) ? globalConfig.identifyResults["Assessment Parcels"]["ASSESSMENT_ROLL_NUMBER_PRIMARY"] : "N/A " %></strong> 
-	Street Address: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Assessment Parcels")) ? globalConfig.identifyResults["Assessment Parcels"]["MPAC_STREET_ADDRESS"] : "N/A " %></strong> 
-	Municipality: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Assessment Parcels")) ? globalConfig.identifyResults["Assessment Parcels"]["MUNICIPALITY_NAME"] : "N/A " %></strong> <br>
-	Property Information Number: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Ownership Parcels")) ? globalConfig.identifyResults["Ownership Parcels"]["PIN"] : "N/A" %></strong> <br>	
-	Intake Protection Zone: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Intake Protection Zones")) ? globalConfig.identifyResults["Intake Protection Zones"]["IPZType"] : "N/A" %></strong> <br>	
-	Surface Water Vulnerability Score: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Surface Water")) ? globalConfig.identifyResults["Vulnerable Scoring Area - Surface Water"]["vss_vulnerabilityScore"] : "N/A" %></strong> <br>	
-	Wellhead Protection Zone: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Well Head Protection Zones")) ? globalConfig.identifyResults["Well Head Protection Zones"]["ZoneName"] : "N/A" %></strong> <br>	
-	Groundwater Vulnerability Score: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Groundwater")) ? globalConfig.identifyResults["Vulnerable Scoring Area - Groundwater"]["vsg_vulnerabilityScore"] : "N/A" %></strong> <br>
-	WHPA – Groundwater Under Direct Influence: <strong><%= (globalConfig.identifyResults.hasOwnProperty("WHPA Groundwater Under Direct Influence: WHPA-E)")) ? globalConfig.identifyResults["WHPA Groundwater Under Direct Influence: WHPA-E)"]["ZoneName"] : "N/A" %></strong> <br>
-	Groundwater Under Direct Influence Vulnerability Score: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Groundwater Under Direct Influence")) ? globalConfig.identifyResults["Vulnerable Scoring Area - Groundwater Under Direct Influence"]["vsu_vulnerabilityScore_GUDI"] : "N/A" %></strong> <br>
-	Intrinsic Vulnerability Level: <strong><%= (globalConfig.identifyResults.hasOwnProperty("SWP_Highly_Vul_Areas")) ? globalConfig.identifyResults["SWP_Highly_Vul_Areas"]["IntrinsicVulnerabilityLevel"] : "N/A" %></strong> <br>
-	Significant Groundwater Recharge Area: <strong><%= (globalConfig.identifyResults.hasOwnProperty("SGRA_SPP_ID_NO_BORDERS")) ? "Yes" : "No" %></strong> <br>
-	Niagara Escarpment Development Control Area: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Niagara Escarpment Area of Development Control")) ? "Yes" : "No" %></strong> <br>
-	Issue Contributing areas: <strong><%= (globalConfig.identifyResults.hasOwnProperty("SWP_Issue_Contributing_Areas")) ? "Yes" : "No" %></strong> <br>		
+	<table class='lakepartner' border='1'>
+		<caption>Search Results</caption>
+		<tbody>
+			<tr><td>Latitude: <strong><%= globalConfig.identifyResults["LatLng"].lat().toFixed(6) %></strong>  Longitde:<strong><%= globalConfig.identifyResults["LatLng"].lng().toFixed(6) %></strong></td></tr>
+			<tr><td>UTM Zone: <strong><%= globalConfig.identifyResults["UTM"].Zone %></strong>   Easting: <strong><%= globalConfig.identifyResults["UTM"].Easting %></strong>     Northing: <strong><%= globalConfig.identifyResults["UTM"].Northing %></strong></td></tr>
+			<tr><td>Source Protection Area Name: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Source Protection Area - 2011")) ? globalConfig.identifyResults["Source Protection Area - 2011"]["LABEL"] : "N/A " %></strong></td></tr>
+			<tr><td>Township, Concession and Lot: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Lots and Concessions")) ? globalConfig.identifyResults["Lots and Concessions"]["LABEL"] : "N/A " %></strong></td></tr>
+			<tr><td>Assessment Roll Number: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Assessment Parcels")) ? globalConfig.identifyResults["Assessment Parcels"]["ASSESSMENT_ROLL_NUMBER_PRIMARY"] : "N/A " %></strong></td></tr> 
+			<tr><td>Street Address: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Assessment Parcels")) ? globalConfig.identifyResults["Assessment Parcels"]["MPAC_STREET_ADDRESS"] : "N/A " %></strong></td></tr> 
+			<tr><td>Municipality: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Assessment Parcels")) ? globalConfig.identifyResults["Assessment Parcels"]["MUNICIPALITY_NAME"] : "N/A " %></strong></td></tr>
+			<tr><td>Property Information Number: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Ownership Parcels")) ? globalConfig.identifyResults["Ownership Parcels"]["PIN"] : "N/A" %></strong></td></tr>
+			<tr><td>Intake Protection Zone: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Intake Protection Zones")) ? globalConfig.identifyResults["Intake Protection Zones"]["IPZType"] : "N/A" %></strong></td></tr>
+			<tr><td>Surface Water Vulnerability Score: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Surface Water")) ? globalConfig.identifyResults["Vulnerable Scoring Area - Surface Water"]["vss_vulnerabilityScore"] : "N/A" %></strong></td></tr>
+			<tr><td>Wellhead Protection Zone: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Well Head Protection Zones")) ? globalConfig.identifyResults["Well Head Protection Zones"]["ZoneName"] : "N/A" %></strong></td></tr>
+			<tr><td>Groundwater Vulnerability Score: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Groundwater")) ? globalConfig.identifyResults["Vulnerable Scoring Area - Groundwater"]["vsg_vulnerabilityScore"] : "N/A" %></strong></td></tr>
+			<tr><td>WHPA – Groundwater Under Direct Influence: <strong><%= (globalConfig.identifyResults.hasOwnProperty("WHPA Groundwater Under Direct Influence: WHPA-E)")) ? globalConfig.identifyResults["WHPA Groundwater Under Direct Influence: WHPA-E)"]["ZoneName"] : "N/A" %></strong></td></tr>
+			<tr><td>Groundwater Under Direct Influence Vulnerability Score: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Groundwater Under Direct Influence")) ? globalConfig.identifyResults["Vulnerable Scoring Area - Groundwater Under Direct Influence"]["vsu_vulnerabilityScore_GUDI"] : "N/A" %></strong></td></tr>
+			<tr><td>Intrinsic Vulnerability Level: <strong><%= (globalConfig.identifyResults.hasOwnProperty("SWP_Highly_Vul_Areas")) ? globalConfig.identifyResults["SWP_Highly_Vul_Areas"]["IntrinsicVulnerabilityLevel"] : "N/A" %></strong></td></tr>
+			<tr><td>Significant Groundwater Recharge Area: <strong><%= (globalConfig.identifyResults.hasOwnProperty("SGRA_SPP_ID_NO_BORDERS")) ? "Yes" : "No" %></strong></td></tr>
+			<tr><td>Niagara Escarpment Development Control Area: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Niagara Escarpment Area of Development Control")) ? "Yes" : "No" %></strong></td></tr>
+			<tr><td>Issue Contributing areas: <strong><%= (globalConfig.identifyResults.hasOwnProperty("SWP_Issue_Contributing_Areas")) ? "Yes" : "No" %></strong></td></tr>
+		</tbody>
+	</table>
    </script>   
 	<!--MOE MAP-->   
 
