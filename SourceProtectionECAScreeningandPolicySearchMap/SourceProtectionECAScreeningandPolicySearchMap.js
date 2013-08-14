@@ -13,7 +13,7 @@ globalConfig.pointBufferTool = {available: false};
 globalConfig.generateURLTool = {available: false};
 globalConfig.usejQueryUITable = false;
 globalConfig.usePredefinedMultipleTabs = false;
-globalConfig.locationServicesList = [];
+//globalConfig.locationServicesList = [];
 globalConfig.maxQueryZoomLevel = 18;
 globalConfig.preIdentifyCallbackName = "SWPLocator";
 globalConfig.postIdentifyCallbackName = "SWPLocator";
@@ -106,19 +106,19 @@ globalConfig.identifyLayerList.map(function (layer) {
 	globalConfig.layerNameIdDict[layer.name] = layer.id;
 });
 
-globalConfig.locationServicesList = globalConfig.locationServicesList || [
+globalConfig.locationServicesList = [
 	{
 		mapService: globalConfig.url,
 		layerID: globalConfig.layerNameIdDict["Assessment Parcels"],
 		displayPolygon: true,  //For non-polygon layers, it is always false. For polygon layers, you can turn on and off to visualize the polygon.  
-		fieldsInInfoWindow: ["ASSESSMENT_ROLL_NUMBER_PRIMARY"], 
+		fieldsInInfoWindow: ["ARN"], 
 		getInfoWindow: function(attributes){
-			return "Assessment Parcel Number: <strong>" + attributes.ASSESSMENT_ROLL_NUMBER_PRIMARY + "</strong>";
+			return "Assessment Parcel Number: <strong>" + attributes.ARN + "</strong>";
 		}, 
 		latitude: "Latitude",
 		longitude: "Longitude",
 		getSearchCondition: function(searchString){
-			return "ASSESSMENT_ROLL_NUMBER_PRIMARY = '" + searchString + "'";
+			return "ARN = '" + searchString + "'";
 		}, 
 		isInputFitRequirements: function(searchString){
 			var reg_isInteger = /^\d+$/;
