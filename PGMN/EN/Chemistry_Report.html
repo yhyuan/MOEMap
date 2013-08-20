@@ -83,18 +83,12 @@
 	</style>
 	<script type="text/javascript">
 		var language = "EN";
-	</script>	
+	</script>
 	<script type="text/html" id='PGMNChemistryTemplate'>
 		<h2><%= (language === "EN") ? "Water Chemistry  in PGMN Well" : "Composition chimique de l'eau des puits du Réseau provincial de contrôle des eaux souterraines" %>: <%= renderResult.PGMN_WELL %></h2>
 		<a name="top"></a><a href="../<%= renderResult.PGMN_WELL %>.txt"><%= (language === "EN") ? "Water Chemistry Data Download (Tab Separated Text File)" : "Téléchargement des données hydro-chimiques (Fichier texte séparé)" %></a>
 		<table class='fishTable'  border='1'>
             <%
-				var convertDate = function (date) {
-					var d = new Date(date);
-					var month = d.getMonth() + 1;
-					var day = d.getDate();	
-					return ((day < 10) ? ("0" + day) :  ("" + day)) + "/" + ((month < 10) ? ("0" + month) :  ("" + month)) + "/" + d.getFullYear();
-				};			
 				var chemicalList = renderResult.availableChartedChemicals;
 				if (chemicalList.length % 3 === 1) {
 					chemicalList = chemicalList.concat([" ", " "]);
@@ -116,48 +110,22 @@
             %>			
 			<tr><td colspan="3"><center><a href="#indexOther"><%= (language === "EN") ? "Pesticides, Volatile Organic Compounds, and other parameters" : "Pesticides, composés organiques volatiles et autres paramètres" %></a></center></td></tr>
 		</table>
-		
 
 		<%
 			_.each(renderResult.availableChartedChemicals,function(chemical,key,list){
-				var chemicalSamples = parameterObject[chemical].sort(function (a, b) {
-					var d1 = new Date(a.attributes.SAMPLE_DAT);
-					var d2 = new Date(b.attributes.SAMPLE_DAT);
-					if (d1 < d2) return -1;
-					if (d2 < d1) return 1;
-					return 0;
-				});
-				var maxValue = _.max(chemicalSamples, function(sample){return sample.attributes.REPORT_VALUE;}).attributes.REPORT_VALUE;
-				if (maxValue < 0.02) {maxValue = 0.02;}
-				if (chemicalSamples.length === 1) {
-					maxValue = 2*maxValue;
-				}
-				var isNumber = function (n) {
-					return !isNaN(parseFloat(n)) && isFinite(n);
-				};
-				var values = _.map(chemicalSamples, function(sample) {
-					if ((!isNumber(sample.attributes.REPORT_VALUE)) || (sample.attributes.REPORT_VALUE < 0.000001)) {
-						return 0;
-					} else {
-						return (sample.attributes.REPORT_VALUE * 100.0 / maxValue).toFixed(2);
-					}
-				});
-				var beginDate = new Date("January 1, 2002");
-				var dateDiff = new Date("January 1, 2013") - beginDate;
-				var dates = _.map(chemicalSamples, function(sample) {
-					return ((new Date(sample.attributes.SAMPLE_DAT) - beginDate) * 100.0 / dateDiff).toFixed(2);
-				});
+				var chemicalSamples = parameterObject[chemical].sort(renderResult.sortByDate);
+				var chartedValues = renderResult.calculateChartedValues(chemicalSamples);
 				var chemicalName = (language === "EN") ? chemical : Chemicals_Dict[chemical];
 		%>
 			<h3><a name="index<%= key %>"><%= chemicalName %></a></h3>
-			<img src='http://chart.apis.google.com/chart?cht=s&chd=t:<%= dates.join(",") %>|<%= values.join(",") %>&chxt=x,y&chs=500x200&chxl=|0:|2002|2003|2004|2005|2006|2007|2008|2009|2010|2011|2012|2013|1:|0|<%= maxValue*0.5 %>|<%= maxValue %>(<%= chemicalSamples[0].attributes.UNITS %>)'/>
+			<img src='http://chart.apis.google.com/chart?cht=s&chd=t:<%= chartedValues.dates.join(",") %>|<%= chartedValues.values.join(",") %>&chxt=x,y&chs=500x200&chxl=|0:|2002|2003|2004|2005|2006|2007|2008|2009|2010|2011|2012|2013|1:|0|<%= chartedValues.maxValue*0.5 %>|<%= chartedValues.maxValue %>(<%= chartedValues.unit %>)'/>
 			<table class='fishTable'  border='1'>
 				<tr><th class="shaded"><center>Date</center></th><th class="shaded"><center><%= (language === "EN") ? "Value" : "Valeur" %></center></th><th class="shaded"><center><%= (language === "EN") ? "Units" : "Unité" %></center></th><th class="shaded"><center><%= (language === "EN") ? "Qualifiers" : "Qualificateurs" %></center></th><th class="shaded"><center><%= (language === "EN") ? "Remark 1" : "Observation 1" %></center></th><th class="shaded"><center><%= (language === "EN") ? "Remark 2" : "Observation 2" %></center></th><th class="shaded"><center><%= (language === "EN") ? "Confidence Level" : "Niveau de confiance" %></center></th><th class="shaded"><center><%= (language === "EN") ? "Comments" : "Commentaires" %></center></th><th class="shaded"><center><%= (language === "EN") ? "Sample Number" : "Numéro d'échantillon" %></center></th></tr>
 	            <%
                 _.each(chemicalSamples,function(sample,key,list){
 					var attrs = sample.attributes;
 				%>
-					<tr><td><%= convertDate(new Date(attrs.SAMPLE_DAT)) %></td><td><%= attrs.REPORT_VALUE %></td><td><%= attrs.UNITS %></td><td><%= attrs.VALQUALIFIER %></td><td><%= attrs.REMARK1 %></td><td><%= attrs.REMARK2 %></td><td><%= attrs.CONFIDENC %></td><td><%= attrs.COMMENTS %></td><td><%= attrs.SAMPLENUM %></td></tr>
+					<tr><td><%= renderResult.convertDate(new Date(attrs.SAMPLE_DAT)) %></td><td><%= attrs.REPORT_VALUE %></td><td><%= attrs.UNITS %></td><td><%= attrs.VALQUALIFIER %></td><td><%= attrs.REMARK1 %></td><td><%= attrs.REMARK2 %></td><td><%= attrs.CONFIDENC %></td><td><%= attrs.COMMENTS %></td><td><%= attrs.SAMPLENUM %></td></tr>
 				<%
 					});
 				%>
@@ -169,13 +137,7 @@
 		<h3><a name="indexOther">Pesticides, Volatile Organic Compounds, and other parameters</a></h3>		
 		<%
 			_.each(renderResult.unchartedChemicals,function(chemical,key,list){
-				var chemicalSamples = parameterObject[chemical].sort(function (a, b) {
-					var d1 = new Date(a.attributes.SAMPLE_DAT);
-					var d2 = new Date(b.attributes.SAMPLE_DAT);
-					if (d1 < d2) return -1;
-					if (d2 < d1) return 1;
-					return 0;
-				});
+				var chemicalSamples = parameterObject[chemical].sort(renderResult.sortByDate);
 		%>
 			<h3><%= chemical %></h3>
 			<table class='fishTable'  border='1'>
@@ -184,7 +146,7 @@
                 _.each(chemicalSamples,function(sample,key,list){
 					var attrs = sample.attributes;
 				%>
-					<tr><td><%= convertDate(new Date(attrs.SAMPLE_DAT)) %></td><td><%= attrs.REPORT_VALUE %></td><td><%= attrs.UNITS %></td><td><%= attrs.VALQUALIFIER %></td><td><%= attrs.REMARK1 %></td><td><%= attrs.REMARK2 %></td><td><%= attrs.CONFIDENC %></td><td><%= attrs.COMMENTS %></td><td><%= attrs.SAMPLENUM %></td></tr>
+					<tr><td><%= renderResult.convertDate(new Date(attrs.SAMPLE_DAT)) %></td><td><%= attrs.REPORT_VALUE %></td><td><%= attrs.UNITS %></td><td><%= attrs.VALQUALIFIER %></td><td><%= attrs.REMARK1 %></td><td><%= attrs.REMARK2 %></td><td><%= attrs.CONFIDENC %></td><td><%= attrs.COMMENTS %></td><td><%= attrs.SAMPLENUM %></td></tr>
 				<%
 					});
 				%>
@@ -193,9 +155,7 @@
 		<%
 			});
 		%>
-
-
-	</script>	
+	</script>
 	<!--MOE Geomatics Center -->
 	<meta content="MSHTML 6.00.2900.3698" name="GENERATOR" />
  
