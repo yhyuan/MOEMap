@@ -38,8 +38,6 @@ var queryLayer = function(maxObjectID, results) {
 			var parameterObject = _.groupBy(newResults, function(feature) {return feature.attributes.PARMNAME;});
 			var availableChartedChemicals = _.filter(chartedChemicals, function(chemical) {return parameterObject.hasOwnProperty(chemical);});
 			var unchartedChemicals = (_.filter(_.keys(parameterObject), function(chemical) {return !(chemical in chartedChemicals);})).sort();
-			//console.log(availableChartedChemicals);
-			//console.log(unchartedChemicals);
 			renderResult = {
 				PGMN_WELL: QueryString.id, 
 				availableChartedChemicals: availableChartedChemicals, 
