@@ -53,11 +53,7 @@ Array.prototype.fill = function(val){
     return this;
 };
 var renderResult = {};
-var layer = new gmaps.ags.Layer(url + '1');
-layer.query({
-	where:  (QueryString.hasOwnProperty("wellid") ? ("(WELL_ID = " + QueryString.wellid + ")"):("(BORE_HOLE_ID = " + QueryString.id + ")")),
-	outFields: ["BORE_HOLE_ID", "WELL_ID", "BHK", "PREV_WELL_ID", "DPBR_M", "WELL_TYPE", "DEPTH_M", "YEAR_COMPLETED", "WELL_COMPLETED_DATE", "RECEIVED_DATE", "AUDIT_NO", "TAG", "CONTRACTOR", "SWL", "FINAL_STATUS_DESCR", "USE1", "USE2", "MOE_COUNTY_DESCR", "MOE_MUNICIPALITY_DESCR", "CON", "LOT", "STREET", "CITY", "UTMZONE", "EAST83", "NORTH83", "GEO", "PLUG", "HOLE", "CM", "CAS", "SCRN", "WAT", "PT", "PTD", "DISINFECTED"]
-}, function (rs) {
+var processResults = function (rs) {
 	var fs = rs.features;
 	var template = "";
 	if (fs.length === 1) {
@@ -99,8 +95,13 @@ layer.query({
 				BHK: feature.attributes.BHK
 			};
 		});
-		//console.log(renderResult);
 		template = "ClusterTemplate";
 	}
 	document.getElementById("target").innerHTML = _.template(document.getElementById(template).innerHTML, renderResult);
-});
+};
+var layer = new gmaps.ags.Layer(url + '1');
+layer.query({
+	returnGeometry: false,
+	where:  (QueryString.hasOwnProperty("wellid") ? ("(WELL_ID = " + QueryString.wellid + ")"):("(BORE_HOLE_ID = " + QueryString.id + ")")),
+	outFields: ["BORE_HOLE_ID", "WELL_ID", "BHK", "PREV_WELL_ID", "DPBR_M", "WELL_TYPE", "DEPTH_M", "YEAR_COMPLETED", "WELL_COMPLETED_DATE", "RECEIVED_DATE", "AUDIT_NO", "TAG", "CONTRACTOR", "SWL", "FINAL_STATUS_DESCR", "USE1", "USE2", "MOE_COUNTY_DESCR", "MOE_MUNICIPALITY_DESCR", "CON", "LOT", "STREET", "CITY", "UTMZONE", "EAST83", "NORTH83", "GEO", "PLUG", "HOLE", "CM", "CAS", "SCRN", "WAT", "PT", "PTD", "DISINFECTED"]
+}, processResults);
