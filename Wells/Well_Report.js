@@ -32,9 +32,9 @@ var convertDate = function (date) {
 	var d = new Date(date);
 	var day = d.getDate();	
 	var dayStr = ((day < 10) ? ("0" + day) :  ("" + day));
-	var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+	var months = (language === "EN") ? ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] : ["janvier", "f&eacute;vrier", "mars", "avril", "mai", "juin", "juillet", "ao&ucirc;t", "septembre", "octobre", "novembre", "d&eacute;cembre"];
 	var monthStr = months[d.getMonth()];
-	return  monthStr + " " + dayStr + ", " + d.getFullYear();
+	return  (language === "EN") ? (monthStr + " " + dayStr + ", " + d.getFullYear()) : (dayStr + " " + monthStr + " " + d.getFullYear());
 };
 var createRenderItems = function (content) {
 	var rows = content.split("|");
@@ -68,11 +68,9 @@ var processResults = function (rs) {
 			renderResult.PT = ";;;;;;;;;;;;";
 		}
 		renderResult.PT = _.map(renderResult.PT.split(";"), function(item) {return (item.length === 0) ? "&nbsp;&nbsp;" : item;});
-		if (renderResult.PT[10] === "&nbsp;&nbsp;") {
-			renderResult.PT[10] = ["&nbsp;", "&nbsp;"];
-		} else {
+		if (renderResult.PT[10] !== "&nbsp;&nbsp;") {
 			var hourMinutes = renderResult.PT[10].split(":");
-			renderResult.PT[10] = hourMinutes;
+			renderResult.PT[10] = hourMinutes[0] + " h:" + hourMinutes[1] + " m";
 		}
 		var timeArray = ["1", "2", "3", "4", "5", "10", "15", "20", "25", "30", "40", "45", "50", "60"];
 		var PTD = _.object(timeArray, new Array(timeArray.length).fill(["&nbsp;", "&nbsp;"]));
