@@ -1,4 +1,4 @@
- var globalConfig = globalConfig || {};
+var globalConfig = globalConfig || {};
 globalConfig.preIdentifyCallbackName = "SWPLocator"; 
 globalConfig.postIdentifyCallbackName = "SWPLocator"; 
 globalConfig.addressGeocodingCallbackName = "SWPLocator"	
@@ -28,6 +28,40 @@ globalConfig.lakeLocations = {
 	"HAUT SAINT-LAURENT": {location: [44.439805,-75.848505], zoomlevel: 9},
 	"FLEUVE SAINT-LAURENT": {location: [44.439805,-75.848505], zoomlevel: 9}
 };
+
+if (globalConfig.language === "EN") {
+	globalConfig.ClearLang = "Clear";
+	globalConfig.TermLang = "Term";
+	globalConfig.SearchLang = "Search";
+	globalConfig.SearchTheMapLang = "Search the map";
+	//globalConfig.disclaimerLang = "EN";
+	globalConfig.displayDisclaimer = true;
+	globalConfig.searchHelpTxt = "Search by <STRONG>Address</STRONG>, <STRONG>City Name</STRONG>, <STRONG>Coordinates</STRONG> or see help for more advanced options.";
+	globalConfig.otherInfoHTML = "<br>Data source: Land Information Ontario (LIO).<br>";
+	globalConfig.searchControlHTML = '<input id = "map_query" type="text" title="Term" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100" 	autocomplete="off"></input>&nbsp;&nbsp;<input type="submit" onclick="globalConfig.search()" value="Search" title="Search"></input> \
+		<input type="submit" onclick="INITIALIZATION.init()" title="Clear" value="&nbsp;Clear&nbsp;"></input> 	\
+		<br><br><div id="information" style="color:#000000">Search by <STRONG>Address</STRONG>, <STRONG>City Name</STRONG>, <STRONG>Coordinates</STRONG> or see help for more advanced options. </div>';
+} else {
+	globalConfig.ClearLang = "Effacer";
+	globalConfig.TermLang = "Terme";
+	globalConfig.SearchLang = "Rechercher";
+	globalConfig.SearchTheMapLang = "Rechercher le plan";
+	//globalConfig.disclaimerLang = "FR";
+	globalConfig.displayDisclaimer = true;
+	globalConfig.searchHelpTxt = "Rechercher par <STRONG>adresse</STRONG>, <STRONG>ville</STRONG>, <STRONG>coordonn\u00e9es</STRONG> ou cliquer sur aide pour plus d\u2019information sur la recherche avanc\u00e9e.";
+	globalConfig.otherInfoHTML = "<br>Source: Information sur les terres de l'Ontario (ITO).<br>";
+	globalConfig.searchControlHTML = '<input id = "map_query" type="text" title="Terme" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100" autocomplete="off"></input>&nbsp;&nbsp;<input type="submit" onclick="globalConfig.search()" value="Rechercher" title="Rechercher"></input> \
+		<input type="submit" onclick="INITIALIZATION.init()" title="Effacer" value="&nbsp;Effacer&nbsp;"></input> 		\
+		<br><br><div id="information" style="color:#000000">Rechercher par <STRONG>adresse</STRONG>, <STRONG>ville</STRONG>, <STRONG>coordonnées</STRONG> ou cliquer sur aide pour de l’information sur la recherche avancée.</div>';	
+}
+/*
+globalConfig.searchControlHTML = '<label class="element-invisible" for="map_query">' + globalConfig.SearchTheMapLang + '</label> \
+	<input id="map_query" type="text" autocomplete="off" maxlength="100" onkeypress="return globalConfig.entsub(event)" size="50" title="' + globalConfig.TermLang + '" /> \
+	<label class="element-invisible" for="search_submit">' + globalConfig.SearchLang + '</label> \
+	<input type="submit" onclick="globalConfig.search()" id="search_submit" value="' + globalConfig.SearchLang + '" title="' + globalConfig.SearchLang + '" /> \
+	<label class="element-invisible" for="search_clear">' + globalConfig.ClearLang + '</label> \
+	<input type="submit" value="&nbsp;' + globalConfig.ClearLang + '&nbsp;" id="search_clear" title="' + globalConfig.ClearLang + '" onclick="INITIALIZATION.init()" />';
+*/
 globalConfig.search = function(){
 		var name = document.getElementById(globalConfig.searchInputBoxDivId).value.trim();
 		if(name.length === 0){
@@ -44,7 +78,7 @@ globalConfig.search = function(){
 				zoomLevel: globalConfig.lakeLocations[searchString].zoomlevel,
 				address: name
 			};
-			console.log(queryParams);
+			//console.log(queryParams);
 			MOEMAP.identifyMultiplePolygonLayersWithLocation(queryParams);
 		} else {
 			globalConfig.maxQueryZoomLevel = 12;			

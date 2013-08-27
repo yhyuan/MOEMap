@@ -51,4 +51,4 @@ var MOEMapLanguage = {
 		"Niagra": "9"+ "<sup>e</sup>"+ " \u00e9tage, 301, rue St. Paul",
 		"York-Durham": "5"+ "<sup>e</sup>"+ " \u00e9tage, 230 chemin Westney Sud"			
 	}
-	}
+};

@@ -4,7 +4,7 @@ if (globalConfig.language === "EN") {
 } else {
 	globalConfig.otherInfoHTML = 'Certaines donn&eacute;es scientifiques et de surveillance n&rsquo;existent qu&rsquo;en anglais.';
 }
-globalConfig.url = "http://www.appliomapss.lrc.gov.on.ca/ArcGIS/rest/services/MOE/PWQMN/MapServer";
+globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/PWQMN/MapServer";
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
 globalConfig.usejQueryUITable = false;
@@ -22,7 +22,7 @@ globalConfig.InformationLang = "Information";
 globalConfig.postIdentifyCallbackName = "Wells";
 globalConfig.postConditionsCallbackName = "Wells";
 globalConfig.infoWindowWidth = '470px';
-globalConfig.infoWindowHeight = "230px";
+globalConfig.infoWindowHeight = "240px";
 globalConfig.infoWindowContentHeight = "200px";
 globalConfig.infoWindowContentWidth = "450px";
 

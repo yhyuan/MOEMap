@@ -7,12 +7,6 @@ globalConfig.searchControlHTML = '	<input id = "map_query" type="text" title="Te
 	<input type="submit" onclick="INITIALIZATION.init()" title="Clear" value="&nbsp;Clear&nbsp;"></input> 	\
 	<br><br><div id="information" style="color:#000000">Search by <STRONG>Address</STRONG>, <STRONG>City Name</STRONG>, <STRONG>Coordinates</STRONG> or see help for more advanced options. </div>';
 */
-globalConfig.searchControlHTML = '	<label class="element-invisible" for="map_query">Search the map</label> \
-	<input id="map_query" type="text" autocomplete="off" maxlength="100" onkeypress="return globalConfig.entsub(event)" size="50" title="Term" /> \
-	<label class="element-invisible" for="search_submit">Search</label> \
-	<input type="submit" onclick="globalConfig.search()" id="search_submit" value="Search" title="Search" /> \
-	<label class="element-invisible" for="search_clear">Clear</label> \
-	<input type="submit" value=" Clear " id="search_clear" title="Clear" onclick="INITIALIZATION.init()" />';
 var MOEMapLanguage = {
 	InfoResultTitle : "Result located within",	
 	LocatedWithinTxt : " located within ",

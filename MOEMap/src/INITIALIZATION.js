@@ -4,7 +4,7 @@
 /*global MOEMAP:false */
 /*global INITIALIZATION:false */
 	var globalConfig = globalConfig || {};
-	//globalConfig.disclaimerDivId = globalConfig.disclaimerDivId || 'disclaimer';
+	globalConfig.disclaimerDivId = globalConfig.disclaimerDivId || 'disclaimer';
 	//if (typeof globalConfig.displayDisclaimer === "undefined"){globalConfig.displayDisclaimer = false;}
 	globalConfig.coordinatesDivId = globalConfig.coordinatesDivId || 'coordinates';    //The div id for coordinates status.
 	globalConfig.updateCoordinates = globalConfig.updateCoordinates || function(lat, lng){
@@ -27,7 +27,9 @@
 	globalConfig.minMapScale = globalConfig.minMapScale || 5;
 	globalConfig.maxMapScale = globalConfig.maxMapScale || 21;
 	globalConfig.tableID = globalConfig.tableID || "myTable";
-	globalConfig.defaultMapTypeId = globalConfig.defaultMapTypeId || google.maps.MapTypeId.ROADMAP;
+	if(!globalConfig.accessible){
+		globalConfig.defaultMapTypeId = globalConfig.defaultMapTypeId || google.maps.MapTypeId.ROADMAP;
+	}
 	globalConfig.accessibleTableClassName = globalConfig.accessibleTableClassName || "fishTable";	
 	globalConfig.generalTableClassName = globalConfig.generalTableClassName || "tablesorter";	
 	globalConfig.accessible = globalConfig.accessible || false;
@@ -340,11 +342,11 @@
 					globalConfig.searchControlDivId = globalConfig.searchControlDivId || 'searchControl'; 
 					document.getElementById(globalConfig.searchControlDivId).innerHTML = globalConfig.searchControlHTML;
 				}
-				/*
+				
 				if (typeof globalConfig.otherInfoHTML !== "undefined") {
 					globalConfig.otherInfoDivId = globalConfig.otherInfoDivId || 'otherInfo'; 
 					document.getElementById(globalConfig.otherInfoDivId).innerHTML = globalConfig.otherInfoHTML;
-				}*/
+				}
 				if (typeof globalConfig.applicationTitle !== "undefined") {
 					globalConfig.applicationTitleDivId = globalConfig.applicationTitleDivId || 'applicationTitle'; 
 					document.getElementById(globalConfig.applicationTitleDivId).innerHTML = globalConfig.applicationTitle;
@@ -352,10 +354,10 @@
 				if (typeof(globalConfig.searchHelpTxt)!== "undefined"){
 					document.getElementById(globalConfig.informationDivId).innerHTML = globalConfig.searchHelpTxt;
 				}
-				/*
+				
 				if ((typeof(globalConfig.disclaimerLang)!== "undefined") && globalConfig.displayDisclaimer){
 					document.getElementById(globalConfig.disclaimerDivId).innerHTML = globalConfig.disclaimerLang;
-				}*/
+				}
 			}
 			if(typeof(globalConfig.postInitialize)!== "undefined"){
 				globalConfig.postInitialize(map);

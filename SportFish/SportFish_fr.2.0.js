@@ -21,7 +21,7 @@ globalConfig.searchControlHTML = '<table width="100%" cellpadding="5" cellspacin
 				</td> \
 				<td valign="top"> \
 					<input id="searchMapLocation" type="radio" name="searchGroup" value="location" checked="checked" onclick="globalConfig.searchChange(this)" title="Recherche d\'emplacements"><span title="Recherche d\'emplacements : Indiquer le lieu en Ontario (lac/rivi\u00e8re, ville/canton, adresse) pour avoir des conseils sur la consommation des poissons du lieu." class="tooltip">Recherche d\'emplacements</span><br /> 						<input id="searchFishSpecies" type="radio" name="searchGroup" value="species" onclick="globalConfig.searchChange(this)" title="Recherche d\'esp\u00e8ces"><span title="Recherche d\'esp\u00e8ces : Indiquer une esp\u00e8ce de poisson pour trouver des lacs sur lesquels existent des conseils sur la consommation de l\'esp\u00e8ce. " class="tooltip">Recherche d\'esp\u00e8ces</span><br /> \
-					<input id="currentMapExtent" type="checkbox" name="currentExtent" title="Étendue de la carte courante"><span title="Afficher la carte : Limiter la recherche à la carte donnée." class="tooltip">\u00c9tendue de la carte courante</span> \
+					<input id="currentMapExtent" type="checkbox" name="currentExtent" title="Étendue de la carte courante"><span title="Afficher la carte : Limiter la recherche &agrave; la carte donn&eacute;e." class="tooltip">\u00c9tendue de la carte courante</span> \
 				</td> \
 			</tr> \
 		</table>';

@@ -389,7 +389,7 @@ globalConfig.renderTable = function(features, tableTemplate, searchCenter){
 		if ((globalConfig.supportTableDownload) && (!$.browser.msie)) {
 			dataTableOptions["sDom"] = 'T<"clear">lfrtip';
 			dataTableOptions["oTableTools"] = {
-					"sSwfPath": "http://www.downloads.ene.gov.on.ca/files/mapping/js/lib/TableTools-2.1.4/media/swf/copy_csv_xls.swf",
+					"sSwfPath": "http://files.ontariogovernment.ca/moe_mapping/mapping/js/MOEMap/js/TableTools-2.1.4/media/swf/copy_csv_xls.swf",
 					"aButtons": ["xls"]
 				};
 		}
@@ -411,7 +411,7 @@ globalConfig.preConditionsCallbackList = globalConfig.preConditionsCallbackList 
 	"Wells": function (queryParams) {
 		var layerSetting = queryParams.layerList[queryParams.currentLayerId];
 		var params = {
-			returnGeometry: true, 
+			returnGeometry: (globalConfig.accessible) ? false : true, 
 			outFields: layerSetting.outFields,
 			where: queryParams.where		
 		};

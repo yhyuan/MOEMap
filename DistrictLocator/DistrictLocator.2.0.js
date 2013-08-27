@@ -1,7 +1,7 @@
  var globalConfig = globalConfig || {};
 globalConfig.preIdentifyCallbackName = "SWPLocator"; 
 globalConfig.postIdentifyCallbackName = "SWPLocator"; 
-globalConfig.addressGeocodingCallbackName = "SWPLocator"	
+globalConfig.addressGeocodingCallbackName = "SWPLocator";
 globalConfig.opacity = 0.9;
 globalConfig.pointBufferTool = {available: false};
 globalConfig.generateURLTool = {available: false};

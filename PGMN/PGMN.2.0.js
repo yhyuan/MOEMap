@@ -1,5 +1,8 @@
 var globalConfig = globalConfig || {};
-globalConfig.url = "http://www.appliomapss.lrc.gov.on.ca/ArcGIS/rest/services/MOE/PGMN/MapServer";
+
+
+
+globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/PGMN/MapServer";
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
 globalConfig.usejQueryUITable = false;
@@ -18,8 +21,8 @@ globalConfig.postIdentifyCallbackName = "Wells";
 //globalConfig.postConditionsCallbackName = "SportFish";
 globalConfig.postConditionsCallbackName = "Wells";
 globalConfig.infoWindowWidth = '470px';
-globalConfig.infoWindowHeight = "490px";
-globalConfig.infoWindowContentHeight = "360px";
+globalConfig.infoWindowHeight = "400px";
+globalConfig.infoWindowContentHeight = "330px";
 globalConfig.infoWindowContentWidth = "450px";
 
 if (globalConfig.accessible) {

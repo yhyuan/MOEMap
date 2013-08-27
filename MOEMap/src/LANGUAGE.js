@@ -34,7 +34,7 @@ if (globalConfig.language === "EN"){
 	globalConfig.onlyLang = globalConfig.onlyLang || "Only";
 	globalConfig.returnedLang = globalConfig.returnedLang || "returned";
 	globalConfig.seeHelpLang = globalConfig.seeHelpLang || "See help for options to refine your search";
-	//globalConfig.disclaimerLang = globalConfig.disclaimerLang || "<p>This website and all of the information it contains are provided &quot;as is&quot; without warranty of any kind, whether express or implied. <a href=\"/environment/en/resources/collection/data_downloads/STDPROD_078135.html\">View the terms of use</a>.</p>";
+	globalConfig.disclaimerLang = globalConfig.disclaimerLang || "<p>This website and all of the information it contains are provided &quot;as is&quot; without warranty of any kind, whether express or implied. <a href=\"/environment/en/resources/collection/data_downloads/STDPROD_078135.html\">View the terms of use</a>.</p>";
 	globalConfig.InformationLang = globalConfig.InformationLang || "Information";
 	//globalConfig.CurrentMapDisplayLang = globalConfig.CurrentMapDisplayLang || 'Current Map Display';
 	globalConfig.CurrentMapDisplayLang = globalConfig.CurrentMapDisplayLang || 'Search current map display only';
@@ -72,7 +72,7 @@ if (globalConfig.language === "EN"){
 	globalConfig.onlyLang = globalConfig.onlyLang || "Seulement";
 	globalConfig.returnedLang = globalConfig.returnedLang || "retourn\u00e9s";
 	globalConfig.seeHelpLang = globalConfig.seeHelpLang || "Consulter l'aide pour affiner votre recherche";	
-	//globalConfig.disclaimerLang = globalConfig.disclaimerLang || "<p>Ce site web et toute l&rsquo;information qu&rsquo;il contient sont fournis sans garantie quelconque, expr&egrave;s ou tacite. <a href=\"/environment/fr/resources/collection/data_downloads/STDPROD_078138.html\">Voir l&rsquo;avis de non-responsabilit&eacute;</a>.</p>";
+	globalConfig.disclaimerLang = globalConfig.disclaimerLang || "<p>Ce site web et toute l&rsquo;information qu&rsquo;il contient sont fournis sans garantie quelconque, expr&egrave;s ou tacite. <a href=\"/environment/fr/resources/collection/data_downloads/STDPROD_078138.html\">Voir l&rsquo;avis de non-responsabilit&eacute;</a>.</p>";
 	globalConfig.InformationLang = globalConfig.InformationLang || "Information";
 	globalConfig.CurrentMapDisplayLang = globalConfig.CurrentMapDisplayLang || '\u00c9tendue de la carte courante';
 	globalConfig.CurrentMapDisplayTitleLang = globalConfig.CurrentMapDisplayTitleLang || 'Afficher la carte : Limiter la recherche \u00e0 la carte donn\u00e9e.';	
