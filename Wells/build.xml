@@ -1,4 +1,4 @@
-<project name="maintainablejs" default="concatenate_Accessible_fr">
+<project name="maintainablejs" default="concatenate_report_fr">
 	<loadproperties srcfile="build.properties" />
 	<tstamp>
 		<format property="build.time"
@@ -84,6 +84,26 @@
 				<file name="MOEMAP.js" />
 			</filelist>			
 			<footer> /* Build Time: ${build.time} */ </footer>			
-		</concat>
+		</concat>		
+	</target>
+	<target name="concatenate_report_en" depends="concatenate_Accessible_fr">
+		<concat destfile="${build.dir}/Wells_Report_en-concatenate.js" >
+			<header> /* Build Time: ${build.time} */ </header>
+			<filelist  dir="${src.dir}" >
+				<file name="Wells_Report_en.js" />
+				<file name="Wells_Report.js" />
+			</filelist>
+			<footer> /* Build Time: ${build.time} */ </footer>			
+		</concat>		
+	</target>	
+	<target name="concatenate_report_fr" depends="concatenate_report_en">
+		<concat destfile="${build.dir}/Wells_Report_fr-concatenate.js" >
+			<header> /* Build Time: ${build.time} */ </header>
+			<filelist  dir="${src.dir}" >
+				<file name="Wells_Report_fr.js" />
+				<file name="Wells_Report.js" />
+			</filelist>
+			<footer> /* Build Time: ${build.time} */ </footer>			
+		</concat>		
 	</target>		
 </project>
