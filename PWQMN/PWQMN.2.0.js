@@ -1,10 +1,10 @@
-var globalConfig = globalConfig || {};
+//var globalConfig = globalConfig || {};
 if (globalConfig.language === "EN") {
 	globalConfig.otherInfoHTML = "Some scientific/monitoring data are only provided in English."; 
 } else {
 	globalConfig.otherInfoHTML = 'Certaines donn&eacute;es scientifiques et de surveillance n&rsquo;existent qu&rsquo;en anglais.';
 }
-globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/PWQMN/MapServer";
+//globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/PWQMN/MapServer";
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
 globalConfig.usejQueryUITable = false;  //Avoid loading extra javascript files

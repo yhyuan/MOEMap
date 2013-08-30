@@ -13,6 +13,7 @@
 			</filelist>
 			<filelist  dir="${src.dir}" >
 				<file name="Wells_Report_en.2.0.js" />
+				<file name="globalConfig.url.js" />
 				<file name="Wells_Report.2.0.js" />
 			</filelist>
 			<filelist  dir="${MOEMap.src.dir}" >

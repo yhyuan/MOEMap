@@ -13,8 +13,12 @@
 			</filelist>			
 			<filelist  dir="${src.dir}" >
 				<file name="TRAIS_Accessible_en.2.0.js" />
+				<file name="globalConfig.url.js" />
 				<file name="TRAIS_Accessible.2.0.js" />
 			</filelist>
+			<filelist  dir="${MOEMap.src.dir}" >
+				<file name="REPORT_tail.js" />
+			</filelist>			
 			<footer> /* Build Time: ${build.time} */ </footer>			
 		</concat>
 	</target>        

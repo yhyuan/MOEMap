@@ -10,6 +10,7 @@
 			<header> /* Build Time: ${build.time} */ </header>
 			<filelist  dir="${src.dir}" >
 				<file name="PWQMN_Accessible_fr.2.0.js" />
+				<file name="globalConfig.url.js" />
 				<file name="PWQMN.2.0.js" />
 			</filelist>
 			<filelist  dir="${MOEMap.src.dir}" >

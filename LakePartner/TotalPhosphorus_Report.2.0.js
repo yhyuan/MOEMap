@@ -40,7 +40,7 @@ google.setOnLoadCallback(function () {
 });
 
 globalConfig.layers = [{
-	url: "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/LakePartner/MapServer/2",
+	url: globalConfig.url + "/2",
 	renderTargetDiv: "data_table",
 	event: "TableReady",
 	where: "ID = " + QueryString.id,
@@ -101,7 +101,7 @@ globalConfig.layers = [{
 		</table>\
 		<br><br><%= globalConfig.chooseLang("If you have some suggestions or find some errors, please send an Email to <a href=\'mailto:lakepartner@ontario.ca?subject=Portal Error Submission\'>lakepartner@ontario.ca</a>.", "Si vous avez des suggestions ou trouvez des erreurs, envoyez un courriel &agrave; <a href=\'mailto:lakepartner@ontario.ca?subject=Erreur de Portail\'>lakepartner@ontario.ca</a>.") %>'
 }, {
-	url: "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/LakePartner/MapServer/1",
+	url: globalConfig.url + "/1",
 	renderTargetDiv: "station_description",
 	event: "DescriptionReady",
 	where: "ID = " + QueryString.id,

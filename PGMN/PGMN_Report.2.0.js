@@ -40,7 +40,7 @@ globalConfig.calculateChartedValues = function (chemicalSamples) {
 };
 
 globalConfig.layers = [{
-	url: "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/PGMN1/MapServer/2",
+	url: globalConfig.url + "/2",
 	renderTargetDiv: "target",
 	event: "reportReady",
 	where: "PGMN_WELL = '" + QueryString.id + "'",

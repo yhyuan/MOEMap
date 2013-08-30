@@ -1,5 +1,5 @@
 globalConfig.layers = [{
-	url: "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/TRAIS/MapServer/2",
+	url: globalConfig.url  + "/2",
 	renderTargetDiv: "target",
 	event: "reportReady",
 	where: "ID = " + QueryString.id,

@@ -14,12 +14,9 @@
 	<target name="js.concatenate">
 		<concat destfile="${build.dir}/PWQMN_en.2.0-concatenate.js" >
 			<header> /* Build Time: ${build.time} */ </header>
-			<!--<filelist  dir="${MOEMap.src.dir}" >
-				<file name="yepnope-min.js" />
-				<file name="arcgislink-min.js" />
-			</filelist>-->
 			<filelist  dir="${src.dir}" >
 				<file name="PWQMN_en.2.0.js" />
+				<file name="globalConfig.url.js" />
 				<file name="PWQMN.2.0.js" />
 			</filelist>
 			<filelist  dir="${MOEMap.src.dir}" >

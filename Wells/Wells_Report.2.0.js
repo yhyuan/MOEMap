@@ -1,6 +1,6 @@
-//var url = "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/Wells2/MapServer/";
+
 globalConfig.layers = [{
-	url: "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/Wells2/MapServer/1",
+	url: globalConfig.url + "/1",
 	renderTargetDiv: "target",
 	event: "reportReady",
 	where: (QueryString.hasOwnProperty("wellid") ? ("(WELL_ID = " + QueryString.wellid + ")"):("(BORE_HOLE_ID = " + QueryString.id + ")")),

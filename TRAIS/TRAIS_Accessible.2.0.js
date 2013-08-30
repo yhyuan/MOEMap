@@ -1,5 +1,6 @@
+
 globalConfig.layers = [{
-	url: "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/TRAIS/MapServer/0",
+	url: globalConfig.url + "/0",
 	renderTargetDiv: "target",
 	event: "reportReady",
 	where: "1=1",
@@ -62,6 +63,3 @@ globalConfig.layers = [{
 			});\
 		%>'
 }];
-_.each(globalConfig.layers, function(layer) {
-	PubSub.on(layer.event, layer.processResults);
-});
