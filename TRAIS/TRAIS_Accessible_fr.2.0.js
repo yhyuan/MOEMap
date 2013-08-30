@@ -1,0 +1,1 @@
+globalConfig.language = "FR";

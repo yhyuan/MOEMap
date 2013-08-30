@@ -63,16 +63,46 @@ globalConfig.queryTableTemplateDivId = globalConfig.queryTableTemplateDivId || '
 if (typeof globalConfig.usejQueryUITable === "undefined"){
 	globalConfig.usejQueryUITable = true;   //whether want to use the predefined multiple tab supports. If it is false, it will only support one tab. 
 }
+if(globalConfig.usejQueryUITable && (!globalConfig.accessible) && (!!yepnope)){	
+	yepnope({
+		load: "http://files.ontariogovernment.ca/moe_mapping/mapping/js/MOEMap/css/jquery.dataTables.css", 
+		callback: function () {
+			//console.log("multipletabs.css loaded!");
+		}
+	});
+	
+	yepnope({
+		load: "http://files.ontariogovernment.ca/moe_mapping/mapping/js/MOEMap/js/jquery.dataTables.js", 
+		callback: function () {
+			//console.log("closure-library-multipletabs-min.js loaded!");
+		}
+	});
+}
 globalConfig.supportTableDownload = globalConfig.supportTableDownload || true;	
 
 //whether want to use the predefined multiple tab supports. If it is false, it will only support one tab. 
 if (typeof globalConfig.usePredefinedMultipleTabs === "undefined"){
 	globalConfig.usePredefinedMultipleTabs = true;
 }
-if(globalConfig.usePredefinedMultipleTabs){	
-	goog.require('goog.dom');
-	goog.require('goog.ui.Tab');
-	goog.require('goog.ui.TabBar');
+if(globalConfig.usePredefinedMultipleTabs && (!globalConfig.accessible) && (!!yepnope)){	
+		yepnope({
+			load: "http://files.ontariogovernment.ca/moe_mapping/mapping/js/MOEMap/css/multipletabs.css", 
+			callback: function () {
+				//console.log("multipletabs.css loaded!");
+			}
+		});
+		
+		yepnope({
+			load: "http://prod-ont-webserver.s3.amazonaws.com/moe_mapping/mapping/js/MOEMap/js/closure-library-multipletabs-min.js", 
+			callback: function () {
+				//console.log("closure-library-multipletabs-min.js loaded!");
+			}
+		});
+		/*
+		goog.require('goog.dom');
+		goog.require('goog.ui.Tab');
+		goog.require('goog.ui.TabBar');
+		*/
 }
 globalConfig.searchedLocationIcon = globalConfig.searchedLocationIcon || "http://gmaps-samples.googlecode.com/svn/trunk/markers/blue/blank.png";
 globalConfig.twpBoundary = globalConfig.twpBoundary || {

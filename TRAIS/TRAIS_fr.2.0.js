@@ -3,7 +3,7 @@ var substancesNames = ["Chrome (et ses compos\u00e9s) NA - 04","Ethylbenz\u00e8n
 globalConfig = {};
 globalConfig.language = "FR";
 globalConfig.searchHelpTxt = "Rechercher par <strong>ville</strong>, <strong>installation</strong>, <strong>entreprise</strong>, <strong>substance</strong>, <strong>secteur</strong> ou cliquer sur aide pour plus d\u0027information sur la recherche avanc\u00e9e.";
-globalConfig.tabsTemplateContent = "Installation: <b>{FacilityName}</b><br>Entreprise: <b>{OrganizationName}</b><br>Adresse: <b>{Address}</b><br>N&deg; INRP: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Secteur: <b>{mapConfig.displaySector(Sector)}</b><br>Substances toxiques: <b>{NUMsubst}</b><br><br><br><br><a target='_blank' href='{URLann_fr}'>Lien aux rapports annuels</a><br><i>Ce lien s'ouvre dans une nouvelle fen\u00eatre.</i><br>";
+globalConfig.tabsTemplateContent = "Installation: <b>{FacilityName}</b><br>Entreprise: <b>{OrganizationName}</b><br>Adresse: <b>{Address}</b><br>N&deg; INRP: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Secteur: <b>{mapConfig.displaySector(Sector)}</b><br>Substances toxiques: <b>{NUMsubst}</b><br><br><br><br><a target='_blank' href='TRAIS_Report.htm?id={ID}'>Lien aux rapports annuels</a><br><i>Ce lien s'ouvre dans une nouvelle fen\u00eatre.</i><br>";
 
 globalConfig.otherInfoHTML = "Certaines donn\u00e9es scientifiques et de surveillance n\u0027existent qu\u0027en anglais."; 
 

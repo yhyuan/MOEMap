@@ -1,4 +1,4 @@
-<project name="maintainablejs" default="concatenate_Accessible_fr">
+<project name="maintainablejs" default="concatenate_report_fr">
 	<loadproperties srcfile="build.properties" />
 	<tstamp>
 		<format property="build.time"
@@ -85,5 +85,31 @@
 			</filelist>			
 			<footer> /* Build Time: ${build.time} */ </footer>			
 		</concat>
-	</target>		
+	</target>
+	<target name="concatenate_report_en" depends="concatenate_Accessible_fr">
+		<concat destfile="${build.dir}/PGMN_Report_en-concatenate.js" >
+			<header> /* Build Time: ${build.time} */ </header>
+			<filelist  dir="${MOEMap.src.dir}" >
+				<file name="REPORT.js" />
+			</filelist>			
+			<filelist  dir="${src.dir}" >
+				<file name="PGMN_Report_en.js" />
+				<file name="PGMN_Report.js" />				
+			</filelist>
+			<footer> /* Build Time: ${build.time} */ </footer>			
+		</concat>		
+	</target>	
+	<target name="concatenate_report_fr" depends="concatenate_report_en">
+		<concat destfile="${build.dir}/PGMN_Report_fr-concatenate.js" >
+			<header> /* Build Time: ${build.time} */ </header>
+			<filelist  dir="${MOEMap.src.dir}" >
+				<file name="REPORT.js" />
+			</filelist>			
+			<filelist  dir="${src.dir}" >
+				<file name="PGMN_Report_fr.js" />
+				<file name="PGMN_Report.js" />
+			</filelist>
+			<footer> /* Build Time: ${build.time} */ </footer>			
+		</concat>		
+	</target>
 </project>

@@ -1,9 +1,10 @@
 var globalConfig = globalConfig || {};
-globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/lakepartner/MapServer";
+//globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/lakepartner/MapServer";
+globalConfig.url = "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/LakePartner/MapServer";
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
-globalConfig.usejQueryUITable = false;
-globalConfig.usePredefinedMultipleTabs = false;
+globalConfig.usejQueryUITable = false;   //Avoid loading extra javascript files
+globalConfig.usePredefinedMultipleTabs = false;   //Avoid loading extra javascript files
 globalConfig.allowMultipleIdentifyResult = false;
 globalConfig.displayTotalIdentifyCount = false;
 globalConfig.locationServicesList = [];
@@ -26,8 +27,8 @@ if (globalConfig.accessible) {
 		{name: globalConfig.fieldNamesList[2], value: "{SITEID}"}, 
 		{name: globalConfig.fieldNamesList[3], value: "{globalConfig.wordCapitalize(TOWNSHIP)}"}, 
 		{name: globalConfig.fieldNamesList[4], value: "{SITEDESC}"}, 
-		{name: globalConfig.fieldNamesList[5], value: "[{SE_COUNT}?N/A?<a href='" + reportLocation + "SECCHI/SECCHI_" + globalConfig.language + "_{ID}.html'>" + reportLang + "</a>]"},
-		{name: globalConfig.fieldNamesList[6], value: "[{PH_COUNT}?N/A?<a href='" + reportLocation + "TP/TP_" + globalConfig.language + "_{ID}.html'>" + reportLang + "</a>]"},		
+		{name: globalConfig.fieldNamesList[5], value: "[{SE_COUNT}?N/A?<a href='SecchiDepth_Report.htm?id={ID}'>" + reportLang + "</a>]"},
+		{name: globalConfig.fieldNamesList[6], value: "[{PH_COUNT}?N/A?<a href='TotalPhosphorus_Report.htm?id={ID}'>" + reportLang + "</a>]"},		
 		{name: globalConfig.fieldNamesList[7], value: "{globalConfig.deciToDegree(LATITUDE)}"}, 
 		{name: globalConfig.fieldNamesList[8], value: "{globalConfig.deciToDegree(LONGITUDE)}"}, 	
 	];

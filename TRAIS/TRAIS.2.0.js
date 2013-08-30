@@ -1,11 +1,12 @@
 var globalConfig = globalConfig || {};
 	
-globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/TRAIS/MapServer";
+//globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/TRAIS/MapServer";
+globalConfig.url = "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/TRAIS/MapServer";
 
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
-globalConfig.usejQueryUITable = false;
-globalConfig.usePredefinedMultipleTabs = false;
+globalConfig.usejQueryUITable = false;  //Avoid loading extra javascript files
+globalConfig.usePredefinedMultipleTabs = false;  //Avoid loading extra javascript files
 globalConfig.allowMultipleIdentifyResult = false;
 globalConfig.displayTotalIdentifyCount = false;
 globalConfig.locationServicesList = [];

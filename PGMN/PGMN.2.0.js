@@ -5,9 +5,9 @@ var globalConfig = globalConfig || {};
 globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/PGMN/MapServer";
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
-globalConfig.usejQueryUITable = false;
+globalConfig.usejQueryUITable = false;  //Avoid loading extra javascript files
 if (globalConfig.accessible) {
-	globalConfig.usePredefinedMultipleTabs = false;
+	globalConfig.usePredefinedMultipleTabs = false;  //Avoid loading extra javascript files
 } else {
 	globalConfig.usePredefinedMultipleTabs = true;
 }

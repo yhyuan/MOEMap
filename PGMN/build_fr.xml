@@ -1,0 +1,51 @@
+<project name="English" default="js.concatenate.lib" basedir=".">
+	<loadproperties srcfile="build.properties" />
+	<tstamp>
+		<format property="build.time"
+			pattern = "MMM d, yyyy hh:mm:ss"
+			locale="en,US"/>
+	</tstamp>
+	<target name="js.concatenate">
+		<concat destfile="${build.dir}/PGMN_fr.2.0-concatenate.js" >
+			<header> /* Build Time: ${build.time} */ </header>
+			<filelist  dir="${src.dir}" >
+				<file name="PGMN_fr.2.0.js" />
+				<file name="PGMN.2.0.js" />
+			</filelist>
+			<filelist  dir="${MOEMap.src.dir}" >
+				<file name="LANGUAGE.js" />
+				<file name="PROTOTYPE.js" />
+				<file name="LOCATOR.js" />
+				<file name="TABS_CALCULATOR.js" />
+				<file name="INITIALIZATION.js" />
+				<file name="TOOLSLEGEND.js" />
+				<file name="MOEMAP.js" />
+			</filelist>			
+			<footer> /* Build Time: ${build.time} */ </footer>			
+		</concat>
+	</target>        
+	<target name="js.minify" depends="js.concatenate">
+		<apply executable="java" parallel="false">
+			<fileset dir="." includes="PGMN_fr.2.0-concatenate.js"/>
+			<arg line="-jar"/>
+			<arg path="../MOEMap/build/yuicompressor-2.4.7.jar"/>
+			<srcfile/>
+			<arg line="-o"/>
+			<mapper type="glob" from="*.js" to="*-min.js"/>
+			<targetfile/>
+		</apply>
+	</target>
+	<target name="js.concatenate.lib"  depends="js.minify">
+		<concat destfile="${build.dir}/PGMN_fr.2.0-min.js" >
+			<header> /* Build Time: ${build.time} */ </header>
+			<filelist  dir="${MOEMap.src.dir}" >
+				<file name="yepnope-min.js" />
+				<file name="arcgislink-min.js" />
+			</filelist>
+			<filelist  dir="${src.dir}" >
+				<file name="PGMN_fr.2.0-concatenate-min.js" />
+			</filelist>
+			<footer> /* Build Time: ${build.time} */ </footer>			
+		</concat>
+	</target>
+</project>
