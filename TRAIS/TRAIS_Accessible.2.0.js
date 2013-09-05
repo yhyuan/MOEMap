@@ -40,7 +40,8 @@ globalConfig.layers = [{
 				return 1;
 			return 0;
 		});
-		document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, {facilityDict: facilityDict, totalFacility: resultsArray.length});	
+		PubSub.emit(globalConfig.layers[0].event + "Data", {facilityDict: facilityDict, totalFacility: resultsArray.length});
+		//document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, {facilityDict: facilityDict, totalFacility: resultsArray.length});	
 	},
 	template: '<H2><%= globalConfig.chooseLang("Accessible Toxics Reporting Facilities and Reports", "Installations et rapports relatifs au toxiques") %></H2>\
 		<%= globalConfig.chooseLang("The following " + totalFacility + " facilities have filed Toxic Reduction reports", "Les installations suivantes ont produit un rapport sur les substances toxiques") %>:<P>\

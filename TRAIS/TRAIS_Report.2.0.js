@@ -38,7 +38,8 @@ globalConfig.layers = [{
 			}
 			renderResult.Substances = substances;
 		}
-		document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, {renderResult: renderResult});		
+		PubSub.emit(globalConfig.layers[0].event + "Data", {renderResult: renderResult});
+		//document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, {renderResult: renderResult});		
 	},
 	template: '<TABLE BORDER=0 WIDTH=600>\
 			<A NAME="top"></A>\

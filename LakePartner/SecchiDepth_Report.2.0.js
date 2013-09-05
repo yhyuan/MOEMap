@@ -1,5 +1,6 @@
 //var url = "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/Wells2/MapServer/";
-globalConfig.isChartLibraryAvailable = false;
+//globalConfig.isChartLibraryAvailable = false;
+/*
 globalConfig.drawChart = function () {
 	if (globalConfig.dataArray && globalConfig.isChartLibraryAvailable)  {
 		var dataArray = globalConfig.dataArray;
@@ -24,12 +25,17 @@ globalConfig.drawChart = function () {
 			hAxis: {title: yearString, titleColor:'black'}, vAxis: {title: secchiDepthString, minValue: 0.0}
 		});
 	}
-};
+};*/
+
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(function () {
-	globalConfig.isChartLibraryAvailable = true;
-	globalConfig.drawChart();
+	PubSub.emit("ChartLibraryAvailable");
 });
+
+//PubSub.on("ChartLibraryAvailable", function(renderResult){
+//	globalConfig.isChartLibraryAvailable = true;
+	//globalConfig.drawChart();	
+//});
 
 globalConfig.layers = [{
 	url: globalConfig.url + "/3",
@@ -38,17 +44,19 @@ globalConfig.layers = [{
 	where: "ID = " + QueryString.id,
 	outFields: ["Year_", "SecchiDepth"],
 	processResults: function (fs) {
-		globalConfig.dataArray = _.map(fs, function(feature) {
+		var dataArray = _.map(fs, function(feature) {
 			var attr = feature.attributes;
 			return {year: attr.Year_, value: attr.SecchiDepth};
 		});
-		globalConfig.drawChart();
-		document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, {dataArray: globalConfig.dataArray});		
+		//globalConfig.dataArray = dataArray;
+		//globalConfig.drawChart();
+		PubSub.emit(globalConfig.layers[0].event + "Data", {dataArray: dataArray});
+		//document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, {dataArray: globalConfig.dataArray});		
 	},
 	template: '<br><br><center><table class="fishTable" border="1">\
 			<caption><%= globalConfig.chooseLang("Water Transparency (Secchi Depth in meters)", "Transparence de l\'eau (profondeur en m&egrave;tres d\'apr&egrave;s le disque Secchi)") %> </caption>\
 			<tbody>\
-				<tr><th scope="col"><%= globalConfig.chooseLang("Year", "Ann&eacute;e") %></th><th scope="col"><%= globalConfig.chooseLang("Secchi Depth (m)", "Mesure du disque Secchi (m)") %></th></tr>\
+				<tr><th scope="col" class="shaded"><center><%= globalConfig.chooseLang("Year", "Ann&eacute;e") %></center></th><th class="shaded" scope="col"><center><%= globalConfig.chooseLang("Secchi Depth (m)", "Mesure du disque Secchi (m)") %></center></th></tr>\
 				<%\
 					_.each(dataArray,function(entry,key,list){\
 				%>\
@@ -66,8 +74,9 @@ globalConfig.layers = [{
 	outFields: ["LAKENAME", "STN", "SITEID", "SITEDESC"],
 	processResults: function (fs) {
 		stationAttr = fs[0].attributes;
+		PubSub.emit(globalConfig.layers[1].event + "Data", {stationAttr: stationAttr});
 		//document.getElementById("station_description").innerHTML = _.template(document.getElementById("TitleTemplate").innerHTML, stationAttr)			
-		document.getElementById(globalConfig.layers[1].renderTargetDiv).innerHTML = _.template(globalConfig.layers[1].template, {stationAttr: stationAttr});		
+		//document.getElementById(globalConfig.layers[1].renderTargetDiv).innerHTML = _.template(globalConfig.layers[1].template, {stationAttr: stationAttr});		
 	},
 	template: '<h1><%= stationAttr.LAKENAME %> (STN <%= stationAttr.STN %>, Site ID <%= stationAttr.SITEID %>)</h1>\
 		<strong><%= stationAttr.SITEDESC %></strong>\
@@ -89,4 +98,30 @@ globalConfig.layers = [{
 			}\
 		%>'
 }];
-
+globalConfig.on ([globalConfig.layers[0].event + "Data", "ChartLibraryAvailable"], function () {
+	//console.log(globalConfig.eventsStatus[globalConfig.layers[0].event + "Data"]);
+	//console.log(globalConfig.eventsStatus["ChartLibraryAvailable"]);
+	if(globalConfig.eventsStatus[globalConfig.layers[0].event + "Data"] && globalConfig.eventsStatus["ChartLibraryAvailable"]) {
+		var dataArray = globalConfig.eventsData[globalConfig.layers[0].event + "Data"].dataArray;
+		var data = new google.visualization.DataTable();
+		var yearString = globalConfig.chooseLang('Year', 'Ann\u00e9e');
+		var secchiDepthString = globalConfig.chooseLang('Secchi Depth (m)', 'Mesure du disque Secchi (m)');
+		data.addColumn('string', yearString);
+		data.addColumn('number', secchiDepthString);
+		data.addRows(dataArray.length+1);		
+		for (var i=0; i<dataArray.length+1; i++){
+			if(i == 0){
+				var year = "" + (dataArray[0].year - 1)
+				data.setValue(0, 0, year);
+				data.setValue(0, 1, 0);	
+			}else{
+				data.setValue(i, 0, "" + dataArray[i-1].year );
+				data.setValue(i, 1, dataArray[i-1].value);	
+			}					
+		}
+		var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));     
+		chart.draw(data, {width: 700, height: 480, colors:['#d4bfff'],     
+			hAxis: {title: yearString, titleColor:'black'}, vAxis: {title: secchiDepthString, minValue: 0.0}
+		});		
+	}	
+});

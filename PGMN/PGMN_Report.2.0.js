@@ -58,7 +58,15 @@ globalConfig.layers = [{
 			var parameterObject = _.groupBy(fs, function(feature) {return feature.attributes.PARMNAME;});
 			var availableChartedChemicals = _.filter(globalConfig.chartedChemicals, function(chemical) {return parameterObject.hasOwnProperty(chemical);});
 			var unchartedChemicals = (_.filter(_.keys(parameterObject), function(chemical) {return !(chemical in globalConfig.chartedChemicals);})).sort();
-			document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, 
+			PubSub.emit(globalConfig.layers[0].event + "Data", {
+				renderResult: {
+					PGMN_WELL: QueryString.id, 
+					availableChartedChemicals: availableChartedChemicals, 
+					unchartedChemicals: unchartedChemicals,
+					parameterObject: parameterObject
+				}
+			});
+			/*document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, 
 				{
 					renderResult: {
 						PGMN_WELL: QueryString.id, 
@@ -66,7 +74,7 @@ globalConfig.layers = [{
 						unchartedChemicals: unchartedChemicals,
 						parameterObject: parameterObject
 					}
-				});	
+				});	*/
 	},
 	template: '		<h2><%= globalConfig.chooseLang("Water Chemistry  in PGMN Well", "Composition chimique de l&acute;eau des puits du R&eacute;seau provincial de contr&ocirc;le des eaux souterraines") %>: <%= renderResult.PGMN_WELL %></h2>\
 		<a name="top"></a><a href="../<%= renderResult.PGMN_WELL %>.txt"><%= globalConfig.chooseLang("Water Chemistry Data Download (Tab Separated Text File)", "T&eacute;l&eacute;chargement des donn&eacute;es hydro-chimiques (Fichier texte s&eacute;par&eacute;)") %></a>\

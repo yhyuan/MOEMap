@@ -72,7 +72,9 @@ globalConfig.layers = [{
 		//var fs = rs.features;
 		//document.getElementById("target").innerHTML = _.template(document.getElementById("Template").innerHTML, {renderResult: (fs.length === 1) ? createSingleWellRenderResult(fs) : createWellsClusterRenderResult(fs)});	
 		//document.getElementById("target").innerHTML = _.template(globalConfig.template, {renderResult: (fs.length === 1) ? createSingleWellRenderResult(fs) : createWellsClusterRenderResult(fs)});	
-		document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, {renderResult: (fs.length === 1) ? createSingleWellRenderResult(fs) : createWellsClusterRenderResult(fs)});		
+		//document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, {renderResult: (fs.length === 1) ? createSingleWellRenderResult(fs) : createWellsClusterRenderResult(fs)});		
+		
+		PubSub.emit(globalConfig.layers[0].event + "Data", {renderResult: (fs.length === 1) ? createSingleWellRenderResult(fs) : createWellsClusterRenderResult(fs)});
 	},
 	template: '			<%\
 				if (Array.isArray(renderResult)) {\

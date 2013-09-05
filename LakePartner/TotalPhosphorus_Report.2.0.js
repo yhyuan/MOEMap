@@ -1,5 +1,5 @@
 //var url = "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/Wells2/MapServer/";
-globalConfig.isChartLibraryAvailable = false;
+/*globalConfig.isChartLibraryAvailable = false;
 globalConfig.drawChart = function () {
 	if (globalConfig.dataArray && globalConfig.isChartLibraryAvailable)  {
 		var greekSymbol = function (str) {return String.fromCharCode(str.charCodeAt(0) + (913 - 65));};
@@ -32,11 +32,12 @@ globalConfig.drawChart = function () {
 			hAxis: {title: 'Date', titleColor:'black'}, vAxis: {title: concentrationString + ' (' + greekSymbol('l') +'g/L)', minValue: 0.0}
 		});
 	}
-};
+};*/
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(function () {
-	globalConfig.isChartLibraryAvailable = true;
-	globalConfig.drawChart();
+	//globalConfig.isChartLibraryAvailable = true;
+	//globalConfig.drawChart();
+	PubSub.emit("ChartLibraryAvailable");
 });
 
 globalConfig.layers = [{
@@ -52,17 +53,18 @@ globalConfig.layers = [{
 			var day = d.getDate();	
 			return "" + d.getFullYear() + "-" + ((month < 10) ? ("0" + month) :  ("" + month)) + "-" + ((day < 10) ? ("0" + day) :  ("" + day));
 		};
-		globalConfig.dataArray = _.map(fs, function(feature) {
+		var dataArray = _.map(fs, function(feature) {
 			var attr = feature.attributes;
 			return {date: convertDate(attr.Date_), tp1: attr.TP1, tp2: attr.TP2};
 		});
-		globalConfig.drawChart();
-		document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, {dataArray: globalConfig.dataArray});		
+		PubSub.emit(globalConfig.layers[0].event + "Data", {dataArray: dataArray});
+		//globalConfig.drawChart();
+		//document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, {dataArray: globalConfig.dataArray});		
 	},
 	template: '		<br><br><table class=\'fishTable\' border=\'1\'>\
 			<caption><%= globalConfig.chooseLang("Average Total Phosphorus (TP) Concentration (&micro;g/L)", "Concentration moyennes de phosphore total (&micro;g/L)") %> </caption>\
 			<tbody>\
-				<tr><th scope=\'col\'><%= globalConfig.chooseLang("Date", "Ann&eacute;e") %></th><th scope=\'col\'><%=  globalConfig.chooseLang("Sample", "&Eacute;chantillon") %> 1 (&micro;g/L)</th><th scope=\'col\'><%=  globalConfig.chooseLang("Sample", "&Eacute;chantillon") %> 2 (&micro;g/L)</th><th scope=\'col\'><%=  globalConfig.chooseLang("Average", "Moyenne") %> (&micro;g/L)</th></tr>\
+				<tr><th class="shaded" scope=\'col\'><center><%= globalConfig.chooseLang("Date", "Ann&eacute;e") %></center></th><th class="shaded" scope=\'col\'><center><%=  globalConfig.chooseLang("Sample", "&Eacute;chantillon") %> 1 (&micro;g/L)</center></th><th class="shaded" scope=\'col\'><center><%=  globalConfig.chooseLang("Sample", "&Eacute;chantillon") %> 2 (&micro;g/L)</center></th><th class="shaded" scope=\'col\'><center><%=  globalConfig.chooseLang("Average", "Moyenne") %> (&micro;g/L)</center></th></tr>\
 				<%\
 					var getAverage = function(tp1, tp2){\
 						var value = 0;\
@@ -108,7 +110,8 @@ globalConfig.layers = [{
 	outFields: ["LAKENAME", "STN", "SITEID", "SITEDESC"],
 	processResults: function (fs) {
 		stationAttr = fs[0].attributes;
-		document.getElementById(globalConfig.layers[1].renderTargetDiv).innerHTML = _.template(globalConfig.layers[1].template, {stationAttr: stationAttr});		
+		PubSub.emit(globalConfig.layers[1].event + "Data", {stationAttr: stationAttr});
+		//document.getElementById(globalConfig.layers[1].renderTargetDiv).innerHTML = _.template(globalConfig.layers[1].template, {stationAttr: stationAttr});		
 	},
 	template: '<h1><%= stationAttr.LAKENAME %> (STN <%= stationAttr.STN %>, Site ID <%= stationAttr.SITEID %>)</h1>\
 		<strong><%= stationAttr.SITEDESC %></strong>\
@@ -134,3 +137,39 @@ globalConfig.layers = [{
 		%>'
 }];
 
+globalConfig.on ([globalConfig.layers[0].event + "Data", "ChartLibraryAvailable"], function () {
+	//console.log(globalConfig.eventsStatus[globalConfig.layers[0].event + "Data"]);
+	//console.log(globalConfig.eventsStatus["ChartLibraryAvailable"]);
+	if(globalConfig.eventsStatus[globalConfig.layers[0].event + "Data"] && globalConfig.eventsStatus["ChartLibraryAvailable"]) {
+		var dataArray = globalConfig.eventsData[globalConfig.layers[0].event + "Data"].dataArray;
+		var greekSymbol = function (str) {return String.fromCharCode(str.charCodeAt(0) + (913 - 65));};
+		var getAverage = function(tp1, tp2){
+			var value = 0;
+			if((typeof(tp1) != "undefined") && (typeof(tp2) != "undefined")){
+				value = 0.5*(tp1 + tp2);
+			}else{
+				if((typeof(tp1) != "undefined")){
+					value = tp1;
+				}
+				if((typeof(tp2) != "undefined")){
+					value = tp2;
+				}					
+			}
+			return parseFloat(value.toFixed(2));
+		};		
+		//var dataArray = globalConfig.dataArray;
+		var data = new google.visualization.DataTable();
+		data.addColumn('string', 'Date');
+		var concentrationString = globalConfig.chooseLang("Average Concentration of Total Phosphorus", "Concentration moyennes de phosphore total");
+		data.addColumn('number', concentrationString + ' (' + greekSymbol('l') +'g/L)');
+		data.addRows(dataArray.length);				
+		for (var i=0; i<dataArray.length; i++){
+			data.setValue(i, 0, dataArray[i].date);
+			data.setValue(i, 1, getAverage(dataArray[i].tp1, dataArray[i].tp2));	
+		}
+		var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));     
+		chart.draw(data, {width: 700, height: 480, colors:['#d4bfff'],     
+			hAxis: {title: 'Date', titleColor:'black'}, vAxis: {title: concentrationString + ' (' + greekSymbol('l') +'g/L)', minValue: 0.0}
+		});
+	}	
+});
