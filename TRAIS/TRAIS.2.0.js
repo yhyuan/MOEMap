@@ -14,7 +14,9 @@ globalConfig.maxQueryZoomLevel = 11;
 globalConfig.displayDisclaimer = true;
 globalConfig.InformationLang = "Information";
 globalConfig.postIdentifyCallbackName = "SportFish";
-
+//globalConfig.infoWindowContentHeight = '700px';
+globalConfig.infoWindowWidth  = '320px';
+globalConfig.infoWindowHeight = '180px';
 if (globalConfig.accessible) {
 	var reportLang = "";
 	if (globalConfig.language === "EN") {
@@ -22,7 +24,7 @@ if (globalConfig.accessible) {
 	} else {
 		reportLang = "Signaler";
 	}
-
+	//globalConfig.usePredefinedMultipleTabs = false;  //Avoid loading extra javascript files
 	globalConfig.tableFieldList = [
 		{name: globalConfig.fieldNamesList[0], value: "{globalConfig.wordCapitalize(LAKENAME)}"}, 
 		{name: globalConfig.fieldNamesList[1], value: "{STN}"}, 
@@ -43,6 +45,7 @@ if (globalConfig.accessible) {
 	}];
 	globalConfig.postConditionsCallbackName = "AccessibleWells";		
 } else {
+	//globalConfig.usePredefinedMultipleTabs = true;  //Avoid loading extra javascript files
 	globalConfig.queryLayerList = [{
 		url: globalConfig.url + "/0",
 		tabsTemplate: [{

@@ -77,7 +77,7 @@ globalConfig.layers = [{
 				});	*/
 	},
 	template: '		<h2><%= globalConfig.chooseLang("Water Chemistry  in PGMN Well", "Composition chimique de l&acute;eau des puits du R&eacute;seau provincial de contr&ocirc;le des eaux souterraines") %>: <%= renderResult.PGMN_WELL %></h2>\
-		<a name="top"></a><a href="../<%= renderResult.PGMN_WELL %>.txt"><%= globalConfig.chooseLang("Water Chemistry Data Download (Tab Separated Text File)", "T&eacute;l&eacute;chargement des donn&eacute;es hydro-chimiques (Fichier texte s&eacute;par&eacute;)") %></a>\
+		<a name="top"></a><a href="http://files.ontariogovernment.ca/moe_mapping/mapping/PGMN/WaterChemistry/<%= renderResult.PGMN_WELL %>.txt"><%= globalConfig.chooseLang("Water Chemistry Data Download (Tab Separated Text File)", "T&eacute;l&eacute;chargement des donn&eacute;es hydro-chimiques (Fichier texte s&eacute;par&eacute;)") %></a>\
 		<table class="fishTable"  border="1">\
             <%\
 				var chemicalList = renderResult.availableChartedChemicals;\

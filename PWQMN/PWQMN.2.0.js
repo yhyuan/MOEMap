@@ -148,6 +148,7 @@ var mapConfig = {
 		dataStr = dataStr.substring(0,dataStr.length-1);
 		var yearCoordinates = Array.range(2002, globalConfig.maxYearCoordinate).join("|");
 		var res = "http://chart.apis.google.com/chart?cht=s&chd=t:" + dateString + "|"+dataStr+"&chxt=x,y&chs=400x150&chxl=|0:|" + yearCoordinates + "|1:|0|"+midCorr+"|" + maxCorr + "(mg/L";
+		//console.log(res.length);
 		return res;
 	},
 

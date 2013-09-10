@@ -177,6 +177,15 @@ globalConfig.preIdentifyCallbackList = globalConfig.preIdentifyCallbackList || {
 };
 globalConfig.preIdentifyCallback = globalConfig.preIdentifyCallback || globalConfig.preIdentifyCallbackList[globalConfig.preIdentifyCallbackName];
 
+globalConfig.createControllableInfoWindowContent = function (content) {
+	var container = document.createElement('div');
+	container.style.width = globalConfig.infoWindowWidth;
+	if (globalConfig.hasOwnProperty('infoWindowHeight')){ 
+		container.style.height = globalConfig.infoWindowHeight;
+	}
+	container.innerHTML = content;
+	return container;
+};
 globalConfig.postIdentifyCallbackName = globalConfig.postIdentifyCallbackName || "Wells";
 globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList || {
 	"Wells": function (queryParams) {
@@ -208,7 +217,7 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 		}
 		var tableTemplate = queryParams.layerList[0].tabsTemplate;
 		var calculateContents = TABS_CALCULATOR.getContent(features[0].attributes, tableTemplate);
-		var container = calculateContents[0].content;			
+		var container = globalConfig.createControllableInfoWindowContent(calculateContents[0].content);
 		MOEMAP.openInfoWindow(queryParams.gLatLng, container);
 	},
 	"SWPLocator": function (queryParams) {
@@ -367,7 +376,8 @@ globalConfig.addMarkersSimple = globalConfig.addMarkersSimple || function(featur
 	for (var x = 0; x < features.length; x++) {
 		var gLatLng = features[x].geometry[0].getPosition();
 		var calculateContents = TABS_CALCULATOR.getContent(features[x].attributes, tabsTemplate);
-		var container = calculateContents[0].content;					
+		//var container = calculateContents[0].content;
+		var container = globalConfig.createControllableInfoWindowContent(calculateContents[0].content);
 		var marker = new google.maps.Marker({
 			position: gLatLng
 		});		
