@@ -57,7 +57,7 @@ globalConfig.layers = [{
 			});
 			var parameterObject = _.groupBy(fs, function(feature) {return feature.attributes.PARMNAME;});
 			var availableChartedChemicals = _.filter(globalConfig.chartedChemicals, function(chemical) {return parameterObject.hasOwnProperty(chemical);});
-			var unchartedChemicals = (_.filter(_.keys(parameterObject), function(chemical) {return !(chemical in globalConfig.chartedChemicals);})).sort();
+			var unchartedChemicals = (_.filter(_.keys(parameterObject), function(chemical) {return !(_.contains(globalConfig.chartedChemicals, chemical));})).sort();
 			PubSub.emit(globalConfig.layers[0].event + "Data", {
 				renderResult: {
 					PGMN_WELL: QueryString.id, 

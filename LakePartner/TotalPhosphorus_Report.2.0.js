@@ -33,12 +33,19 @@ globalConfig.drawChart = function () {
 		});
 	}
 };*/
+var chartLibraryDeferred = new $.Deferred();
+var chartLibraryPrompt = (chartLibraryDeferred).promise();
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(function () {
 	//globalConfig.isChartLibraryAvailable = true;
 	//globalConfig.drawChart();
-	PubSub.emit("ChartLibraryAvailable");
+	//PubSub.emit("ChartLibraryAvailable");
+	chartLibraryDeferred.resolve();
 });
+
+var chartDataDeferred = new $.Deferred();
+var chartDataPrompt = (chartDataDeferred).promise();
+globalConfig.dataArray = {};
 
 globalConfig.layers = [{
 	url: globalConfig.url + "/2",
@@ -57,6 +64,8 @@ globalConfig.layers = [{
 			var attr = feature.attributes;
 			return {date: convertDate(attr.Date_), tp1: attr.TP1, tp2: attr.TP2};
 		});
+		globalConfig.dataArray = dataArray;
+		chartDataDeferred.resolve();
 		PubSub.emit(globalConfig.layers[0].event + "Data", {dataArray: dataArray});
 		//globalConfig.drawChart();
 		//document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, {dataArray: globalConfig.dataArray});		
@@ -137,7 +146,39 @@ globalConfig.layers = [{
 		%>'
 }];
 
-globalConfig.on ([globalConfig.layers[0].event + "Data", "ChartLibraryAvailable"], function () {
+$.when(chartLibraryPrompt, chartDataPrompt).done(function() {
+	var dataArray = globalConfig.dataArray;
+	var greekSymbol = function (str) {return String.fromCharCode(str.charCodeAt(0) + (913 - 65));};
+	var getAverage = function(tp1, tp2){
+		var value = 0;
+		if((typeof(tp1) != "undefined") && (typeof(tp2) != "undefined")){
+			value = 0.5*(tp1 + tp2);
+		}else{
+			if((typeof(tp1) != "undefined")){
+				value = tp1;
+			}
+			if((typeof(tp2) != "undefined")){
+				value = tp2;
+			}					
+		}
+		return parseFloat(value.toFixed(2));
+	};		
+	var data = new google.visualization.DataTable();
+	data.addColumn('string', 'Date');
+	var concentrationString = globalConfig.chooseLang("Average Concentration of Total Phosphorus", "Concentration moyennes de phosphore total");
+	data.addColumn('number', concentrationString + ' (' + greekSymbol('l') +'g/L)');
+	data.addRows(dataArray.length);				
+	for (var i=0; i<dataArray.length; i++){
+		data.setValue(i, 0, dataArray[i].date);
+		data.setValue(i, 1, getAverage(dataArray[i].tp1, dataArray[i].tp2));	
+	}
+	var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));     
+	chart.draw(data, {width: 700, height: 480, colors:['#d4bfff'],     
+		hAxis: {title: 'Date', titleColor:'black'}, vAxis: {title: concentrationString + ' (' + greekSymbol('l') +'g/L)', minValue: 0.0}
+	});	
+});
+
+/*globalConfig.on ([globalConfig.layers[0].event + "Data", "ChartLibraryAvailable"], function () {
 	//console.log(globalConfig.eventsStatus[globalConfig.layers[0].event + "Data"]);
 	//console.log(globalConfig.eventsStatus["ChartLibraryAvailable"]);
 	if(globalConfig.eventsStatus[globalConfig.layers[0].event + "Data"] && globalConfig.eventsStatus["ChartLibraryAvailable"]) {
@@ -172,4 +213,4 @@ globalConfig.on ([globalConfig.layers[0].event + "Data", "ChartLibraryAvailable"
 			hAxis: {title: 'Date', titleColor:'black'}, vAxis: {title: concentrationString + ' (' + greekSymbol('l') +'g/L)', minValue: 0.0}
 		});
 	}	
-});
+});*/

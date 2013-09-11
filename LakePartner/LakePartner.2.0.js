@@ -12,6 +12,7 @@ globalConfig.maxQueryZoomLevel = 11;
 globalConfig.displayDisclaimer = true;
 globalConfig.InformationLang = "Information";
 globalConfig.postIdentifyCallbackName = "SportFish";
+globalConfig.infoWindowWidth  = '280px';
 
 if (globalConfig.accessible) {
 	var reportLang = "";

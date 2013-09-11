@@ -1,0 +1,7 @@
+ant -f build_en.xml
+rm ECAsinSourceProtectionVulnerableAreas_en.2.0-concatenate.js
+rm ECAsinSourceProtectionVulnerableAreas_en.2.0-concatenate-min.js
+cp ECAsinSourceProtectionVulnerableAreas_en.2.0-min.js /Y/web/ECAsinSourceProtectionVulnerableAreas/en
+rm ECAsinSourceProtectionVulnerableAreas_en.2.0-min.js
+cp ECAsinSourceProtectionVulnerableAreas_en.htm /Y/web/ECAsinSourceProtectionVulnerableAreas/en
+mv /Y/web/ECAsinSourceProtectionVulnerableAreas/en/ECAsinSourceProtectionVulnerableAreas_en.htm  /Y/web/ECAsinSourceProtectionVulnerableAreas/en/ECAsinSourceProtectionVulnerableAreas.htm

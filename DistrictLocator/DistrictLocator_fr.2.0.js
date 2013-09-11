@@ -44,11 +44,18 @@ var MOEMapLanguage = {
 		"Owen Sound": "101, rue 17"+ "<sup>e</sup>"+ " Est",
 		"Peterborough": "300, rue Water, Place Robinson",
 		"Sarnia": "1094, chemin London",
-		"Sudbury": "Bureau 1201, 199, rue Larch",
-		"Thunder Bay": "Bureau 331, 435, rue James Sud",
+		"Sudbury": "Bureau 1201, 199, rue Larch",		
+		"Thunder Bay": "3" + "<sup>e</sup>"+ " \u00e9tage, bureau 331B, 435, rue James Sud",
 		"Timmins": "Complexe du gouvernement de l\u2019Ontario, Sac postal 3080, Autoroute 101 Est",
 		"Toronto": "8"+ "<sup>e</sup>"+ " \u00e9tage, 5775, rue Yonge",	
 		"Niagra": "9"+ "<sup>e</sup>"+ " \u00e9tage, 301, rue St. Paul",
 		"York-Durham": "5"+ "<sup>e</sup>"+ " \u00e9tage, 230 chemin Westney Sud"			
-	}
+	},
+	moeDistrictThunderbayTollFreePhone: {
+		"Thunder Bay": "1-800-875-7772 (Dans la zone des indicatifs r\u00e9gionaux 705 et 807)"	
+	}, 
+	moeDistrictThunderbayFax: {
+		"Thunder Bay": "(807) 473-3160 ou (807) 475-1754"	
+	} 
+	
 };

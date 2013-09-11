@@ -1,0 +1,2 @@
+globalConfig = {};
+globalConfig.language = "EN";

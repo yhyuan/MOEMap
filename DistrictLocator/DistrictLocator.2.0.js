@@ -1,4 +1,4 @@
- var globalConfig = globalConfig || {};
+var globalConfig = globalConfig || {};
 globalConfig.preIdentifyCallbackName = "SWPLocator"; 
 globalConfig.postIdentifyCallbackName = "SWPLocator"; 
 globalConfig.addressGeocodingCallbackName = "SWPLocator";
@@ -9,7 +9,8 @@ globalConfig.usejQueryUITable = false;
 globalConfig.usePredefinedMultipleTabs = false;
 globalConfig.locationServicesList = [];
 globalConfig.maxQueryZoomLevel = 12;
-globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/MOE_Districts_Full_Bnd/MapServer";
+//globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/MOE_Districts_Full_Bnd/MapServer";
+globalConfig.url = "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/MOE_Districts_Full_Bnd/MapServer";
 globalConfig.identifyMarkerRedTearDrop = true;
 globalConfig.displayDisclaimer = true;
 globalConfig.disallowMouseClick = true;
@@ -58,26 +59,41 @@ globalConfig.identifyMultiplePolygonLayersServicesTemplate = {
 		} else {		
 			var record = globalConfig.identifyMultiplePolygonLayersServicesTemplate.layerList[0]["result"].features[0].attributes;
 			var moeDistrict = "";
+			var moeOfficeAddressLbl = "";
 			var moeDistrictStreet = "";
+			var moeDistrictTollFreePhone = "";
+			var moeDistrictFaxNum = "";
 			if (globalConfig.language == "EN") {
 				moeDistrict = record.MOE_DISTRICT + " MOE District";
-				moeDistrictStreet = MOEMapLanguage.OfficeAddressLbl + '<br>' + record.STREET_NAME;
+				moeOfficeAddressLbl = MOEMapLanguage.OfficeAddressLbl;
+				moeDistrictStreet =  record.STREET_NAME;	
+				moeDistrictTollFreePhone = record.TOLLFREENUMBER;
+				moeDistrictFaxNum = record.FAXNUMBER;
 			} else {
 				moeDistrict = MOEMapLanguage.MOEDistrict[record.MOE_DISTRICT];
-				moeDistrictStreet = MOEMapLanguage.OfficeAddressLbl + '<br>'+MOEMapLanguage.MOEDistrictStreet[record.MOE_DISTRICT];
+				moeOfficeAddressLbl = MOEMapLanguage.OfficeAddressLbl;
+				moeDistrictStreet = MOEMapLanguage.MOEDistrictStreet[record.MOE_DISTRICT];
+				if (record.MOE_DISTRICT == "Thunder Bay") {
+					moeDistrictTollFreePhone = MOEMapLanguage.moeDistrictThunderbayTollFreePhone["Thunder Bay"];
+					moeDistrictFaxNum = MOEMapLanguage.moeDistrictThunderbayFax["Thunder Bay"];
+				} else {
+					moeDistrictTollFreePhone = record.TOLLFREENUMBER;
+					moeDistrictFaxNum = record.FAXNUMBER;
+				}
 			}
 			document.getElementById(globalConfig.informationDivId).innerHTML = "<i><b>" + globalConfig.returnedAddress + "</i></b>" + MOEMapLanguage.LocatedWithinTxt + "<b><i>"+ moeDistrict + ".</i></b>"; 			
 			var moeDistrictCity = record.CITY;
 			var moeDistrictPostalCode = record.POSTALCODE;
 			var moeDistrictPhone = MOEMapLanguage.TelLbl + record.PHONENUMBER;
-			var moeDistrictFax = MOEMapLanguage.FaxLbl + record.FAXNUMBER;
-			var moeDistrictTollFree = MOEMapLanguage.TollFreeLbl + record.TOLLFREENUMBER;
+			var moeDistrictFax = MOEMapLanguage.FaxLbl + moeDistrictFaxNum;
+			var moeDistrictTollFree = MOEMapLanguage.TollFreeLbl + moeDistrictTollFreePhone;
 			var addressReturn = globalConfig.returnedAddress;
 			var contentString = '<i>' + addressReturn + '</i><br><br>' +     
 				//'<i>(Latitude: '+ latlng.lat().toFixed(6) + ', Longitude: ' + latlng.lng().toFixed(6) + ')</i><br><br>' + 
 				'<table><tr><td><b><u>' + MOEMapLanguage.InfoResultTitle+ '</u></b></td></tr>' + 	 
-				'<tr><td><h3>' +moeDistrict+ '</h3></td></tr>' +    	 
-				'<tr><td>'+moeDistrictStreet+ '</td></tr>' +
+				'<tr><td><h3>' +moeDistrict+ '</h3></td></tr>' +   
+				'<tr><td style="padding-bottom: 5px;">'+moeOfficeAddressLbl+ '</td></tr>' + 		
+				'<tr><td style="padding-bottom: 3px; ">'+moeDistrictStreet+ '</td></tr>' +
 				'<tr><td>'+moeDistrictCity+ ' ' + moeDistrictPostalCode+ '</td></tr>' + 
 				'<tr><td style="font-size:10px">'+moeDistrictTollFree+'</td></tr>' + 
 				'<tr><td style="font-size:10px">'+moeDistrictPhone+ moeDistrictFax+'</td></tr></table>'  			

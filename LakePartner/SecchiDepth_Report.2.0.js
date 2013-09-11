@@ -26,16 +26,24 @@ globalConfig.drawChart = function () {
 		});
 	}
 };*/
-
+var chartLibraryDeferred = new $.Deferred();
+var chartLibraryPrompt = (chartLibraryDeferred).promise();
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(function () {
-	PubSub.emit("ChartLibraryAvailable");
+	chartLibraryDeferred.resolve();
+	//PubSub.emit("ChartLibraryAvailable");
 });
 
 //PubSub.on("ChartLibraryAvailable", function(renderResult){
 //	globalConfig.isChartLibraryAvailable = true;
 	//globalConfig.drawChart();	
 //});
+
+var chartDataDeferred = new $.Deferred();
+var chartDataPrompt = (chartDataDeferred).promise();
+globalConfig.dataArray = {};
+
+
 
 globalConfig.layers = [{
 	url: globalConfig.url + "/3",
@@ -48,6 +56,8 @@ globalConfig.layers = [{
 			var attr = feature.attributes;
 			return {year: attr.Year_, value: attr.SecchiDepth};
 		});
+		chartDataDeferred.resolve();
+		globalConfig.dataArray = dataArray;
 		//globalConfig.dataArray = dataArray;
 		//globalConfig.drawChart();
 		PubSub.emit(globalConfig.layers[0].event + "Data", {dataArray: dataArray});
@@ -98,6 +108,32 @@ globalConfig.layers = [{
 			}\
 		%>'
 }];
+
+$.when(chartLibraryPrompt, chartDataPrompt).done(function() {
+	var dataArray = globalConfig.dataArray;
+	var data = new google.visualization.DataTable();
+	var yearString = globalConfig.chooseLang('Year', 'Ann\u00e9e');
+	var secchiDepthString = globalConfig.chooseLang('Secchi Depth (m)', 'Mesure du disque Secchi (m)');
+	data.addColumn('string', yearString);
+	data.addColumn('number', secchiDepthString);
+	data.addRows(dataArray.length+1);		
+	for (var i=0; i<dataArray.length+1; i++){
+		if(i == 0){
+			var year = "" + (dataArray[0].year - 1)
+			data.setValue(0, 0, year);
+			data.setValue(0, 1, 0);	
+		}else{
+			data.setValue(i, 0, "" + dataArray[i-1].year );
+			data.setValue(i, 1, dataArray[i-1].value);	
+		}					
+	}
+	var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));     
+	chart.draw(data, {width: 700, height: 480, colors:['#d4bfff'],     
+		hAxis: {title: yearString, titleColor:'black'}, vAxis: {title: secchiDepthString, minValue: 0.0}
+	});		
+});
+
+/*
 globalConfig.on ([globalConfig.layers[0].event + "Data", "ChartLibraryAvailable"], function () {
 	//console.log(globalConfig.eventsStatus[globalConfig.layers[0].event + "Data"]);
 	//console.log(globalConfig.eventsStatus["ChartLibraryAvailable"]);
@@ -124,4 +160,4 @@ globalConfig.on ([globalConfig.layers[0].event + "Data", "ChartLibraryAvailable"
 			hAxis: {title: yearString, titleColor:'black'}, vAxis: {title: secchiDepthString, minValue: 0.0}
 		});		
 	}	
-});
+});*/
