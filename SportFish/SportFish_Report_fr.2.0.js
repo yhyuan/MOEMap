@@ -1,6 +1,6 @@
 globalConfig.language = "FR";
 //globalConfig.speciesDict stores the relationship between SPECIES_CODE and SPECNAME. 
-globalConfig.speciesDict = {
+/*globalConfig.speciesDict = {
 	"051": "Poisson caster",
 	"063": "Alose \u00e0 g\u00e9sieree",
 	"071": "Saumon rose",
@@ -44,4 +44,4 @@ globalConfig.speciesDict = {
 	"332": "Dor\u00e9 Noir",
 	"334": "Dor\u00e9",
 	"371": "Malachigan"
-	};
+	};*/

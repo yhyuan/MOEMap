@@ -56,7 +56,7 @@ globalConfig.layers = [{
 						substance = "substances";\
 					} \
 			%>\
-				<A HREF=TRAIS_Report.htm?id=<%= facility.ID %>><%= facility.CompanyName %>-<%= facility.FacilityName %> [<%= facility.City %>]</A> (<%= facility.Substances %> <%= substance %>)<BR>\
+				<A HREF="<%= globalConfig.chooseLang("en", "fr") + "_trais_report?id=" + facility.ID %>"><%= facility.CompanyName %>-<%= facility.FacilityName %> [<%= facility.City %>]</A> (<%= facility.Substances %> <%= substance %>)<BR>\
 			<%\
 				});\
 			%>\
@@ -64,3 +64,5 @@ globalConfig.layers = [{
 			});\
 		%>'
 }];
+
+/*<A HREF=TRAIS_Report.htm?id=<%= facility.ID %>><%= facility.CompanyName %>-<%= facility.FacilityName %> [<%= facility.City %>]</A> (<%= facility.Substances %> <%= substance %>)<BR>\*/

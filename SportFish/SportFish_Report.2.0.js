@@ -104,6 +104,48 @@ globalConfig.lengthCategory = {
 	 "75":  12
 };
 
+var speciesDeferred = new $.Deferred();
+var speciesPrompt = (speciesDeferred).promise();
+var speciesQueryLayer = new gmaps.ags.Layer(globalConfig.url  + "/3");
+speciesQueryLayer.query({
+	returnGeometry: false,
+	where: "1=1",
+	outFields: ["SPECIES_CODE", "SPECNAME", "NOM_D_ESPECE"]
+}, function (rs) {
+	//PubSub.emit("speciesReady", rs.features);
+	var codes = _.map(rs.features, function(feature) {
+		return feature.attributes.SPECIES_CODE;
+	});
+	var species = _.map(rs.features, function(feature) {
+		return globalConfig.chooseLang(feature.attributes.SPECNAME, feature.attributes.NOM_D_ESPECE);
+	});
+	globalConfig.speciesDict = _.object(codes, species);
+	//console.log(speciesPrompt);
+	speciesDeferred.resolve();
+	//console.log(globalConfig.speciesDict);
+});
+
+var adivosryIndexDeferred = new $.Deferred();
+var adivosryIndexPrompt = (adivosryIndexDeferred).promise();
+var adivosryIndexQueryLayer = new gmaps.ags.Layer(globalConfig.url  + "/4");
+adivosryIndexQueryLayer.query({
+	returnGeometry: false,
+	where: "1=1",
+	outFields: ["ADVISORY_LEVEL ", "KEY_"]
+}, function (rs) {
+	//PubSub.emit("adivosryIndexReady", rs.features);
+	//console.log(rs.features);
+	var levels = _.map(rs.features, function(feature) {
+		return feature.attributes.ADVISORY_LEVEL;
+	});
+	var keys = _.map(rs.features, function(feature) {
+		return feature.attributes.KEY_;
+	});
+	globalConfig.adivosryIndexDict = _.object(levels, keys);
+	adivosryIndexDeferred.resolve();
+	//console.log(globalConfig.adivosryIndexDict);	
+});
+
 globalConfig.getSpeciesNameURL = function(speciesCode) {
 	if (speciesCode === "087") {
 		return '<A HREF="http://www.mnr.gov.on.ca/' + globalConfig.chooseLang("en", "fr") + '/Business/SORR/2ColumnSubPage/STDPROD_085774.html">' + globalConfig.speciesDict[speciesCode] + '</A>';
@@ -153,25 +195,62 @@ globalConfig.getSpeciesNameURL = function(speciesCode) {
 	}
 	return globalConfig.speciesDict[speciesCode];
 }
+
+var adivosryDeferred = new $.Deferred();
+var adivosryPrompt = (adivosryDeferred).promise();
 globalConfig.startTime = new Date();
+globalConfig.frequencyLookup = {
+	'0': 0,
+	'1': 1,
+	'2': 2,
+	'3': 3,
+	'4': 4,
+	'5': 5,
+	'6': 6,
+	'7': 7,
+	'8': 8,
+	'9': 9,
+	'a': 10,
+	'b': 11,
+	'c': 12,
+	'd': 13
+};
+globalConfig.parseJSON = function (input) {
+	//console.log(input);
+	var items = input.substring(1,input.length - 1).split('","');
+	//console.log(items);
+	items = _.map(items, function(item) {
+		return item.split('":"');
+	});
+	var keys = _.map(items, function(item) {
+		return item[0];
+	});
+	var values = _.map(items, function(item) {
+		return item[1];
+	});	
+	return _.object(keys, values);
+};
+
 globalConfig.layers = [{
 	url: globalConfig.url  + "/0",
 	renderTargetDiv: "siteDescription",
 	event: "siteDescriptionReady",
 	where: "WATERBODYC = " + QueryString.id,
-	outFields: [globalConfig.chooseLang("LOCNAME_EN", "LOCNAME_FR"), globalConfig.chooseLang("GUIDELOC_EN", "GUIDELOC_FR")],
+	outFields: [globalConfig.chooseLang("LOCNAME_EN", "LOCNAME_FR"), globalConfig.chooseLang("GUIDELOC_EN", "GUIDELOC_FR"), "ADVISORY", "ANALYMETHOD"],
 	processResults: function (fs) {
 		var attr = fs[0].attributes;
-		console.log(new Date() - globalConfig.startTime);
 		var renderResult = {
 			"locName": globalConfig.chooseLang(attr.LOCNAME_EN, attr.LOCNAME_FR),
-			"locDesc": globalConfig.chooseLang(attr.GUIDELOC_EN, attr.GUIDELOC_FR)
+			"locDesc": globalConfig.chooseLang(attr.GUIDELOC_EN, attr.GUIDELOC_FR),
+			"speciesObject": JSON.parse(attr.ADVISORY), //(typeof(JSON) !== "undefined") ? JSON.parse(attr.ADVISORY) : globalConfig.parseJSON(attr.ADVISORY),
+			"analysisObject": JSON.parse(attr.ANALYMETHOD) //(typeof(JSON) !== "undefined") ? JSON.parse(attr.ANALYMETHOD) : globalConfig.parseJSON(attr.ANALYMETHOD)
 		};
-		PubSub.emit(globalConfig.layers[0].event + "Data", renderResult);
-		//document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, );		
+		
+		globalConfig.renderResult = renderResult;
+		adivosryDeferred.resolve();
 	},
 	template: '<h1><%= locName %></h1>\
-				<div style="margin-right:20px;margin-bottom:15px;float:right;"><a href="http://www.ontario.ca/fishguide"><img alt="2011-2012" style="border:1px solid black;" hspace="10" src="http://www.downloads.ene.gov.on.ca/files/fishguide/en/advisories/images/fish3.jpg" /></a></div>\
+				<div style="margin-right:20px;margin-bottom:15px;float:right;"><a href="http://www.ontario.ca/fishguide"><img alt="2011-2012" style="border:1px solid black;" hspace="10" src="http://files.ontariogovernment.ca/moe_mapping/mapping/SportFish/EN/images/fish3.jpg" /></a></div>\
 				<strong><%= locDesc %></strong>\
 				<%\
 					if (globalConfig.isEnglish()){\
@@ -191,45 +270,8 @@ globalConfig.layers = [{
 					<br><a href="JavaScript:window.print();">Imprimer cette page</a></p>\
 				<%\
 					}\
-				%>'
-}, {
-	url: globalConfig.url  + "/3",
-	renderTargetDiv: "target",
-	event: "reportReady",
-	where: "GUIDE_WATERBODY_CODE = '" + QueryString.id + "'",
-	outFields: ["SPECIES_CODE", "POPULATION_TYPE_ID", "LENGTH_CATEGORY_ID", "ADV_LEVEL", "ANALYSIS_CLASS_ID"],
-	processResults: function (fs) {
-		/*var speciesList = _.keys(_.groupBy(fs, function(feature){
-			return globalConfig.chooseLang(feature.attributes.SPECNAME, feature.attributes.NOM_D_ESPECE); 
-		}));*/
-		console.log(new Date() - globalConfig.startTime);	
-		var speciesList = _.uniq(_.map(fs, function(feature) {
-			return feature.attributes.SPECIES_CODE;
-		}));
-		var analysisObject = _.object(speciesList, new Array(speciesList.length).fill([]));
-		var speciesObject = _.object(speciesList, _.map(speciesList, function (species) {
-			return {
-				G: new Array(globalConfig.lengthCategorySize).fill("&nbsp;"),
-				S: new Array(globalConfig.lengthCategorySize).fill("&nbsp;")
-			};
-		}));
-		_.each(fs, function(feature) {
-			//var species = globalConfig.speciesDict[feature.attributes.SPECIES_CODE];//globalConfig.chooseLang(feature.attributes.SPECNAME, feature.attributes.NOM_D_ESPECE);
-			var populationType = globalConfig.populationType[feature.attributes.POPULATION_TYPE_ID];
-			var lengthCategoryIndex = globalConfig.lengthCategory[feature.attributes.LENGTH_CATEGORY_ID];
-			speciesObject[feature.attributes.SPECIES_CODE][populationType][lengthCategoryIndex] = feature.attributes.ADV_LEVEL;
-			analysisObject[feature.attributes.SPECIES_CODE] = _.uniq(analysisObject[feature.attributes.SPECIES_CODE].concat(globalConfig.analysisDict[feature.attributes.ANALYSIS_CLASS_ID]));
-		});
-		//console.log(species);
-		console.log(new Date() - globalConfig.startTime);
-		var renderResult = {
-			speciesObject: speciesObject, 
-			analysisObject: analysisObject
-		};
-		PubSub.emit(globalConfig.layers[1].event + "Data", renderResult);		
-		//document.getElementById(globalConfig.layers[1].renderTargetDiv).innerHTML = _.template(globalConfig.layers[1].template, {speciesObject: speciesObject, analysisObject: analysisObject});
-	},
-	template: '<TABLE class="fishTable" border="1">\
+				%>\
+				<TABLE class="fishTable" border="1">\
 				<TR><TH CLASS="measure" COLSPAN=2><I><%= globalConfig.chooseLang("Length", "Longueur") %> (cm) &rarr;</I></TH><TD SCOPE="col"><I><SMALL><CENTER>15&#8209;20</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>20&#8209;25</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>25&#8209;30</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>30&#8209;35</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>35&#8209;40</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>40&#8209;45</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>45&#8209;50</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>50&#8209;55</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>55&#8209;60</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>60&#8209;65</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>65&#8209;70</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>70&#8209;75</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>>75</CENTER></SMALL></I></TD>\
 				</TR>\
 				<TR><TH CLASS="measure" SCOPE="row" COLSPAN=2><I><%= globalConfig.chooseLang("Length", "Longueur") %>&nbsp;(in)&nbsp;&rarr;</I></TD><TD SCOPE="col"><I><SMALL><CENTER>6&#8209;8</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>8&#8209;10</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>10&#8209;12</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>12&#8209;14</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>14&#8209;16</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>16&#8209;18</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>18&#8209;20</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>20&#8209;22</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>22&#8209;24</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>24&#8209;26</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>26&#8209;28</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>28&#8209;30</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>>30</CENTER></SMALL></I></TD>\
@@ -247,7 +289,7 @@ globalConfig.layers = [{
 						var advisoryG = advisory.G;\
 						var advisoryS = advisory.S;\
 				%>\
-					<TR><TH ROWSPAN=2 SCOPE="row" ALIGN="left"><%= globalConfig.getSpeciesNameURL(speciesCode) %><SUP><%= analysisObject[speciesCode].join(", ") %></SUP></TD>\
+					<TR><TH ROWSPAN=2 SCOPE="row" ALIGN="left"><%= globalConfig.getSpeciesNameURL(speciesCode) %><SUP><%= analysisObject[speciesCode] %></SUP></TD>\
 					<TD>G</TD>\
 					<%\
 						_.each(advisory.G, function(adv, key, list) {\
@@ -268,9 +310,9 @@ globalConfig.layers = [{
 					</TR>\
 				<%\
 					});\
-				%><TR><TH CLASS="measure" COLSPAN=2 SCOPE="row"><I>Length&nbsp;(cm)&nbsp;&rarr;</I></TD><TD SCOPE="col"><I><SMALL><CENTER>15&#8209;20</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>20&#8209;25</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>25&#8209;30</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>30&#8209;35</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>35&#8209;40</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>40&#8209;45</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>45&#8209;50</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>50&#8209;55</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>55&#8209;60</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>60&#8209;65</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>65&#8209;70</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>70&#8209;75</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>>75</CENTER></SMALL></I></TD>\
+				%><TR><TH CLASS="measure" COLSPAN=2 SCOPE="row"><I><%= globalConfig.chooseLang("Length", "Longueur") %>&nbsp;(cm)&nbsp;&rarr;</I></TD><TD SCOPE="col"><I><SMALL><CENTER>15&#8209;20</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>20&#8209;25</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>25&#8209;30</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>30&#8209;35</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>35&#8209;40</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>40&#8209;45</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>45&#8209;50</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>50&#8209;55</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>55&#8209;60</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>60&#8209;65</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>65&#8209;70</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>70&#8209;75</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>>75</CENTER></SMALL></I></TD>\
 				</TR>\
-				<TR><TH CLASS="measure" SCOPE="row" COLSPAN=2><I>Length (in) &rarr;</I></TD><TD SCOPE="col"><I><SMALL><CENTER>6&#8209;8</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>8&#8209;10</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>10&#8209;12</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>12&#8209;14</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>14&#8209;16</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>16&#8209;18</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>18&#8209;20</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>20&#8209;22</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>22&#8209;24</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>24&#8209;26</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>26&#8209;28</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>28&#8209;30</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>>30</CENTER></SMALL></I></TD>\
+				<TR><TH CLASS="measure" SCOPE="row" COLSPAN=2><I><%= globalConfig.chooseLang("Length", "Longueur") %> (in) &rarr;</I></TD><TD SCOPE="col"><I><SMALL><CENTER>6&#8209;8</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>8&#8209;10</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>10&#8209;12</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>12&#8209;14</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>14&#8209;16</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>16&#8209;18</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>18&#8209;20</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>20&#8209;22</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>22&#8209;24</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>24&#8209;26</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>26&#8209;28</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>28&#8209;30</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>>30</CENTER></SMALL></I></TD>\
 				</TR>\
 				<TR><TD COLSPAN=15></TD>\
 				</TR></TABLE>\
@@ -288,3 +330,52 @@ globalConfig.layers = [{
 					}\
 				%>'
 }];
+
+var documentReadyDeferred = new $.Deferred();
+var documentReadyPrompt = (documentReadyDeferred).promise();
+PubSub.on("DocumentReady", function() {
+	documentReadyDeferred.resolve();
+});
+
+$.when(documentReadyPrompt, speciesPrompt, adivosryIndexPrompt, adivosryPrompt).done(function() {
+	//console.log(new Date() - globalConfig.startTime);
+	var renderResult = globalConfig.renderResult;		
+	var keys = _.keys(renderResult.speciesObject);
+	var values = _.values(renderResult.speciesObject);
+	values = _.map(values, function(value) {
+		var keyValues = value.split('');
+		var result = [];
+		var key = "";
+		for (var i=0;i<keyValues.length;i++){
+			if ((i+2)%2==0) {
+				key = globalConfig.adivosryIndexDict[keyValues[i]];
+			} else {
+				var frequency = globalConfig.frequencyLookup[keyValues[i]];
+				result = result.concat(new Array(frequency).fill(key));
+			}
+		}
+		//alert(result);
+		var i = 0;
+		var general = _.map(result, function(item) {
+			var items = item.split('');
+			if(items[0] !== 'x') {
+				return items[0];
+			}
+			return '&nbsp;';
+		});
+		//alert(general);
+		var special = _.map(result, function(item) {
+			var items = item.split('');
+			if(items[1] !== 'x') {
+				return items[1];
+			}
+			return '&nbsp;';
+		});
+		return {
+			G: general,
+			S: special
+		};
+	});
+	renderResult.speciesObject = _.object(keys, values);		
+	document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, globalConfig.renderResult);	
+});

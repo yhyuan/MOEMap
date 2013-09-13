@@ -12,6 +12,8 @@ globalConfig.displayDisclaimer = true;
 globalConfig.InformationLang = "Information";
 globalConfig.postIdentifyCallbackName = "SportFish";
 globalConfig.postConditionsCallbackName = "SportFish";
+globalConfig.infoWindowWidth  = '280px';
+
 globalConfig.queryLayerList = [{
 	url: globalConfig.url + "/0",
 	tabsTemplate: [{

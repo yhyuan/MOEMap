@@ -4,8 +4,8 @@ globalConfig = {};
 globalConfig.language = "EN";
 globalConfig.searchHelpTxt = "Search <strong>city</strong>, <strong>facility name</strong>, <strong>company</strong>, <strong>sector</strong>, <strong>substance</strong> or see help for more advanced options.";
 //globalConfig.searchHelpTxt = "Search <strong>city</strong>, <strong>facility name</strong>, <strong>company</strong>, <strong>sector</strong>, <strong>substance</strong>";
-globalConfig.tabsTemplateContent = "Facility: <b>{FacilityName}</b><br>Organization: <b>{OrganizationName}</b><br>Physical Address: <b>{Address}</b><br>NPRI ID: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Sector: <b>{mapConfig.displaySector(Sector)}</b><br>Toxic Substances: <b>{NUMsubst}</b><br><br><a target='_blank' href='TRAIS_Report.htm?id={ID}'>Link to Annual Reports</a><br><i>This link will open in a new browser window.</i><br>";
-
+//globalConfig.tabsTemplateContent = "Facility: <b>{FacilityName}</b><br>Organization: <b>{OrganizationName}</b><br>Physical Address: <b>{Address}</b><br>NPRI ID: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Sector: <b>{mapConfig.displaySector(Sector)}</b><br>Toxic Substances: <b>{NUMsubst}</b><br><br><a target='_blank' href='TRAIS_Report.htm?id={ID}'>Link to Annual Reports</a><br><i>This link will open in a new browser window.</i><br>";
+globalConfig.tabsTemplateContent = "Facility: <b>{FacilityName}</b><br>Organization: <b>{OrganizationName}</b><br>Physical Address: <b>{Address}</b><br>NPRI ID: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Sector: <b>{mapConfig.displaySector(Sector)}</b><br>Toxic Substances: <b>{NUMsubst}</b><br><br><a target='_blank' href='en_trais_report?id={ID}'>Link to Annual Reports</a><br><i>This link will open in a new browser window.</i><br>";
 //globalConfig.otherInfoHTML = "Some scientific/monitoring data is only provided in English."; 
 
 /*

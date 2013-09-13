@@ -11,3 +11,8 @@ _.each(globalConfig.layers, function(layer) {
 		}
 	});
 });
+globalConfig.loadingMessage = globalConfig.loadingMessage || globalConfig.chooseLang("Your report is being generated...", "Le rapport est produit...");
+$( document ).ready(function() {
+	document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = globalConfig.loadingMessage; //globalConfig.chooseLang("Your report is being generated...", "Le rapport est produit...");
+	PubSub.emit("DocumentReady");
+});
