@@ -1,14 +1,69 @@
-globalConfig.url = "http://www.giscoeservices.lrc.gov.on.ca/ArcGIS/rest/services/MOE/ECofA_P/MapServer";
 globalConfig.isRoutingServiceAvailable = false;
 globalConfig.displayDisclaimer = true;
-globalConfig.maxQueryReturn = 1000;
+globalConfig.maxQueryReturn = 500;
 globalConfig.accessible = globalConfig.accessible || false;
+
+globalConfig.resultFoundSimple = globalConfig.resultFoundSimple || function(queryParams){
+	var searchString = queryParams.searchString;
+	var totalCount = queryParams.totalCount;
+	//console.log(queryParams);
+	var regionName = "";
+	if (typeof(queryParams.withinExtent) !== "undefined") {
+		regionName = " " + (queryParams.withinExtent ? globalConfig.inCurrentMapExtentLang : globalConfig.inGobalRegionLang);
+	}
+	var searchString = "";
+	if (typeof(queryParams.searchString) !== "undefined") {
+		searchString = " " + globalConfig.forLang + " <strong>"  + queryParams.searchString + "</strong> ";
+	}
+	
+	var message = "";
+	if(totalCount === 0){
+		message = globalConfig.yourSearchLang + searchString + globalConfig.returnedNoResultLang + regionName + ". " + globalConfig.pleaseRefineSearchLang + ".";
+	} else if(totalCount === 1){
+		message = globalConfig.oneResultFoundLang  + searchString + regionName + ".";
+	} else if(totalCount >= globalConfig.maxQueryReturn){
+		//message = totalCount + " " + globalConfig.resultsFoundLang + searchString + regionName + ". " + globalConfig.onlyLang + " " + globalConfig.maxQueryReturn + " " + globalConfig.returnedLang + ". " + globalConfig.seeHelpLang + ".";
+		message = "Your search has returned " + totalCount + " results.  Only the first " + globalConfig.maxQueryReturn + " are displayed. Please try narrowing your search.";
+	} else {
+		message = totalCount + " " + globalConfig.resultsFoundLang + searchString + regionName + ".";
+	}		
+	document.getElementById(globalConfig.informationDivId).innerHTML ="<i>" + message + "</i>";
+};
+	
 if (globalConfig.accessible) {
 	globalConfig.usePredefinedMultipleTabs = false;
 	globalConfig.allowMultipleIdentifyResult = false;
 	globalConfig.displayTotalIdentifyCount = false;
 	globalConfig.postConditionsCallbackName = "AccessibleWells";
 	globalConfig.tableSimpleTemplateTitleLang = "";
+	globalConfig.postConditionsCallback = function (queryParams) {
+		var features = Array.range(0, queryParams.layerList.length - 1).reduce(function(previousValue, currentValue) {
+			var result = queryParams.layerList[currentValue].result;
+			if (result.hasOwnProperty('features')) {
+				return previousValue.concat(result.features);
+			} else {
+				return previousValue;
+			}
+		}, []);
+		queryParams.totalCount = features.length;
+		globalConfig.resultFoundSimple(queryParams);		
+		if(features.length === 0) {
+			return;
+		}
+		if (features.length > globalConfig.maxQueryReturn) {
+			features = features.slice(0, globalConfig.maxQueryReturn);
+		}
+		var tableTemplate = queryParams.layerList[0].tableTemplate;
+		var table = tableTemplate.head + Array.range(0, features.length - 1).reduce(function(previousValue, currentValue) {
+			var calculateContents = TABS_CALCULATOR.getContent(features[currentValue].attributes, [{ label:globalConfig.InformationLang, content:tableTemplate.content}]);
+			var str = calculateContents[0].content;
+			if(currentValue%2 === 1) {
+				str = globalConfig.replaceChar(str, "<td>", "<td  class='shaded'>");
+			} 
+			return previousValue + str;
+		}, "") + tableTemplate.tail;
+		document.getElementById(globalConfig.queryTableDivId).innerHTML = table;
+	};
 } else {
 	//globalConfig.usejQueryUITable = true;
 	var lang = "";
@@ -28,7 +83,61 @@ if (globalConfig.accessible) {
 		size: {width: legendWidth, height: 81},   //Width and Height
 		location: {ratioX: 0.01, ratioY: 0.25}  	
 	};
+
+	globalConfig.postConditionsCallback = function (queryParams) {
+		var features = Array.range(0, queryParams.layerList.length - 1).reduce(function(previousValue, currentValue) {
+			var result = queryParams.layerList[currentValue].result;
+			if (result.hasOwnProperty('features')) {
+				return previousValue.concat(result.features);
+			} else {
+				return previousValue;
+			}
+		}, []);
+		queryParams.totalCount = features.length;
+		if (features.length > globalConfig.maxQueryReturn) {
+			features = features.slice(0, globalConfig.maxQueryReturn);
+		}
+		globalConfig.resultFoundSimple(queryParams);		
+		if(features.length === 0) {
+			if(queryParams.requireGeocode) {
+				MOEMAP.geocodeAddress(queryParams);		
+			}		
+			return;
+		}
+		if(!queryParams.withinExtent) {	
+			var bounds = globalConfig.calculatePointsBounds(features);
+			globalConfig.setMapBound(queryParams.map,bounds);	
+		}
+		globalConfig.addMarkers(features,queryParams.layerList[0].tabsTemplate);
+		if (queryParams.layerList[0].hasOwnProperty('tableTemplate')){ 
+			globalConfig.renderTable(features,queryParams.layerList[0].tableTemplate);
+		}
+	};
+	globalConfig.postBufferCallback = function (queryParams) {
+		var features = Array.range(0, queryParams.layerList.length - 1).reduce(function(previousValue, currentValue) {
+			var result = queryParams.layerList[currentValue].result;
+			if (result.hasOwnProperty('features')) {
+				return previousValue.concat(result.features);
+			} else {
+				return previousValue;
+			}
+		}, []);
+		if(features.length === 0) {
+			queryParams.totalCount = 0;
+			globalConfig.resultFoundSimple(queryParams);				
+			return;
+		}
+		queryParams.totalCount = features.length;
+		if (features.length > globalConfig.maxQueryReturn) {
+			features = features.slice(0, globalConfig.maxQueryReturn);
+		}		
+		globalConfig.addMarkers(features, queryParams.layerList[0].tabsTemplate);
+		globalConfig.renderTable(features, queryParams.layerList[0].tableTemplate, queryParams.gLatLng);
+		//queryParams.totalCount = features.length;
+		globalConfig.resultFoundSimple(queryParams);		
+	}	
 }
+
 if (globalConfig.language === "EN") {
 	globalConfig.radiusMustBeNumber = "The search radius must be a number.";
 	globalConfig.mustSpecifyRadius = "You must specify a search radius or remove the value in address";
@@ -174,15 +283,28 @@ if (globalConfig.language === "EN") {
 	}	
 }
 
-globalConfig.formatDate = function(timestamp){	
-	if((typeof(timestamp) != "undefined") && (parseInt(timestamp) === timestamp)){
-		var date = new Date(timestamp);
-		var year = date.getFullYear();
-		var month = date.getMonth() + 1;
-		var day = date.getDate();
-		return "" + year + "/" + month  + "/" + day;
-	}else{
-		return "N/A";
+globalConfig.formatDate = function(timestamp){
+	if (globalConfig.url === "http://www.giscoeservices.lrc.gov.on.ca/ArcGIS/rest/services/MOE/ECofA_P/MapServer") {
+		if((typeof(timestamp) != "undefined") && (parseInt(timestamp) === timestamp)){
+			var date = new Date(timestamp);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			return "" + year + "/" + month  + "/" + day;
+		}else{
+			return "N/A";
+		}
+	} else {
+		if (timestamp !== "N/A") {
+			//console.log(timestamp);
+			var date = new Date(timestamp);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDate();
+			return "" + year + "/" + month  + "/" + day;
+		} else {
+			return "N/A";
+		}
 	}
 };
 globalConfig.formatProjectType = function(str){
@@ -210,18 +332,39 @@ globalConfig.calculateReportURL = function(pdflink){
 			}
 			var reg = /^\d+$/;
 			if(reg.test(pdflink)){
-				return "<a target='_blank' href='http://www.accessenvironment.ene.gov.on.ca/PiwWeb/piw/ViewDocument.action?documentRefID=" + pdflink + "'>PDF</a>";
+				//return "<a target='_blank' href='http://www.accessenvironment.ene.gov.on.ca/PiwWeb/piw/ViewDocument.action?documentRefID=" + pdflink + "'>PDF</a>";
+				return "<a target='_blank' href='http://www.accessenvironment.ene.gov.on.ca/AEWeb/ae/ViewDocument.action?documentRefID=" + pdflink + "'>PDF</a>";
 			}
 		}
 	}		
 	return "N/A";
 };
+globalConfig.calculateCERTIFICATE_NUMBER = function(pdflink, CERTIFICATE_NUMBER){
+	var certficateNumber = globalConfig.processNA(CERTIFICATE_NUMBER);
+	if(typeof(pdflink) != "undefined"){
+		if(pdflink == "N/A"){
+			return certficateNumber;
+		}else{
+			if(pdflink.indexOf(".pdf") > 0){
+				return "<a target='_blank' href='http://www.environet.ene.gov.on.ca/instruments/" + pdflink + "'>" + certficateNumber + "</a>";
+			}
+			var reg = /^\d+$/;
+			if(reg.test(pdflink)){
+				//return "<a target='_blank' href='http://www.accessenvironment.ene.gov.on.ca/PiwWeb/piw/ViewDocument.action?documentRefID=" + pdflink + "'>PDF</a>";
+				return "<a target='_blank' href='http://www.accessenvironment.ene.gov.on.ca/AEWeb/ae/ViewDocument.action?documentRefID=" + pdflink + "'>" + certficateNumber + "</a>";
+			}
+		}
+	}		
+	return certficateNumber;
+};
+
 globalConfig.tabTableFieldList_1 = [
-	{name: globalConfig.fieldNamesList[0], value: "{globalConfig.processNA(CERTIFICATE_NUMBER)}"}, 
+	//{name: globalConfig.fieldNamesList[0], value: "{globalConfig.processNA(CERTIFICATE_NUMBER)}"}, 
+	{name: globalConfig.fieldNamesList[0], value: "{globalConfig.calculateCERTIFICATE_NUMBER(PDF_LINK,CERTIFICATE_NUMBER)}"}, 
 	{name: globalConfig.fieldNamesList[1], value: "{globalConfig.processNA(BUSINESS_NAME)}"}, 
 	{name: globalConfig.fieldNamesList[2], value: "{globalConfig.formatDate(DATE_)}"}, 
-	{name: globalConfig.fieldNamesList[3], value: "{globalConfig.formatProjectType(PROJECT_TYPE)}"}, 
-	{name: globalConfig.fieldNamesList[4], value: "{globalConfig.calculateReportURL(PDF_LINK)}"}
+	{name: globalConfig.fieldNamesList[3], value: "{globalConfig.formatProjectType(PROJECT_TYPE)}"}//, 
+	//{name: globalConfig.fieldNamesList[4], value: "{globalConfig.calculateCERTIFICATE_NUMBER(PDF_LINK, CERTIFICATE_NUMBER)}"}
 ];
 
 globalConfig.tabTableFieldList_2 = [
@@ -233,14 +376,15 @@ globalConfig.tabTableFieldList_2 = [
 ];
 
 globalConfig.tableFieldList = [
-	{name: globalConfig.fieldNamesList[0] + "&nbsp&nbsp", value: "{globalConfig.processNA(CERTIFICATE_NUMBER)}"}, 
+	//{name: globalConfig.fieldNamesList[0] + "&nbsp&nbsp", value: "{globalConfig.processNA(CERTIFICATE_NUMBER)}"}, 
+	{name: globalConfig.fieldNamesList[0] + "&nbsp&nbsp", value: "{globalConfig.calculateCERTIFICATE_NUMBER(PDF_LINK,CERTIFICATE_NUMBER)}"}, 
 	{name: globalConfig.fieldNamesList[1] + "&nbsp&nbsp", value: "{globalConfig.processNA(BUSINESS_NAME)}"}, 
 	{name: globalConfig.fieldNamesList[7], value: "{globalConfig.processNA(ADDRESS)}"}, 
 	{name: globalConfig.fieldNamesList[8] + "&nbsp&nbsp", value: "{globalConfig.processNA(MUNICIPALITY)}"}, 
 	{name: globalConfig.fieldNamesList[2], value: "{globalConfig.formatDate(DATE_)}"},
 	{name: globalConfig.fieldNamesList[3] + "&nbsp&nbsp", value: "{globalConfig.formatProjectType(PROJECT_TYPE)}"},
-	{name: globalConfig.fieldNamesList[9] + "&nbsp", value: "{globalConfig.formatProjectType(STATUS)}"},
-	{name: globalConfig.fieldNamesList[4] + "&nbsp&nbsp", value: "{globalConfig.calculateReportURL(PDF_LINK)}"},	
+	{name: globalConfig.fieldNamesList[9] + "&nbsp", value: "{globalConfig.formatProjectType(STATUS)}"}//,
+	//{name: globalConfig.fieldNamesList[4] + "&nbsp&nbsp", value: "{globalConfig.calculateCERTIFICATE_NUMBER(PDF_LINK, CERTIFICATE_NUMBER)}"},	
 ];
 
 globalConfig.queryLayerList = [{
@@ -305,7 +449,7 @@ globalConfig.search = function(){
 			searchString: searchString,
 			withinExtent: false
 		};
-		
+		document.getElementById(globalConfig.informationDivId).innerHTML ="<i>Searching......</i>";
 		if(globalConfig.accessible || document.getElementById(globalConfig.searchBusinessDivId).checked){
 			var name = searchString.toUpperCase();
 			name = globalConfig.replaceChar(name, "'", "''");
