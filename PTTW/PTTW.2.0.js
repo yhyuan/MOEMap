@@ -1,5 +1,3 @@
-var globalConfig = globalConfig || {};
-globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/PTTW_Search/MapServer";
 if (globalConfig.accessible) {
 	globalConfig.usePredefinedMultipleTabs = false;
 } else {
@@ -26,39 +24,13 @@ if (globalConfig.language === "EN") {
 		"Type de source"
 	];
 }
-/*globalConfig.attributeSearchItems = [{field: "CLIENTNAME"}];
-
-if (globalConfig.language === "EN") {
-	globalConfig.fieldNamesList = [
-		"Permit Number", 
-		"Permit Holder Name", 
-		"Purpose", 
-		"Specific Purpose", 
-		"Max Litres per Day", 
-		"Source Type"
-	];
-	globalConfig.LinkLang = "Link";
-	globalConfig.InformationLang = "information";
-} else {
-	globalConfig.fieldNamesList = [
-		"Identification du puits", 
-		"N&deg; plaque (dep. 2003)", 
-		"N&deg; de v\u00e9rification (dep. 1986)", 
-		"Licence (entrepreneur)", 
-		"Profondeur (m)", 
-		"Date de finition (MM/JJ/AAAA)", 
-		"Donn\u00e9es compl\u00e8tes sur le puits"
-	];
-	globalConfig.LinkLang = "Lien";
-	globalConfig.InformationLang = "information";
-}*/
 if (globalConfig.accessible) {
 	globalConfig.queryLayerList = [{
 		url: globalConfig.url + "/0",
 		tableTemplate: {
 			title: globalConfig.tableSimpleTemplateTitleLang, 
-			content: "<tr><td  class='shaded'>{PERMITNO}</td><td  class='shaded'>{CLIENTNAME}</td><td  class='shaded'>{PURPOSECAT}</td><td  class='shaded'>{SPURPOSE}</td><td  class='shaded'>{MAXL_DAY}</td><td  class='shaded'>{SURFGRND}</td></tr>",
-			head: "<table class='fishTable'  border='1'><tr><th><center>" + globalConfig.fieldNamesList.join("</center></th><th><center>") + "</center></th></tr>",
+			content: "<tr><td>{PERMITNO}</td><td>{CLIENTNAME}</td><td>{PURPOSECAT}</td><td>{SPURPOSE}</td><td>{MAXL_DAY}</td><td>{SURFGRND}</td></tr>",
+			head: "<table class='fishTable'  border='1'><tr><th class='shaded'><center>" + globalConfig.fieldNamesList.join("</center></th><th class='shaded'><center>") + "</center></th></tr>",
 			tail: "</table>"			
 		} 
 	}];
@@ -91,7 +63,10 @@ if (globalConfig.accessible) {
 	globalConfig.searchChange = function(type){
 		document.getElementById(globalConfig.searchInputBoxDivId).value = "";
 		if(type === globalConfig.businessTypeParameter){
-			$( "#" + globalConfig.searchInputBoxDivId ).autocomplete({ disabled: true });
+			$( "#" + globalConfig.searchInputBoxDivId ).autocomplete({
+				disabled: true,
+				source: []
+			});
 			document.getElementById(globalConfig.radiusSelectionDivId).disabled = true;
 		}else if (type === globalConfig.watershedTypeParameter){
 			document.getElementById(globalConfig.radiusSelectionDivId).disabled = true;
@@ -112,7 +87,10 @@ if (globalConfig.accessible) {
 				}
 			});				
 		}else{
-			$( "#" + globalConfig.searchInputBoxDivId ).autocomplete({ disabled: true });
+			$( "#" + globalConfig.searchInputBoxDivId ).autocomplete({
+				disabled: true,
+				source: []
+			});
 			document.getElementById(globalConfig.radiusSelectionDivId).disabled = false;
 		}
 	};

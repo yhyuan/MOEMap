@@ -4,6 +4,9 @@
 /*global MOEMAP:false */
 /*global INITIALIZATION:false */
 	var globalConfig = globalConfig || {};
+	globalConfig.testDivExist = globalConfig.testDivExist || function (divId) {
+		return (!!document.getElementById(divId))
+	};
 	globalConfig.disclaimerDivId = globalConfig.disclaimerDivId || 'disclaimer';
 	//if (typeof globalConfig.displayDisclaimer === "undefined"){globalConfig.displayDisclaimer = false;}
 	globalConfig.coordinatesDivId = globalConfig.coordinatesDivId || 'coordinates';    //The div id for coordinates status.
@@ -340,22 +343,27 @@
 				}
 				if (typeof globalConfig.searchControlHTML !== "undefined") {
 					globalConfig.searchControlDivId = globalConfig.searchControlDivId || 'searchControl'; 
-					document.getElementById(globalConfig.searchControlDivId).innerHTML = globalConfig.searchControlHTML;
+					if (globalConfig.testDivExist(globalConfig.searchControlDivId)) {
+						document.getElementById(globalConfig.searchControlDivId).innerHTML = globalConfig.searchControlHTML;
+					}
 				}
 				
 				if (typeof globalConfig.otherInfoHTML !== "undefined") {
 					globalConfig.otherInfoDivId = globalConfig.otherInfoDivId || 'otherInfo'; 
-					document.getElementById(globalConfig.otherInfoDivId).innerHTML = globalConfig.otherInfoHTML;
+					if (globalConfig.testDivExist(globalConfig.otherInfoDivId)) {
+						document.getElementById(globalConfig.otherInfoDivId).innerHTML = globalConfig.otherInfoHTML;
+					}
 				}
-				if (typeof globalConfig.applicationTitle !== "undefined") {
+				if (typeof globalConfig.applicationTitle !== "undefined")  {
 					globalConfig.applicationTitleDivId = globalConfig.applicationTitleDivId || 'applicationTitle'; 
-					document.getElementById(globalConfig.applicationTitleDivId).innerHTML = globalConfig.applicationTitle;
+					if (globalConfig.testDivExist(globalConfig.applicationTitleDivId)) {
+						document.getElementById(globalConfig.applicationTitleDivId).innerHTML = globalConfig.applicationTitle;
+					}
 				}										
-				if (typeof(globalConfig.searchHelpTxt)!== "undefined"){
+				if ((typeof(globalConfig.searchHelpTxt)!== "undefined") && globalConfig.testDivExist(globalConfig.informationDivId)){
 					document.getElementById(globalConfig.informationDivId).innerHTML = globalConfig.searchHelpTxt;
 				}
-				
-				if ((typeof(globalConfig.disclaimerLang)!== "undefined") && globalConfig.displayDisclaimer){
+				if ((typeof(globalConfig.disclaimerLang)!== "undefined") && globalConfig.displayDisclaimer && globalConfig.testDivExist(globalConfig.disclaimerDivId)){
 					document.getElementById(globalConfig.disclaimerDivId).innerHTML = globalConfig.disclaimerLang;
 				}
 			}

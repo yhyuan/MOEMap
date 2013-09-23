@@ -12,12 +12,12 @@
 		</jshint>
 	</target>	
 	<target name="js.concatenate">
-		<concat destfile="${build.dir}/AccessEnvironmentAdv_Accessible_fr.2.0-concatenate.js" >
+		<concat destfile="${build.dir}/PTTW_en.2.0-concatenate.js" >
 			<header> /* Build Time: ${build.time} */ </header>
 			<filelist  dir="${src.dir}" >
-				<file name="AccessEnvironmentAdv_Accessible_fr.2.0.js" />
+				<file name="PTTW_en.2.0.js" />
 				<file name="globalConfig.url.js" />
-				<file name="AccessEnvironment.2.0.js" />
+				<file name="PTTW.2.0.js" />
 			</filelist>
 			<filelist  dir="${MOEMap.src.dir}" >
 				<file name="LANGUAGE.js" />
@@ -33,7 +33,7 @@
 	</target>        
 	<target name="js.minify" depends="js.concatenate">
 		<apply executable="java" parallel="false">
-			<fileset dir="." includes="AccessEnvironmentAdv_Accessible_fr.2.0-concatenate.js"/>
+			<fileset dir="." includes="PTTW_en.2.0-concatenate.js"/>
 			<arg line="-jar"/>
 			<arg path="../MOEMap/build/yuicompressor-2.4.7.jar"/>
 			<srcfile/>
@@ -43,15 +43,15 @@
 		</apply>
 	</target>
 	<target name="js.concatenate.lib"  depends="js.minify">
-		<concat destfile="${build.dir}/AccessEnvironmentAdv_Accessible_fr.2.0-min.js" >
+		<concat destfile="${build.dir}/PTTW_en.2.0-min.js" >
 			<header> /* Build Time: ${build.time} */ </header>
 			<filelist  dir="${MOEMap.src.dir}" >
-				<file name="underscore-min.js" />
-				<file name="removeGoogleMapsDependency.js" />
+				<file name="yepnope-min.js" />
+				<file name="addGoogleMapsDependency.js" />
 				<file name="arcgislink-min.js" />
 			</filelist>
 			<filelist  dir="${src.dir}" >
-				<file name="AccessEnvironmentAdv_Accessible_fr.2.0-concatenate-min.js" />
+				<file name="PTTW_en.2.0-concatenate-min.js" />
 			</filelist>
 			<footer> /* Build Time: ${build.time} */ </footer>			
 		</concat>

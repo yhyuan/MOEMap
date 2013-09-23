@@ -1,6 +1,8 @@
+globalConfig.resoucesLocation = "http://files.ontariogovernment.ca/moe_mapping/mapping/js/AccessEnvironment/";
 globalConfig.isRoutingServiceAvailable = false;
 globalConfig.displayDisclaimer = true;
-globalConfig.maxQueryReturn = 500;
+globalConfig.maxQueryReturn = 50000;
+globalConfig.maxDisplayReturn = 500;  
 globalConfig.accessible = globalConfig.accessible || false;
 
 globalConfig.resultFoundSimple = globalConfig.resultFoundSimple || function(queryParams){
@@ -21,12 +23,15 @@ globalConfig.resultFoundSimple = globalConfig.resultFoundSimple || function(quer
 		message = globalConfig.yourSearchLang + searchString + globalConfig.returnedNoResultLang + regionName + ". " + globalConfig.pleaseRefineSearchLang + ".";
 	} else if(totalCount === 1){
 		message = globalConfig.oneResultFoundLang  + searchString + regionName + ".";
-	} else if(totalCount >= globalConfig.maxQueryReturn){
+	} else if(totalCount >= globalConfig.maxDisplayReturn){
 		//message = totalCount + " " + globalConfig.resultsFoundLang + searchString + regionName + ". " + globalConfig.onlyLang + " " + globalConfig.maxQueryReturn + " " + globalConfig.returnedLang + ". " + globalConfig.seeHelpLang + ".";
-		message = "Your search has returned " + totalCount + " results.  Only the first " + globalConfig.maxQueryReturn + " are displayed. Please try narrowing your search.";
+		//message = "Your search has returned " + totalCount + " results.  Only the first " + globalConfig.maxDisplayReturn + " are displayed. Please try narrowing your search.";
+		message = totalCount + " " + globalConfig.resultsFoundLang + searchString + regionName + ". " + globalConfig.onlyLang + " " + globalConfig.maxDisplayReturn + " " + globalConfig.returnedLang + ". " + globalConfig.seeHelpLang + ".";
+	} else if (totalCount >= globalConfig.maxQueryReturn) {
+		message = globalConfig.moreThanLang + " " + globalConfig.maxQueryReturn + " " + globalConfig.resultsFoundLang + searchString + regionName + ". " + globalConfig.onlyLang + " " + globalConfig.maxDisplayReturn + " " + globalConfig.returnedLang + ". " + globalConfig.seeHelpLang + ".";
 	} else {
 		message = totalCount + " " + globalConfig.resultsFoundLang + searchString + regionName + ".";
-	}		
+	}
 	document.getElementById(globalConfig.informationDivId).innerHTML ="<i>" + message + "</i>";
 };
 	
@@ -50,8 +55,8 @@ if (globalConfig.accessible) {
 		if(features.length === 0) {
 			return;
 		}
-		if (features.length > globalConfig.maxQueryReturn) {
-			features = features.slice(0, globalConfig.maxQueryReturn);
+		if (features.length > globalConfig.maxDisplayReturn) {
+			features = features.slice(0, globalConfig.maxDisplayReturn);
 		}
 		var tableTemplate = queryParams.layerList[0].tableTemplate;
 		var table = tableTemplate.head + Array.range(0, features.length - 1).reduce(function(previousValue, currentValue) {
@@ -66,24 +71,23 @@ if (globalConfig.accessible) {
 	};
 } else {
 	//globalConfig.usejQueryUITable = true;
-	var lang = "";
+	//var lang = "";
 	var legendWidth = 0;
 	if (globalConfig.language === "EN") {
 		globalConfig.tableSimpleTemplateTitleLang = "Note: The Distance(KM) column represents the distance between your search location and the permit location in the specific row. Data is in English only.";
-		lang = "en";
+		//lang = "en";
 		legendWidth = 270;
 	} else {
 		globalConfig.tableSimpleTemplateTitleLang = "\u00c0 noter : La colonne de distance (en km) donne la distance entre le lieu de votre recherche et le lieu concern\u00e9 par le permis dans la rang\u00e9e donn\u00e9e. Les donn\u00e9es sont en anglais seulement.";
-		lang = "fr";
+		//lang = "fr";
 		legendWidth = 372;		
 	}
 	globalConfig.legend = {
-		available: true,	
-		url: "http://www.downloads.ene.gov.on.ca/files/mapping/js/AccessEnvironment/legend_" + lang +  ".png", 
+		available: true,
+		url: globalConfig.resoucesLocation + "legend_" + globalConfig.language +  ".png", 
 		size: {width: legendWidth, height: 81},   //Width and Height
 		location: {ratioX: 0.01, ratioY: 0.25}  	
 	};
-
 	globalConfig.postConditionsCallback = function (queryParams) {
 		var features = Array.range(0, queryParams.layerList.length - 1).reduce(function(previousValue, currentValue) {
 			var result = queryParams.layerList[currentValue].result;
@@ -94,8 +98,8 @@ if (globalConfig.accessible) {
 			}
 		}, []);
 		queryParams.totalCount = features.length;
-		if (features.length > globalConfig.maxQueryReturn) {
-			features = features.slice(0, globalConfig.maxQueryReturn);
+		if (features.length > globalConfig.maxDisplayReturn) {
+			features = features.slice(0, globalConfig.maxDisplayReturn);
 		}
 		globalConfig.resultFoundSimple(queryParams);		
 		if(features.length === 0) {
@@ -128,8 +132,8 @@ if (globalConfig.accessible) {
 			return;
 		}
 		queryParams.totalCount = features.length;
-		if (features.length > globalConfig.maxQueryReturn) {
-			features = features.slice(0, globalConfig.maxQueryReturn);
+		if (features.length > globalConfig.maxDisplayReturn) {
+			features = features.slice(0, globalConfig.maxDisplayReturn);
 		}		
 		globalConfig.addMarkers(features, queryParams.layerList[0].tabsTemplate);
 		globalConfig.renderTable(features, queryParams.layerList[0].tableTemplate, queryParams.gLatLng);
@@ -159,7 +163,7 @@ if (globalConfig.language === "EN") {
 	];
 	if (globalConfig.advancedVersion) {
 		globalConfig.searchHelpTxt = "";
-		globalConfig.searchControlHTML = '<label class="element-invisible" for="map_query">Search the map</label> \
+		/*globalConfig.searchControlHTML = '<label class="element-invisible" for="map_query">Search the map</label> \
 			<input id="map_query" type="text" title="Term" maxlength="100" onkeypress="return globalConfig.entsub(event)" size="50" /> &nbsp; \
 			<label class="element-invisible" for="search_submit">Search</label> \
 			<input type="submit" title="Search" id="search_submit" value="Search" onclick="globalConfig.search()" /> \
@@ -185,7 +189,213 @@ if (globalConfig.language === "EN") {
 				<label for=\'searchSector\' class=\'option\'>Search sector</label> \
 				</span> \
 				<br/> \
-			</fieldset>';
+			</fieldset>';*/
+		globalConfig.otherInfoHTML = '*Please note that Environmental Compliance Approvals (ECAs) include all Certificates of Approval (CofAs) previously issued under the Environmental Protection Act (EPA) and approvals previously issued under s.53 of the Ontario Water Resources Act (OWRA). Also, please note that the Ministry is currently updating geographic references for approvals data.  In some cases the number of pins mapped may not reflect the total number of records.<br/>';
+		globalConfig.searchControlHTML = '<div>\
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="Search Criteria includes Business Information Criteria, Environmental Compliance Approvals (ECA), All Statuses, ECA/REA Status, EASR Status, Sort Criteria.">\
+					<tr>\
+						<td width="45%" style="valign:top;">\
+						<table class="portletText" border="0" cellpadding="0"\
+							cellspacing="1px" summary="Certificate Number, EBR Registry Number, MOE Refernce Nubmer, Approval Issued From Date, Approval Issued To Date.">\
+								<caption>&nbsp;</caption>\
+								<tr>\
+									<td class="portletText" width="140px">&nbsp;</td>\
+									<td class="portletText" width="100px">&nbsp;</td>\
+								</tr>\
+								<tr>\
+									<td class="portletText" width="140px">Approval Number</td>\
+									<td class="portletText" width="100px"><input type="text"\
+										name="searchCriteria.certificateNumber" title="Certificate Number"\
+										value=""\
+										maxlength="20" width="100%"></td>\
+								</tr>\
+								<tr>\
+									<td class="portletText" width="140px">EBR Registry Number</td>\
+									<td class="portletText" width="100px"><input type="text"\
+										name="searchCriteria.ebrRegistryNumber" title="Registry Number"\
+										value=""\
+										maxlength="10"></td>\
+								</tr>\
+								<tr>\
+									<td class="portletText" width="140px">MOE Reference Number</td>\
+									<td class="portletText" width="100px"><input type="text"\
+										name="searchCriteria.moeReferenceNumber" title="MOE Reference Number"\
+										value=""\
+										maxlength="11"></td>\
+								</tr>\
+								<tr>\
+									<th scope="row" scope="row" align="left">Date</th>\
+								</tr>\
+								<tr>\
+									<td width="140" height="25">From:(yyyy-mm-dd)</td>\
+									<td width="190" height="25">\
+										<input type="text"\
+										name="searchCriteria.approvalDateFromString"\
+										id="txtDatepickerFrom" title="From Date format yyyy-mm-dd"\
+										value="">\
+									</td>\
+								</tr>\
+								<tr>\
+									<td width="140" height="25">To:(yyyy-mm-dd)</td>\
+									<td width="190" height="25"><input type="text"\
+										name="searchCriteria.approvalDateToString" id="txtDatepickerTo" title="To Date format yyyy-mm-dd"\
+										value="">\
+									</td>\
+								</tr>\
+						</table>\
+						</td>\
+						<td width="55%" VALIGN="TOP">\
+						<table class="portletText" border="0" cellpadding="0" cellspacing="1" summary="Business Information Criteria includes Business Name, Street No., Street Name, City/Town, Postal Code, Search Radius.">\
+							<caption>&nbsp;</caption>\
+								<tr>\
+									<th scope="row" width="140" align="left" nowrap="nowrap">Business Information</th>\
+									<td width="150">&nbsp;</td>\
+								</tr>\
+								<tr>\
+									<td width="140px" class="portletText">Business Name</td>\
+									<td width="150px" class="portletText"><input type="text"\
+										name="searchCriteria.businessName" title="Business Name"\
+										value=""\
+										maxlength="80"></td>\
+								</tr>' + (globalConfig.accessible ? ' ' : '<tr>\
+									<td width="140px" class="portletText">Address</td>\
+									<td width="150px" class="portletText">\
+										<input type="text" name="searchCriteria.siteStreetNumber" id="txtStreetNo" title="Street No"\
+										value=""\
+										maxlength="250"></td>\
+								</tr>\
+								<tr>\
+									<td width="140px" class="portletText" colspan="2"">&nbsp;</td>\
+								</tr>\
+								<tr>\
+									<td height="30">\
+									<label for="lstRadius">Search Radius (km)</label></td>\
+									<td height="30">\
+										<input type="text" name="searchCriteria.radius" id="txtRadius" title="Radius"\
+										value=""\
+										maxlength="250">\
+									</td>\
+								</tr>') + '</table>\
+						</td>\
+					</tr>\
+					<tr>\
+						<td colspan="2">&nbsp;\
+						</td>\
+					</tr>\
+					<tr>\
+						<td colspan="2">Press Ctrl + click to select more than one option.\
+						</td>\
+					</tr>\
+					<tr>\
+						<td colspan="2">&nbsp;\
+						</td>\
+					</tr>\
+					<tr>\
+						<th scope="row" width="45%" align="left" valign="TOP"><!-- ***criteria*** -->\
+						<div id="fsAllTypes">\
+						<input name="chkAllApprovals" id="chkAllApprovals" value="All Approvals" type="checkbox" />&nbsp; \
+						<label	for="chkAllApprovals">Environmental Compliance<br/>Approvals (ECA) <br/></label>\
+						<div style="font-weight: normal;">Project Type</div>\
+						<div><label for="lstAllApprovalsType"></label> \
+						<select	name="searchCriteria.ecaApprovalTypes" size="6" multiple="multiple" class="selections" id="lstAllApprovalsType">\
+							<option value=\'Air\' >\
+							&nbsp;Air/Noise</option>\
+							<option value=\'Municipal and Private Sewage Works\' >\
+							&nbsp;Municipal and Private Sewage</option>\
+							<option value=\'Waste Disposal Sites\' >\
+							&nbsp;Waste Disposal Site</option>\
+							<option value=\'Waste Management Systems\' >\
+							&nbsp;Waste Management System</option>\
+							<option value=\'Industrial Sewage Works\' >\
+							&nbsp;Industrial Sewage</option>\
+						</select></div>\
+						<div class="clear" style="height: 20px;"></div>\
+						<input name="searchCriteria.reaApprovalTypes" id="chkAllREAs" value="Renewable Energy Approval" type="checkbox" />&nbsp;&nbsp;&nbsp; \
+						<label for="chkAllREAs">\
+						Renewable Energy Approvals (REA)</label>\
+						<div class="clear" style="height: 20px;"></div>\
+						<input name="chkAllEASRs" id="chkAllEASRs" value="All EASRs" type="checkbox" />&nbsp;\
+						<label for="chkAllEASRs">Environmental Activity<br />Sector Registry (EASR) <br/></label>\
+						 <div style="font-weight: normal;">Project Type</div>\
+						<div><label for="lstAllEASRsType"></label> \
+						<select	name="searchCriteria.easrApprovalTypes" size="4" multiple="multiple"	class="selections" id="lstAllEASRsType">\
+							<option value=\'AUTOMOTIVE_REFINISHING\' >\
+							&nbsp;Automotive Refinishing</option>\
+							<option value=\'STANDBY_POWER_SYSTEM\' >\
+							&nbsp;Standby Power System</option>\
+							<option value=\'HEATING_SYSTEM\' >\
+							&nbsp;Heating System</option>\
+							<option value=\'WASTE_TRANSPORTATION_SYSTEM\' >\
+							&nbsp;Waste Management System</option>\
+							<option value=\'PRINTING_FACILITY\' >\
+							&nbsp;Printing Facility</option>\
+							<option value=\'SOLAR_FACILITY\' >\
+							&nbsp;Solar Facility</option>\
+						</select></div>\
+						</div>\
+						</th>\
+						<td valign="TOP" width="55%">\
+						<fieldset class="fsAllStatus">\
+						<div style="font-weight: bold; height: 25px;"><input\
+							type="checkbox" name="chkAllStatus" id="chkAllStatus" />&nbsp;<label\
+							for="chkAllStatus">All Statuses</label>\
+						</div>\
+						<div class="clear"></div>\
+						<div class="divECAStatus" style="float: left; width: 140px;">\
+						<div style="font-weight: bold; height: 25px;"><input\
+							type="checkbox" name="chkECAStatus" id="chkECAStatus" />\
+						<label for="chkECAStatus" style="font-size:95%;">ECA/REA Status</label></div>\
+						<div><label for="lstEASRStatus"></label> <select\
+							name="searchCriteria.ecaApprovalStatus" size="4"\
+							multiple="multiple" class="selections" id="lstECAStatus" title="ECA/REA Status">					 \
+								<option value=\'Revoked and/or Replaced\' >\
+								&nbsp;Revoked and/or Replaced</option>\
+								<option value=\'Approved\' >\
+								&nbsp;Approved</option>\
+								<option value=\'Amended\' >\
+								&nbsp;Amended</option>\
+						</select></div>\
+						</div>\
+						<div id="divEASRStatus" style="float: right; width: 160px;">\
+						<div style="font-weight: bold; height: 25px;"><input\
+							type="checkbox" name="chkEASRStatus" id="chkEASRStatus" />\
+						 <label for="chkEASRStatus" style="font-size:95%;">EASR Status</label></div>\
+						<div><label for="lstEASRStatus"></label> \
+						<select	name="searchCriteria.easrApprovalStatus" size="4" multiple="multiple" class="selections" id="lstEASRStatus">\
+								<option value=\'REGISTERED\' >\
+								&nbsp;Registered</option>\
+								<option value=\'REMOVED\' >\
+								&nbsp;Removed</option>\
+								<option value=\'SUSPENDED\' >\
+								&nbsp;Suspended</option>\
+						</select></div>\
+						</div>\
+						<div class="clear"></div>\
+						</fieldset>\
+						<table border="0" cellpadding="0" cellspacing="5" width="330" summary="Sort Criteria includes Recodes per page, Sort by Date, Certificate Number, Business Name, EBR Number, Project Type, Municipality, Certificate Status.">\
+							<caption>&nbsp;</caption>\
+							<tr>\
+								<td colspan="2">&nbsp;</td>\
+							</tr>\
+							<tr>\
+								<td  colspan="2">&nbsp;</td>\
+							</tr>\
+						</table>\
+						</td>\
+					</tr>\
+					<tr>\
+						<td align="center" colspan="2">\
+							<input type="button" name="action" value="Search" onclick="globalConfig.advSearch()"/>&nbsp;\
+							<input type="button" value="&nbsp;Clear&nbsp;" title="Clear"  onclick="globalConfig.Clear()">\
+							<input type="hidden" name="searchCriteria.geoLatlng.latitude" id="searchCriteria.geoLatlng.latitude" value="" />\
+							<input type="hidden" name="searchCriteria.geoLatlng.longitude" id="searchCriteria.geoLatlng.longitude" value="" />\
+						</td>\
+					</tr>\
+					<tr>\
+						<td colspan="2">&nbsp;</td>\
+					</tr>\
+			</table>\
+		</div>' + '<div id="information" style="color:#0000FF">' + globalConfig.searchHelpTxt + '</div>';
 	} else {	
 		if (globalConfig.accessible) {
 			globalConfig.searchHelpTxt = "Search with Business Name.";
@@ -229,7 +439,7 @@ if (globalConfig.language === "EN") {
 	];
 	if (globalConfig.advancedVersion) {
 		globalConfig.searchHelpTxt = "";
-		globalConfig.searchControlHTML = '<label class="element-invisible" for="map_query">Search the map</label> \
+		/*globalConfig.searchControlHTML = '<label class="element-invisible" for="map_query">Search the map</label> \
 			<input id="map_query" type="text" title="Term" maxlength="100" onkeypress="return globalConfig.entsub(event)" size="50" /> &nbsp; \
 			<label class="element-invisible" for="search_submit">Search</label> \
 			<input type="submit" title="Search" id="search_submit" value="Search" onclick="globalConfig.search()" /> \
@@ -251,7 +461,215 @@ if (globalConfig.language === "EN") {
 				</span> \
 				<br/> \
 				<input id="currentMapExtent" type="checkbox" name="currentExtent" title="Current Map Display" /> <label for="currentExtent" class=\'option\'>Search current map display only</label> \
-			</fieldset>';
+			</fieldset>';*/
+		globalConfig.otherInfoHTML = '*Les autorisations environnementales comprennent les certificats d\'autorisation d&#xE9;livr&#xE9;s aux termes de la Loi sur la protection de l\'environnement et les autorisations d&#xE9;livr&#xE9;es en vertu de l\'article 53 de la Loi sur les ressources en eau de l\'Ontario. De plus, veuillez noter que le minist&#xE8;re met &#xE0; jour actuellement les r&#xE9;f&#xE9;rences g&#xE9;ographiques des donn&#xE9;es sur les  autorisations.  Dans certains cas, le nombre de points cartographi&#xE9;s ne correspond pas au nombre total de registres. <br/>';
+		globalConfig.searchControlHTML = '	<div>\
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="Search Criteria includes Business Information Criteria, Environmental Compliance Approvals (ECA), All Statuses, ECA/REA Status, EASR Status, Sort Criteria.">\
+				<caption>&nbsp;</caption>\
+					<tr>\
+						<td width="45%" style="valign:top;">\
+						<table class="portletText" border="0" cellpadding="0"\
+							cellspacing="1px" summary="Certificate Number, EBR Registry Number, MOE Refernce Nubmer, Approval Issued From Date, Approval Issued To Date.">\
+								<caption>&nbsp;</caption>\
+								<tr>\
+									<td class="portletText" width="140px">&nbsp;</td>\
+									<td class="portletText" width="100px">&nbsp;</td>\
+								</tr>\
+								<tr>\
+									<td class="portletText" width="140px">N<SUP>o</SUP> d\'autorisation</td>\
+									<td class="portletText" width="100px"><input type="text"\
+										name="searchCriteria.certificateNumber" title="Certificate Number"\
+										value=""\
+										maxlength="20" width="100%"></td>\
+								</tr>\
+								<tr>\
+									<td class="portletText" width="140px">N<SUP>o</SUP> au Registre environnemental</td>\
+									<td class="portletText" width="100px"><input type="text"\
+										name="searchCriteria.ebrRegistryNumber" title="Registry Number"\
+										value=""\
+										maxlength="10"></td>\
+								</tr>\
+								<tr>\
+									<td class="portletText" width="140px">N<SUP>o</SUP> de r&#xE9;f&#xE9;rence du MEO</td>\
+									<td class="portletText" width="100px"><input type="text"\
+										name="searchCriteria.moeReferenceNumber" title="MOE Reference Number"\
+										value=""\
+										maxlength="11"></td>\
+								</tr>\
+								\
+								<tr>\
+									<th scope="row" scope="row" align="left">Date</th>\
+								</tr>\
+								<tr>\
+									<td width="140" height="25">De:(aaaa-mm-jj)</td>\
+									<td width="190" height="25">\
+										<input type="text"\
+										name="searchCriteria.approvalDateFromString"\
+										id="txtDatepickerFrom" title="From Date format yyyy-mm-dd"\
+										value="">\
+									</td>\
+								</tr>\
+								<tr>\
+									<td width="140" height="25">&#xC0;:(aaaa-mm-jj)</td>\
+									<td width="190" height="25"><input type="text"\
+										name="searchCriteria.approvalDateToString" id="txtDatepickerTo" title="To Date format yyyy-mm-dd"\
+										value="">\
+									</td>\
+								</tr>\
+						</table>\
+						</td>\
+						<td width="55%" VALIGN="TOP">\
+						<table class="portletText" border="0" cellpadding="0" cellspacing="1" summary="Business Information Criteria includes Business Name, Street No., Street Name, City/Town, Postal Code, Search Radius.">\
+							<caption>&nbsp;</caption>\
+								<tr>\
+									<th scope="row" width="140" align="left" nowrap="nowrap">Renseignements sur l\'entreprise</th>\
+									<td width="150">&nbsp;</td>\
+								</tr>\
+								<tr>\
+									<td width="140px" class="portletText">Nom de l\'entreprise</td>\
+									<td width="150px" class="portletText"><input type="text"\
+										name="searchCriteria.businessName" title="Business Name"\
+										value=""\
+										maxlength="80"></td>\
+								</tr>' + (globalConfig.accessible ? ' ' : '<tr>\
+									<td width="140px" class="portletText">Adresse</td>\
+									<td width="150px" class="portletText">\
+										<input type="text" name="searchCriteria.siteStreetNumber" id="txtStreetNo" title="Street No"\
+										value=""\
+										maxlength="250"></td>\
+								</tr>\
+								<tr>\
+									<td width="140px" class="portletText" colspan="2"">&nbsp;</td>\
+								</tr>\
+								<tr>\
+									<td height="30">\
+									<label for="lstRadius">Rayon de recherche</label></td>\
+									<td height="30">\
+										<input type="text" name="searchCriteria.radius" id="txtRadius" title="Radius"\
+										value=""\
+										maxlength="250">							\
+									</td>\
+								</tr>') + '</table>\
+						</td>\
+					</tr>\
+					<tr>\
+						<td colspan="2">&nbsp;\
+						</td>\
+					</tr>\
+					<tr>\
+						<td colspan="2">Appuyer sur CTRL + cliquer pour choisir plus d\'une option.\
+						</td>\
+					</tr>\
+					<tr>\
+						<td colspan="2">&nbsp;\
+						</td>\
+					</tr>\
+					<tr>\
+						<th scope="row" width="45%" align="left" valign="TOP"><!-- ***criteria*** -->\
+						<div id="fsAllTypes">\
+						<input name="chkAllApprovals" id="chkAllApprovals" value="All Approvals" type="checkbox" />&nbsp; \
+						<label	for="chkAllApprovals">Autorisations environnementales (AE) <br/></label>\
+						<div style="font-weight: normal;">Type de projet</div>\
+						<div><label for="lstAllApprovalsType"></label> \
+						<select	name="searchCriteria.ecaApprovalTypes" size="6" multiple="multiple" class="selections" id="lstAllApprovalsType">\
+							<option value=\'Air\' >\
+							&nbsp;Air/Bruit</option>\
+							<option value=\'Municipal and Private Sewage Works\' >\
+							&nbsp;&#xC9;gout municipal ou priv&#xE9;</option>\
+							<option value=\'Waste Disposal Sites\' >\
+							&nbsp;Lieu d\'&#xE9;limination des d&#xE9;chets</option>\
+							<option value=\'Waste Management Systems\' >\
+							&nbsp;Syst&#xE8;me de gestion des d&#xE9;chets</option>\
+							<option value=\'Industrial Sewage Works\' >\
+							&nbsp;&#xC9;gout industriel</option>\
+						</select></div>\
+						<div class="clear" style="height: 20px;"></div>\
+						<input name="searchCriteria.reaApprovalTypes" id="chkAllREAs" value="Renewable Energy Approval" type="checkbox" />&nbsp;&nbsp;&nbsp; \
+						<label for="chkAllREAs">\
+						Autorisations de projet d\'&#xE9;nergie renouvelable (APER)</label>\
+						<div class="clear" style="height: 20px;"></div>\
+						<input name="chkAllEASRs" id="chkAllEASRs" value="All EASRs" type="checkbox" />&nbsp;\
+						<label for="chkAllEASRs">Registre environnemental des<br/> activit&#xE9;s et des secteurs (REAS) <br/></label>\
+						 <div style="font-weight: normal;">Type de projet</div>\
+						<div><label for="lstAllEASRsType"></label> \
+						<select	name="searchCriteria.easrApprovalTypes" size="4" multiple="multiple"	class="selections" id="lstAllEASRsType">\
+							<option value=\'AUTOMOTIVE_REFINISHING\' >\
+							&nbsp;Finition Automobile</option>\
+							<option value=\'STANDBY_POWER_SYSTEM\' >\
+							&nbsp;Syst&egrave;me d&acute;alimentation &eacute;lectrique d&acute;appoint</option>\
+							<option value=\'HEATING_SYSTEM\' >\
+							&nbsp;Syst&egrave;me de chauffage</option>\
+							<option value=\'WASTE_TRANSPORTATION_SYSTEM\' >\
+							&nbsp;Syst&egrave;me de gestion des d&eacute;chets</option>\
+							<option value=\'PRINTING_FACILITY\' >\
+							&nbsp;Installation d&acute;impression</option>\
+							<option value=\'SOLAR_FACILITY\' >\
+							&nbsp;Installation de panneaux solaires</option>\
+						</select></div>\
+						</div>\
+						</th>\
+						<td valign="TOP" width="55%"><!-- ***criteria*** -->\
+						<fieldset class="fsAllStatus">\
+						<div style="font-weight: bold; height: 25px;"><input\
+							type="checkbox" name="chkAllStatus" id="chkAllStatus" />&nbsp;<label\
+							for="chkAllStatus">Toutes les &#xE9;tapes</label>\
+						</div>\
+						<div class="clear"></div>\
+						<div class="divECAStatus" style="float: left; width: 140px;">\
+						<div style="font-weight: bold; height: 25px;"><input\
+							type="checkbox" name="chkECAStatus" id="chkECAStatus" />\
+						<label for="chkECAStatus" style="font-size:95%;">Statut AE/APER</label></div>\
+						<div><label for="lstEASRStatus"></label> <select\
+							name="searchCriteria.ecaApprovalStatus" size="4"\
+							multiple="multiple" class="selections" id="lstECAStatus" title="ECA/REA Status">\
+								<option value=\'Revoked and/or Replaced\' >\
+								&nbsp;Enregistr&#xE9;</option>\
+								<option value=\'Approved\' >\
+								&nbsp;Approuv&#xE9;</option>\
+								<option value=\'Amended\' >\
+								&nbsp;Modifi&#xE9;	</option>\
+						</select></div>\
+						</div>\
+						<div id="divEASRStatus" style="float: right; width: 160px;">\
+						<div style="font-weight: bold; height: 25px;"><input\
+							type="checkbox" name="chkEASRStatus" id="chkEASRStatus" />\
+						 <label for="chkEASRStatus" style="font-size:95%;">Statut REAS</label></div>\
+						<div><label for="lstEASRStatus"></label> \
+						<select	name="searchCriteria.easrApprovalStatus" size="4" multiple="multiple" class="selections" id="lstEASRStatus">\
+								<option value=\'REGISTERED\' >\
+								&nbsp;Enregistr&eacute;</option>\
+								<option value=\'REMOVED\' >\
+								&nbsp;Retir&eacute;</option>\
+								<option value=\'SUSPENDED\' >\
+								&nbsp;Compte bloqu&eacute; temporairement</option>\
+						</select></div>\
+						</div>\
+						<div class="clear"></div>\
+						</fieldset>\
+						<table border="0" cellpadding="0" cellspacing="5" width="330" summary="Sort Criteria includes Recodes per page, Sort by Date, Certificate Number, Business Name, EBR Number, Project Type, Municipality, Certificate Status.">\
+							<caption>&nbsp;</caption>\
+							<tr>\
+								<td colspan="2">&nbsp;</td>\
+							</tr>\
+							<tr>\
+								<td  colspan="2">&nbsp;</td>\
+							</tr>\
+						</table>\
+						</td>\
+					</tr>\
+					<tr>\
+						<td align="center" colspan="2">\
+							<input type="button" name="action" value="Recherche" onclick="globalConfig.advSearch()"/>&nbsp;\
+							<input type="button" value="Effacer" title="Effacer"  onclick="globalConfig.Clear()">					\
+							<input type="hidden" name="searchCriteria.geoLatlng.latitude" id="searchCriteria.geoLatlng.latitude" value="" />\
+							<input type="hidden" name="searchCriteria.geoLatlng.longitude" id="searchCriteria.geoLatlng.longitude" value="" />\
+						</td>\
+					</tr>\
+					<tr>\
+						<td colspan="2">&nbsp;</td>\
+					</tr>\
+			</table>\
+		</div>' + '<div id="information" style="color:#0000FF">' + globalConfig.searchHelpTxt + '</div>';
 	} else {
 		globalConfig.AdvancedSearchLang = "Recherche avanc\u00e9e"; 	
 		if (globalConfig.accessible) {
@@ -401,7 +819,7 @@ globalConfig.queryLayerList = [{
 		content: globalConfig.tableFieldList
 	} 
 }];
-globalConfig.postInitialize = function(map){
+globalConfig.postInitializeSimple = function () {
 	if (document.getElementById(globalConfig.searchBusinessDivId)) {
 		document.getElementById(globalConfig.searchBusinessDivId).checked = true;
 	}
@@ -413,7 +831,16 @@ globalConfig.postInitialize = function(map){
 	}
 	if(document.getElementById(globalConfig.searchInputBoxDivId)){
 		document.getElementById(globalConfig.searchInputBoxDivId).focus();//Make sure the input box is focused when the page is initialized.
+	}	
+};
+
+globalConfig.postInitialize = function(map){
+	if (globalConfig.advancedVersion) {
+		globalConfig.postInitializeAdvanced();
+	} else {
+		globalConfig.postInitializeSimple();
 	}
+	
 	if (!globalConfig.accessible) {
 		var triangleRecordsWithoutLatLng = [
 			new google.maps.LatLng(45.6, -81),
@@ -449,7 +876,7 @@ globalConfig.search = function(){
 			searchString: searchString,
 			withinExtent: false
 		};
-		document.getElementById(globalConfig.informationDivId).innerHTML ="<i>Searching......</i>";
+		document.getElementById(globalConfig.informationDivId).innerHTML =(globalConfig.language === "EN") ? "<i>Searching for results...</i>" : "<i>Recherche des r\u00e9sultats ...</i>";
 		if(globalConfig.accessible || document.getElementById(globalConfig.searchBusinessDivId).checked){
 			var name = searchString.toUpperCase();
 			name = globalConfig.replaceChar(name, "'", "''");
@@ -480,6 +907,7 @@ globalConfig.advSearch = function(){
 		searchString: searchString,
 		withinExtent: false
 	};
+	document.getElementById(globalConfig.informationDivId).innerHTML =(globalConfig.language === "EN") ? "<i>Searching for results...</i>" : "<i>Recherche des r\u00e9sultats ...</i>";
 	var conditions = [];
 	var certificateNumber = document.getElementsByName("searchCriteria.certificateNumber")[0].value.trim();
 	if (certificateNumber.length > 0) {
@@ -643,7 +1071,7 @@ function goHome()
 		//document.location.href='GoSearch.action?search=basic';
 }
 
-if (globalConfig.advancedVersion) {
+globalConfig.postInitializeAdvanced = function (){
   /*$(function() {
 
   });*/
@@ -654,8 +1082,10 @@ if (globalConfig.advancedVersion) {
 		document.getElementsByName("searchCriteria.approvalDateFromString")[0].value = "";
 		document.getElementsByName("searchCriteria.approvalDateToString")[0].value = "";
 		document.getElementsByName("searchCriteria.businessName")[0].value = "";
-		document.getElementsByName("searchCriteria.siteStreetNumber")[0].value = "";
-		document.getElementsByName("searchCriteria.radius")[0].value = "";
+		if (!globalConfig.accessible) {
+			document.getElementsByName("searchCriteria.siteStreetNumber")[0].value = "";
+			document.getElementsByName("searchCriteria.radius")[0].value = "";
+		}
 		$("#chkAllApprovals").attr("checked", false);
 		$("#lstAllApprovalsType").find("option").attr("selected", false);
 		$("#chkAllStatus").attr("checked", false);
@@ -680,7 +1110,7 @@ if (globalConfig.advancedVersion) {
 			changeMonth: true,
 			numberOfMonths: 1,
 			showOn: "button",
-			buttonImage: "calendar.gif",
+			buttonImage: globalConfig.resoucesLocation + "calendar.gif",
 			buttonImageOnly: true,
 			dateFormat: 'yy-mm-dd',			  
 			onClose: function( selectedDate ) {
@@ -692,7 +1122,7 @@ if (globalConfig.advancedVersion) {
 			changeMonth: true,
 			numberOfMonths: 1,
 			showOn: "button",
-			buttonImage: "calendar.gif",
+			buttonImage: globalConfig.resoucesLocation + "calendar.gif",
 			buttonImageOnly: true,
 			dateFormat: 'yy-mm-dd',			  
 			onClose: function( selectedDate ) {
@@ -953,6 +1383,6 @@ if (globalConfig.advancedVersion) {
 		});
 			
 	 });
-}
+};
  /*Advanced version use only*/
  
