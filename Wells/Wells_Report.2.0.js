@@ -1,20 +1,24 @@
-
+if (!String.prototype.trim) {
+  String.prototype.trim = function () {
+    return this.replace(/^\s+|\s+$/g, '');
+  };
+}
 globalConfig.layers = [{
 	url: globalConfig.url + "/1",
 	renderTargetDiv: "target",
 	event: "reportReady",
-	where: (QueryString.hasOwnProperty("wellid") ? ("(WELL_ID = " + QueryString.wellid + ")"):("(BORE_HOLE_ID = " + QueryString.id + ")")),
+	where: (QueryString.hasOwnProperty("wellid") ? ("(WELL_ID = '" + QueryString.wellid + "')"):("(BORE_HOLE_ID = " + QueryString.id + ")")),
 	outFields: (QueryString.hasOwnProperty("wellid") ? ["BORE_HOLE_ID", "WELL_ID", "BHK", "UTMZONE", "EAST83", "NORTH83"] : ["BORE_HOLE_ID", "WELL_ID", "BHK", "PREV_WELL_ID", "DPBR_M", "WELL_TYPE", "DEPTH_M", "YEAR_COMPLETED", "WELL_COMPLETED_DATE", "RECEIVED_DATE", "AUDIT_NO", "TAG", "CONTRACTOR", "SWL", "FINAL_STATUS_DESCR", "USE1", "USE2", "MOE_COUNTY_DESCR", "MOE_MUNICIPALITY_DESCR", "CON", "LOT", "STREET", "CITY", "UTMZONE", "EAST83", "NORTH83", "GEO", "PLUG", "HOLE", "CM", "CAS", "SCRN", "WAT", "PT", "PTD", "DISINFECTED"]),
 	processResults: function (fs) {
 		var createWellsClusterRenderResult = function (fs) {
 			return _.map(fs, function(feature) {			
 				return {
-					WELL_ID: feature.attributes.WELL_ID, 
-					UTMZONE: feature.attributes.UTMZONE, 
-					EAST83: feature.attributes.EAST83, 
-					NORTH83: feature.attributes.NORTH83, 
-					BORE_HOLE_ID: feature.attributes.BORE_HOLE_ID,
-					BHK: feature.attributes.BHK
+					WELL_ID: feature.attributes.WELL_ID || "", 
+					UTMZONE: feature.attributes.UTMZONE || "", 
+					EAST83: feature.attributes.EAST83 || "", 
+					NORTH83: feature.attributes.NORTH83 || "", 
+					BORE_HOLE_ID: feature.attributes.BORE_HOLE_ID || "",
+					BHK: feature.attributes.BHK || ""
 				};
 			});
 		
@@ -52,6 +56,7 @@ globalConfig.layers = [{
 			renderResult.HOLE = createRenderItems(renderResult.HOLE);
 			renderResult.WELL_COMPLETED_DATE = convertDate(renderResult.WELL_COMPLETED_DATE);
 			renderResult.RECEIVED_DATE = convertDate(renderResult.RECEIVED_DATE);
+			renderResult.PT = renderResult.PT.trim();
 			if (renderResult.PT.length === 0) {
 				renderResult.PT = ";;;;;;;;;;;;";
 			}

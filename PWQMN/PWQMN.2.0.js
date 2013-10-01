@@ -21,10 +21,10 @@ globalConfig.displayDisclaimer = true;
 globalConfig.InformationLang = "Information";
 globalConfig.postIdentifyCallbackName = "Wells";
 globalConfig.postConditionsCallbackName = "Wells";
-globalConfig.infoWindowWidth = '470px';
-globalConfig.infoWindowHeight = "240px";
-globalConfig.infoWindowContentHeight = "200px";
-globalConfig.infoWindowContentWidth = "450px";
+//globalConfig.infoWindowWidth = '470px';
+//globalConfig.infoWindowHeight = "240px";
+//globalConfig.infoWindowContentHeight = "200px";
+//globalConfig.infoWindowContentWidth = "450px";
 
 if (globalConfig.accessible) {
 	globalConfig.queryLayerList = [{
