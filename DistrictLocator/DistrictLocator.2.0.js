@@ -1,4 +1,4 @@
-var globalConfig = globalConfig || {};
+//var globalConfig = globalConfig || {};
 globalConfig.preIdentifyCallbackName = "SWPLocator"; 
 globalConfig.postIdentifyCallbackName = "SWPLocator"; 
 globalConfig.addressGeocodingCallbackName = "SWPLocator";
@@ -9,8 +9,8 @@ globalConfig.usejQueryUITable = false;
 globalConfig.usePredefinedMultipleTabs = false;
 globalConfig.locationServicesList = [];
 globalConfig.maxQueryZoomLevel = 12;
-//globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/MOE_Districts_Full_Bnd/MapServer";
-globalConfig.url = "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/MOE_Districts_Full_Bnd/MapServer";
+//globalConfig.url = "http://www.appliomapss.lrc.gov.on.ca/ArcGIS/rest/services/MOE/MOE_Districts_Full_Bnd/MapServer";
+//globalConfig.url = "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/MOE_Districts_Full_Bnd/MapServer";
 globalConfig.identifyMarkerRedTearDrop = true;
 globalConfig.displayDisclaimer = true;
 globalConfig.disallowMouseClick = true;

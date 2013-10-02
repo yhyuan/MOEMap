@@ -3,7 +3,7 @@ globalConfig.language = "EN";
 globalConfig.accessible = false;
 globalConfig.InformationLang = "Information";
 globalConfig.tabsTemplateContent = "DWS Name: <b>{DWSName}</b><br>Most current Drinking Water Quality result: <br><a target='_parent' href='{LastARURL}'>{LastARYear}</a> <br>The number shown represents the percentage of drinking water quality tests done for this system in the time period indicated that met Ontario's rigourous drinking water quality standards.<br><br><a target='_parent' href='http://www.ene.gov.on.ca/environment/dwo/en/mapping/report/system?dws={DWSNum}'>Tell me more about this drinking water system.</a>";
-globalConfig.searchHelpTxt = "Search <strong>Community</strong>, <strong>Address</strong>, or <strong>DWS #</strong>or see help for more advanced options.";
+globalConfig.searchHelpTxt = "Search <strong>Address</strong>, or <strong>DWS #</strong>or see help for more advanced options.";
 globalConfig.searchControlHTML = '<table width="100%" cellpadding="5" cellspacing="0" border="0" style="margin-bottom:15px;" summary="Search interactive map form">\
 			<caption style="text-align:left;">Search interactive map</caption>\
 			<tr>\

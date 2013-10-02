@@ -1,8 +1,12 @@
 globalConfig = {};
 globalConfig.language = "EN";
+//globalConfig.SecchiDepth_ReportName = "SecchiDepth_Report.htm";
+//globalConfig.TotalPhosphorus_ReportName = "TotalPhosphorus_Report.htm";
+globalConfig.SecchiDepth_ReportName = "secchidepth_report";
+globalConfig.TotalPhosphorus_ReportName = "totalphoshorus_report";
 globalConfig.searchHelpTxt = "Search <strong>lake name</strong>, <strong>location</strong>, <strong>Station Number (STN)</strong> or see help for more advanced options.";
 //globalConfig.searchHelpTxt = "You may search for <strong>lake name</strong>, <strong>location</strong>, or <strong>Station Number (STN)</strong>";
-globalConfig.tabsTemplateContent = "<strong><font color='#799441'>{globalConfig.wordCapitalize(LAKENAME)}, STN {STN}, Site ID {SITEID}</font></strong><br>{globalConfig.wordCapitalize(TOWNSHIP)} Township      <br>{SITEDESC}<br><br>Interactive Chart and Data: <br>[{SE_COUNT}?  ?&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='SecchiDepth_Report.htm?id={ID}'>Secchi Depth</a><br>][{PH_COUNT}?  ?&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='TotalPhosphorus_Report.htm?id={ID}'>Total Phosphorus Concentration</a><br>]<br>Latitude <b>{globalConfig.deciToDegree(LATITUDE)}</b> Longitude <b>{globalConfig.deciToDegree(LONGITUDE)}</b><br><a href='mailto:lakepartner@ontario.ca?subject=Report Issue (Submission {globalConfig.wordCapitalize(LAKENAME)}, STN {STN}, Site ID {SITEID})'>Report an issue for this location</a>.<br>";
+globalConfig.tabsTemplateContent = "<strong><font color='#799441'>{globalConfig.wordCapitalize(LAKENAME)}, STN {STN}, Site ID {SITEID}</font></strong><br>{globalConfig.wordCapitalize(TOWNSHIP)} Township      <br>{SITEDESC}<br><br>Interactive Chart and Data: <br>[{SE_COUNT}?  ?&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='" + globalConfig.SecchiDepth_ReportName + "?id={ID}'>Secchi Depth</a><br>][{PH_COUNT}?  ?&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='" + globalConfig.TotalPhosphorus_ReportName + "?id={ID}'>Total Phosphorus Concentration</a><br>]<br>Latitude <b>{globalConfig.deciToDegree(LATITUDE)}</b> Longitude <b>{globalConfig.deciToDegree(LONGITUDE)}</b><br><a href='mailto:lakepartner@ontario.ca?subject=Report Issue (Submission {globalConfig.wordCapitalize(LAKENAME)}, STN {STN}, Site ID {SITEID})'>Report an issue for this location</a>.<br>";
 /*globalConfig.searchControlHTML = '<label class="element-invisible" for="map_query">Search the map</label>	\
 	<input id="map_query" type="text" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100" title="Search term" /> \
 	<label class="element-invisible" for="search_submit">Search</label> \

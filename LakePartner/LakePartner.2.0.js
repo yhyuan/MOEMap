@@ -1,6 +1,10 @@
-var globalConfig = globalConfig || {};
+//var globalConfig = globalConfig || {};
 //globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/lakepartner/MapServer";
 //globalConfig.url = "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/LakePartner/MapServer";
+//globalConfig.SecchiDepth_ReportName = "SecchiDepth_Report.htm";
+//globalConfig.TotalPhosphorus_ReportName = "TotalPhosphorus_Report.htm";
+globalConfig.SecchiDepth_ReportName = "secchidepth_report";
+globalConfig.TotalPhosphorus_ReportName = "totalphoshorus_report";
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
 globalConfig.usejQueryUITable = false;   //Avoid loading extra javascript files
@@ -21,15 +25,15 @@ if (globalConfig.accessible) {
 	} else {
 		reportLang = "Signaler";
 	}
-	var reportLocation = "http://www.downloads.ene.gov.on.ca/files/mapping/LakePartner/";
+	//var reportLocation = "http://www.downloads.ene.gov.on.ca/files/mapping/LakePartner/";
 	globalConfig.tableFieldList = [
 		{name: globalConfig.fieldNamesList[0], value: "{globalConfig.wordCapitalize(LAKENAME)}"}, 
 		{name: globalConfig.fieldNamesList[1], value: "{STN}"}, 
 		{name: globalConfig.fieldNamesList[2], value: "{SITEID}"}, 
 		{name: globalConfig.fieldNamesList[3], value: "{globalConfig.wordCapitalize(TOWNSHIP)}"}, 
 		{name: globalConfig.fieldNamesList[4], value: "{SITEDESC}"}, 
-		{name: globalConfig.fieldNamesList[5], value: "[{SE_COUNT}?N/A?<a href='SecchiDepth_Report.htm?id={ID}'>" + reportLang + "</a>]"},
-		{name: globalConfig.fieldNamesList[6], value: "[{PH_COUNT}?N/A?<a href='TotalPhosphorus_Report.htm?id={ID}'>" + reportLang + "</a>]"},		
+		{name: globalConfig.fieldNamesList[5], value: "[{SE_COUNT}?N/A?<a href='" + globalConfig.SecchiDepth_ReportName + "?id={ID}'>" + reportLang + "</a>]"},
+		{name: globalConfig.fieldNamesList[6], value: "[{PH_COUNT}?N/A?<a href='" + globalConfig.TotalPhosphorus_ReportName + "?id={ID}'>" + reportLang + "</a>]"},		
 		{name: globalConfig.fieldNamesList[7], value: "{globalConfig.deciToDegree(LATITUDE)}"}, 
 		{name: globalConfig.fieldNamesList[8], value: "{globalConfig.deciToDegree(LONGITUDE)}"}, 	
 	];
