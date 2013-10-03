@@ -21,7 +21,7 @@ globalConfig.layers = [{
 		<%\
 			_.each(sites,function(site,key,list){\
 		%>\
-		<A HREF="http://files.ontariogovernment.ca/moe_mapping/mapping/SportFish/<%= globalConfig.chooseLang("EN", "FR") %>/LAKE<%= site.attributes.WATERBODYC %>.html"><%= globalConfig.chooseLang(site.attributes.LOCNAME_EN, site.attributes.LOCNAME_FR) %></A> - <%= globalConfig.chooseLang(site.attributes.GUIDELOC_EN, site.attributes.GUIDELOC_FR)  %>.<BR>\
+		<A HREF="SportFish_Report.htm?id=<%= site.attributes.WATERBODYC %>"><%= globalConfig.chooseLang(site.attributes.LOCNAME_EN, site.attributes.LOCNAME_FR) %></A> - <%= globalConfig.chooseLang(site.attributes.GUIDELOC_EN, site.attributes.GUIDELOC_FR)  %>.<BR>\
 		<%\
 			});\
 		%>'
@@ -30,7 +30,7 @@ globalConfig.layers = [{
 /*
 
 http://files.ontariogovernment.ca/moe_mapping/mapping/SportFish/EN/LAKE48218315.html
+		<A HREF="http://files.ontariogovernment.ca/moe_mapping/mapping/SportFish/<%= globalConfig.chooseLang("EN", "FR") %>/LAKE<%= site.attributes.WATERBODYC %>.html"><%= globalConfig.chooseLang(site.attributes.LOCNAME_EN, site.attributes.LOCNAME_FR) %></A> - <%= globalConfig.chooseLang(site.attributes.GUIDELOC_EN, site.attributes.GUIDELOC_FR)  %>.<BR>\
 
-		<A HREF="SportFish_Report.htm?id=<%= site.attributes.WATERBODYC %>"><%= globalConfig.chooseLang(site.attributes.LOCNAME_EN, site.attributes.LOCNAME_FR) %></A> - <%= globalConfig.chooseLang(site.attributes.GUIDELOC_EN, site.attributes.GUIDELOC_FR)  %>.<BR>\
 <A HREF="<%= globalConfig.chooseLang(site.attributes.URL_EN, site.attributes.URL_FR) %>"><%= globalConfig.chooseLang(site.attributes.LOCNAME_EN, site.attributes.LOCNAME_FR) %></A> - <%= globalConfig.chooseLang(site.attributes.GUIDELOC_EN, site.attributes.GUIDELOC_FR)  %>.<BR>\
 */

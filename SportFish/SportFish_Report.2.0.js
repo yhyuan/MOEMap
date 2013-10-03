@@ -121,6 +121,7 @@ speciesQueryLayer.query({
 	});
 	globalConfig.speciesDict = _.object(codes, species);
 	//console.log(speciesPrompt);
+	//console.log(globalConfig.speciesDict);
 	speciesDeferred.resolve();
 	//console.log(globalConfig.speciesDict);
 });
@@ -131,7 +132,7 @@ var adivosryIndexQueryLayer = new gmaps.ags.Layer(globalConfig.url  + "/4");
 adivosryIndexQueryLayer.query({
 	returnGeometry: false,
 	where: "1=1",
-	outFields: ["ADVISORY_LEVEL ", "KEY_"]
+	outFields: ["ADVISORY_LEVEL ", "KEY"]
 }, function (rs) {
 	//PubSub.emit("adivosryIndexReady", rs.features);
 	//console.log(rs.features);
@@ -139,7 +140,7 @@ adivosryIndexQueryLayer.query({
 		return feature.attributes.ADVISORY_LEVEL;
 	});
 	var keys = _.map(rs.features, function(feature) {
-		return feature.attributes.KEY_;
+		return feature.attributes.KEY;
 	});
 	globalConfig.adivosryIndexDict = _.object(levels, keys);
 	adivosryIndexDeferred.resolve();
@@ -147,6 +148,7 @@ adivosryIndexQueryLayer.query({
 });
 
 globalConfig.getSpeciesNameURL = function(speciesCode) {
+	//console.log(speciesCode);
 	if (speciesCode === "087") {
 		return '<A HREF="http://www.mnr.gov.on.ca/' + globalConfig.chooseLang("en", "fr") + '/Business/SORR/2ColumnSubPage/STDPROD_085774.html">' + globalConfig.speciesDict[speciesCode] + '</A>';
 	}
@@ -376,6 +378,6 @@ $.when(documentReadyPrompt, speciesPrompt, adivosryIndexPrompt, adivosryPrompt).
 			S: special
 		};
 	});
-	renderResult.speciesObject = _.object(keys, values);		
+	globalConfig.renderResult.speciesObject = _.object(keys, values);	
 	document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, globalConfig.renderResult);	
 });
