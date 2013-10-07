@@ -7,7 +7,7 @@
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-	<TITLE>Source Protection ECA Screening and Policy Search Map</TITLE>
+	<TITLE>Source Protection Location and Policy Search Map</TITLE>
 
 	
 
@@ -136,37 +136,15 @@
 		.shaded { background-color:#CCCCCC; }
 	</style>
 	
-   <script type="text/javascript" src="http://prod-ont-webserver.s3.amazonaws.com/moe_mapping/mapping/js/MOEMap/js/underscore-min.js"></script>	
+   <!--<script type="text/javascript" src="http://prod-ont-webserver.s3.amazonaws.com/moe_mapping/mapping/js/MOEMap/js/underscore-min.js"></script>	-->
    <script src="http://maps.google.com/maps/api/js?sensor=true&libraries=geometry"></script>
-   <script type="text/javascript" src="http://www.downloads.ene.gov.on.ca/files/mapping/js/waste/arcgislink.js"></script>
+   <script type="text/javascript" src="SourceProtectionECAScreeningandPolicySearchMap_en.2.0-min.js"></script>
+   <!--<script type="text/javascript" src="http://www.downloads.ene.gov.on.ca/files/mapping/js/waste/arcgislink.js"></script>
    <script type="text/javascript" src="SourceProtectionECAScreeningandPolicySearchMap_en.js"></script> 
    <script type="text/javascript" src="SourceProtectionECAScreeningandPolicySearchMap.js"></script>    
-   <script type="text/javascript" src="../Development/build/MOEMap2.0.js"></script>    
+   <script type="text/javascript" src="../Development/build/MOEMap2.0.js"></script>
    <script type="text/html" id='QueryTableTemplate'>	
-	<table class='lakepartner' border='1'>
-		<caption>Search Results</caption>
-		<tbody>
-			<tr><td>Latitude: <strong><%= globalConfig.identifyResults["LatLng"].lat().toFixed(6) %></strong>  Longitde:<strong><%= globalConfig.identifyResults["LatLng"].lng().toFixed(6) %></strong></td></tr>
-			<tr><td>UTM Zone: <strong><%= globalConfig.identifyResults["UTM"].Zone %></strong>   Easting: <strong><%= globalConfig.identifyResults["UTM"].Easting %></strong>     Northing: <strong><%= globalConfig.identifyResults["UTM"].Northing %></strong></td></tr>
-			<tr><td>Source Protection Area Name: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Source Protection Area - 2011")) ? globalConfig.identifyResults["Source Protection Area - 2011"]["LABEL"] : "N/A " %></strong></td></tr>
-			<tr><td>Township, Concession and Lot: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Lots and Concessions")) ? globalConfig.identifyResults["Lots and Concessions"]["LABEL"] : "N/A " %></strong></td></tr>
-			<tr><td>Assessment Roll Number: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Assessment Parcels")) ? globalConfig.identifyResults["Assessment Parcels"]["ASSESSMENT_ROLL_NUMBER_PRIMARY"] : "N/A " %></strong></td></tr> 
-			<tr><td>Street Address: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Assessment Parcels")) ? globalConfig.identifyResults["Assessment Parcels"]["MPAC_STREET_ADDRESS"] : "N/A " %></strong></td></tr> 
-			<tr><td>Municipality: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Assessment Parcels")) ? globalConfig.identifyResults["Assessment Parcels"]["MUNICIPALITY_NAME"] : "N/A " %></strong></td></tr>
-			<tr><td>Property Information Number: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Ownership Parcels")) ? globalConfig.identifyResults["Ownership Parcels"]["PIN"] : "N/A" %></strong></td></tr>
-			<tr><td>Intake Protection Zone: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Intake Protection Zones")) ? globalConfig.identifyResults["Intake Protection Zones"]["IPZType"] : "N/A" %></strong></td></tr>
-			<tr><td>Surface Water Vulnerability Score: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Surface Water")) ? globalConfig.identifyResults["Vulnerable Scoring Area - Surface Water"]["vss_vulnerabilityScore"] : "N/A" %></strong></td></tr>
-			<tr><td>Wellhead Protection Zone: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Well Head Protection Zones")) ? globalConfig.identifyResults["Well Head Protection Zones"]["ZoneName"] : "N/A" %></strong></td></tr>
-			<tr><td>Groundwater Vulnerability Score: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Groundwater")) ? globalConfig.identifyResults["Vulnerable Scoring Area - Groundwater"]["vsg_vulnerabilityScore"] : "N/A" %></strong></td></tr>
-			<tr><td>WHPA – Groundwater Under Direct Influence: <strong><%= (globalConfig.identifyResults.hasOwnProperty("WHPA Groundwater Under Direct Influence: WHPA-E)")) ? globalConfig.identifyResults["WHPA Groundwater Under Direct Influence: WHPA-E)"]["ZoneName"] : "N/A" %></strong></td></tr>
-			<tr><td>Groundwater Under Direct Influence Vulnerability Score: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Groundwater Under Direct Influence")) ? globalConfig.identifyResults["Vulnerable Scoring Area - Groundwater Under Direct Influence"]["vsu_vulnerabilityScore_GUDI"] : "N/A" %></strong></td></tr>
-			<tr><td>Intrinsic Vulnerability Level: <strong><%= (globalConfig.identifyResults.hasOwnProperty("SWP_Highly_Vul_Areas")) ? globalConfig.identifyResults["SWP_Highly_Vul_Areas"]["IntrinsicVulnerabilityLevel"] : "N/A" %></strong></td></tr>
-			<tr><td>Significant Groundwater Recharge Area: <strong><%= (globalConfig.identifyResults.hasOwnProperty("SGRA_SPP_ID_NO_BORDERS")) ? "Yes" : "No" %></strong></td></tr>
-			<tr><td>Niagara Escarpment Development Control Area: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Niagara Escarpment Area of Development Control")) ? "Yes" : "No" %></strong></td></tr>
-			<tr><td>Issue Contributing areas: <strong><%= (globalConfig.identifyResults.hasOwnProperty("SWP_Issue_Contributing_Areas")) ? "Yes" : "No" %></strong></td></tr>
-		</tbody>
-	</table>
-   </script>   
+   </script>  -->
 	<!--MOE MAP-->   
 
 
@@ -188,7 +166,7 @@
 
   <a name="top" id="top"></a>
  <div id="right_column">
- <h1>Source Protection ECA Screening and Policy Search Map</h1>
+ <h1>Source Protection Location and Policy Search Map</h1>
  This tool enables a user to identify whether an address falls within a Vulnerable Area.  The tool then allows the user to identify significant threat Source Protection Policies for that zone. <br><br>
  <strong>Note</strong>:  Zones where Significant threats appear are Wellhead Protection Areas:WHPA A;  and WHPA B with scores of 10 or 8; Intake Protection Zones - IPZ 1 and 2 with scores greater than 7, and Issue Contributing Areas.    For the threat activityDense Non Aqueous Phase Liquids (DNAPL) the significant threat zone is broader, encompassing WHPA C.  Threat Activities and the Circumstances under which they pose a threat to drinking water are searchable in the link below.   
 

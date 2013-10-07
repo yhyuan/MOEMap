@@ -58,7 +58,7 @@ globalConfig.maxQueryZoomLevel = globalConfig.maxQueryZoomLevel || 17;
 globalConfig.maxQueryZoomLevelTWPSearch = globalConfig.maxQueryZoomLevelTWPSearch || 11;  //Zoom Level for Township search
 globalConfig.maxQueryZoomLevelTWPLotConSearch = globalConfig.maxQueryZoomLevelTWPLotConSearch || 14;	// Zoom Level for Township with Lot and Concession search
 globalConfig.queryTableDivId = globalConfig.queryTableDivId || 'query_table';
-globalConfig.queryTableTemplateDivId = globalConfig.queryTableTemplateDivId || 'QueryTableTemplate';
+//globalConfig.queryTableTemplateDivId = globalConfig.queryTableTemplateDivId || 'QueryTableTemplate';
 
 if (typeof globalConfig.usejQueryUITable === "undefined"){
 	globalConfig.usejQueryUITable = true;   //whether want to use the predefined multiple tab supports. If it is false, it will only support one tab. 
@@ -251,16 +251,19 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 		if (globalConfig.identifyMultiplePolygonLayersServicesTemplate.hasOwnProperty('displayResultBelowMap') && (globalConfig.identifyMultiplePolygonLayersServicesTemplate.displayResultBelowMap)) {
 			globalConfig.identifyResults["LatLng"] = queryParams.gLatLng;
 			globalConfig.identifyResults["UTM"] = globalConfig.convertLatLngtoUTM(queryParams.gLatLng.lat(), queryParams.gLatLng.lng());		
-			var template = document.getElementById(globalConfig.queryTableTemplateDivId).innerHTML;
-			document.getElementById(globalConfig.queryTableDivId).innerHTML = _.template(template, globalConfig.identifyResults);
-		} else {
-			MOEMAP.openInfoWindow(queryParams.gLatLng, container);	
-			(function (container, identifyMarker) {
-				google.maps.event.addListener(identifyMarker, 'click', function () {
-					MOEMAP.openInfoWindow(identifyMarker.getPosition(), container);
-				});
-			})(container, identifyMarker);
-		}
+			//var template = document.getElementById(globalConfig.queryTableTemplateDivId).innerHTML;
+			document.getElementById(globalConfig.queryTableDivId).innerHTML = _.template(globalConfig.identifyMultiplePolygonLayersServicesTemplate.queryTableTemplate, globalConfig.identifyResults);
+			//console.log(container);
+			container = _.template(globalConfig.identifyMultiplePolygonLayersServicesTemplate.popupTemplate, globalConfig.identifyResults);
+		} //else {
+		container = globalConfig.createControllableInfoWindowContent(container);
+		MOEMAP.openInfoWindow(queryParams.gLatLng, container);	
+		(function (container, identifyMarker) {
+			google.maps.event.addListener(identifyMarker, 'click', function () {
+				MOEMAP.openInfoWindow(identifyMarker.getPosition(), container);
+			});
+		})(container, identifyMarker);
+		//}
 		google.maps.event.addListener(identifyMarker, 'dragend', function () {
 			MOEMAP.clearOverlays();
 			if(document.getElementById(globalConfig.searchInputBoxDivId)){
@@ -292,8 +295,11 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 					MOEMAP.addOverlay(geometryPoly);	
 				}
 			}
-		}		
-		
+		}
+		/*
+		if ((typeof(globalConfig.searchHelpTxt)!== "undefined") && globalConfig.testDivExist(globalConfig.informationDivId)){
+			document.getElementById(globalConfig.informationDivId).innerHTML = globalConfig.searchHelpTxt;
+		}*/		
 	}
 };
 globalConfig.postIdentifyCallback = globalConfig.postIdentifyCallback || globalConfig.postIdentifyCallbackList[globalConfig.postIdentifyCallbackName];

@@ -232,7 +232,12 @@ globalConfig.parseJSON = function (input) {
 	});	
 	return _.object(keys, values);
 };
-
+globalConfig.getAnalysisMethods = function (speciesCode, analysisMethodList) {
+	//var speciesAnalysisMethods = globalConfig.speciesDict[speciesCode] + analysisMethodList;
+	//if speciesAnalysisMethods.length > 22
+	//console.log(analysisMethodList);
+	return analysisMethodList.split(",").join(", ");
+};
 globalConfig.layers = [{
 	url: globalConfig.url  + "/0",
 	renderTargetDiv: "siteDescription",
@@ -291,7 +296,7 @@ globalConfig.layers = [{
 						var advisoryG = advisory.G;\
 						var advisoryS = advisory.S;\
 				%>\
-					<TR><TH ROWSPAN=2 SCOPE="row" ALIGN="left"><%= globalConfig.getSpeciesNameURL(speciesCode) %><SUP><%= analysisObject[speciesCode] %></SUP></TD>\
+					<TR><TH ROWSPAN=2 SCOPE="row" ALIGN="left"><%= globalConfig.getSpeciesNameURL(speciesCode) %><SUP><%= globalConfig.getAnalysisMethods(speciesCode, analysisObject[speciesCode]) %></SUP></TD>\
 					<TD>G</TD>\
 					<%\
 						_.each(advisory.G, function(adv, key, list) {\
