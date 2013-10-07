@@ -3,8 +3,13 @@
 //globalConfig.url = "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/LakePartner/MapServer";
 //globalConfig.SecchiDepth_ReportName = "SecchiDepth_Report.htm";
 //globalConfig.TotalPhosphorus_ReportName = "TotalPhosphorus_Report.htm";
-globalConfig.SecchiDepth_ReportName = "secchidepth_report";
-globalConfig.TotalPhosphorus_ReportName = "totalphoshorus_report";
+if (globalConfig.language === "EN") {
+	globalConfig.SecchiDepth_ReportName = "secchidepth_report";
+	globalConfig.TotalPhosphorus_ReportName = "totalphoshorus_report";
+} else {
+	globalConfig.SecchiDepth_ReportName = "fr_secchidepth_report";
+	globalConfig.TotalPhosphorus_ReportName = "fr_totalphoshorus_report";
+}
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
 globalConfig.usejQueryUITable = false;   //Avoid loading extra javascript files

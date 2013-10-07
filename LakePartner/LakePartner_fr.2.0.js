@@ -2,8 +2,8 @@ globalConfig = {};
 globalConfig.language = "FR";
 //globalConfig.SecchiDepth_ReportName = "SecchiDepth_Report.htm";
 //globalConfig.TotalPhosphorus_ReportName = "TotalPhosphorus_Report.htm";
-globalConfig.SecchiDepth_ReportName = "secchidepth_report";
-globalConfig.TotalPhosphorus_ReportName = "totalphoshorus_report";
+globalConfig.SecchiDepth_ReportName = "fr_secchidepth_report";
+globalConfig.TotalPhosphorus_ReportName = "fr_totalphoshorus_report";
 globalConfig.searchHelpTxt = "Rechercher <strong>nom du lac</strong>, <strong>le num\u00e9ro de la station (STN)</strong>, <strong>l\u0027adresse</strong> ou cliquer sur aide pour faire une recherche avanc\u00e9e.";
 globalConfig.tabsTemplateContent = "<strong><font color='#799441'>{globalConfig.wordCapitalize(LAKENAME)}, STN {STN}, N&deg; du lieu {SITEID}</font></strong><br>Canton: {globalConfig.wordCapitalize(TOWNSHIP)}<br>{SITEDESC}<br><br>Tableau et donn\u00e9es interactifs: <br>[{SE_COUNT}?  ?&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='" + globalConfig.SecchiDepth_ReportName + "?id={ID}'>Disque Secchi</a><br>][{PH_COUNT}?  ?&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='" + globalConfig.TotalPhosphorus_ReportName + "?id={ID}'>Concentration de phosphore total</a><br>]<br>Latitude <b>{globalConfig.deciToDegree(LATITUDE)}</b> Longitude <b>{globalConfig.deciToDegree(LONGITUDE)}</b><br><a href='mailto:lakepartner@ontario.ca?subject=Erreur de Portail ({globalConfig.wordCapitalize(LAKENAME)}, STN {STN}, N&deg; du lieu {SITEID})'>Signaler une erreur pour ce lieu</a>.<br>";
 globalConfig.otherInfoHTML = "<h2>Une erreur sur la carte?</h2> \
