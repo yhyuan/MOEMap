@@ -276,7 +276,7 @@ globalConfig.layers = [{
 								<TR><TD bgColor=#dddddd colSpan=4><STRONG><%= globalConfig.chooseLang("Construction Record - Screen", "Construction - Cr&eacute;pine") %></STRONG></TD></TR>\
 								<TR>\
 									<TD width="20%"><SPAN STYLE="font-size:75%"><I><%= globalConfig.chooseLang("Outside<BR>Diameter", "Diam&egrave;tre<BR>ext&eacute;rieur") %></I></SPAN></TD>\
-									<TD width="40%"><SPAN STYLE="font-size:75%"><I><%= globalConfig.chooseLang("Material", "Mat&eacute;riau") %></I></SPAN>X</TD>\
+									<TD width="40%"><SPAN STYLE="font-size:75%"><I><%= globalConfig.chooseLang("Material", "Mat&eacute;riau") %></I></SPAN></TD>\
 									<TD width="20%"><SPAN STYLE="font-size:75%"><I><%= globalConfig.chooseLang("Depth", "Profondeur") %><BR><%= globalConfig.chooseLang("From", "De") %><BR></I></SPAN></TD>\
 									<TD width="20%"><SPAN STYLE="font-size:75%"><I><BR><%= globalConfig.chooseLang("To", "&agrave;") %><BR></I></SPAN></TD>\
 								</TR>\

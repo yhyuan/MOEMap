@@ -162,9 +162,9 @@ globalConfig.preIdentifyCallbackList = globalConfig.preIdentifyCallbackList || {
 		return params;
 	},
 	"SWPLocator": function (queryParams) {
-		if (globalConfig.identifyMultiplePolygonLayersServicesTemplate.hasOwnProperty('displayResultBelowMap') && (globalConfig.identifyMultiplePolygonLayersServicesTemplate.displayResultBelowMap)) {
+		/*if (globalConfig.identifyMultiplePolygonLayersServicesTemplate.hasOwnProperty('displayResultBelowMap') && (globalConfig.identifyMultiplePolygonLayersServicesTemplate.displayResultBelowMap)) {
 			globalConfig.identifyResults = {};
-		}	
+		}*/
 		var layerSetting = queryParams.layerList[queryParams.currentLayerId];
 		var params = {
 			returnGeometry: layerSetting.hasOwnProperty('returnGeometry') ? layerSetting.returnGeometry : false,
@@ -247,7 +247,7 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 				draggable: true
 			}));
 		MOEMAP.addOverlay(identifyMarker);
-		
+		/*
 		if (globalConfig.identifyMultiplePolygonLayersServicesTemplate.hasOwnProperty('displayResultBelowMap') && (globalConfig.identifyMultiplePolygonLayersServicesTemplate.displayResultBelowMap)) {
 			globalConfig.identifyResults["LatLng"] = queryParams.gLatLng;
 			globalConfig.identifyResults["UTM"] = globalConfig.convertLatLngtoUTM(queryParams.gLatLng.lat(), queryParams.gLatLng.lng());		
@@ -255,7 +255,7 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 			document.getElementById(globalConfig.queryTableDivId).innerHTML = _.template(globalConfig.identifyMultiplePolygonLayersServicesTemplate.queryTableTemplate, globalConfig.identifyResults);
 			//console.log(container);
 			container = _.template(globalConfig.identifyMultiplePolygonLayersServicesTemplate.popupTemplate, globalConfig.identifyResults);
-		} //else {
+		}*/ //else {
 		container = globalConfig.createControllableInfoWindowContent(container);
 		MOEMAP.openInfoWindow(queryParams.gLatLng, container);	
 		(function (container, identifyMarker) {
@@ -269,7 +269,10 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 			if(document.getElementById(globalConfig.searchInputBoxDivId)){
 				document.getElementById(globalConfig.searchInputBoxDivId).value="";
 				document.getElementById(globalConfig.searchInputBoxDivId).focus();
-			}			
+			}
+			if(document.getElementById(globalConfig.queryTableDivId)){
+				document.getElementById(globalConfig.queryTableDivId).innerHTML = "";
+			}
 			var geocoder = new google.maps.Geocoder();
 			var latlng = identifyMarker.getPosition();
 			queryParams.map.setCenter (latlng);
@@ -295,7 +298,10 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 					MOEMAP.addOverlay(geometryPoly);	
 				}
 			}
-		}
+		}/*
+		if (globalConfig.identifyMultiplePolygonLayersServicesTemplate.hasOwnProperty('success')) {
+			globalConfig.identifyMultiplePolygonLayersServicesTemplate.success();
+		}*/
 		/*
 		if ((typeof(globalConfig.searchHelpTxt)!== "undefined") && globalConfig.testDivExist(globalConfig.informationDivId)){
 			document.getElementById(globalConfig.informationDivId).innerHTML = globalConfig.searchHelpTxt;
