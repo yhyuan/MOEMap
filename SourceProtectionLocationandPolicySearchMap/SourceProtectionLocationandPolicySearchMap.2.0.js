@@ -68,7 +68,7 @@ globalConfig.identifyLayerList = [
 	}, {
 		name: 	"Vulnerable Scoring Area - Groundwater",
 		id: 8,
-		returnFields: ["vsg_vulnerabilityScore"]
+		returnFields: ["vsg_vulnerabilityScore", "vsg_whpa_id", "vsg_spp_id"]
 	}, {
 		name: 	"Vulnerable Scoring Area - Groundwater Under Direct Influence",
 		id: 9,
@@ -76,7 +76,7 @@ globalConfig.identifyLayerList = [
 	}, {
 		name: 	"Vulnerable Scoring Area - Surface Water",
 		id: 10,
-		returnFields: ["vss_vulnerabilityScore"]
+		returnFields: ["vss_vulnerabilityScore", "vss_spp_id", "vss_ipz_id"]
 	}, {
 		name: 	"Highly Vulnerable Areas",
 		id: 11,
@@ -130,7 +130,9 @@ globalConfig.popupTemplate = '<%= (globalConfig.identifyResults.hasOwnProperty("
 	<%= (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Groundwater")) ? "Groundwater Vulnerability Score: <strong>" + globalConfig.identifyResults["Vulnerable Scoring Area - Groundwater"]["vsg_vulnerabilityScore"] + "</strong><br>": "" %>\
 	<%= (globalConfig.identifyResults.hasOwnProperty("WHPA Groundwater Under Direct Influence: WHPA-E)")) ? "WHPA – Groundwater Under Direct Influence (GUDI): <strong>" + globalConfig.identifyResults["WHPA Groundwater Under Direct Influence: WHPA-E)"]["ZoneName"] + "</strong><br>": "" %>\
 	<%= (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Groundwater Under Direct Influence")) ? "GUDI Vulnerability Score: <strong>" + globalConfig.identifyResults["Vulnerable Scoring Area - Groundwater Under Direct Influence"]["vsu_vulnerabilityScore_GUDI"] + "</strong><br>": "" %>\
-	Issue Contributing areas (ICA): <strong><%= (globalConfig.identifyResults.hasOwnProperty("Issue Contributing Areas")) ? "Yes" : "No" %></strong>';
+	Issue Contributing areas (ICA): <strong><%= (globalConfig.identifyResults.hasOwnProperty("Issue Contributing Areas")) ? "Yes" : "No" %></strong><br>\
+	<%= (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Surface Water")) ? "<a target=\'_blank\' href=\'http://maps.thamesriver.on.ca/swpPolicyEntry/parseLink/parse.aspx?zone=" + globalConfig.identifyResults["Vulnerable Scoring Area - Surface Water"]["vss_ipz_id"] + "&score=" + globalConfig.identifyResults["Vulnerable Scoring Area - Surface Water"]["vss_vulnerabilityScore"] + "&sppid=" + globalConfig.identifyResults["Vulnerable Scoring Area - Surface Water"]["vss_spp_id"] + "&source=sw\'>Policy (surface water protection)</a><br>": "" %>\
+	<%= (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Groundwater")) ? "<a target=\'_blank\' href=\'http://maps.thamesriver.on.ca/swpPolicyEntry/parseLink/parse.aspx?zone=" + globalConfig.identifyResults["Vulnerable Scoring Area - Groundwater"]["vsg_whpa_id"] + "&score=" + globalConfig.identifyResults["Vulnerable Scoring Area - Groundwater"]["vsg_vulnerabilityScore"] + "&sppid=" + globalConfig.identifyResults["Vulnerable Scoring Area - Groundwater"]["vsg_spp_id"] + "\'>Policy (groundwater protection)</a><br>": "" %>';
 globalConfig.identifyMultiplePolygonLayersServicesTemplate = {
 	layerList: _.map(globalConfig.identifyLayerList, function (layer) {
 		return {

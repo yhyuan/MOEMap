@@ -5,10 +5,10 @@
 //globalConfig.TotalPhosphorus_ReportName = "TotalPhosphorus_Report.htm";
 if (globalConfig.language === "EN") {
 	globalConfig.SecchiDepth_ReportName = "secchidepth_report";
-	globalConfig.TotalPhosphorus_ReportName = "totalphoshorus_report";
+	globalConfig.TotalPhosphorus_ReportName = "totalphosphorus_report";
 } else {
 	globalConfig.SecchiDepth_ReportName = "fr_secchidepth_report";
-	globalConfig.TotalPhosphorus_ReportName = "fr_totalphoshorus_report";
+	globalConfig.TotalPhosphorus_ReportName = "fr_totalphosphorus_report";
 }
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};

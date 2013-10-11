@@ -1,7 +1,0 @@
-ant -f build_en.xml
-rm SourceProtectionECAScreeningandPolicySearchMap_en.2.0-concatenate.js
-rm SourceProtectionECAScreeningandPolicySearchMap_en.2.0-concatenate-min.js
-cp SourceProtectionECAScreeningandPolicySearchMap_en.2.0-min.js /Y/web/SourceProtectionECAScreeningandPolicySearchMap/en
-rm SourceProtectionECAScreeningandPolicySearchMap_en.2.0-min.js
-cp SourceProtectionECAScreeningandPolicySearchMap_en.htm /Y/web/SourceProtectionECAScreeningandPolicySearchMap/en
-mv /Y/web/SourceProtectionECAScreeningandPolicySearchMap/en/SourceProtectionECAScreeningandPolicySearchMap_en.htm  /Y/web/SourceProtectionECAScreeningandPolicySearchMap/en/SourceProtectionECAScreeningandPolicySearchMap.htm
