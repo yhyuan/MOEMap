@@ -1,18 +1,28 @@
+if (globalConfig.language === "EN") {
+	globalConfig.annualReportURL = "TRAIS_Report.htm";
+	globalConfig.planSummaryURL = "TRAIS_PlanSummaries_Report.htm";
+	globalConfig.exitRecordsURL = "TRAIS_ExitRecords_Report.htm";
+} else {
+	globalConfig.annualReportURL = "TRAIS_Report.htm";
+	globalConfig.planSummaryURL = "TRAIS_PlanSummaries_Report.htm";
+	globalConfig.exitRecordsURL = "TRAIS_ExitRecords_Report.htm";
+}
 
 globalConfig.layers = [{
 	url: globalConfig.url + "/0",
 	renderTargetDiv: "target",
 	event: "reportReady",
 	where: "1=1",
-	outFields: ["ID", "OrganizationName", "FacilityName", "Address", "NUMsubst"],
+	//outFields: ["ID", "OrganizationName", "FacilityName", "Address", "NUMsubst"],
+	outFields: ["UniqueID", "Organisation", "Facility", "City", "NUMsubst"],
 	processResults: function (fs) {
 		var constructObject = function (feature) {
 			var attr = feature.attributes;
 			return {
-				CompanyName: attr.OrganizationName,
-				FacilityName: attr.FacilityName,
-				ID: attr.ID,
-				City: attr.Address.split("/")[1],
+				CompanyName: attr.Organisation, //attr.OrganizationName,
+				FacilityName: attr.Facility, //attr.FacilityName,
+				ID: attr.UniqueID, //attr.ID,
+				City: attr.City, //attr.Address.split("/")[1],
 				Substances: attr.NUMsubst
 			};
 		};
@@ -56,7 +66,10 @@ globalConfig.layers = [{
 						substance = "substances";\
 					} \
 			%>\
-				<A HREF="<%= globalConfig.chooseLang("en", "fr") + "_trais_report?id=" + facility.ID %>"><%= facility.CompanyName %>-<%= facility.FacilityName %> [<%= facility.City %>]</A> (<%= facility.Substances %> <%= substance %>)<BR>\
+				<%= facility.CompanyName %>-<%= facility.FacilityName %> [<%= facility.City %>] (<%= facility.Substances %> <%= substance %>)<BR>\
+				<A HREF="<%= globalConfig.annualReportURL %>?id=<%= facility.ID %>"><%= globalConfig.chooseLang("Link to Annual Reports", "Lien aux rapports annuels") %></A>, \
+				<A HREF="<%= globalConfig.planSummaryURL %>?id=<%= facility.ID %>"><%= globalConfig.chooseLang("Link to Plan Summaries", "Lien aux Plan Summaries") %></A>, \
+				<A HREF="<%= globalConfig.exitRecordsURL %>?id=<%= facility.ID %>"><%= globalConfig.chooseLang("Link to Records", "Lien aux Records") %></A><br><br>\
 			<%\
 				});\
 			%>\

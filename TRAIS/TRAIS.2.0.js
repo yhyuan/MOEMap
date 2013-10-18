@@ -2,6 +2,48 @@
 	
 //globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/TRAIS/MapServer";
 //globalConfig.url = "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/TRAIS/MapServer";
+var sectorNames = [];
+var sectorNameLayerID = "7";
+var sectorNameQueryLayer = new gmaps.ags.Layer(globalConfig.url  + "/" + sectorNameLayerID);
+sectorNameQueryLayer.query({
+	returnGeometry: false,
+	where: "1=1",
+	outFields: (globalConfig.language === "EN") ? ["ID", "sectorNameEn"] : ["ID", "sectorNameFr"]
+}, function (rs) {
+	sectorNames = _.map(rs.features, function(feature) {
+		return feature.attributes.ID + " - " + ((globalConfig.language === "EN") ? feature.attributes.sectorNameEn : feature.attributes.sectorNameFr);
+	});
+});
+var substancesNames = [];
+var substancesNameLayerID = "3";
+var substancesNameQueryLayer = new gmaps.ags.Layer(globalConfig.url  + "/" + substancesNameLayerID);
+substancesNameQueryLayer.query({
+	returnGeometry: false,
+	where: "1=1",
+	outFields: (globalConfig.language === "EN") ? ["CODE", "SUBSTANCE_EN", "CASNumber"] : ["CODE", "SUBSTANCE_FR", "CASNumber"]
+}, function (rs) {
+	substancesNames = _.map(rs.features, function(feature) {
+		return ((globalConfig.language === "EN") ? feature.attributes.SUBSTANCE_EN : feature.attributes.SUBSTANCE_FR) + " " + feature.attributes.CASNumber;
+	});
+	var codes  = _.map(rs.features, function(feature) {
+		return feature.attributes.CODE;
+	});
+	globalConfig.substancesDict = _.object(substancesNames, codes);
+});
+
+if (globalConfig.language === "EN") {
+	globalConfig.annualReportURL = "TRAIS_Report.htm";
+	globalConfig.planSummaryURL = "TRAIS_PlanSummaries_Report.htm";
+	globalConfig.exitRecordsURL = "TRAIS_ExitRecords_Report.htm";
+	globalConfig.searchHelpTxt = "Search <strong>city</strong>, <strong>facility name</strong>, <strong>company</strong>, <strong>sector</strong>, <strong>substance</strong> or see help for more advanced options.";
+	globalConfig.tabsTemplateContent = "Facility: <b>{Facility}</b><br>Organization: <b>{Organisation}</b><br>Physical Address: <b>{StreetAddress} / {City}</b><br>NPRI ID: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Sector: <b>{mapConfig.displaySector(Sector)}</b><br>Toxic Substances: <b>{NUMsubst}</b><br><br>[{NUMsubst}? No Annual Report submitted. ?<a target='_blank' href='" + globalConfig.annualReportURL + "?id={UniqueID}'>Link to Annual Reports</a>]<br>[{NUMPlanSummary}? No Plan Summary submitted. ?<a target='_blank' href='" + globalConfig.planSummaryURL + "?id={UniqueID}'>Link to Plan Summaries</a>]<br>[{NUMExitRecord}? No Record submitted. ?<a target='_blank' href='" + globalConfig.exitRecordsURL + "?id={UniqueID}'>Link to Records</a>]<br><i>These links will open in a new browser window.</i><br>";
+} else {
+	globalConfig.annualReportURL = "TRAIS_Report.htm";
+	globalConfig.planSummaryURL = "TRAIS_PlanSummaries_Report.htm";
+	globalConfig.exitRecordsURL = "TRAIS_ExitRecords_Report.htm";
+	globalConfig.searchHelpTxt = "Rechercher par <strong>ville</strong>, <strong>installation</strong>, <strong>entreprise</strong>, <strong>substance</strong>, <strong>secteur</strong> ou cliquer sur aide pour plus d\u0027information sur la recherche avanc\u00e9e.";
+	globalConfig.tabsTemplateContent = "Installation: <b>{Facility}</b><br>Entreprise: <b>{Organisation}</b><br>Adresse: <b>{StreetAddress} / {City}</b><br>N&deg; INRP: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Secteur: <b>{mapConfig.displaySector(Sector)}</b><br>Substances toxiques: <b>{NUMsubst}</b><br><br><a target='_blank' href='" + globalConfig.annualReportURL + "?id={UniqueID}'>Lien aux rapports annuels</a><br><a target='_blank' href='" + globalConfig.planSummaryURL + "?id={UniqueID}'>Lien aux Plan Summaries</a><br><a target='_blank' href='" + globalConfig.exitRecordsURL + "?id={UniqueID}'>Lien aux Records</a><br><i>Ce lien s'ouvre dans une nouvelle fen\u00eatre.</i><br>";	
+}
 
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
@@ -16,9 +58,9 @@ globalConfig.InformationLang = "Information";
 globalConfig.postIdentifyCallbackName = "SportFish";
 //globalConfig.infoWindowContentHeight = '700px';
 globalConfig.infoWindowWidth  = '320px';
-globalConfig.infoWindowHeight = '180px';
+globalConfig.infoWindowHeight = '200px';
 if (globalConfig.accessible) {
-	var reportLang = "";
+/*	var reportLang = "";
 	if (globalConfig.language === "EN") {
 		reportLang = "Report";	
 	} else {
@@ -43,7 +85,7 @@ if (globalConfig.accessible) {
 			content: globalConfig.tableFieldList
 		} 
 	}];
-	globalConfig.postConditionsCallbackName = "AccessibleWells";		
+	globalConfig.postConditionsCallbackName = "AccessibleWells";*/		
 } else {
 	//globalConfig.usePredefinedMultipleTabs = true;  //Avoid loading extra javascript files
 	globalConfig.queryLayerList = [{
@@ -194,7 +236,7 @@ var mapConfig = {
 		}
 	},
 	searchSubstances: function(queryParams){
-		var ii = -1; //substancesNames.indexOf(name) + 1;
+		/*var ii = -1; //substancesNames.indexOf(name) + 1;
 		for(var i=0; i<substancesNames.length; i++){
 			if(substancesNames[i] == queryParams.searchString){
 				ii = i;
@@ -209,7 +251,8 @@ var mapConfig = {
 			index = index + "0" + ii;
 		}else{
 			index = index + ii;
-		}
+		}*/
+		var index = globalConfig.substancesDict[queryParams.searchString];
 		var where = "(UPPER(Substance_List) LIKE '%" + index + "%')"; // OR (UPPER(Substance_List) LIKE '" + index + "%') OR (UPPER(Substance_List) LIKE '%" + index + "')";
 		queryParams.where = where;
 		queryParams.requireGeocode = false;
