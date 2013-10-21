@@ -2,6 +2,12 @@
 	
 //globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/TRAIS/MapServer";
 //globalConfig.url = "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/TRAIS/MapServer";
+globalConfig.searchFieldFacilityName = "Facility";
+globalConfig.searchFieldOrganizationName = "Organisation";
+globalConfig.searchFieldSector = "Sector";
+globalConfig.searchFieldNPRI_ID = "NPRI_ID";
+globalConfig.searchFieldSubstance_List = "Substance_List";
+
 var sectorNames = [];
 var sectorNameLayerID = "7";
 var sectorNameQueryLayer = new gmaps.ags.Layer(globalConfig.url  + "/" + sectorNameLayerID);
@@ -125,7 +131,7 @@ globalConfig.search = function(){
 		var coorsArray = name.split(/\s+/);
 		var str = coorsArray.join(" ").toUpperCase();
 		queryParams.requireGeocode = true;
-		queryParams.where = "(UPPER(FacilityName) LIKE '%" + str + "%') OR (UPPER(OrganizationName) LIKE '%" + str + "%')";
+		queryParams.where = "(UPPER(" + globalConfig.searchFieldFacilityName + ") LIKE '%" + str + "%') OR (UPPER(" + globalConfig.searchFieldOrganizationName + ") LIKE '%" + str + "%')";
 		MOEMAP.queryLayersWithConditionsExtent(queryParams);
 	}
 };
@@ -153,7 +159,7 @@ var mapConfig = {
 			min = code;
 			max = code;
 		}
-		var where = "((Sector >= " + min + ") AND (Sector <= " + max + "))";
+		var where = "((" + globalConfig.searchFieldSector + " >= " + min + ") AND (" + globalConfig.searchFieldSector + " <= " + max + "))";
 		queryParams.where = where;
 		queryParams.requireGeocode = false;
 		MOEMAP.queryLayersWithConditionsExtent(queryParams);		
@@ -161,7 +167,7 @@ var mapConfig = {
 	isSector: function (name){
 		var reg = /^\d+$/;
 		if((name.length == 6) && (reg.test(name))){		
-				return "Sector = " + name;
+				return globalConfig.searchFieldSector + " = " + name;
 		}
 		return "";
 	},		
@@ -185,7 +191,7 @@ var mapConfig = {
 			while (name.length != 10){
 				name = "0" + name
 			}
-			return "NPRI_ID = '" + name + "'";
+			return globalConfig.searchFieldNPRI_ID + " = '" + name + "'";
 		}
 		return "";
 	},
@@ -253,7 +259,7 @@ var mapConfig = {
 			index = index + ii;
 		}*/
 		var index = globalConfig.substancesDict[queryParams.searchString];
-		var where = "(UPPER(Substance_List) LIKE '%" + index + "%')"; // OR (UPPER(Substance_List) LIKE '" + index + "%') OR (UPPER(Substance_List) LIKE '%" + index + "')";
+		var where = "(UPPER(" + globalConfig.searchFieldSubstance_List + ") LIKE '%" + index + "%')"; // OR (UPPER(Substance_List) LIKE '" + index + "%') OR (UPPER(Substance_List) LIKE '%" + index + "')";
 		queryParams.where = where;
 		queryParams.requireGeocode = false;
 		MOEMAP.queryLayersWithConditionsExtent(queryParams);		

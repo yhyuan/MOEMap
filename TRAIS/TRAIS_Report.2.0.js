@@ -3,7 +3,7 @@ globalConfig.layers = [{
 	renderTargetDiv: "target",
 	event: "reportReady",
 	where: QueryString.hasOwnProperty("year") ? ("(UniqueFacilityID = '" + QueryString.id + "') AND (ReportingPeriod = '" + QueryString.year + "')"):("(UniqueFacilityID = '" + QueryString.id + "')"),
-	outFields: QueryString.hasOwnProperty("year") ? ["FacilityName", "StreetAddressPhysicalAddress", "MunicipalityCityPhysicalAddress", "OrganizationName", "NPRIID", "Sector", "PublicContactFullName", "PublicContactTelephone", "PublicContactEmail", "HighestRankingEmployee", "SubstanceName", "Units", "EnteredtheFacilityUsed", "Created", "ContainedinProduct", "ReleasestoAir", "ReleasestoWater", "ReleasestoLand", "DisposalOnSite", "DisposalOffSite", "RecycleOffSite"] : ["UniqueFacilityID", "ReportingPeriod"],
+	outFields: QueryString.hasOwnProperty("year") ? ["FacilityName", "StreetAddressPhysicalAddress", "MunicipalityCityPhysicalAddress", "OrganizationName", "NPRIID", "Sector", "PublicContactFullName", "PublicContactTelephone", "PublicContactEmail", "HighestRankingEmployee", "SubstanceName", "Units", "EnteredtheFacilityUsed", "Created", "ContainedinProduct", "ReleasestoAir", "ReleasestoWater", "ReleasestoLand", "DisposalOnSite", "DisposalOffSite", "RecycleOffSite", "UseEnteredtheFacilityAnnualPercentageChange", "CreatedAnnualPercentageChange", "ContainedinProductAnnualPercentageChange", "ReasonsforChangeTRAQuantifications", "ReleasestoAirAnnualPercentageChange", "ReleasestoWaterAnnualPercentageChange", "ReleasestoLandAnnualPercentageChange", "ReasonsforChangeAllMedia"] : ["UniqueFacilityID", "ReportingPeriod"],
 	processResults: function (fs) {
 		var calculateRenderResultwithYear = function (fs) {
 			var attr = fs[0].attributes;
@@ -34,7 +34,21 @@ globalConfig.layers = [{
 						Land: attr.ReleasestoLand,
 						DOnSite: attr.DisposalOnSite,
 						DOffSite: attr.DisposalOffSite,
-						ROffSite: attr.RecycleOffSite
+						ROffSite: attr.RecycleOffSite,
+						UseEnteredtheFacilityAnnualPercentageChange: attr.UseEnteredtheFacilityAnnualPercentageChange,
+						CreatedAnnualPercentageChange: attr.CreatedAnnualPercentageChange,
+						ContainedinProductAnnualPercentageChange: attr.ContainedinProductAnnualPercentageChange,
+						ReasonsforChangeTRAQuantifications: attr.ReasonsforChangeTRAQuantifications,
+						ReleasestoAirAnnualPercentageChange: attr.ReleasestoAirAnnualPercentageChange,
+						ReleasestoWaterAnnualPercentageChange: attr.ReleasestoWaterAnnualPercentageChange,
+						ReleasestoLandAnnualPercentageChange: attr.ReleasestoLandAnnualPercentageChange,
+						ReasonsforChangeAllMedia: attr.ReasonsforChangeAllMedia,
+						DisposedOnSiteAnnualPercentageChange: attr.DisposedOnSiteAnnualPercentageChange,
+						DisposedOffSiteAnnualPercentageChange: attr.DisposedOffSiteAnnualPercentageChange,
+						OffSiteTransfersAnnualPercentageChange: attr.OffSiteTransfersAnnualPercentageChange,
+						ReasonsforChangeDisposals: attr.ReasonsforChangeDisposals,
+						RecycledOffSiteAnnualPercentageChange: attr.RecycledOffSiteAnnualPercentageChange,
+						ReasonsForChangeRecycling: attr.ReasonsForChangeRecycling		
 					};
 					substances.push(s);
 				}
@@ -52,7 +66,7 @@ globalConfig.layers = [{
 			}
 		};
 		var renderResult = QueryString.hasOwnProperty("year") ? calculateRenderResultwithYear(fs) : calculateRenderResult(fs);
-		console.log(renderResult);
+		//console.log(renderResult);
 		PubSub.emit(globalConfig.layers[0].event + "Data", {renderResult: renderResult});
 		//document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, {renderResult: renderResult});		
 	},
@@ -93,44 +107,59 @@ globalConfig.layers = [{
 				<A NAME="<%= substance.Name %>"></A><U><B><%= substance.Name %></B></U><P>\
 				<TABLE BORDER=1 WIDTH=600>\
 						<TR>\
-							<TD WIDTH=50% BGCOLOR=lightgrey>&nbsp;</TD>\
-							<TD WIDTH=50% BGCOLOR=lightgrey><%= renderResult.ReportingPeriod %><BR><%= globalConfig.chooseLang("Amount Reported", "Quantit&eacute; d&eacute;clar&eacute;e") %> <BR>(<%= substance.Units %>)</TD>\
+							<TD WIDTH=25% BGCOLOR=lightgrey>&nbsp;</TD>\
+							<TD WIDTH=25% BGCOLOR=lightgrey><%= renderResult.ReportingPeriod %><BR><%= globalConfig.chooseLang("Amount Reported", "Quantit&eacute; d&eacute;clar&eacute;e") %> <BR>(<%= substance.Units %>)</TD>\
+							<TD WIDTH=25% BGCOLOR=lightgrey><%= globalConfig.chooseLang("% Change from Previous Annual Report for ", "% Change from Previous Annual Report for ") %> <%= (renderResult.ReportingPeriod - 1) %></TD>\
+							<TD WIDTH=25% BGCOLOR=lightgrey><%= globalConfig.chooseLang("Reasons for Change", "Reasons for Change") %></TD>\
 						</TR>\
 						<TR>\
 							<TD><%= globalConfig.chooseLang("Entered the Facility (Used)", "Quantit&eacute; ayant p&eacute;n&eacute;tr&eacute; l\'installation (utilis&eacute;e)") %></TD>\
 							<TD><%= substance.Used %></TD>\
+							<TD><%= substance.UseEnteredtheFacilityAnnualPercentageChange %></TD>\
+							<TD rowspan="3"><%= substance.ReasonsforChangeTRAQuantifications %></TD>\
 						</TR>\
 						<TR>\
 							<TD><%= globalConfig.chooseLang("Created", "Quantit&eacute; cr&eacute;&eacute;e") %></TD>\
 							<TD><%= substance.Created %></TD>\
+							<TD><%= substance.CreatedAnnualPercentageChange %></TD>\
 						</TR>\
 						<TR>\
 							<TD><%= globalConfig.chooseLang("Contained in Product", "Quantit&eacute; contenue dans les produits") %><BR>&nbsp;</TD>\
 							<TD><%= substance.Contained %></TD>\
+							<TD><%= substance.ContainedinProductAnnualPercentageChange %></TD>\
 						</TR>\
 						<TR>\
 							<TD><%= globalConfig.chooseLang("Released to Air", "Quantit&eacute; &eacute;mise dans l\'air") %><BR></TD>\
 							<TD><%= substance.Air %></TD>\
+							<TD><%= substance.ReleasestoAirAnnualPercentageChange %></TD>\
+							<TD rowspan="3"><%= substance.ReasonsforChangeAllMedia %></TD>\
 						</TR>\
 						<TR>\
 							<TD><%= globalConfig.chooseLang("Released to Water", "Quantit&eacute; rejet&eacute;e dans l\'eau") %></TD>\
 							<TD><%= substance.Water %></TD>\
+							<TD><%= substance.ReleasestoWaterAnnualPercentageChange %></TD>\
 						</TR>\
 						<TR>\
 							<TD><%= globalConfig.chooseLang("Released to Land", "Quantit&eacute; d&eacute;vers&eacute;e sur les sols") %><BR>&nbsp;</TD>\
 							<TD><%= substance.Land %></TD>\
+							<TD><%= substance.ReleasestoLandAnnualPercentageChange %></TD>\
 						</TR>\
 						<TR>\
 							<TD><%= globalConfig.chooseLang("Disposed On-Site", "Quantit&eacute; &eacute;limin&eacute;e dans le site") %></TD>\
 							<TD><%= substance.DOnSite %></TD>\
+							<TD><%= substance.DisposedOnSiteAnnualPercentageChange %></TD>\
+							<TD rowspan="2"><%= substance.ReasonsforChangeDisposals %></TD>\
 						</TR>\
 						<TR>\
 							<TD><%= globalConfig.chooseLang("Disposed Off-Site", "Quantit&eacute; &eacute;limin&eacute;e hors site") %></TD>\
 							<TD><%= substance.DOffSite %></TD>\
+							<TD><%= substance.DisposedOffSiteAnnualPercentageChange %></TD>\
 						</TR>\
 						<TR>\
 							<TD><%= globalConfig.chooseLang("Recycled Off-Site", "Quantit&eacute; recycl&eacute;e hors site") %></TD>\
 							<TD><%= substance.ROffSite %></TD>\
+							<TD><%= substance.RecycledOffSiteAnnualPercentageChange %></TD>\
+							<TD><%= substance.ReasonsForChangeRecycling %></TD>\
 						</TR>\
 						</TABLE>\
 				<BR><BR><I><A HREF="http://www.ene.gov.on.ca/environment/<%= globalConfig.chooseLang("en", "fr") %>/resources/collection/data_downloads/index.htm"><%= globalConfig.chooseLang("Download the full dataset", "Ensemble de donn&eacute;es &agrave; t&eacute;l&eacute;charger") %></A></I><BR>\
