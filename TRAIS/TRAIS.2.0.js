@@ -40,15 +40,29 @@ substancesNameQueryLayer.query({
 if (globalConfig.language === "EN") {
 	globalConfig.annualReportURL = "TRAIS_Report.htm";
 	globalConfig.planSummaryURL = "TRAIS_PlanSummaries_Report.htm";
-	globalConfig.exitRecordsURL = "TRAIS_ExitRecords_Report.htm";
+	globalConfig.recordsURL = "TRAIS_Records_Report.htm";
+	globalConfig.NoAnnualReportSubmittedLang = "No Annual Report submitted.";
+	globalConfig.NoPlanSummarySubmittedLang = "No Plan Summary submitted.";
+	globalConfig.NoRecordSubmittedLang = "No Record submitted.";
+	globalConfig.LinktoAnnualReportsLang = "Links to Annual Reports";
+	globalConfig.LinktoPlanSummariesLang = "Links to Plan Summaries";
+	globalConfig.LinktoRecordsLang = "Links to Records";
+	globalConfig.OpenNewWindowLang = "These links will open in a new browser window.";
 	globalConfig.searchHelpTxt = "Search <strong>city</strong>, <strong>facility name</strong>, <strong>company</strong>, <strong>sector</strong>, <strong>substance</strong> or see help for more advanced options.";
-	globalConfig.tabsTemplateContent = "Facility: <b>{Facility}</b><br>Organization: <b>{Organisation}</b><br>Physical Address: <b>{StreetAddress} / {City}</b><br>NPRI ID: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Sector: <b>{mapConfig.displaySector(Sector)}</b><br>Toxic Substances: <b>{NUMsubst}</b><br><br>[{NUMsubst}? No Annual Report submitted. ?<a target='_blank' href='" + globalConfig.annualReportURL + "?id={UniqueID}'>Link to Annual Reports</a>]<br>[{NUMPlanSummary}? No Plan Summary submitted. ?<a target='_blank' href='" + globalConfig.planSummaryURL + "?id={UniqueID}'>Link to Plan Summaries</a>]<br>[{NUMExitRecord}? No Record submitted. ?<a target='_blank' href='" + globalConfig.exitRecordsURL + "?id={UniqueID}'>Link to Records</a>]<br><i>These links will open in a new browser window.</i><br>";
+	globalConfig.tabsTemplateContent = "Facility: <b>{Facility}</b><br>Organization: <b>{Organisation}</b><br>Physical Address: <b>{StreetAddress} / {City}</b><br>NPRI ID: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Sector: <b>{mapConfig.displaySector(Sector)}</b><br>Toxic Substances: <b>{NUMsubst}</b><br><br>[{NUMsubst}? " + globalConfig.NoAnnualReportSubmittedLang + " ?<a target='_blank' href='" + globalConfig.annualReportURL + "?id={UniqueID}'>" + globalConfig.LinktoAnnualReportsLang + "</a>]<br>[{NUMPlanSummary}? " + globalConfig.NoPlanSummarySubmittedLang + " ?<a target='_blank' href='" + globalConfig.planSummaryURL + "?id={UniqueID}'>" + globalConfig.LinktoPlanSummariesLang + "</a>]<br>[{NUMRecord}? " + globalConfig.NoRecordSubmittedLang + " ?<a target='_blank' href='" + globalConfig.recordsURL + "?id={UniqueID}'>" + globalConfig.LinktoRecordsLang + "</a>]<br><i>" + globalConfig.OpenNewWindowLang + "</i><br>";
 } else {
 	globalConfig.annualReportURL = "TRAIS_Report.htm";
 	globalConfig.planSummaryURL = "TRAIS_PlanSummaries_Report.htm";
-	globalConfig.exitRecordsURL = "TRAIS_ExitRecords_Report.htm";
+	globalConfig.recordsURL = "TRAIS_Records_Report.htm";
+	globalConfig.NoAnnualReportSubmittedLang = "No Annual Report submitted.";
+	globalConfig.NoPlanSummarySubmittedLang = "No Plan Summary submitted.";
+	globalConfig.NoRecordSubmittedLang = "No Record submitted.";
+	globalConfig.LinktoAnnualReportsLang = "Lien aux rapports annuels";
+	globalConfig.LinktoPlanSummariesLang = "Lien aux Plan Summaries";
+	globalConfig.LinktoRecordsLang = "Lien aux Records";
+	globalConfig.OpenNewWindowLang = "Ce lien s'ouvre dans une nouvelle fen\u00eatre.";	
 	globalConfig.searchHelpTxt = "Rechercher par <strong>ville</strong>, <strong>installation</strong>, <strong>entreprise</strong>, <strong>substance</strong>, <strong>secteur</strong> ou cliquer sur aide pour plus d\u0027information sur la recherche avanc\u00e9e.";
-	globalConfig.tabsTemplateContent = "Installation: <b>{Facility}</b><br>Entreprise: <b>{Organisation}</b><br>Adresse: <b>{StreetAddress} / {City}</b><br>N&deg; INRP: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Secteur: <b>{mapConfig.displaySector(Sector)}</b><br>Substances toxiques: <b>{NUMsubst}</b><br><br><a target='_blank' href='" + globalConfig.annualReportURL + "?id={UniqueID}'>Lien aux rapports annuels</a><br><a target='_blank' href='" + globalConfig.planSummaryURL + "?id={UniqueID}'>Lien aux Plan Summaries</a><br><a target='_blank' href='" + globalConfig.exitRecordsURL + "?id={UniqueID}'>Lien aux Records</a><br><i>Ce lien s'ouvre dans une nouvelle fen\u00eatre.</i><br>";	
+	globalConfig.tabsTemplateContent = "Installation: <b>{Facility}</b><br>Entreprise: <b>{Organisation}</b><br>Adresse: <b>{StreetAddress} / {City}</b><br>N&deg; INRP: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Secteur: <b>{mapConfig.displaySector(Sector)}</b><br>Substances toxiques: <b>{NUMsubst}</b><br><br>[{NUMsubst}? " + globalConfig.NoAnnualReportSubmittedLang + " ?<a target='_blank' href='" + globalConfig.annualReportURL + "?id={UniqueID}'>" + globalConfig.LinktoAnnualReportsLang + "</a>]<br>[{NUMPlanSummary}? " + globalConfig.NoPlanSummarySubmittedLang + " ?<a target='_blank' href='" + globalConfig.planSummaryURL + "?id={UniqueID}'>" + globalConfig.LinktoPlanSummariesLang + "</a>]<br>[{NUMRecord}? " + globalConfig.NoRecordSubmittedLang + " ?<a target='_blank' href='" + globalConfig.recordsURL + "?id={UniqueID}'>" + globalConfig.LinktoRecordsLang + "</a>]<br><i>" + globalConfig.OpenNewWindowLang + "</i><br>";	
 }
 
 globalConfig.pointBufferTool = {available: false};

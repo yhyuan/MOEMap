@@ -1,0 +1,7 @@
+	globalConfig.NoAnnualReportSubmittedLang = "No Annual Report submitted.";
+	globalConfig.NoPlanSummarySubmittedLang = "No Plan Summary submitted.";
+	globalConfig.NoRecordSubmittedLang = "No Record submitted.";
+	globalConfig.LinktoAnnualReportsLang = "Links to Annual Reports";
+	globalConfig.LinktoPlanSummariesLang = "Links to Plan Summaries";
+	globalConfig.LinktoRecordsLang = "Links to Records";
+	globalConfig.OpenNewWindowLang = "These links will open in a new browser window.";

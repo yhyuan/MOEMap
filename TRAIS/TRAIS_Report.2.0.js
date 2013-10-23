@@ -3,16 +3,16 @@ globalConfig.layers = [{
 	renderTargetDiv: "target",
 	event: "reportReady",
 	where: QueryString.hasOwnProperty("year") ? ("(UniqueFacilityID = '" + QueryString.id + "') AND (ReportingPeriod = '" + QueryString.year + "')"):("(UniqueFacilityID = '" + QueryString.id + "')"),
-	outFields: QueryString.hasOwnProperty("year") ? ["FacilityName", "StreetAddressPhysicalAddress", "MunicipalityCityPhysicalAddress", "OrganizationName", "NPRIID", "Sector", "PublicContactFullName", "PublicContactTelephone", "PublicContactEmail", "HighestRankingEmployee", "SubstanceName", "Units", "EnteredtheFacilityUsed", "Created", "ContainedinProduct", "ReleasestoAir", "ReleasestoWater", "ReleasestoLand", "DisposalOnSite", "DisposalOffSite", "RecycleOffSite", "UseEnteredtheFacilityAnnualPercentageChange", "CreatedAnnualPercentageChange", "ContainedinProductAnnualPercentageChange", "ReasonsforChangeTRAQuantifications", "ReleasestoAirAnnualPercentageChange", "ReleasestoWaterAnnualPercentageChange", "ReleasestoLandAnnualPercentageChange", "ReasonsforChangeAllMedia"] : ["UniqueFacilityID", "ReportingPeriod"],
+	outFields: QueryString.hasOwnProperty("year") ? ["FacilityName", "StreetAddressPhysicalAddress", "MunicipalityCityPhysicalAddress", "OrganizationName", "NPRIID", "NAICS", "PublicContactFullName", "PublicContactTelephone", "PublicContactEmail", "HighestRankingEmployee", "SubstanceName", "Units", "EnteredtheFacilityUsed", "Created", "ContainedinProduct", "ReleasestoAir", "ReleasestoWater", "ReleasestoLand", "DisposalOnSite", "DisposalOffSite", "RecycleOffSite", "UseEnteredtheFacilityAnnualPercentageChange", "CreatedAnnualPercentageChange", "ContainedinProductAnnualPercentageChange", "ReasonsforChangeTRAQuantifications", "ReleasestoAirAnnualPercentageChange", "ReleasestoWaterAnnualPercentageChange", "ReleasestoLandAnnualPercentageChange", "ReasonsforChangeAllMedia"] : ["UniqueFacilityID", "ReportingPeriod"],
 	processResults: function (fs) {
 		var calculateRenderResultwithYear = function (fs) {
 			var attr = fs[0].attributes;
+			var NAICS = attr.NAICS;
 			var renderResult = {
 				ReportingPeriod: QueryString.year, 
 				FacilityName: attr.FacilityName,
 				CompanyName: attr.OrganizationName,
 				Address: attr.StreetAddressPhysicalAddress + " / " + attr.MunicipalityCityPhysicalAddress,
-				Sector: attr.Sector,
 				NPRIID: attr.NPRIID,
 				PublicContact: (attr.PublicContactFullName === null) ?  "[<I>" + globalConfig.chooseLang("no name available", "Aucun nom disponible") +  "</I>]" : attr.PublicContactFullName,
 				PublicContactPhone: attr.PublicContactTelephone,
@@ -54,21 +54,32 @@ globalConfig.layers = [{
 				}
 				renderResult.Substances = substances;
 			}
-			return renderResult;
+			var NAICSLayerID = "4";
+			var NAICSQueryLayer = new gmaps.ags.Layer(globalConfig.url  + "/" + NAICSLayerID);
+			NAICSQueryLayer.query({
+				returnGeometry: false,
+				where: "NAICS=" + NAICS,
+				outFields: ["Name"]
+			}, function (rs) {
+				renderResult.Sector = NAICS + " - " + rs.features[0].attributes.Name;
+				PubSub.emit(globalConfig.layers[0].event + "Data", {renderResult: renderResult});
+			});
 		};
 		var calculateRenderResult = function (fs) {
 			var reportingPeriods  = _.uniq(_.map(fs, function(feature) {
 				return feature.attributes.ReportingPeriod;
 			}));
-			return {
+			var renderResult = {
 				UniqueFacilityID: QueryString.id, 
 				reportingPeriods: reportingPeriods
-			}
+			};
+			PubSub.emit(globalConfig.layers[0].event + "Data", {renderResult: renderResult});
 		};
-		var renderResult = QueryString.hasOwnProperty("year") ? calculateRenderResultwithYear(fs) : calculateRenderResult(fs);
-		//console.log(renderResult);
-		PubSub.emit(globalConfig.layers[0].event + "Data", {renderResult: renderResult});
-		//document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, {renderResult: renderResult});		
+		if (QueryString.hasOwnProperty("year")) {
+			calculateRenderResultwithYear(fs);
+		} else {
+			calculateRenderResult(fs);
+		}
 	},
 	template: '<%\
 				if (renderResult.hasOwnProperty("reportingPeriods")) {\

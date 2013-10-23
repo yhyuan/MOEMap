@@ -1,11 +1,23 @@
 if (globalConfig.language === "EN") {
 	globalConfig.annualReportURL = "TRAIS_Report.htm";
 	globalConfig.planSummaryURL = "TRAIS_PlanSummaries_Report.htm";
-	globalConfig.exitRecordsURL = "TRAIS_ExitRecords_Report.htm";
+	globalConfig.recordsURL = "TRAIS_ExitRecords_Report.htm";
+	globalConfig.NoAnnualReportSubmittedLang = "No Annual Report submitted.";
+	globalConfig.NoPlanSummarySubmittedLang = "No Plan Summary submitted.";
+	globalConfig.NoRecordSubmittedLang = "No Record submitted.";
+	globalConfig.LinktoAnnualReportsLang = "Links to Annual Reports";
+	globalConfig.LinktoPlanSummariesLang = "Links to Plan Summaries";
+	globalConfig.LinktoRecordsLang = "Links to Records";	
 } else {
 	globalConfig.annualReportURL = "TRAIS_Report.htm";
 	globalConfig.planSummaryURL = "TRAIS_PlanSummaries_Report.htm";
-	globalConfig.exitRecordsURL = "TRAIS_ExitRecords_Report.htm";
+	globalConfig.recordsURL = "TRAIS_ExitRecords_Report.htm";
+	globalConfig.NoAnnualReportSubmittedLang = "No Annual Report submitted.";
+	globalConfig.NoPlanSummarySubmittedLang = "No Plan Summary submitted.";
+	globalConfig.NoRecordSubmittedLang = "No Record submitted.";
+	globalConfig.LinktoAnnualReportsLang = "Lien aux rapports annuels";
+	globalConfig.LinktoPlanSummariesLang = "Lien aux Plan Summaries";
+	globalConfig.LinktoRecordsLang = "Lien aux Records";	
 }
 
 globalConfig.layers = [{
@@ -14,7 +26,7 @@ globalConfig.layers = [{
 	event: "reportReady",
 	where: "1=1",
 	//outFields: ["ID", "OrganizationName", "FacilityName", "Address", "NUMsubst"],
-	outFields: ["UniqueID", "Organisation", "Facility", "City", "NUMsubst"],
+	outFields: ["UniqueID", "Organisation", "Facility", "City", "NUMsubst", "NUMPlanSummary", "NUMRecord"],
 	processResults: function (fs) {
 		var constructObject = function (feature) {
 			var attr = feature.attributes;
@@ -23,7 +35,9 @@ globalConfig.layers = [{
 				FacilityName: attr.Facility, //attr.FacilityName,
 				ID: attr.UniqueID, //attr.ID,
 				City: attr.City, //attr.Address.split("/")[1],
-				Substances: attr.NUMsubst
+				Substances: attr.NUMsubst,
+				NUMPlanSummary: NUMPlanSummary,
+				NUMRecord: NUMRecord
 			};
 		};
 		var resultsArray = _.map(fs, constructObject);
@@ -67,9 +81,9 @@ globalConfig.layers = [{
 					} \
 			%>\
 				<%= facility.CompanyName %>-<%= facility.FacilityName %> [<%= facility.City %>] (<%= facility.Substances %> <%= substance %>)<BR>\
-				<A HREF="<%= globalConfig.annualReportURL %>?id=<%= facility.ID %>"><%= globalConfig.chooseLang("Link to Annual Reports", "Lien aux rapports annuels") %></A>, \
-				<A HREF="<%= globalConfig.planSummaryURL %>?id=<%= facility.ID %>"><%= globalConfig.chooseLang("Link to Plan Summaries", "Lien aux Plan Summaries") %></A>, \
-				<A HREF="<%= globalConfig.exitRecordsURL %>?id=<%= facility.ID %>"><%= globalConfig.chooseLang("Link to Records", "Lien aux Records") %></A><br><br>\
+				<% if (facility.Substances > 0) {%> <A HREF="<%= globalConfig.annualReportURL %>?id=<%= facility.ID %>"><%= globalConfig.LinktoAnnualReportsLang %></A><% } else {%> <%= globalConfig.NoAnnualReportSubmittedLang %> <% }%>, \
+				<% if (facility.NUMPlanSummary > 0) {%> <A HREF="<%= globalConfig.planSummaryURL %>?id=<%= facility.ID %>"><%= globalConfig.LinktoPlanSummariesLang %></A><% } else {%> <%= globalConfig.NoPlanSummarySubmittedLang %> <% }%>, \
+				<% if (facility.NUMRecord > 0) {%> <A HREF="<%= globalConfig.recordsURL %>?id=<%= facility.ID %>"><%= globalConfig.LinktoRecordsLang %></A><% } else {%> <%= globalConfig.NoRecordSubmittedLang %> <% }%><br><br>\
 			<%\
 				});\
 			%>\
