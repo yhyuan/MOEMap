@@ -4,7 +4,7 @@ globalConfig.layers = [{
 	renderTargetDiv: "target",
 	event: "reportReady",
 	where: QueryString.hasOwnProperty("year") ? ("(UniqueFacilityID = '" + QueryString.id + "') AND (ReportingPeriod = '" + QueryString.year + "')"):("(UniqueFacilityID = '" + QueryString.id + "')"),
-	outFields: QueryString.hasOwnProperty("year") ? ["FacilityName", "StreetAddressPhysicalAddress", "MunicipalityCityPhysicalAddress", "OrganizationName", "NPRIID", "NAICS", "PublicContactFullName", "PublicContactTelephone", "PublicContactEmail", "HighestRankingEmployee", "SubstanceName", "Units", "VersionofthePlan", "ReasonforNoIntenttoReduceUseText ", "ReasonforNoIntenttoReduceCreationText", "PlanObjectives", "UseReductionQuantityTargetValue", "UseReductionQuantityTargetUnit", "UseReductionTimelineTargetYears", "UseReductionTargetDescription", "CreationReductionQuantityTargetValue", "CreationReductionQuantityTargetUnit", "CreationReductionTimelineTargetYears", "CreationReductionTargetDescription", "ReasonsforUse", "ReasonsforCreation", "StatementNoOptionImplementedYN", "ReasonsNoOptionImplemented", "DescriptionofAnyAdditionalActionsTaken", "OptionReductionCategory", "ActivityTaken", "EstimatedUseReductionPercent", "EstimatedCreationReductionPercent", "EstimatedContainedinProductReductionPercent", "EstimatedAirReleasesReductionPercent", "EstimatedWaterReleasesReductionPercent", "EstimatedLandReleasesReductionPercent", "EstimatedOnsiteDisposalsReductionPercent", "EstimatedOffsiteDisposalsReductionPercent", "EstimatedOffsiteRecyclingReductionPercent"] : ["UniqueFacilityID", "ReportingPeriod"],
+	outFields: QueryString.hasOwnProperty("year") ? ["FacilityName", "StreetAddressPhysicalAddress", "MunicipalityCityPhysicalAddress", "OrganizationName", "NPRIID", "NAICS", "PublicContactFullName", "PublicContactTelephone", "PublicContactEmail", "HighestRankingEmployee", "SubstanceName", "Units", "VersionofthePlan", "ReasonforNoIntenttoReduceUseText ", "ReasonforNoIntenttoReduceCreationText", "PlanObjectives", "UseReductionQuantityTargetValue", "UseReductionQuantityTargetUnit", "UseReductionTimelineTargetYears", "UseReductionTargetDescription", "CreationReductionQuantityTargetValue", "CreationReductionQuantityTargetUnit", "CreationReductionTimelineTargetYears", "CreationReductionTargetDescription", "ReasonsforUse", "ReasonsforCreation", "StatementNoOptionImplementedYN", "ReasonsNoOptionImplemented", "DescriptionofAnyAdditionalActionsTaken", "OptionReductionCategory", "ActivityTaken", "EstimatedUseReductionPercent", "EstimatedCreationReductionPercent", "EstimatedContainedinProductReductionPercent", "EstimatedAirReleasesReductionPercent", "EstimatedWaterReleasesReductionPercent", "EstimatedLandReleasesReductionPercent", "EstimatedOnsiteDisposalsReductionPercent", "EstimatedOffsiteDisposalsReductionPercent", "EstimatedOffsiteRecyclingReductionPercent", "AnticipatedTimelinesforAchievingReductionsinUse", "AnticipatedTimelinesforAchievingReductionsinCreation"] : ["UniqueFacilityID", "ReportingPeriod"],
 	processResults: function (fs) {
 		var calculateRenderResultwithYear = function (fs) {
 			var attr = fs[0].attributes;
@@ -54,7 +54,9 @@ globalConfig.layers = [{
 						EstimatedLandReleasesReductionPercent: attr.EstimatedLandReleasesReductionPercent,
 						EstimatedOnsiteDisposalsReductionPercent: attr.EstimatedOnsiteDisposalsReductionPercent,
 						EstimatedOffsiteDisposalsReductionPercent: attr.EstimatedOffsiteDisposalsReductionPercent,
-						EstimatedOffsiteRecyclingReductionPercent: attr.EstimatedOffsiteRecyclingReductionPercent
+						EstimatedOffsiteRecyclingReductionPercent: attr.EstimatedOffsiteRecyclingReductionPercent,
+						AnticipatedTimelinesforAchievingReductionsinUse: attr.AnticipatedTimelinesforAchievingReductionsinUse,
+						AnticipatedTimelinesforAchievingReductionsinCreation: attr.AnticipatedTimelinesforAchievingReductionsinCreation
 					};
 					substances.push(s);
 				}
@@ -374,13 +376,13 @@ globalConfig.layers = [{
 					  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;\
 					  padding:0cm 5.4pt 0cm 5.4pt\'>\
 					  <p class=MsoNormal align=center style=\'text-align:center\'><span\
-					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'>x years</span></p>\
+					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= (substance.AnticipatedTimelinesforAchievingReductionsinUse.length > 0) ? ( substance.AnticipatedTimelinesforAchievingReductionsinUse + " years") : "" %></span></p>\
 					  </td>\
 					  <td width="9%" valign=top style=\'width:9.46%;border-top:none;border-left:\
 					  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;\
 					  padding:0cm 5.4pt 0cm 5.4pt\'>\
 					  <p class=MsoNormal align=center style=\'text-align:center\'><span\
-					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'>x years</span></p>\
+					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= (substance.AnticipatedTimelinesforAchievingReductionsinCreation.length > 0) ? ( substance.AnticipatedTimelinesforAchievingReductionsinCreation + " years") : "" %></span></p>\
 					  </td>\
 					 </tr>\
 					</table>\

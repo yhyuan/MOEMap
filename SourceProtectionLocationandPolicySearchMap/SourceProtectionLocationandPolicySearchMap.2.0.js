@@ -39,59 +39,59 @@ globalConfig.identifyLayerList = [
 		returnFields: ["LABEL", "SPP_ID"]
 	}, {
 		name: "Lots and Concessions",
-		id: 1,
+		id: 3,
 		returnFields: ["LABEL"]
 	}, {
 		name: 	"Assessment Parcels",
-		id: 2,
+		id: 4,
 		returnFields: ["ASSESSMENT_ROLL_NUMBER_PRIMARY", "MPAC_STREET_ADDRESS", "MUNICIPALITY_NAME"]
 	}, {
 		name: 	"Ownership Parcels",
-		id: 3,
+		id: 5,
 		returnFields: ["PIN"]
 	}, {
 		name: 	"Issue Contributing Areas",
-		id: 4,
+		id: 6,
 		returnFields: ["OBJECTID", "IssueContributingGlobalID"]
 	}, {
 		name: "Well Head Protection Zones",
-		id: 5,
+		id: 7,
 		returnFields: ["ZoneName"]
 	}, {
 		name: 	"WHPA Groundwater Under Direct Influence: WHPA-E)",
-		id: 6,
+		id: 8,
 		returnFields: ["ZoneName"]
 	}, {
 		name: 	"Intake Protection Zones",
-		id: 7,
+		id: 9,
 		returnFields: ["IPZType"]
 	}, {
 		name: 	"Vulnerable Scoring Area - Groundwater",
-		id: 8,
+		id: 10,
 		returnFields: ["vsg_vulnerabilityScore", "vsg_whpa_id", "vsg_spp_id"]
 	}, {
 		name: 	"Vulnerable Scoring Area - Groundwater Under Direct Influence",
-		id: 9,
+		id: 11,
 		returnFields: ["vsu_vulnerabilityScore_GUDI"]
 	}, {
 		name: 	"Vulnerable Scoring Area - Surface Water",
-		id: 10,
+		id: 12,
 		returnFields: ["vss_vulnerabilityScore", "vss_spp_id", "vss_ipz_id"]
 	}, {
 		name: 	"Highly Vulnerable Areas",
-		id: 11,
+		id: 13,
 		returnFields: ["IntrinsicVulnerabilityLevel"]
 	}, {
 		name: 	"Significant Groundwater Recharge Area - SPPID NO BORDERS",
-		id: 12,
+		id: 14,
 		returnFields: ["OBJECTID"]
 	}, {
 		name: 	"Niagara Escarpment Area of Development Control",
-		id: 13,
+		id: 15,
 		returnFields: ["OBJECTID"]
 	}, {
 		name: 	"OakRidgesMorainePlanningArea",
-		id: 14,
+		id: 16,
 		returnFields: ["OBJECTID"]
 	}
 ];
@@ -235,7 +235,7 @@ globalConfig.postIdentifyCallback = function (queryParams) {
 	globalConfig.identifyResults["LatLng"] = queryParams.gLatLng;
 	globalConfig.identifyResults["UTM"] = globalConfig.convertLatLngtoUTM(queryParams.gLatLng.lat(), queryParams.gLatLng.lng());
 	if(globalConfig.identifyResults.hasOwnProperty("Issue Contributing Areas")) {
-		var ICAIssuesQueryLayer = new gmaps.ags.Layer(globalConfig.url  + "/15");
+		var ICAIssuesQueryLayer = new gmaps.ags.Layer(globalConfig.url  + "/17" );
 		var IssueContributingGlobalID = globalConfig.identifyResults["Issue Contributing Areas"][0].attributes["IssueContributingGlobalID"];
 		ICAIssuesQueryLayer.query({
 			returnGeometry: false,

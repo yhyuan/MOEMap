@@ -5,3 +5,4 @@
 	globalConfig.LinktoPlanSummariesLang = "Links to Plan Summaries";
 	globalConfig.LinktoRecordsLang = "Links to Records";
 	globalConfig.OpenNewWindowLang = "These links will open in a new browser window.";
+Year

@@ -116,7 +116,7 @@ globalConfig.layers = [{
                 _.each(renderResult.Substances,function(substance,key,list){\
             %>\
 				<A NAME="<%= substance.Name %>"></A><U><B><%= substance.Name %></B></U><P>\
-				<TABLE BORDER=1 WIDTH=600>\
+				<TABLE class="fishTable" BORDER=1 WIDTH=600>\
 						<TR>\
 							<TD WIDTH=25% BGCOLOR=lightgrey>&nbsp;</TD>\
 							<TD WIDTH=25% BGCOLOR=lightgrey><%= renderResult.ReportingPeriod %><BR><%= globalConfig.chooseLang("Amount Reported", "Quantit&eacute; d&eacute;clar&eacute;e") %> <BR>(<%= substance.Units %>)</TD>\
