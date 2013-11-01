@@ -1,0 +1,144 @@
+11. Access Environment
+    1) English: (dev: http://lrcdrrvsdvap002/web/AccessEnvironment/en/AccessEnvironment.htm)
+      (1) Add the following JavaScript to the head section of a new HTML page:
+		<script type="text/javascript" src="http://www.ene.gov.on.ca/stdprodconsume/fragments/scriptsjquery/js/jquery.js"></script> (It is not to include if it has been included in the page. )
+		<!--MOE MAP-->   
+		<script src="http://maps.google.com/maps/api/js?sensor=true&libraries=geometry"></script>
+		<script type="text/javascript" src="http://files.ontariogovernment.ca/moe_mapping/mapping/js/AccessEnvironment/AccessEnvironment_en.2.0-min.js"></script>   
+		<!--MOE MAP-->
+	(2) Add the following HTML content to div with id of "right_column"
+			<h2>Access Environment</h2>
+			 Welcome to Access Environment. This map based search tool has been designed to allow you, the public, quick and easy access to Ministry of the Environment approvals and registration information.<br><br> 
+
+			Access Environment currently displays Environmental Compliance Approvals*, Renewable Energy Approvals and the Environmental Activity and Sector Registrations. <br><br>
+
+			*Please note that Environmental Compliance Approvals (ECAs) include all Certificates of Approval (CofAs) previously issued under the EPA and approvals previously issued under s. 53 of the OWRA<br><br>
+			<a href='http://www.accessenvironment.ene.gov.on.ca/PiwWeb/piw/GoSearch.action?search=enhance&lang=en'>Report an error or make a recommendation.</a>
+			   <br><br>
+			Please enter any of your search criteria below:<br><br>
+				<div id="searchControl"></div><br>
+				<div id="map_canvas" style="width: 700px; height:540px;"></div>
+				<div id="coordinates"></div><br>
+				<div id="query_table"></div>
+				<div id="otherInfo"></div>
+				<div id="disclaimer"></div>
+    2) French: (dev: http://lrcdrrvsdvap002/web/AccessEnvironment/fr/AccessEnvironment.htm)
+      (1) Add the following JavaScript to the head section of a new HTML page:
+		<script type="text/javascript" src="http://www.ene.gov.on.ca/stdprodconsume/fragments/scriptsjquery/js/jquery.js"></script> (It is not to include if it has been included in the page. )
+		<!--MOE MAP-->   
+		<script src="http://maps.google.com/maps/api/js?sensor=true&libraries=geometry"></script>
+		<script type="text/javascript" src="http://files.ontariogovernment.ca/moe_mapping/mapping/js/AccessEnvironment/AccessEnvironment_fr.2.0-min.js"></script>   
+		<!--MOE MAP-->
+	  (2) Add the following HTML content to div with id of "right_column"
+			<h2>Acc&#xE8;s Environnement</h2>
+			 Bienvenue &#xE0; Acc&#xE8;s Environnement. Cet outil de recherche dot&#xE9; de donn&#xE9;es cartographiques permet au public d'avoir facilement des renseignements sur les autorisations environnementales du minist&#xE8;re de l'Environnement (depuis d&#xE9;cembre 1999).<br/><br/>Acc&#xE8;s Environnement affiche actuellement les autorisations environnementales*(AE), les autorisations de projet d'&#xE9;nergie renouvelable (APER) et les enregistrements au Registre environnemental des activit&#xE9;s et des secteurs (REAS).  <br/><br/>*Les autorisations environnementales comprennent les certificats d'autorisation d&#xE9;livr&#xE9;s aux termes de la Loi sur la protection de l'environnement et les autorisations d&#xE9;livr&#xE9;es en vertu de l'article 53 de la Loi sur les ressources en eau de l'Ontario. De plus, veuillez noter que le minist&#xE8;re met &#xE0; jour actuellement les r&#xE9;f&#xE9;rences g&#xE9;ographiques des donn&#xE9;es sur les  autorisations.  Dans certains cas, le nombre de points cartographi&#xE9;s ne correspond pas au nombre total de registres. <br/><br/>
+			<a id="reportErrorLink" href='GoSearch.action?search=enhance&lang=fr'>Signaler une erreur ou faire une recommandation.</a>
+			<br/><br/>
+			Veuillez saisir les crit&#xE8;res de recherche ci-dessous:<br><br>
+				<div id="searchControl"></div><br>
+				<div id="map_canvas" style="width: 700px; height:540px;"></div>
+				<div id="coordinates"></div><br>
+				<div id="query_table"></div>
+				<div id="otherInfo"></div>
+				<div id="disclaimer"></div>
+    3) Accessible English: (dev: http://lrcdrrvsdvap002/web/AccessEnvironment/en/AccessEnvironment_Accessible.htm)
+      (1) Add the following JavaScript to the head section of a new HTML page:
+			<link rel="stylesheet" type="text/css" href="http://files.ontariogovernment.ca/moe_mapping/mapping/js/MOEMap/css/fishTable.css">
+			<script type="text/javascript" src="http://files.ontariogovernment.ca/moe_mapping/mapping/js/AccessEnvironment/AccessEnvironment_Accessible_en.2.0-min.js"></script>
+	  (2) Add the following HTML content to div with id of "right_column"
+			<h2>Access Environment Accessible Version</h2>
+			 Welcome to Access Environment. This map based search tool has been designed to allow you, the public, quick and easy access to Ministry of the Environment approvals and registration information.<br><br> 
+
+			Access Environment currently displays Environmental Compliance Approvals*, Renewable Energy Approvals and the Environmental Activity and Sector Registrations. <br><br>
+
+			*Please note that Environmental Compliance Approvals (ECAs) include all Certificates of Approval (CofAs) previously issued under the EPA and approvals previously issued under s. 53 of the OWRA<br><br>
+			<a href='http://www.accessenvironment.ene.gov.on.ca/PiwWeb/piw/GoSearch.action?search=enhance&lang=en'>Report an error or make a recommendation.</a>
+			   <br><br>
+			Please enter any of your search criteria below:<br><br>
+				<div id="searchControl"></div><br>
+				<div id="coordinates"></div><br>
+				<div id="query_table"></div>
+				<div id="otherInfo"></div>
+				<div id="disclaimer"></div>	
+
+    4) Accessible French: (dev: http://lrcdrrvsdvap002/web/AccessEnvironment/fr/AccessEnvironment_Accessible.htm)
+      (1) Add the following JavaScript to the head section of a new HTML page:
+			<link rel="stylesheet" type="text/css" href="http://files.ontariogovernment.ca/moe_mapping/mapping/js/MOEMap/css/fishTable.css">
+			<script type="text/javascript" src="http://files.ontariogovernment.ca/moe_mapping/mapping/js/AccessEnvironment/AccessEnvironment_Accessible_fr.2.0-min.js"></script>
+	  (2) Add the following HTML content to div with id of "right_column"
+			<h2>Acc&#xE8;s Environnement</h2>
+			 Bienvenue &#xE0; Acc&#xE8;s Environnement. Cet outil de recherche dot&#xE9; de donn&#xE9;es cartographiques permet au public d'avoir facilement des renseignements sur les autorisations environnementales du minist&#xE8;re de l'Environnement (depuis d&#xE9;cembre 1999).<br/><br/>Acc&#xE8;s Environnement affiche actuellement les autorisations environnementales*(AE), les autorisations de projet d'&#xE9;nergie renouvelable (APER) et les enregistrements au Registre environnemental des activit&#xE9;s et des secteurs (REAS).  <br/><br/>*Les autorisations environnementales comprennent les certificats d'autorisation d&#xE9;livr&#xE9;s aux termes de la Loi sur la protection de l'environnement et les autorisations d&#xE9;livr&#xE9;es en vertu de l'article 53 de la Loi sur les ressources en eau de l'Ontario. De plus, veuillez noter que le minist&#xE8;re met &#xE0; jour actuellement les r&#xE9;f&#xE9;rences g&#xE9;ographiques des donn&#xE9;es sur les  autorisations.  Dans certains cas, le nombre de points cartographi&#xE9;s ne correspond pas au nombre total de registres. <br/><br/>
+			<a id="reportErrorLink" href='GoSearch.action?search=enhance&lang=fr'>Signaler une erreur ou faire une recommandation.</a>
+			<br/><br/>
+			Veuillez saisir les crit&#xE8;res de recherche ci-dessous:<br><br>
+
+				<div id="searchControl"></div><br>
+				<div id="coordinates"></div><br>
+				<div id="query_table"></div>
+				<div id="otherInfo"></div>
+				<div id="disclaimer"></div>
+    5) English Advanced: (dev: http://lrcdrrvsdvap002/web/AccessEnvironment/en/AccessEnvironmentAdv.htm)
+      (1) Add the following JavaScript to the head section of a new HTML page:
+		<script type="text/javascript" src="http://www.ene.gov.on.ca/stdprodconsume/fragments/scriptsjquery/js/jquery.js"></script> (It is not to include if it has been included in the page. )
+		<script type="text/javascript" src="http://www.ene.gov.on.ca/stdprodconsume/fragments/scriptsjquery/js/jquery-ui.js"></script>(It is not to include if it has been included in the page. )
+		<!--MOE MAP-->   
+		<script src="http://maps.google.com/maps/api/js?sensor=true&libraries=geometry"></script>
+		<script type="text/javascript" src="http://files.ontariogovernment.ca/moe_mapping/mapping/js/AccessEnvironment/AccessEnvironmentAdv_en.2.0-min.js"></script>   
+		<!--MOE MAP-->
+	(2) Add the following HTML content to div with id of "right_column"
+		 <h2>Search Criteria</h2>
+			<div id="searchControl"></div>	
+			<div id="information" style="margin-top:10px;"></div> 
+			<div id="map_canvas" style="width: 700px; height:540px;"></div>
+			<div id="coordinates"></div><br>
+			<div id="query_table"></div>
+			<div id="otherInfo"></div>
+			<div id="disclaimer"></div>
+    6) French  Advanced: (dev: http://lrcdrrvsdvap002/web/AccessEnvironment/fr/AccessEnvironmentAdv.htm)
+      (1) Add the following JavaScript to the head section of a new HTML page:
+		<script type="text/javascript" src="http://www.ene.gov.on.ca/stdprodconsume/fragments/scriptsjquery/js/jquery.js"></script> (It is not to include if it has been included in the page. )
+		<script type="text/javascript" src="http://www.ene.gov.on.ca/stdprodconsume/fragments/scriptsjquery/js/jquery-ui.js"></script>(It is not to include if it has been included in the page. )
+		<!--MOE MAP-->   
+		<script src="http://maps.google.com/maps/api/js?sensor=true&libraries=geometry"></script>
+		<script type="text/javascript" src="http://files.ontariogovernment.ca/moe_mapping/mapping/js/AccessEnvironment/AccessEnvironmentAdv_fr.2.0-min.js"></script>   
+		<!--MOE MAP-->
+	  (2) Add the following HTML content to div with id of "right_column"
+			<h2>Critères de recherche</h2>
+				<div id="searchControl"></div>	
+				<div id="information" style="margin-top:10px;"></div> 
+				<div id="map_canvas" style="width: 700px; height:540px;"></div>
+				<div id="coordinates"></div><br>
+				<div id="query_table"></div>
+				<div id="otherInfo"></div>
+				<div id="disclaimer"></div>
+
+    7) Accessible English  Advanced: (dev: http://lrcdrrvsdvap002/web/AccessEnvironment/en/AccessEnvironmentAdv_Accessible.htm)
+      (1) Add the following JavaScript to the head section of a new HTML page:
+			<script type="text/javascript" src="http://www.ene.gov.on.ca/stdprodconsume/fragments/scriptsjquery/js/jquery.js"></script> (It is not to include if it has been included in the page. )
+			<script type="text/javascript" src="http://www.ene.gov.on.ca/stdprodconsume/fragments/scriptsjquery/js/jquery-ui.js"></script>(It is not to include if it has been included in the page. )	  
+			<link rel="stylesheet" type="text/css" href="http://files.ontariogovernment.ca/moe_mapping/mapping/js/MOEMap/css/fishTable.css">
+			<script type="text/javascript" src="http://files.ontariogovernment.ca/moe_mapping/mapping/js/AccessEnvironment/AccessEnvironmentAdv_Accessible_en.2.0-min.js"></script>
+	  (2) Add the following HTML content to div with id of "right_column"
+		<h2>Search Criteria</h2>
+			<div id="searchControl"></div><br>
+			<div id="information" style="margin-top:10px;"></div> 
+			<div id="coordinates"></div><br>
+			<div id="query_table"></div>
+			<div id="otherInfo"></div>
+			<div id="disclaimer"></div>
+
+    8) Accessible French  Advanced: (dev: http://lrcdrrvsdvap002/web/AccessEnvironment/fr/AccessEnvironmentAdv_Accessible.htm)
+      (1) Add the following JavaScript to the head section of a new HTML page:
+			<script type="text/javascript" src="http://www.ene.gov.on.ca/stdprodconsume/fragments/scriptsjquery/js/jquery.js"></script> (It is not to include if it has been included in the page. )
+			<script type="text/javascript" src="http://www.ene.gov.on.ca/stdprodconsume/fragments/scriptsjquery/js/jquery-ui.js"></script>(It is not to include if it has been included in the page. )	  
+			<link rel="stylesheet" type="text/css" href="http://files.ontariogovernment.ca/moe_mapping/mapping/js/MOEMap/css/fishTable.css">
+			<script type="text/javascript" src="http://files.ontariogovernment.ca/moe_mapping/mapping/js/AccessEnvironment/AccessEnvironmentAdv_Accessible_fr.2.0-min.js"></script>
+	  (2) Add the following HTML content to div with id of "right_column"
+			<h2>Critères de recherche</h2>
+				<div id="searchControl"></div>	
+				<div id="information" style="margin-top:10px;"></div> 
+				<div id="map_canvas" style="width: 700px; height:540px;"></div>
+				<div id="coordinates"></div><br>
+				<div id="query_table"></div>
+				<div id="otherInfo"></div>
+				<div id="disclaimer"></div>

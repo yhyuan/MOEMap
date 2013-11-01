@@ -1,7 +1,7 @@
 globalConfig.resoucesLocation = "http://files.ontariogovernment.ca/moe_mapping/mapping/js/AccessEnvironment/";
 globalConfig.isRoutingServiceAvailable = false;
 globalConfig.displayDisclaimer = true;
-globalConfig.maxQueryReturn = 50000;
+globalConfig.maxQueryReturn = 100000;
 globalConfig.maxDisplayReturn = 500;  
 globalConfig.accessible = globalConfig.accessible || false;
 
