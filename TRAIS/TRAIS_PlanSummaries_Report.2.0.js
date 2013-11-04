@@ -77,6 +77,8 @@ globalConfig.layers = [{
 			var reportingPeriods  = _.uniq(_.map(fs, function(feature) {
 				return feature.attributes.ReportingPeriod;
 			}));
+			reportingPeriods.sort();
+			reportingPeriods.reverse();
 			var renderResult = {
 				UniqueFacilityID: QueryString.id, 
 				reportingPeriods: reportingPeriods
@@ -170,7 +172,6 @@ globalConfig.layers = [{
 				  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>\
 				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Reductions: ", "Reductions: ") %> <%= (substance.UseReductionQuantityTargetValue + " " + substance.UseReductionQuantityTargetUnit) %><o:p></o:p></span></p>\
 				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Target Timelines: ", "Target Timelines: ") %> <%= (substance.UseReductionTimelineTargetYears.length === 0) ? "" : substance.UseReductionTimelineTargetYears + globalConfig.chooseLang(" years", " years")%><o:p></o:p></span></p>\
-				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'>Or<o:p></o:p></span></p>\
 				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= substance.UseReductionTargetDescription %><o:p></o:p></span></p>\
 				  </td>\
 				 </tr>\
@@ -187,7 +188,6 @@ globalConfig.layers = [{
 				  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>\
 				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Reductions: ", "Reductions: ") %> <%= (substance.CreationReductionQuantityTargetValue + " " + substance.CreationReductionQuantityTargetUnit) %><o:p></o:p></span></p>\
 				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Target Timelines: ", "Target Timelines: ") %> <%= (substance.CreationReductionTimelineTargetYears.length === 0) ? "" : substance.CreationReductionTimelineTargetYears + globalConfig.chooseLang(" years", " years")%><o:p></o:p></span></p>\
-				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'>Or<o:p></o:p></span></p>\
 				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= substance.CreationReductionTargetDescription %><o:p></o:p></span></p>\
 				  </td>\
 				 </tr>\

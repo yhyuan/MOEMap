@@ -128,24 +128,10 @@
 	<meta content="MSHTML 6.00.2900.3698" name="GENERATOR" />
 
 	<!--MOE MAP--> 
-	<style type="text/css">
-		.lakepartner { width:700px; margin-right:-3px; border-spacing:1px; border-collapse:separate !important; border:1px #000000 solid; }	
-		.lakepartner th { padding:2px; font-size:11px; border:1px #000000 solid; vertical-align:middle; text-align:center; }	  
-		.lakepartner td { padding:2px; font-size:11px; border:1px #000000 solid; text-align:left; }
-		.lakepartner caption {font-size:1.2em;}
-		.shaded { background-color:#CCCCCC; }
-	</style>
-	
-   <!--<script type="text/javascript" src="http://prod-ont-webserver.s3.amazonaws.com/moe_mapping/mapping/js/MOEMap/js/underscore-min.js"></script>	-->
-   <script src="http://maps.google.com/maps/api/js?sensor=true&libraries=geometry"></script>
-   <script type="text/javascript" src="SourceProtectionLocationandPolicySearchMap_en.2.0-min.js"></script>
-   <!--<script type="text/javascript" src="http://www.downloads.ene.gov.on.ca/files/mapping/js/waste/arcgislink.js"></script>
-   <script type="text/javascript" src="SourceProtectionLocationandPolicySearchMap_en.js"></script> 
-   <script type="text/javascript" src="SourceProtectionLocationandPolicySearchMap.js"></script>    
-   <script type="text/javascript" src="../Development/build/MOEMap2.0.js"></script>
-   <script type="text/html" id='QueryTableTemplate'>	
-   </script>  -->
-	<!--MOE MAP-->   
+	<link rel="stylesheet" type="text/css" href="http://files.ontariogovernment.ca/moe_mapping/mapping/js/MOEMap/css/lakePartnerTable.css" />
+	<script src="http://maps.google.com/maps/api/js?sensor=true&libraries=geometry"></script>
+	<script type="text/javascript" src="SourceProtectionLocationandPolicySearchMap_en.2.0-min.js"></script>
+   <!--MOE MAP-->   
 
 
 </head>
@@ -167,30 +153,21 @@
   <a name="top" id="top"></a>
  <div id="right_column">
  <h1>Source Protection Information and Policy Search</h1>
- This interactive map allows you to find source water protection information and policies for locations across the province. It is designed to determine if a location falls within a vulnerable area and provided the relevant information and policies related to that location.
-<br><br>
-The source water protection data and associated polies were created by Conservation Ontario, conservation authorities and their partners.
-<br><br>
-The search can be performed by address, intersection, roll number or property information number (PIN). Once a search is complete, the interactive map will return the address information and display the parcel data for the property. Please ensure that this is the property of interest. If it is not, please move the map pin to the appropriate location.
-<br><br>
-If the property of interest contains more than one score, please more the pin on the map to obtain the policies for both scores to ensure you have all of the policies related to the property.
-<br><br>
-Information regarding the chosen location, intake protection and well head protection zones as well as scores are provided along with other pertinent information. 
-<br><br>
-Links are provided to the source water protection policies located on the Upper Thames conservation Authority policy website. The policies are password protected; a username and password can be obtained by emailing <a href="mailto:andy.Gemza@ontario.ca">Andy Gemza</a>. 
-<br><br>
-For questions related to the use of the interactive map or to report a problem please contact <a href="mailto:andy.Gemza@ontario.ca">Andy Gemza</a>.
-<br><br>
-Please enter an address or location in the "search interactive map" box and click "search".  Please click “Help” for more information and search tips.
-<br><br>
+
+This interactive map allows the user to search a location and view whether it is within a Source Protection Vulnerable Area. <a href="http://conservation-ontario.on.ca/source_protection/otherswpregionsindex.htma">Source Protection Policies</a> (password protected) to be used in addressing threats within those areas will display (where applicable) within a popup.<br><br>
+Additional Resources<br><br>
+To identify which threat is applicable for each vulnerable area, access the <a href="http://maps.thamesriver.on.ca/swpCAMaps/threatslookup/default.aspx">table of threat activities</a>. 
+<a href="http://conservation-ontario.on.ca/source_protection/otherswpregionsindex.htm">Assessment Reports or Plans</a> are also available for review. <br><br>
+To determine which measure may be used to address which threats, see the <a href="http://www.trcagauging.ca/RmmCatalogue/">risk measures catalogue</a>.  <br><br>
+
+Search by Municipality, Address, Lot and Concession, Intersection and Assessment Roll Number. See help for more information, instructions, training and search tips. To submit a question, comment, or obtain a password, send an email to <a href="mailto:source.protection@ontario.ca">source.protection@ontario.ca</a> .<br><br>
 	
 	<div id="searchControl"></div>	
 	<div id="information" style="color:#000000">Search by <STRONG>Address</STRONG>, <STRONG>City Name</STRONG>, <STRONG>Postal Code</STRONG> or see help for more advanced options. </div><br>
 	<div id="map_canvas" style="width: 698px; height:600px; BORDER: black 1px solid; FLOAT: left; "></div> 	
 	<div id="coordinates" style="font-size:0.8em;">Latitude : 48.950861, Longitude : -83.486242 (UTM Zone:17, Easting:317978.96, Northing:5424971.70)</div>
+	<img src="Legend_SWP_Policy_V3.jpg" alt="Legend">
 	<div id="query_table"></div>
-
-	
 	<br>This website and all of the information it contains are provided "as is" without warranty of any kind, whether expressed or implied. <a target='_blank' href='http://www.ene.gov.on.ca/environment/en/resources/collection/data_downloads/STDPROD_078135.html'>View the complete disclaimer</a>.	
 
 	
