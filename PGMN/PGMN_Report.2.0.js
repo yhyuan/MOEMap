@@ -44,7 +44,7 @@ globalConfig.layers = [{
 	renderTargetDiv: "target",
 	event: "reportReady",
 	where: "PGMN_WELL = '" + QueryString.id + "'",
-	outFields: ["SAMPLENUM", "SAMPLE_DAT", "CONFIDENC", "COMMENTS", "IONIC_BALA", "LAB", "LAB_ID", "PARMNAME", "DILUTION", "REPORT_VALUE", "UNITS", "VALQUALIFIER", "REMARK1", "REMARK2"],
+	outFields: ["SAMPLENUM", "SAMPLE_DAT", "CONFIDENCE", "COMMENTS", "IONIC_BALA", "LAB", "LAB_ID", "PARMNAME", "DILUTION", "REPORT_VALUE", "UNITS", "VALQUALIFIER", "REMARK1", "REMARK2"],
 	processResults: function (fs) {
 			var convertDate = function (date) {
 				var d = new Date(date);
@@ -116,7 +116,7 @@ globalConfig.layers = [{
                 _.each(chemicalSamples,function(sample,key,list){\
 					var attrs = sample.attributes;\
 				%>\
-					<tr><td><%= attrs.SAMPLE_DATE %></td><td><%= attrs.REPORT_VALUE %></td><td><%= attrs.UNITS %></td><td><%= attrs.VALQUALIFIER %></td><td><%= attrs.REMARK1 %></td><td><%= attrs.REMARK2 %></td><td><%= attrs.CONFIDENC %></td><td><%= attrs.COMMENTS %></td><td><%= attrs.SAMPLENUM %></td></tr>\
+					<tr><td><%= attrs.SAMPLE_DATE %></td><td><%= attrs.REPORT_VALUE %></td><td><%= attrs.UNITS %></td><td><%= attrs.VALQUALIFIER %></td><td><%= attrs.REMARK1 %></td><td><%= attrs.REMARK2 %></td><td><%= attrs.CONFIDENCE %></td><td><%= attrs.COMMENTS %></td><td><%= attrs.SAMPLENUM %></td></tr>\
 				<%\
 					});\
 				%>\
@@ -137,7 +137,7 @@ globalConfig.layers = [{
                 _.each(chemicalSamples,function(sample,key,list){\
 					var attrs = sample.attributes;\
 				%>\
-					<tr><td><%= attrs.SAMPLE_DATE %></td><td><%= attrs.REPORT_VALUE %></td><td><%= attrs.UNITS %></td><td><%= attrs.VALQUALIFIER %></td><td><%= attrs.REMARK1 %></td><td><%= attrs.REMARK2 %></td><td><%= attrs.CONFIDENC %></td><td><%= attrs.COMMENTS %></td><td><%= attrs.SAMPLENUM %></td></tr>\
+					<tr><td><%= attrs.SAMPLE_DATE %></td><td><%= attrs.REPORT_VALUE %></td><td><%= attrs.UNITS %></td><td><%= attrs.VALQUALIFIER %></td><td><%= attrs.REMARK1 %></td><td><%= attrs.REMARK2 %></td><td><%= attrs.CONFIDENCE %></td><td><%= attrs.COMMENTS %></td><td><%= attrs.SAMPLENUM %></td></tr>\
 				<%\
 					});\
 				%>\

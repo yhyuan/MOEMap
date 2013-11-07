@@ -336,6 +336,10 @@
 						var agsLayer = new gmaps.ags.MapOverlay(mapService, {opacity: globalConfig.opacity});	
 						agsLayer.setMap(map);
 					}
+					if(typeof(globalConfig.tileLayerService)!== "undefined"){
+						var agsType = new gmaps.ags.MapType(globalConfig.tileLayerService.url,{name:globalConfig.tileLayerService.name, opacity:globalConfig.tileLayerService.opacity});
+						map.overlayMapTypes.insertAt(0, agsType);					
+					}
 					MOEMAP.init(map);
 					TOOLSLEGEND.init(map);
 					globalConfig.updateCoordinates (globalConfig.orgLatitude, globalConfig.orgLongitude);
