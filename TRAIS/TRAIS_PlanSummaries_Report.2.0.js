@@ -97,16 +97,16 @@ globalConfig.layers = [{
 	template: '<%\
 				if (renderResult.hasOwnProperty("reportingPeriods")) {\
 				%>\
-				Year<br>\
+				<%= globalConfig.chooseLang("Year", "Ann&eacute;e") %><br>\
 				<%\
 				 _.each(renderResult.reportingPeriods,function(reportingPeriod,key,list){\
 				%>\
-				<A HREF="<%= globalConfig.TRAIS_PlanSummaries_Report %>?id=<%= renderResult.UniqueFacilityID %>&year=<%= reportingPeriod %>"><%= reportingPeriod + " " + globalConfig.chooseLang("Plan Summary", "Plan Summary") %> </A><br>\
+				<A HREF="<%= globalConfig.TRAIS_PlanSummaries_Report %>?id=<%= renderResult.UniqueFacilityID %>&year=<%= reportingPeriod %>"><%= reportingPeriod + " " + globalConfig.chooseLang("Plan Summary", "Sommaires de Plan") %> </A><br>\
 				<%});%>\
 			<% } else {%>\
 			<TABLE BORDER=0 WIDTH=600>\
 			<A NAME="top"></A>\
-			<TR><TD COLSPAN=2><CENTER><H2><%= globalConfig.chooseLang("Plan Summary " + renderResult.ReportingPeriod, "Plan Summary " + renderResult.ReportingPeriod) %></H2></CENTER><P></TD></TR>\
+			<TR><TD COLSPAN=2><CENTER><H2><%= globalConfig.chooseLang("Plan Summary " + renderResult.ReportingPeriod, "Sommaires de Plan " + renderResult.ReportingPeriod) %></H2></CENTER><P></TD></TR>\
 			<TR><TD><%= globalConfig.chooseLang("Facility Name", "Nom de l\'installation") %>:</TD><TD><%= renderResult.FacilityName %></TD></TR>\
 			<TR><TD><%= globalConfig.chooseLang("Company Name", "Nom de l\'entreprise") %>:</TD><TD><%= renderResult.CompanyName %></TD></TR>\
 			<TR><TD><%= globalConfig.chooseLang("Physical Address", "Adresse") %>:</TD><TD><%= renderResult.Address %></TD></TR>\
@@ -129,12 +129,12 @@ globalConfig.layers = [{
                 _.each(renderResult.Substances,function(substance,key,list){\
             %>\
 				<A NAME="<%= substance.Name %>"></A><U><B><%= substance.Name %></B></U><P>\
-				<%= globalConfig.chooseLang("Which annual report is you plan summary based on?", "Which annual report is you plan summary based on?") %><br>\
+				<%= globalConfig.chooseLang("Which annual report is you plan summary based on?", "Sur quel rapport annuel votre sommaire de plan repose-t-il?") %><br>\
 				<strong>(<%= substance.VersionofthePlan %>)</strong><br>\
-				<strong><%= globalConfig.chooseLang("Statement of Intent to Reduce Use:", "Statement of Intent to Reduce Use:") %></strong>\
-					<%= (substance.ReasonforNoIntenttoReduceUseText.length === 0) ? (globalConfig.chooseLang("Toxic Substance Reduction Plan includes a statement to reduce the use of the substance", "Toxic Substance Reduction Plan includes a statement to reduce the use of the substance")) : (globalConfig.chooseLang("Toxic Substance Reduction Plan does not include a statement to reduce the use of the substance because ", "Toxic Substance Reduction Plan does not include a statement to reduce the use of the substance because ") + substance.ReasonforNoIntenttoReduceUseText) %>\
-				<br><strong><%= globalConfig.chooseLang("Statement of Intent to Reduce Creation:", "Statement of Intent to Reduce Creation:") %></strong>\
-					<%= (substance.ReasonforNoIntenttoReduceCreationText.length === 0) ? (globalConfig.chooseLang("Toxic Substance Reduction Plan includes a statement to reduce the creation of the substance", "Toxic Substance Reduction Plan includes a statement to reduce the creation of the substance")) : (globalConfig.chooseLang("Toxic Substance Reduction Plan does not include a statement to reduce the use of the substance because ", "Toxic Substance Reduction Plan does not include a statement to reduce the use of the substance because ") + substance.ReasonforNoIntenttoReduceCreationText) %>\
+				<strong><%= globalConfig.chooseLang("Statement of Intent to Reduce Use:", "Déclaration de l’intention de réduire l’utilisation:") %></strong>\
+					<%= (substance.ReasonforNoIntenttoReduceUseText.length === 0) ? (globalConfig.chooseLang("Toxic Substance Reduction Plan includes a statement to reduce the use of the substance", "Le plan de réduction de substance toxique comprend une déclaration en vue de réduire l’utilisation de la substance")) : (globalConfig.chooseLang("Toxic Substance Reduction Plan does not include a statement to reduce the use of the substance because ", "Le plan de réduction de substance toxique ne comprend pas de déclaration en vue de réduire l’utilisation de la substance du fait que ") + substance.ReasonforNoIntenttoReduceUseText) %>\
+				<br><strong><%= globalConfig.chooseLang("Statement of Intent to Reduce Creation:", "Déclaration de l’intention de réduire la création:") %></strong>\
+					<%= (substance.ReasonforNoIntenttoReduceCreationText.length === 0) ? (globalConfig.chooseLang("Toxic Substance Reduction Plan includes a statement to reduce the creation of the substance", "Le plan de réduction de substance toxique comprend une déclaration en vue de réduire la création de la substance")) : (globalConfig.chooseLang("Toxic Substance Reduction Plan does not include a statement to reduce the use of the substance because ", "Le plan de réduction de substance toxique ne comprend pas de déclaration en vue de réduire la création de la substance du fait que ") + substance.ReasonforNoIntenttoReduceCreationText) %>\
 				<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width="100%"\
 				 style=\'width:100.0%;border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;\
 				 mso-yfti-tbllook:480;mso-padding-alt:0cm 5.4pt 0cm 5.4pt;mso-border-insideh:\
@@ -144,14 +144,14 @@ globalConfig.layers = [{
 				  mso-border-alt:solid windowtext .5pt;background:#E6E6E6;padding:0cm 5.4pt 0cm 5.4pt;\
 				  height:25.6pt\'>\
 				  <p class=MsoNormal><b style=\'mso-bidi-font-weight:normal\'><span\
-				  style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Objectives:", "Objectives:") %><o:p></o:p></span></b></p>\
+				  style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Objectives:", "Objectifs:") %><o:p></o:p></span></b></p>\
 				  </td>\
 				  <td width="74%" colspan=2 valign=top style=\'width:74.68%;border:solid windowtext 1.0pt;\
 				  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:\
 				  solid windowtext .5pt;background:#E6E6E6;padding:0cm 5.4pt 0cm 5.4pt;\
 				  height:25.6pt\'>\
 				  <p class=MsoNormal><b style=\'mso-bidi-font-weight:normal\'><span\
-				  style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Targets (optional): ", "Targets (optional):") %> <o:p></o:p></span></b></p>\
+				  style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Targets (optional): ", "Cibles (facultatif):") %> <o:p></o:p></span></b></p>\
 				  </td>\
 				 </tr>\
 				 <tr style=\'mso-yfti-irow:1\'>\
@@ -164,14 +164,14 @@ globalConfig.layers = [{
 				  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;\
 				  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;\
 				  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>\
-				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Use", "Use") %><o:p></o:p></span></p>\
+				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Use", "Utilisation") %><o:p></o:p></span></p>\
 				  </td>\
 				  <td width="67%" valign=top style=\'width:67.24%;border-top:none;border-left:\
 				  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;\
 				  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;\
 				  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>\
-				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Reductions: ", "Reductions: ") %> <%= (substance.UseReductionQuantityTargetValue + " " + substance.UseReductionQuantityTargetUnit) %><o:p></o:p></span></p>\
-				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Target Timelines: ", "Target Timelines: ") %> <%= (substance.UseReductionTimelineTargetYears.length === 0) ? "" : substance.UseReductionTimelineTargetYears + globalConfig.chooseLang(" years", " years")%><o:p></o:p></span></p>\
+				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Reductions: ", "Réductions: ") %> <%= (substance.UseReductionQuantityTargetValue + " " + substance.UseReductionQuantityTargetUnit) %><o:p></o:p></span></p>\
+				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Target Timelines: ", "Délai visé: ") %> <%= (substance.UseReductionTimelineTargetYears.length === 0) ? "" : substance.UseReductionTimelineTargetYears + globalConfig.chooseLang(" years", " ans")%><o:p></o:p></span></p>\
 				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= substance.UseReductionTargetDescription %><o:p></o:p></span></p>\
 				  </td>\
 				 </tr>\
@@ -180,47 +180,44 @@ globalConfig.layers = [{
 				  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;\
 				  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;\
 				  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>\
-				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Creation", "Creation") %><o:p></o:p></span></p>\
+				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Creation", "Création") %><o:p></o:p></span></p>\
 				  </td>\
 				  <td width="67%" valign=top style=\'width:67.24%;border-top:none;border-left:\
 				  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;\
 				  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;\
 				  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt\'>\
-				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Reductions: ", "Reductions: ") %> <%= (substance.CreationReductionQuantityTargetValue + " " + substance.CreationReductionQuantityTargetUnit) %><o:p></o:p></span></p>\
-				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Target Timelines: ", "Target Timelines: ") %> <%= (substance.CreationReductionTimelineTargetYears.length === 0) ? "" : substance.CreationReductionTimelineTargetYears + globalConfig.chooseLang(" years", " years")%><o:p></o:p></span></p>\
+				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Reductions: ", "Réductions: ") %> <%= (substance.CreationReductionQuantityTargetValue + " " + substance.CreationReductionQuantityTargetUnit) %><o:p></o:p></span></p>\
+				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Target Timelines: ", "Délai visé: ") %> <%= (substance.CreationReductionTimelineTargetYears.length === 0) ? "" : substance.CreationReductionTimelineTargetYears + globalConfig.chooseLang(" years", " ans")%><o:p></o:p></span></p>\
 				  <p class=MsoNormal><span style=\'font-size:11.0pt;font-family:"Tahoma","sans-serif"\'><%= substance.CreationReductionTargetDescription %><o:p></o:p></span></p>\
 				  </td>\
 				 </tr>\
 				</table>\
-				<br><strong><%= globalConfig.chooseLang("Reason for Use: ", "Reason for Use: ") %></strong><%= substance.ReasonsforUse %>\
-				<br><strong><%= globalConfig.chooseLang("Reason for Creation: ", "Reason for Creation: ") %></strong><%= substance.ReasonsforCreation %>\
-				<br><strong><%= globalConfig.chooseLang("Implementing Toxic Substance Reduction Options", "Implementing Toxic Substance Reduction Options") %></strong><br>\
+				<br><strong><%= globalConfig.chooseLang("Reason for Use: ", "Raison de l’utilisation: ") %></strong><%= substance.ReasonsforUse %>\
+				<br><strong><%= globalConfig.chooseLang("Reason for Creation: ", "Raison de la création: ") %></strong><%= substance.ReasonsforCreation %>\
+				<br><strong><%= globalConfig.chooseLang("Implementing Toxic Substance Reduction Options", "Options de mise en œuvre de la réduction de la substance toxique") %></strong><br>\
 				<% if (substance.StatementNoOptionImplementedYN === "No") { %>\
+					<br><%= globalConfig.chooseLang("Toxic Substance Reduction Plan indicated that the following options will be implemented", "Le plan de réduction de substance toxique indique que les options suivantes seront mises en œuvre") %><br>\
 					<table class=MsoNormalTable WIDTH=600 border=1 cellspacing=0 cellpadding=0 width="100%"\
 					 style=\'width:100.0%;border-collapse:collapse;border:none\'>\
 					 <tr style=\'height:27.4pt\'>\
 					  <td width="9%" rowspan=3 valign=top style=\'width:9.72%;border:solid windowtext 1.0pt;\
 					  background:#E6E6E6;padding:0cm 5.4pt 0cm 5.4pt;height:27.4pt\'>\
-					  <p class=MsoNormal><b><span style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'>Reduction\
-					  Categories</span></b></p>\
+					  <p class=MsoNormal><b><span style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Reduction Categories", "Catégories de réduction") %></span></b></p>\
 					  </td>\
 					  <td width="9%" rowspan=3 valign=top style=\'width:9.04%;border:solid windowtext 1.0pt;\
 					  border-left:none;background:#E6E6E6;padding:0cm 5.4pt 0cm 5.4pt;height:27.4pt\'>\
-					  <p class=MsoNormal><b><span style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'>Reduction\
-					  Options</span></b></p>\
+					  <p class=MsoNormal><b><span style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Reduction Options", "Options de réduction") %></span></b></p>\
 					  </td>\
 					  <td width="62%" colspan=9 valign=top style=\'width:62.72%;border:solid windowtext 1.0pt;\
 					  border-left:none;background:#E6E6E6;padding:0cm 5.4pt 0cm 5.4pt;height:27.4pt\'>\
 					  <p class=MsoNormal align=center style=\'text-align:center\'><b><span\
-					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'>Percentage\
-					  Reductions</span></b></p>\
+					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Percentage Reductions", "Réductions en pourcentage") %> </span></b></p>\
 					  </td>\
 					  <td width="9%" rowspan=3 valign=top style=\'width:9.04%;border:solid windowtext 1.0pt;\
 					  border-left:none;background:#E6E6E6;padding:0cm 5.4pt 0cm 5.4pt;height:27.4pt\'>\
 					  <p class=MsoNormal style=\'margin-top:0cm;margin-right:5.65pt;margin-bottom:\
 					  0cm;margin-left:5.65pt;margin-bottom:.0001pt\'><b><span style=\'font-size:7.0pt;\
-					  font-family:"Tahoma","sans-serif"\'>Anticipated Timelines for Achieving\
-					  Reductions in Use</span></b></p>\
+					  font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Anticipated Timelines for Achieving Reductions in Use", "Délai prévu pour la réduction de l’utilisation") %></span></b></p>\
 					  <p class=MsoNormal style=\'margin-top:0cm;margin-right:5.65pt;margin-bottom:\
 					  0cm;margin-left:5.65pt;margin-bottom:.0001pt\'><b><span style=\'font-size:7.0pt;\
 					  font-family:"Tahoma","sans-serif";color:red\'>&nbsp;</span></b></p>\
@@ -232,8 +229,7 @@ globalConfig.layers = [{
 					  border-left:none;background:#E6E6E6;padding:0cm 5.4pt 0cm 5.4pt;height:27.4pt\'>\
 					  <p class=MsoNormal align=center style=\'margin-top:0cm;margin-right:5.65pt;\
 					  margin-bottom:0cm;margin-left:5.65pt;margin-bottom:.0001pt;text-align:center\'><b><span\
-					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'>Anticipated\
-					  Timelines for Achieving Reductions in Creation</span></b></p>\
+					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Anticipated Timelines for Achieving Reductions in Creation", "Délai prévu pour la réduction de la création") %></span></b></p>\
 					  </td>\
 					 </tr>\
 					 <tr style=\'height:23.35pt\'>\
@@ -241,39 +237,39 @@ globalConfig.layers = [{
 					  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;\
 					  background:#E6E6E6;padding:0cm 5.4pt 0cm 5.4pt;height:23.35pt\'>\
 					  <p class=MsoNormal align=center style=\'text-align:center\'><b><span\
-					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'>Used</span></b></p>\
+					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Used", "Utilisée") %></span></b></p>\
 					  </td>\
 					  <td width="7%" rowspan=2 style=\'width:7.68%;border-top:none;border-left:none;\
 					  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;\
 					  background:#E6E6E6;padding:0cm 5.4pt 0cm 5.4pt;height:23.35pt\'>\
 					  <p class=MsoNormal align=center style=\'text-align:center\'><b><span\
-					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'>Created</span></b></p>\
+					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Created", "Créée") %></span></b></p>\
 					  </td>\
 					  <td width="9%" rowspan=2 style=\'width:9.7%;border-top:none;border-left:none;\
 					  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;\
 					  background:#E6E6E6;padding:0cm 5.4pt 0cm 5.4pt;height:23.35pt\'>\
 					  <p class=MsoNormal align=center style=\'text-align:center\'><b><span\
-					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'>Contained in Product</span></b></p>\
+					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Contained in Product", "Contenue dans un produit") %></span></b></p>\
 					  </td>\
 					  <td width="16%" colspan=3 style=\'width:16.64%;border-top:none;border-left:\
 					  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;\
 					  background:#E6E6E6;padding:0cm 5.4pt 0cm 5.4pt;height:23.35pt\'>\
 					  <p class=MsoNormal align=center style=\'text-align:center\'><b><span\
-					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'>Released to</span></b></p>\
+					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Released to", "Rejetée dans") %></span></b></p>\
 					  </td>\
 					  <td width="13%" colspan=2 style=\'width:13.56%;border-top:none;border-left:\
 					  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;\
 					  background:#E6E6E6;padding:0cm 5.4pt 0cm 5.4pt;height:23.35pt\'>\
 					  <p class=MsoNormal align=center style=\'text-align:center\'><b><span\
-					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'>Disposed</span></b></p>\
+					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Disposed", "Éliminée") %></span></b></p>\
 					  </td>\
 					  <td width="9%" rowspan=2 style=\'width:9.04%;border-top:none;border-left:none;\
 					  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;\
 					  background:#E6E6E6;padding:0cm 5.4pt 0cm 5.4pt;height:23.35pt\'>\
 					  <p class=MsoNormal align=center style=\'text-align:center\'><b><span\
-					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'>Recycled</span></b></p>\
+					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Recycled", "Recyclée ") %></span></b></p>\
 					  <p class=MsoNormal align=center style=\'text-align:center\'><b><span\
-					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'>Off-site</span></b></p>\
+					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Off-site", "hors site ") %></span></b></p>\
 					  </td>\
 					 </tr>\
 					 <tr style=\'height:36.4pt\'>\
@@ -281,31 +277,31 @@ globalConfig.layers = [{
 					  solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;background:#E6E6E6;\
 					  padding:0cm 5.4pt 0cm 5.4pt;height:36.4pt\'>\
 					  <p class=MsoNormal align=center style=\'text-align:center\'><b><span\
-					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'>Air</span></b></p>\
+					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Air", "l’air") %></span></b></p>\
 					  </td>\
 					  <td width="6%" style=\'width:6.78%;border-top:none;border-left:none;\
 					  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;\
 					  background:#E6E6E6;padding:0cm 5.4pt 0cm 5.4pt;height:36.4pt\'>\
 					  <p class=MsoNormal align=center style=\'text-align:center\'><b><span\
-					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'>Land</span></b></p>\
+					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Land", "la terre") %></span></b></p>\
 					  </td>\
 					  <td width="5%" style=\'width:5.66%;border-top:none;border-left:none;\
 					  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;\
 					  background:#E6E6E6;padding:0cm 5.4pt 0cm 5.4pt;height:36.4pt\'>\
 					  <p class=MsoNormal align=center style=\'text-align:center\'><b><span\
-					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'>Water</span></b></p>\
+					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Water", "l’eau") %></span></b></p>\
 					  </td>\
 					  <td width="6%" style=\'width:6.78%;border-top:none;border-left:none;\
 					  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;\
 					  background:#E6E6E6;padding:0cm 5.4pt 0cm 5.4pt;height:36.4pt\'>\
 					  <p class=MsoNormal align=center style=\'text-align:center\'><b><span\
-					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'>On-Site</span></b></p>\
+					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("On-Site", "sur place") %></span></b></p>\
 					  </td>\
 					  <td width="6%" style=\'width:6.78%;border-top:none;border-left:none;\
 					  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;\
 					  background:#E6E6E6;padding:0cm 5.4pt 0cm 5.4pt;height:36.4pt\'>\
 					  <p class=MsoNormal align=center style=\'text-align:center\'><b><span\
-					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'>Off-Site</span></b></p>\
+					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= globalConfig.chooseLang("Off-Site", "hors site") %></span></b></p>\
 					  </td>\
 					 </tr>\
 					 <tr>\
@@ -376,21 +372,21 @@ globalConfig.layers = [{
 					  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;\
 					  padding:0cm 5.4pt 0cm 5.4pt\'>\
 					  <p class=MsoNormal align=center style=\'text-align:center\'><span\
-					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= (substance.AnticipatedTimelinesforAchievingReductionsinUse.length > 0) ? ( substance.AnticipatedTimelinesforAchievingReductionsinUse + " years") : "" %></span></p>\
+					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= (substance.AnticipatedTimelinesforAchievingReductionsinUse.length > 0) ? ( substance.AnticipatedTimelinesforAchievingReductionsinUse + globalConfig.chooseLang(" years", " ans")) : "" %></span></p>\
 					  </td>\
 					  <td width="9%" valign=top style=\'width:9.46%;border-top:none;border-left:\
 					  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;\
 					  padding:0cm 5.4pt 0cm 5.4pt\'>\
 					  <p class=MsoNormal align=center style=\'text-align:center\'><span\
-					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= (substance.AnticipatedTimelinesforAchievingReductionsinCreation.length > 0) ? ( substance.AnticipatedTimelinesforAchievingReductionsinCreation + " years") : "" %></span></p>\
+					  style=\'font-size:7.0pt;font-family:"Tahoma","sans-serif"\'><%= (substance.AnticipatedTimelinesforAchievingReductionsinCreation.length > 0) ? ( substance.AnticipatedTimelinesforAchievingReductionsinCreation + globalConfig.chooseLang(" years", " ans")) : "" %></span></p>\
 					  </td>\
 					 </tr>\
 					</table>\
 				<% } else {%>\
-					<%= globalConfig.chooseLang("Toxic Substance Reduction Plan indicated that no options will be implemented for the following reason(s): ", "Toxic Substance Reduction Plan indicated that no options will be implemented for the following reason(s):") %><br><%= substance.ReasonsNoOptionImplemented %><br>\
+					<%= globalConfig.chooseLang("Toxic Substance Reduction Plan indicated that no options will be implemented for the following reason(s): ", ") Le plan de réduction de substance toxique indiquait qu’aucune option ne serait mise en œuvre, et ce, pour la ou les raisons suivantes:") %><br><%= substance.ReasonsNoOptionImplemented %><br>\
 				<% }%>\
-				<strong><%= globalConfig.chooseLang("Actions Taken Outside the Plan that Reduced the Use and Creation of the Substance (optional): ", "Actions Taken Outside the Plan that Reduced the Use and Creation of the Substance (optional): ") %></strong><br><%= (substance.DescriptionofAnyAdditionalActionsTaken.length === 0) ? globalConfig.chooseLang("None at this time", "None at this time") : substance.DescriptionofAnyAdditionalActionsTaken %>\
-				<BR><BR><I><A HREF="http://www.ene.gov.on.ca/environment/<%= globalConfig.chooseLang("en", "fr") %>/resources/collection/data_downloads/index.htm"><%= globalConfig.chooseLang("Download the full dataset", "Ensemble de donn&eacute;es &agrave; t&eacute;l&eacute;charger") %></A></I><BR>\
+				<strong><%= globalConfig.chooseLang("Actions Taken Outside the Plan that Reduced the Use and Creation of the Substance (optional): ", "Mesures prises indépendamment du plan qui ont permis de réduire l’utilisation et la création de la substance (facultatif): ") %></strong><br><%= (substance.DescriptionofAnyAdditionalActionsTaken.length === 0) ? globalConfig.chooseLang("None at this time", "None at this time") : substance.DescriptionofAnyAdditionalActionsTaken %>\
+				<BR><BR><I><A HREF="http://www.ene.gov.on.ca/environment/<%= globalConfig.chooseLang("en", "fr") %>/resources/collection/data_downloads/index.htm"><%= globalConfig.chooseLang("Click here to access the full dataset", "Cliquez ici pour accéder au jeu de données complet") %></A></I><BR>\
 				<A HREF="#top"><%= globalConfig.chooseLang("Back to top", "Haut de la page") %></A><BR><HR WIDTH=100%>\
 				</OL><P>\
             <%\

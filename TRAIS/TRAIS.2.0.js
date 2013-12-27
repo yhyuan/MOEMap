@@ -54,13 +54,13 @@ if (globalConfig.language === "EN") {
 	globalConfig.annualReportURL = "TRAIS_Report.htm";
 	globalConfig.planSummaryURL = "TRAIS_PlanSummaries_Report.htm";
 	globalConfig.recordsURL = "TRAIS_Records_Report.htm";
-	globalConfig.NoAnnualReportSubmittedLang = "No Annual Report submitted.";
-	globalConfig.NoPlanSummarySubmittedLang = "No Plan Summary submitted.";
-	globalConfig.NoRecordSubmittedLang = "No Record submitted.";
+	globalConfig.NoAnnualReportSubmittedLang = "Aucun rapport annuel pr&eacute;sent&eacute;.";
+	globalConfig.NoPlanSummarySubmittedLang = "Aucun sommaire de plan pr&eacute;sent&eacute;.";
+	globalConfig.NoRecordSubmittedLang = "Aucun document pr&eacute;sent&eacute;.";
 	globalConfig.LinktoAnnualReportsLang = "Lien aux rapports annuels";
-	globalConfig.LinktoPlanSummariesLang = "Lien aux Plan Summaries";
-	globalConfig.LinktoRecordsLang = "Lien aux Records";
-	globalConfig.OpenNewWindowLang = "Ce lien s'ouvre dans une nouvelle fen\u00eatre.";	
+	globalConfig.LinktoPlanSummariesLang = "Lien aux sommaires de plan";
+	globalConfig.LinktoRecordsLang = "Lien aux documents";
+	globalConfig.OpenNewWindowLang = "En cliquant sur ces liens, vous ouvrirez une nouvelle fen&ecirc;tre dans votre navigateur.";	
 	globalConfig.searchHelpTxt = "Rechercher par <strong>ville</strong>, <strong>installation</strong>, <strong>entreprise</strong>, <strong>substance</strong>, <strong>secteur</strong> ou cliquer sur aide pour plus d\u0027information sur la recherche avanc\u00e9e.";
 	globalConfig.tabsTemplateContent = "Installation: <b>{Facility}</b><br>Entreprise: <b>{Organisation}</b><br>Adresse: <b>{StreetAddress} / {City}</b><br>N&deg; INRP: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Secteur: <b>{mapConfig.displaySector(Sector)}</b><br>Substances toxiques: <b>{NUMsubst}</b><br><br>[{NUMsubst}? " + globalConfig.NoAnnualReportSubmittedLang + " ?<a target='_blank' href='" + globalConfig.annualReportURL + "?id={UniqueID}'>" + globalConfig.LinktoAnnualReportsLang + "</a>]<br>[{NUMPlanSummary}? " + globalConfig.NoPlanSummarySubmittedLang + " ?<a target='_blank' href='" + globalConfig.planSummaryURL + "?id={UniqueID}'>" + globalConfig.LinktoPlanSummariesLang + "</a>]<br>[{NUMRecord}? " + globalConfig.NoRecordSubmittedLang + " ?<a target='_blank' href='" + globalConfig.recordsURL + "?id={UniqueID}'>" + globalConfig.LinktoRecordsLang + "</a>]<br><i>" + globalConfig.OpenNewWindowLang + "</i><br>";	
 }

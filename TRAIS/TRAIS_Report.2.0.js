@@ -101,7 +101,7 @@ globalConfig.layers = [{
 	template: '<%\
 				if (renderResult.hasOwnProperty("reportingPeriods")) {\
 				%>\
-				Year<br>\
+				<%= globalConfig.chooseLang("Year", "Ann&eacute;e") %><br>\
 				<%\
 				 _.each(renderResult.reportingPeriods,function(reportingPeriod,key,list){\
 				%>\
@@ -137,140 +137,140 @@ globalConfig.layers = [{
 						<TR>\
 							<TH WIDTH=25% BGCOLOR=lightgrey>&nbsp;</TH>\
 							<TH WIDTH=25% BGCOLOR=lightgrey><%= renderResult.ReportingPeriod %><BR><%= globalConfig.chooseLang("Amount Reported", "Quantit&eacute; d&eacute;clar&eacute;e") %> <BR>(<%= substance.Units %>)</TH>\
-							<TH WIDTH=25% BGCOLOR=lightgrey><%= globalConfig.chooseLang("% Change from Previous Annual Report ", "% Change from Previous Annual Report") %> </TH>\
-							<TH WIDTH=25% BGCOLOR=lightgrey><%= globalConfig.chooseLang("Reasons for Change", "Reasons for Change") %></TH>\
+							<TH WIDTH=25% BGCOLOR=lightgrey><%= globalConfig.chooseLang("% Change from Previous Annual Report ", "Variation en % par rapport au rapport annuel pr&eacute;c&eacute;dent") %> </TH>\
+							<TH WIDTH=25% BGCOLOR=lightgrey><%= globalConfig.chooseLang("Reasons for Change", "Raisons de la variation") %></TH>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.chooseLang("Entered the Facility (Used)", "Quantit&eacute; ayant p&eacute;n&eacute;tr&eacute; l\'installation (utilis&eacute;e)") %></TD>\
+							<TD><%= globalConfig.chooseLang("Entered the Facility (Used)", "Ayant p&eacute;n&eacute;tr&eacute; dans l’installation (Utilis&eacute;e)") %></TD>\
 							<TD><%= substance.Used %></TD>\
 							<TD><%= substance.UseEnteredtheFacilityAnnualPercentageChange %></TD>\
 							<TD rowspan="3"><%= substance.ReasonsforChangeTRAQuantifications %></TD>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.chooseLang("Created", "Quantit&eacute; cr&eacute;&eacute;e") %></TD>\
+							<TD><%= globalConfig.chooseLang("Created", "Cr&eacute;&eacute;e") %></TD>\
 							<TD><%= substance.Created %></TD>\
 							<TD><%= substance.CreatedAnnualPercentageChange %></TD>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.chooseLang("Contained in Product", "Quantit&eacute; contenue dans les produits") %><BR>&nbsp;</TD>\
+							<TD><%= globalConfig.chooseLang("Contained in Product", "Contenue dans un produit") %><BR>&nbsp;</TD>\
 							<TD><%= substance.Contained %></TD>\
 							<TD><%= substance.ContainedinProductAnnualPercentageChange %></TD>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.chooseLang("Released to Air", "Quantit&eacute; &eacute;mise dans l\'air") %><BR></TD>\
+							<TD><%= globalConfig.chooseLang("Released to Air", "Rejet&eacute;e dans l’air") %><BR></TD>\
 							<TD><%= substance.Air %></TD>\
 							<TD><%= substance.ReleasestoAirAnnualPercentageChange %></TD>\
 							<TD rowspan="3"><%= substance.ReasonsforChangeAllMedia %></TD>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.chooseLang("Released to Water", "Quantit&eacute; rejet&eacute;e dans l\'eau") %></TD>\
+							<TD><%= globalConfig.chooseLang("Released to Water", "Rejet&eacute;e dans l’eau") %></TD>\
 							<TD><%= substance.Water %></TD>\
 							<TD><%= substance.ReleasestoWaterAnnualPercentageChange %></TD>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.chooseLang("Released to Land", "Quantit&eacute; d&eacute;vers&eacute;e sur les sols") %><BR>&nbsp;</TD>\
+							<TD><%= globalConfig.chooseLang("Released to Land", "Rejet&eacute;e dans la terre") %><BR>&nbsp;</TD>\
 							<TD><%= substance.Land %></TD>\
 							<TD><%= substance.ReleasestoLandAnnualPercentageChange %></TD>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.chooseLang("Disposed On-Site", "Quantit&eacute; &eacute;limin&eacute;e dans le site") %></TD>\
+							<TD><%= globalConfig.chooseLang("Disposed On-Site", "&Eacute;limin&eacute;e sur place") %></TD>\
 							<TD><%= substance.DOnSite %></TD>\
 							<TD><%= substance.DisposedOnSiteAnnualPercentageChangeHTMLOnly %></TD>\
 							<TD rowspan="2"><%= substance.ReasonsforChangeDisposals %></TD>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.chooseLang("Disposed Off-Site", "Quantit&eacute; &eacute;limin&eacute;e hors site") %></TD>\
+							<TD><%= globalConfig.chooseLang("Disposed Off-Site", "&Eacute;limin&eacute;e hors site") %></TD>\
 							<TD><%= substance.DOffSite %></TD>\
 							<TD><%= substance.DisposedOffSiteAnnualPercentageChangeHTMLOnly %></TD>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.chooseLang("Recycled Off-Site", "Quantit&eacute; recycl&eacute;e hors site") %></TD>\
+							<TD><%= globalConfig.chooseLang("Recycled Off-Site", "Recycl&eacute;e hors site") %></TD>\
 							<TD><%= substance.ROffSite %></TD>\
 							<TD><%= substance.RecycledOffSiteAnnualPercentageChange %></TD>\
 							<TD><%= substance.ReasonsForChangeRecycling %></TD>\
 						</TR>\
 						</TABLE>\
-					<strong><%= globalConfig.chooseLang("Progress Implementing Toxics Reduction Plan", "Progress Implementing Toxics Reduction Plan") %></strong><br>\
+					<strong><%= globalConfig.chooseLang("Progress Implementing Toxics Reduction Plan", "Progr&egrave;s dans la mise en œuvre du plan de r&eacute;duction de substances toxiques") %></strong><br>\
 					<%\
 						if (substance.NoOptionsIdentifiedforUseorCreation === "Yes") {\
 					%>\
-						<%= globalConfig.chooseLang("No options to reduce the use or creation of " + substance.Name + " were identified for implementation in the Toxics Reduction Plan", "No options to reduce the use or creation of " + substance.Name + " were identified for implementation in the Toxics Reduction Plan") %>\
+						<%= globalConfig.chooseLang("No options to reduce the use or creation of " + substance.Name + " were identified for implementation in the Toxics Reduction Plan", "Aucune option visant &agrave; r&eacute;duire l’utilisation ou la cr&eacute;ation de " + substance.Name + " n’a &eacute;t&eacute; mentionn&eacute;e en vue de sa mise en œuvre dans le plan de r&eacute;duction de substance toxique") %>\
 					<%\
 						} else {\
 					%>\
-						<%= globalConfig.chooseLang("Option(s) to reduce the use or creation of " + substance.Name + " was/were identified for implementation in the Toxics Reduction Plan", "Option(s) to reduce the use or creation of " + substance.Name + " was/were identified for implementation in the Toxics Reduction Plan") %>\
+						<%= globalConfig.chooseLang("Option(s) to reduce the use or creation of " + substance.Name + " was/were identified for implementation in the Toxics Reduction Plan", "Une ou plusieurs options visant &agrave; r&eacute;duire l’utilisation ou la cr&eacute;ation de " + substance.Name + " ont &eacute;t&eacute; mentionn&eacute;es en vue de leur mise en œuvre dans le plan de r&eacute;duction de substance toxique") %>\
 				<TABLE class="fishTable" BORDER=1 WIDTH=600>\
 						<TR>\
-							<TH WIDTH=10% BGCOLOR=lightgrey><%= globalConfig.chooseLang("Option Category", "Option Category") %></TH>\
-							<TH WIDTH=10% BGCOLOR=lightgrey><%= globalConfig.chooseLang("Option Activity", "Option Activity") %></TH>\
+							<TH WIDTH=10% BGCOLOR=lightgrey><%= globalConfig.chooseLang("Option Category", "Cat&eacute;gorie d’option") %></TH>\
+							<TH WIDTH=10% BGCOLOR=lightgrey><%= globalConfig.chooseLang("Option Activity", "Activit&eacute; li&eacute;e &agrave; l’option") %></TH>\
 							<TH WIDTH=10% BGCOLOR=lightgrey><%= globalConfig.chooseLang("Source", "Source") %></TH>\
-							<TH WIDTH=70% BGCOLOR=lightgrey><%= globalConfig.chooseLang("Reduction achieved in " + renderResult.ReportingPeriod + "<br><br>" + substance.Units, "Reduction achieved in " + renderResult.ReportingPeriod + "<br><br>" + substance.Units) %></TH>\
+							<TH WIDTH=70% BGCOLOR=lightgrey><%= globalConfig.chooseLang("Reduction achieved in " + renderResult.ReportingPeriod + "<br><br>" + substance.Units, "R&eacute;duction atteinte en " + renderResult.ReportingPeriod + "<br><br>" + substance.Units) %></TH>\
 						</TR>\
 						<TR>\
 							<TD><%= substance.ToxicsReductionCategory %></TD>\
 							<TD><%= substance.OptionActivityTaken %></TD>\
-							<TD><%= globalConfig.chooseLang("Use", "Use") %></TD>\
+							<TD><%= globalConfig.chooseLang("Use", "Utilisation") %></TD>\
 							<TD><%= substance.OptionsImplementedAmountofreductioninuse %></TD>\
 						</TR>\
 						<TR>\
 							<TD><%= substance.ToxicsReductionCategory %></TD>\
 							<TD><%= substance.OptionActivityTaken %></TD>\
-							<TD><%= globalConfig.chooseLang("Creation", "Creation") %></TD>\
+							<TD><%= globalConfig.chooseLang("Creation", "Cr&eacute;ation") %></TD>\
 							<TD><%= substance.OptionsImplementedAmountofreductionincreation %></TD>\
 						</TR>\
 						<TR>\
 							<TD><%= substance.ToxicsReductionCategory %></TD>\
 							<TD><%= substance.OptionActivityTaken %></TD>\
-							<TD><%= globalConfig.chooseLang("Contained in Product", "Contained in Product") %></TD>\
+							<TD><%= globalConfig.chooseLang("Contained in Product", "Contenue dans un produit") %></TD>\
 							<TD><%= substance.OptionsImplementedAmountofreductionincontainedinproduct %></TD>\
 						</TR>\
 						<TR>\
 							<TD><%= substance.ToxicsReductionCategory %></TD>\
 							<TD><%= substance.OptionActivityTaken %></TD>\
-							<TD><%= globalConfig.chooseLang("Released into Air", "Released into Air") %></TD>\
+							<TD><%= globalConfig.chooseLang("Released into Air", "Rejet&eacute;e dans l’air") %></TD>\
 							<TD><%= substance.OptionsImplementedAmountofreductioninreleasetoair %></TD>\
 						</TR>\
 						<TR>\
 							<TD><%= substance.ToxicsReductionCategory %></TD>\
 							<TD><%= substance.OptionActivityTaken %></TD>\
-							<TD><%= globalConfig.chooseLang("Released into Water", "Released into Water") %></TD>\
+							<TD><%= globalConfig.chooseLang("Released into Water", "Rejet&eacute;e dans l’eau") %></TD>\
 							<TD><%= substance.OptionsImplementedAmountofreductioninreleasetowater %></TD>\
 						</TR>\
 						<TR>\
 							<TD><%= substance.ToxicsReductionCategory %></TD>\
 							<TD><%= substance.OptionActivityTaken %></TD>\
-							<TD><%= globalConfig.chooseLang("Released into Land", "Released into Land") %></TD>\
+							<TD><%= globalConfig.chooseLang("Released into Land", "Rejet&eacute;e dans la terre") %></TD>\
 							<TD><%= substance.OptionsImplementedAmountofreductioninreleasetoland %></TD>\
 						</TR>\
 						<TR>\
 							<TD><%= substance.ToxicsReductionCategory %></TD>\
 							<TD><%= substance.OptionActivityTaken %></TD>\
-							<TD><%= globalConfig.chooseLang("Disposed On-Site", "Disposed On-Site") %></TD>\
+							<TD><%= globalConfig.chooseLang("Disposed On-Site", "&Eacute;limin&eacute;e sur place") %></TD>\
 							<TD><%= substance.OptionsImplementedAmountofreductionindisposedonsite %></TD>\
 						</TR>\
 						<TR>\
 							<TD><%= substance.ToxicsReductionCategory %></TD>\
 							<TD><%= substance.OptionActivityTaken %></TD>\
-							<TD><%= globalConfig.chooseLang("Disposed Off-Site", "Disposed Off-Site") %></TD>\
+							<TD><%= globalConfig.chooseLang("Disposed Off-Site", "&Eacute;limin&eacute;e hors site") %></TD>\
 							<TD><%= substance.OptionsImplementedAmountofreductioninthesubstancedisposedoffsite %></TD>\
 						</TR>\
 						<TR>\
 							<TD><%= substance.ToxicsReductionCategory %></TD>\
 							<TD><%= substance.OptionActivityTaken %></TD>\
-							<TD><%= globalConfig.chooseLang("Recycled Off-Site", "Recycled Off-Site") %></TD>\
+							<TD><%= globalConfig.chooseLang("Recycled Off-Site", "Recycl&eacute;e hors site") %></TD>\
 							<TD><%= substance.OptionsImplementedAmountofreductioninrecycled %></TD>\
 						</TR>\
 						</TABLE>\
-						<%= globalConfig.chooseLang("Will all planned timelines for reduction be met?", "Will all planned timelines for reduction be met?") %><br>\
+						<%= globalConfig.chooseLang("Will all planned timelines for reduction be met?", "Tous les d&eacute;lais pr&eacute;vus pour la r&eacute;duction seront-ils respect&eacute;s?") %><br>\
 						<%= substance.Willthetimelinesbemet %><br>\
-						<%= globalConfig.chooseLang("Any actions outside the Toxics Reduction Plan that reduced the use or creation of this substance this year?", "Any actions outside the Toxics Reduction Plan that reduced the use or creation of this substance this year?") %><br>\
+						<%= globalConfig.chooseLang("Any actions outside the Toxics Reduction Plan that reduced the use or creation of this substance this year?", "Des mesures prises ind&eacute;pendamment du plan de r&eacute;duction de substance toxique ont-elles permis de r&eacute;duire l’utilisation et la cr&eacute;ation de la substance cette ann&eacute;e?") %><br>\
 						<%= substance.DescriptionofAdditionalAction %><br>\
-						<%= globalConfig.chooseLang("Any amendment(s) to the Toxics Reduction Plan this year?", "Any amendment(s) to the Toxics Reduction Plan this year?") %><br>\
+						<%= globalConfig.chooseLang("Any amendment(s) to the Toxics Reduction Plan this year?", "Le plan de r&eacute;duction de substance toxique a-t-il &eacute;t&eacute; modifi&eacute; cette ann&eacute;e?") %><br>\
 						<%= substance.AmendmentsDescription %><br>\
 					<%\
 						}\
 					%>\
-				<BR><BR><I><A HREF="http://www.ene.gov.on.ca/environment/<%= globalConfig.chooseLang("en", "fr") %>/resources/collection/data_downloads/index.htm"><%= globalConfig.chooseLang("Download the full dataset", "Ensemble de donn&eacute;es &agrave; t&eacute;l&eacute;charger") %></A></I><BR>\
+				<BR><BR><I><A HREF="http://www.ene.gov.on.ca/environment/<%= globalConfig.chooseLang("en", "fr") %>/resources/collection/data_downloads/index.htm"><%= globalConfig.chooseLang("Full dataset available for download", "Jeu de donn&eacute;es complet disponible en t&eacute;l&eacute;chargement") %></A></I><BR>\
 				<A HREF="#top"><%= globalConfig.chooseLang("Back to top", "Haut de la page") %></A><BR><HR WIDTH=100%>\
 				</OL><P>\
             <%\
