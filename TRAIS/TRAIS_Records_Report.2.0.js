@@ -110,17 +110,17 @@ globalConfig.layers = [{
 	},
 	template: '<% if (globalConfig.isEnglish()) {%>\
 				<center><strong>Exit Records - All Years</strong></center><br><br>\
-				The following Exit Records have been submitted by the facility in lieu of an Annual Report for a substance because it did not meet one or more capture criteria set under the Toxics Reduction Act. Facilities that have submitted an exit record are no longer required to account, plan or report for these substances unless they meet the capture criteria again. <br><br>\
+				The following Exit Records have been submitted by the facility in lieu of an Annual Report for a substance because it did not meet one or more capture criteria set under the <a href="http://www.ene.gov.on.ca/environment/en/subject/toxics/index.htm" target="_blank">Toxics Reduction Act</a>. Facilities that have submitted an exit record are no longer required to account, plan or report for these substances unless they meet the capture criteria again. <br><br>\
 			<% } else {%>\
-				<center><strong>Exit Records - All Years</strong></center><br><br>\
-				The following Exit Records have been submitted by the facility in lieu of an Annual Report for a substance because it did not meet one or more capture criteria set under the Toxics Reduction Act. Facilities that have submitted an exit record are no longer required to account, plan or report for these substances unless they meet the capture criteria again. <br><br>\
+				<center><strong>Documents de sortie – Toutes les années</strong></center><br><br>\
+				Les documents de sortie suivants ont été présentés par l’installation au lieu d’un rapport annuel concernant une substance donnée du fait que l’installation ne remplissait plus un ou plusieurs des critères d’assujettissement établis par la <a href="http://www.ene.gov.on.ca/environment/fr/subject/toxics/index.htm" target="_blank">Loi sur la réduction des toxiques</a>. Les installations qui ont présenté un document de sortie ne sont plus tenues de comptabiliser, de planifier ou de déclarer ces substances, à moins qu’elles ne remplissent de nouveau les critères d’assujettissement.<br><br>\
 			<% } %>\
 			<TABLE class="fishTable" BORDER="1" WIDTH="600">\
 				<TR>\
 					<TH WIDTH=20%><%= globalConfig.chooseLang("Date", "Date") %></TD>\
 					<TH WIDTH=30%><%= globalConfig.chooseLang("Substances", "Substances") %></TD>\
-					<TH WIDTH=20%><%= globalConfig.chooseLang("CAS Number", "CAS Number") %></TD>\
-					<TH WIDTH=30%><%= globalConfig.chooseLang("Reasons", "Reasons") %></TD>\
+					<TH WIDTH=20%><%= globalConfig.chooseLang("CAS Number", "Numéro CAS") %></TD>\
+					<TH WIDTH=30%><%= globalConfig.chooseLang("Reasons", "Raisons") %></TD>\
 				</TR>\
 	            <% _.each(_.keys(renderResult.dateSubstanceObject), function(dateofSubmission,key,list){%>\
 					<TR>\
@@ -183,15 +183,15 @@ globalConfig.layers = [{
 				The following Exemption Records have been submitted by the facility in lieu of an Annual Report for congeners of dioxins and furans, or hexachlorobenzene because the facility has determined through monitoring or source testing that these substances were below the capture criteria set out in the most recent National Pollutant Release Inventory (NPRI) Gazette Notice. <br><br>\
 				After a facility has submitted an exemption record for the substance for three (3) consecutive years, they no longer have to submit these records.  In addition, after a facility has submitted the first exemption record, they are no longer required to account, plan or submit an annual report for these substances unless they meet the capture criteria again. <br><br>\
 			<% } else {%>\
-				<center><strong>Exemption Records – All Years</strong></center><br><br>\
-				The following Exemption Records have been submitted by the facility in lieu of an Annual Report for congeners of dioxins and furans, or hexachlorobenzene because the facility has determined through monitoring or source testing that these substances were below the capture criteria set out in the most recent National Pollutant Release Inventory (NPRI) Gazette Notice. <br><br>\
-				After a facility has submitted an exemption record for the substance for three (3) consecutive years, they no longer have to submit these records.  In addition, after a facility has submitted the first exemption record, they are no longer required to account, plan or submit an annual report for these substances unless they meet the capture criteria again. <br><br>\
+				<center><strong>Documents d’exemption – Toutes les années</strong></center><br><br>\
+				Les documents d’exemption suivants ont été présentés par l’installation au lieu d’un rapport annuel concernant les congénères des dioxines et des furannes ou l’hexachlorobenzène, car l’installation a déterminé par des activités de surveillance ou d’analyse des sources que ces substances ne remplissaient pas les critères d’assujettissement énoncés dans le plus récent avis publié dans la Gazette concernant l’Inventaire national des rejets de polluants (INRP). <br><br>\
+				Lorsqu’une installation a présenté un document d’exemption concernant la substance pendant trois (3) années consécutives, elle n’est plus tenue de présenter ces documents. De plus, dès qu’une installation a présenté le premier document d’exemption, elle n’est plus tenue de comptabiliser, de planifier ou présenter un rapport annuel concernant ces substances, à moins qu’elle ne remplisse de nouveau les critères d’assujettissement. <br><br>\
 			<% } %>\
 			<TABLE class="fishTable" BORDER="1" WIDTH="600">\
 				<TR>\
 					<TH WIDTH=30%><%= globalConfig.chooseLang("Date", "Date") %></TD>\
 					<TH WIDTH=30%><%= globalConfig.chooseLang("Substances", "Substances") %></TD>\
-					<TH WIDTH=30%><%= globalConfig.chooseLang("Record Rank ", "Record Rank ") %></TD>\
+					<TH WIDTH=30%><%= globalConfig.chooseLang("Record Rank ", "Classement du document selon l’année ") %></TD>\
 				</TR>\
 	            <% _.each(_.keys(renderResult.dateSubstanceObject), function(dateofSubmission,key,list){%>\
 					<TR>\
