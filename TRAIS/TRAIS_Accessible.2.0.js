@@ -1,7 +1,7 @@
 if (globalConfig.language === "EN") {
 	globalConfig.annualReportURL = "TRAIS_Report.htm";
 	globalConfig.planSummaryURL = "TRAIS_PlanSummaries_Report.htm";
-	globalConfig.recordsURL = "TRAIS_ExitRecords_Report.htm";
+	globalConfig.recordsURL = "TRAIS_Records_Report.htm";
 	globalConfig.NoAnnualReportSubmittedLang = "No Annual Report submitted.";
 	globalConfig.NoPlanSummarySubmittedLang = "No Plan Summary submitted.";
 	globalConfig.NoRecordSubmittedLang = "No Record submitted.";
@@ -11,13 +11,13 @@ if (globalConfig.language === "EN") {
 } else {
 	globalConfig.annualReportURL = "TRAIS_Report.htm";
 	globalConfig.planSummaryURL = "TRAIS_PlanSummaries_Report.htm";
-	globalConfig.recordsURL = "TRAIS_ExitRecords_Report.htm";
-	globalConfig.NoAnnualReportSubmittedLang = "No Annual Report submitted.";
-	globalConfig.NoPlanSummarySubmittedLang = "No Plan Summary submitted.";
-	globalConfig.NoRecordSubmittedLang = "No Record submitted.";
+	globalConfig.recordsURL = "TRAIS_Records_Report.htm";
+	globalConfig.NoAnnualReportSubmittedLang = "Aucun rapport annuel pr&eacute;sent&eacute;.";
+	globalConfig.NoPlanSummarySubmittedLang = "Aucun sommaire de plan pr&eacute;sent&eacute;.";
+	globalConfig.NoRecordSubmittedLang = "Aucun document pr&eacute;sent&eacute;.";
 	globalConfig.LinktoAnnualReportsLang = "Lien aux rapports annuels";
-	globalConfig.LinktoPlanSummariesLang = "Lien aux Plan Summaries";
-	globalConfig.LinktoRecordsLang = "Lien aux Records";	
+	globalConfig.LinktoPlanSummariesLang = "Lien aux sommaires de plan";
+	globalConfig.LinktoRecordsLang = "Lien aux documents";	
 }
 
 globalConfig.layers = [{
@@ -36,8 +36,8 @@ globalConfig.layers = [{
 				ID: attr.UniqueID, //attr.ID,
 				City: attr.City, //attr.Address.split("/")[1],
 				Substances: attr.NUMsubst,
-				NUMPlanSummary: NUMPlanSummary,
-				NUMRecord: NUMRecord
+				NUMPlanSummary: attr.NUMPlanSummary,
+				NUMRecord: attr.NUMRecord
 			};
 		};
 		var resultsArray = _.map(fs, constructObject);
