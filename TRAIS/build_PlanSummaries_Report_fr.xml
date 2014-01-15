@@ -9,6 +9,7 @@
 		<concat destfile="${build.dir}/TRAIS_PlanSummaries_Report_fr.2.0-concatenate.js" >
 			<header> /* Build Time: ${build.time} */ </header>
 			<filelist  dir="${MOEMap.src.dir}" >
+				<file name="yepnope-min.js" />
 				<file name="REPORT.js" />
 			</filelist>			
 			<filelist  dir="${src.dir}" >

@@ -5,3 +5,4 @@ cp TRAIS_PlanSummaries_Report_fr.2.0-min.js /Y/web/TRAIS/fr
 rm TRAIS_PlanSummaries_Report_fr.2.0-min.js
 cp TRAIS_PlanSummaries_Report_fr.htm /Y/web/TRAIS/fr
 mv /Y/web/TRAIS/fr/TRAIS_PlanSummaries_Report_fr.htm  /Y/web/TRAIS/fr/TRAIS_PlanSummaries_Report.htm
+cp TRAIS.css /Y/web/TRAIS/fr

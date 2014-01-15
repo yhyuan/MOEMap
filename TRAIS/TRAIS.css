@@ -1,0 +1,7 @@
+.TRAISImage { margin:5px 20px 10px 5px;float:right;border:1px #000000 solid; }
+.TRAISTable { width:700px; margin-right:-3px; border-spacing:1px; border-collapse:separate !important; border:1px #000000 solid; }
+.TRAISTable th { padding:2px; font-size:11px; border:1px #000000 solid; vertical-align:middle; text-align:left; background:#E6E6E6;}
+.TRAISTable th.measure { padding:2px; font-size:11px; border:1px #000000 solid; vertical-align:middle; text-align:right; }
+.TRAISTable td { padding:2px; font-size:11px; border:1px #000000 solid; text-align:left; }
+.TRAISTable th sup { vertical-align:super; }
+.shaded { background-color:#CCCCCC; }

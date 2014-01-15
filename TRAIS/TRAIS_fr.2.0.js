@@ -16,7 +16,7 @@ globalConfig.searchControlHTML = '<table width="100%" cellpadding="5" cellspacin
 			</tr>\
 			<tr>\
 				<td valign="top" width="450px">\
-					<input id="map_query" type="text" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100" title="Term"></input>&nbsp;<input type="submit" onclick="globalConfig.search()" value="Recherche" title="Recherche"></input>\
+					<input id="map_query" type="text" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100" title="Terme"></input>&nbsp;<input type="submit" onclick="globalConfig.search()" value="Recherche" title="Recherche"></input>\
 					<div id="information" style="margin-top:10px;">Rechercher par <strong>ville</strong>, <strong>installation</strong>, <strong>entreprise</strong>, <strong>substance</strong>, <strong>secteur</strong> ou cliquer sur aide pour plus d\u0027information sur la recherche avanc\u00e9e.</div>\
 				</td>\
 				<td valign="top">\
