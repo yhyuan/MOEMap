@@ -2,6 +2,7 @@ globalConfig = {};
 globalConfig.language = "EN";
 globalConfig.searchHelpTxt = "Zoom in, or Search with Watershed, Permit Holder Name, Address.";
 globalConfig.tableSimpleTemplateTitleLang = "Note: The Distance(KM) column represents the distance between your search location and the permit location in the specific row. Data is in English only.";
+//globalConfig.tableSimpleTemplateTitleLang = "The following table contains the records with valid coordinates.";
 globalConfig.otherInfoHTML = ""; 
 globalConfig.InformationLang = "Information";
 globalConfig.searchControlHTML = '<center><input id = "map_query" type="text" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100"></input>&nbsp;&nbsp;<input type="submit" onclick="globalConfig.search()" value="Search"></input>&nbsp;&nbsp;\

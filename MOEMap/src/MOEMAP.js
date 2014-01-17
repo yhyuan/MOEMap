@@ -31,21 +31,33 @@ globalConfig.resultFoundSimple = globalConfig.resultFoundSimple || function(quer
 	if (typeof(queryParams.withinExtent) !== "undefined") {
 		regionName = " " + (queryParams.withinExtent ? globalConfig.inCurrentMapExtentLang : globalConfig.inGobalRegionLang);
 	}
-	//var searchString = " ";
+	var searchString = " ";
 	if (typeof(queryParams.searchString) !== "undefined") {
 		searchString = " " + globalConfig.forLang + " <strong>"  + queryParams.searchString + "</strong> ";
 	}
 	
 	var message = "";
-	if(totalCount === 0){
-		message = globalConfig.yourSearchLang + searchString + globalConfig.returnedNoResultLang + regionName + ". " + globalConfig.pleaseRefineSearchLang + ".";
-	} else if(totalCount === 1){
-		message = globalConfig.oneResultFoundLang  + searchString + regionName + ".";
-	} else if(totalCount >= globalConfig.maxQueryReturn){
-		message = globalConfig.moreThanLang + " " + globalConfig.maxQueryReturn + " " + globalConfig.resultsFoundLang + searchString + regionName + ". " + globalConfig.onlyLang + " " + globalConfig.maxQueryReturn + " " + globalConfig.returnedLang + ". " + globalConfig.seeHelpLang + ".";
+	if (queryParams.hasOwnProperty("invalidCount") && (queryParams.invalidCount > 0)) {
+		if(totalCount === 0){
+			message = globalConfig.yourSearchLang + searchString + globalConfig.returnedNoResultLang + regionName + ". " + globalConfig.pleaseRefineSearchLang + ".";
+		} else if(totalCount === 1){
+			message = globalConfig.oneResultFoundLang  + searchString + regionName + "." + "This result does not have valid coordinates.";
+		} else if(totalCount >= globalConfig.maxQueryReturn){
+			message = globalConfig.moreThanLang + " " + globalConfig.maxQueryReturn + " " + globalConfig.resultsFoundLang + searchString + regionName + ". " + globalConfig.onlyLang + " " + globalConfig.maxQueryReturn + " " + globalConfig.returnedLang + ". " + globalConfig.seeHelpLang + "." + "Among returned results, " + queryParams.invalidCount + " results do not have valid coordinates.";
+		} else {
+			message = totalCount + " " + globalConfig.resultsFoundLang + searchString + regionName + "." + "Among returned results, " + queryParams.invalidCount + " results do not have valid coordinates.";
+		}	
 	} else {
-		message = totalCount + " " + globalConfig.resultsFoundLang + searchString + regionName + ".";
-	}		
+		if(totalCount === 0){
+			message = globalConfig.yourSearchLang + searchString + globalConfig.returnedNoResultLang + regionName + ". " + globalConfig.pleaseRefineSearchLang + ".";
+		} else if(totalCount === 1){
+			message = globalConfig.oneResultFoundLang  + searchString + regionName + ".";
+		} else if(totalCount >= globalConfig.maxQueryReturn){
+			message = globalConfig.moreThanLang + " " + globalConfig.maxQueryReturn + " " + globalConfig.resultsFoundLang + searchString + regionName + ". " + globalConfig.onlyLang + " " + globalConfig.maxQueryReturn + " " + globalConfig.returnedLang + ". " + globalConfig.seeHelpLang + ".";
+		} else {
+			message = totalCount + " " + globalConfig.resultsFoundLang + searchString + regionName + ".";
+		}
+	}
 	document.getElementById(globalConfig.informationDivId).innerHTML ="<i>" + message + "</i>";
 };	
 globalConfig.noResultFound = globalConfig.noResultFound || function(){
@@ -93,7 +105,7 @@ if(globalConfig.usePredefinedMultipleTabs && (!globalConfig.accessible) && (!!ye
 		});
 		
 		yepnope({
-			load: "http://prod-ont-webserver.s3.amazonaws.com/moe_mapping/mapping/js/MOEMap/js/closure-library-multipletabs-min.js", 
+			load: "http://files.ontariogovernment.ca/moe_mapping/mapping/js/MOEMap/js/closure-library-multipletabs-min.js", 
 			callback: function () {
 				//console.log("closure-library-multipletabs-min.js loaded!");
 			}
@@ -360,7 +372,12 @@ globalConfig.postBufferCallbackList = globalConfig.postBufferCallbackList || {
 			return;
 		}
 		globalConfig.addMarkers(features, queryParams.layerList[0].tabsTemplate);
-		globalConfig.renderTable(features, queryParams.layerList[0].tableTemplate, queryParams.gLatLng);
+		var templates = {
+			"coordinatesTable": queryParams.layerList[0].tableTemplate,
+			"noCoordinatesTable": queryParams.layerList[0].noCoordinatesTableTemplate
+		};
+		//globalConfig.renderTable(features, queryParams.layerList[0].tableTemplate, queryParams.gLatLng);
+		globalConfig.renderTable(features, templates, queryParams.gLatLng);
 		queryParams.totalCount = features.length;
 		globalConfig.resultFoundSimple(queryParams);		
 	}
@@ -402,7 +419,13 @@ globalConfig.addMarkersSimple = globalConfig.addMarkersSimple || function(featur
 	}
 };
 
-globalConfig.renderTable = function(features, tableTemplate, searchCenter){
+globalConfig.renderTable = function(features, templates, searchCenter){
+	var tableTemplate = templates.coordinatesTable;
+	var noCoordinatesTableTemplate = templates.noCoordinatesTable;
+	var featuresValidCoors = features.filter(globalConfig.validFeaturesFilter);
+	var featuresInvalidCoors = features.filter(function (feature) {
+		return  !globalConfig.validFeaturesFilter(feature);
+	});
 	var tableHead = tableTemplate.head;
 	var requireDistanceField = (typeof(searchCenter) !== "undefined");
 	if(requireDistanceField) {
@@ -411,12 +434,12 @@ globalConfig.renderTable = function(features, tableTemplate, searchCenter){
 			tableHead = resArrays[0] + "<th><center>" + globalConfig.distanceLang + "</center></th></tr>" + resArrays[1];
 		}
 	}
-	var getTableContent = function(features){
+	var getTableContent = function(features, requireDistanceField, tableTemplateContent){
 		var table = "";
 		var size = features.length;
 		for (var x = 0; x < size; x++) {
 			var findResult = features[x];
-			var calculateContents = TABS_CALCULATOR.getContent(findResult.attributes, [{ label:globalConfig.InformationLang, content:tableTemplate.content}]);
+			var calculateContents = TABS_CALCULATOR.getContent(findResult.attributes, [{ label:globalConfig.InformationLang, content:tableTemplateContent}]);
 			var str = calculateContents[0].content;
 			var gLatLng = findResult.geometry[0].getPosition();
 			if(requireDistanceField) {
@@ -427,7 +450,10 @@ globalConfig.renderTable = function(features, tableTemplate, searchCenter){
 		}
 		return table;
 	};
-	var table = tableHead + getTableContent(features) + tableTemplate.tail + "<br><br><br>";
+	//var table = tableHead + getTableContent(features) + tableTemplate.tail + "<br><br><br>";
+	var table = (featuresValidCoors.length === 0) ? "" : (tableHead + getTableContent(featuresValidCoors, requireDistanceField, tableTemplate.content) + tableTemplate.tail + "<br><br><br>");
+	table = table + ((featuresInvalidCoors.length === 0) ? "" : (noCoordinatesTableTemplate.head + getTableContent(featuresInvalidCoors, false, noCoordinatesTableTemplate.content) + noCoordinatesTableTemplate.tail + "<br><br><br>"));
+	
 	document.getElementById(globalConfig.queryTableDivId).innerHTML = table;
 	var tableID = globalConfig.tableID;
 	if(globalConfig.usejQueryUITable){
@@ -449,7 +475,8 @@ globalConfig.renderTable = function(features, tableTemplate, searchCenter){
 			var fields = tableHead.split("</th><th>");
 			dataTableOptions["aaSorting"] = [[ fields.length-1, "asc" ]];
 		}
-		$('#' + tableID).dataTable(dataTableOptions);				
+		$('#' + tableID).dataTable(dataTableOptions);
+		$('#' + globalConfig.noCoordinatesTableID).dataTable(dataTableOptions);
 	}
 };
 	
@@ -484,7 +511,10 @@ globalConfig.preConditionsCallbackList = globalConfig.preConditionsCallbackList 
 	}
 };
 globalConfig.preConditionsCallback = globalConfig.preConditionsCallback || globalConfig.preConditionsCallbackList[globalConfig.preConditionsCallbackName];
-
+globalConfig.validFeaturesFilter = globalConfig.validFeaturesFilter || function(feature) {
+	var p = feature.geometry[0].position; 
+		return (Math.abs(p.d) > 0.0001 && Math.abs(p.e) > 0.0001);
+};
 globalConfig.postConditionsCallbackName = globalConfig.postConditionsCallbackName || "Wells";
 globalConfig.postConditionsCallbackList = globalConfig.postConditionsCallbackList || {
 	"Wells": function (queryParams) {
@@ -496,21 +526,38 @@ globalConfig.postConditionsCallbackList = globalConfig.postConditionsCallbackLis
 				return previousValue;
 			}
 		}, []);
-		queryParams.totalCount = features.length;
-		globalConfig.resultFoundSimple(queryParams);		
 		if(features.length === 0) {
+			queryParams.totalCount = 0;
+			globalConfig.resultFoundSimple(queryParams);		
 			if(queryParams.requireGeocode) {
 				MOEMAP.geocodeAddress(queryParams);		
 			}		
 			return;
 		}
-		if(!queryParams.withinExtent) {	
-			var bounds = globalConfig.calculatePointsBounds(features);
+		var featuresValidCoors = features.filter(globalConfig.validFeaturesFilter);
+		var featuresInvalidCoors = features.filter(function (feature) {
+			return  !globalConfig.validFeaturesFilter(feature);
+		});
+		queryParams.totalCount = features.length;
+		queryParams.validCount = featuresValidCoors.length;
+		queryParams.invalidCount = featuresInvalidCoors.length;
+		globalConfig.resultFoundSimple(queryParams);		
+		//console.log(featuresValidCoors);
+		if((!queryParams.withinExtent) && (featuresValidCoors.length > 0)) {	
+			//var bounds = globalConfig.calculatePointsBounds(features);
+			var bounds = globalConfig.calculatePointsBounds(featuresValidCoors);
 			globalConfig.setMapBound(queryParams.map,bounds);	
 		}
-		globalConfig.addMarkers(features,queryParams.layerList[0].tabsTemplate);
-		if (queryParams.layerList[0].hasOwnProperty('tableTemplate')){ 
-			globalConfig.renderTable(features,queryParams.layerList[0].tableTemplate);
+		//globalConfig.addMarkers(features,queryParams.layerList[0].tabsTemplate);
+		globalConfig.addMarkers(featuresValidCoors,queryParams.layerList[0].tabsTemplate);
+		//globalConfig.addMarkers(featuresValidCoors,queryParams.layerList[0].tabsTemplate);
+		if (queryParams.layerList[0].hasOwnProperty('tableTemplate')){
+			var templates = {
+				"coordinatesTable": queryParams.layerList[0].tableTemplate,
+				"noCoordinatesTable": queryParams.layerList[0].noCoordinatesTableTemplate
+			};
+			//globalConfig.renderTable(features,queryParams.layerList[0].tableTemplate);
+			globalConfig.renderTable(features,templates);
 		}
 	},
 	"AccessibleWells": function (queryParams) {

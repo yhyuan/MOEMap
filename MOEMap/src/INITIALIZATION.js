@@ -128,6 +128,15 @@
 			tail: "</tbody></table>"
 		};
 	};
+	globalConfig.noCoordinatesTableTitle = globalConfig.noCoordinatesTableTitle || "The following table contains the records without valid coordinates.";
+	globalConfig.noCoordinatesTableID = globalConfig.noCoordinatesTableID || "noCoordinatesTable";
+	globalConfig.createNoCoordinatesTableBelowMap = globalConfig.createNoCoordinatesTableBelowMap || function(tableSimpleTemplate) {
+		return {
+			head: globalConfig.noCoordinatesTableTitle + "<table id=\"" + globalConfig.noCoordinatesTableID + "\" class=\"" + globalConfig.tableClassName + "\" border=\"0\" cellpadding=\"0\" cellspacing=\"1\"><thead><tr><th><center>" + tableSimpleTemplate.content.map(function(b) {return b.name;}).join("</center></th><th><center>") + "</center></th></tr></thead><tbody>",
+			content: "<tr><td>" + tableSimpleTemplate.content.map(function(b) {return b.value;}).join('</td><td>') + "</td></tr>",
+			tail: "</tbody></table>"
+		};
+	};	
 /*	
 	globalConfig.searchControlHTMLGenerator = globalConfig.searchControlHTMLGenerator || function () {
 		return '<table width="100%" cellpadding="5" cellspacing="0" border="0" style="margin-bottom:15px;" summary="' 
@@ -232,7 +241,8 @@
 						outFields = getRequiredFields(layerSetting.tabsTemplate);
 					}
 					if ((!layerSetting.hasOwnProperty('tableTemplate')) && layerSetting.hasOwnProperty('tableSimpleTemplate')) {
-						layerSetting.tableTemplate = globalConfig.createTableBelowMap(layerSetting.tableSimpleTemplate);		
+						layerSetting.tableTemplate = globalConfig.createTableBelowMap(layerSetting.tableSimpleTemplate);
+						layerSetting.noCoordinatesTableTemplate = globalConfig.createNoCoordinatesTableBelowMap(layerSetting.tableSimpleTemplate);
 					}
 					if(layerSetting.hasOwnProperty('tableTemplate')) {
 						var outFields2 = getRequiredFields([{ label:globalConfig.InformationLang, content:layerSetting.tableTemplate.content}]); 
