@@ -16,7 +16,7 @@ globalConfig.layers = [{
 	renderTargetDiv: "target",
 	event: "reportReady",
 	where: QueryString.hasOwnProperty("year") ? ("(UniqueFacilityID = '" + QueryString.id + "') AND (ReportingPeriod = '" + QueryString.year + "')"):("(UniqueFacilityID = '" + QueryString.id + "')"),
-	outFields: QueryString.hasOwnProperty("year") ? ["FacilityName", "StreetAddressPhysicalAddress", "MunicipalityCityPhysicalAddress", "OrganizationName", "NPRIID", "NAICS", "PublicContactFullName", "PublicContactTelephone", "PublicContactEmail", "HighestRankingEmployee", "SubstanceName", "Units", "VersionofthePlan", "ReasonforNoIntenttoReduceUseText ", "ReasonforNoIntenttoReduceCreationText", "PlanObjectives", "UseReductionQuantityTargetValue", "UseReductionQuantityTargetUnit", "UseReductionTimelineTargetYears", "UseReductionTargetDescription", "CreationReductionQuantityTargetValue", "CreationReductionQuantityTargetUnit", "CreationReductionTimelineTargetYears", "CreationReductionTargetDescription", "ReasonsforUse", "ReasonsforCreation", "StatementNoOptionImplementedYN", "ReasonsNoOptionImplemented", "DescriptionofAnyAdditionalActionsTaken", "OptionReductionCategory", "ActivityTaken", "EstimatedUseReductionPercent", "EstimatedCreationReductionPercent", "EstimatedContainedinProductReductionPercent", "EstimatedAirReleasesReductionPercent", "EstimatedWaterReleasesReductionPercent", "EstimatedLandReleasesReductionPercent", "EstimatedOnsiteDisposalsReductionPercent", "EstimatedOffsiteDisposalsReductionPercent", "EstimatedOffsiteRecyclingReductionPercent", "AnticipatedTimelinesforAchievingReductionsinUse", "AnticipatedTimelinesforAchievingReductionsinCreation"] : ["UniqueFacilityID", "ReportingPeriod"],
+	outFields: QueryString.hasOwnProperty("year") ? ["FacilityName", "StreetAddressPhysicalAddress", "MunicipalityCityPhysicalAddress", "OrganizationName", "NPRIID", "NAICS", "PublicContactFullName", "PublicContactTelephone", "PublicContactEmail", "HighestRankingEmployee", "SubstanceName", "Units", "VersionofthePlan", "ReasonforNoIntenttoReduceUseText ", "ReasonforNoIntenttoReduceCreationText", "PlanObjectives", "UseReductionQuantityTargetValue", "UseReductionQuantityTargetUnit", "UseReductionTimelineTargetYears", "UseReductionTargetDescription", "CreationReductionQuantityTargetValue", "CreationReductionQuantityTargetUnit", "CreationReductionTimelineTargetYears", "CreationReductionTargetDescription", "ReasonsforUse", "ReasonsforUseSummary", "ReasonsforCreation", "ReasonsforCreationSummary", "StatementNoOptionImplementedYN", "ReasonsNoOptionImplemented", "DescriptionofAnyAdditionalActionsTaken", "OptionReductionCategory", "ActivityTaken", "DescriptionofOption", "EstimatedUseReductionPercent", "EstimatedCreationReductionPercent", "EstimatedContainedinProductReductionPercent", "EstimatedAirReleasesReductionPercent", "EstimatedWaterReleasesReductionPercent", "EstimatedLandReleasesReductionPercent", "EstimatedOnsiteDisposalsReductionPercent", "EstimatedOffsiteDisposalsReductionPercent", "EstimatedOffsiteRecyclingReductionPercent", "AnticipatedTimelinesforAchievingReductionsinUse", "AnticipatedTimelinesforAchievingReductionsinCreation"] : ["UniqueFacilityID", "ReportingPeriod"],
 	processResults: function (fs) {
 		var calculateRenderResultwithYear = function (fs) {
 			var attr = fs[0].attributes;
@@ -56,7 +56,9 @@ globalConfig.layers = [{
 						CreationReductionTimelineTargetYears: attr.CreationReductionTimelineTargetYears,
 						CreationReductionTargetDescription: attr.CreationReductionTargetDescription,
 						ReasonsforUse: attr.ReasonsforUse,
+						ReasonsforUseSummary: attr.ReasonsforUseSummary,						
 						ReasonsforCreation: attr.ReasonsforCreation,
+						ReasonsforCreationSummary: attr.ReasonsforCreationSummary,
 						StatementNoOptionImplementedYN: attr.StatementNoOptionImplementedYN,
 						ReasonsNoOptionImplemented: attr.ReasonsNoOptionImplemented,
 						DescriptionofAnyAdditionalActionsTaken: attr.DescriptionofAnyAdditionalActionsTaken,
@@ -64,6 +66,7 @@ globalConfig.layers = [{
 							return {
 								OptionReductionCategory: item.OptionReductionCategory,
 								ActivityTaken: item.ActivityTaken,
+								DescriptionofOption: item.DescriptionofOption,
 								EstimatedUseReductionPercent: item.EstimatedUseReductionPercent,
 								EstimatedCreationReductionPercent: item.EstimatedCreationReductionPercent,
 								EstimatedContainedinProductReductionPercent: item.EstimatedContainedinProductReductionPercent,
@@ -162,8 +165,8 @@ globalConfig.layers = [{
 					<td><%= globalConfig.chooseLang("Reductions: ", "Réductions: ") %><br><br><%= (substance.CreationReductionQuantityTargetValue + " " + substance.CreationReductionQuantityTargetUnit) %><br><%= globalConfig.chooseLang("Target Timelines: ", "Délai visé: ") %> <%= (substance.CreationReductionTimelineTargetYears.length === 0) ? "" : globalConfig.getYears(substance.CreationReductionTimelineTargetYears) %><br><%= substance.CreationReductionTargetDescription %><br><br></td>\
 				  </tr>\
 				</table>\
-				<br><strong><%= globalConfig.chooseLang("Reason for Use: ", "Raison de l’utilisation: ") %></strong><%= substance.ReasonsforUse %>\
-				<br><strong><%= globalConfig.chooseLang("Reason for Creation: ", "Raison de la création: ") %></strong><%= substance.ReasonsforCreation %>\
+				<br><strong><%= globalConfig.chooseLang("Reason for Use: ", "Raison de l’utilisation: ") %></strong><%= (substance.ReasonsforUse === "Other") ?  substance.ReasonsforUseSummary : substance.ReasonsforUse  %>\
+				<br><strong><%= globalConfig.chooseLang("Reason for Creation: ", "Raison de la création: ") %></strong><%= (substance.ReasonsforCreation === "Other") ?  substance.ReasonsforCreationSummary : substance.ReasonsforCreation %>\
 				<br><strong><%= globalConfig.chooseLang("Implementing Toxic Substance Reduction Options", "Options de mise en œuvre de la réduction de la substance toxique") %></strong><br>\
 				<% if (substance.StatementNoOptionImplementedYN === "No") { %>\
 					<br><%= globalConfig.chooseLang("Toxic Substance Reduction Plan indicated that the following options will be implemented", "Le plan de réduction de substance toxique indique que les options suivantes seront mises en œuvre") %><br>\
@@ -181,7 +184,7 @@ globalConfig.layers = [{
 					%>\
 					  <tr>\
 					    <td rowspan="9"><%= globalConfig.processEmptyValue(option.OptionReductionCategory) %></td>\
-						<td rowspan="9"><%= globalConfig.processEmptyValue(option.ActivityTaken) %></td>\
+						<td rowspan="9"><%= (option.ActivityTaken === "Other") ?  option.DescriptionofOption : globalConfig.processEmptyValue(option.ActivityTaken) %></td>\
 						<td><%= globalConfig.chooseLang("Used", "Utilisée") %></td>\
 						<td><%= globalConfig.processEmptyValue(option.EstimatedUseReductionPercent) %></td>\
 						<td rowspan="9"><%= (option.AnticipatedTimelinesforAchievingReductionsinUse.length > 0) ? ( globalConfig.getYears(option.AnticipatedTimelinesforAchievingReductionsinUse)) : "&nbsp;" %></td>\
