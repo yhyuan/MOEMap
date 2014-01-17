@@ -1,9 +1,3 @@
-yepnope({
-	load: "http://files.ontariogovernment.ca/moe_mapping/mapping/js/TRAIS/TRAIS.css", 
-	callback: function () {
-		//console.log("multipletabs.css loaded!");
-	}
-});
 globalConfig.processEmptyValue = function(str) {
 	if (str.length === 0){
 		return "&nbsp;";
@@ -143,14 +137,8 @@ globalConfig.layers = [{
 			<TR><TD><%= globalConfig.chooseLang("Public Contact", "Personne-ressource") %>:</TD><TD><%= renderResult.PublicContact %><BR><%= renderResult.PublicContactPhone %><BR><A HREF=mailto:<%= renderResult.PublicContactEmail %>><%= renderResult.PublicContactEmail %></A></TD></TR>\
 			<TR><TD COLSPAN=2>&nbsp;<BR><%= globalConfig.chooseLang("Certified by", "Certifi&eacute; par") %> <U><%= renderResult.HighestRankingEmployee %></U>, <%= globalConfig.chooseLang("Highest Ranking Employee", "employ&eacute; le plus &eacute;lev&eacute; hi&eacute;rarchiquement") %><BR>&nbsp;</TD></TR>\
 			<TR><TD COLSPAN=2><A NAME="subst"></A><%= ((renderResult.hasOwnProperty("Substances") && renderResult.Substances.length > 0)) ? globalConfig.chooseLang("List of Substances:", "Liste des substances:") : "" %>\
-            <%\
-                _.each(renderResult.Substances,function(substance,key,list){\
-            %>\
-				<A HREF="#<%= substance.Name %>"><%= substance.Name %></A>,\
-            <%\
-                });\
-            %>\
-			<TR><TD COLSPAN=2><HR></TD><TR>			\
+			<%= _.map(renderResult.Substances, function(substance) {return \'<A HREF="#\' + substance.Name + \'">\' + substance.Name + \'</A>\';}).join(", ") %>\
+			<TR><TD COLSPAN=2><HR></TD><TR>\
 		</TABLE><P>\
 			<%= ((renderResult.hasOwnProperty("Substances") && renderResult.Substances.length > 0)) ? "" : globalConfig.chooseLang("There is no substance renderResultrmation provided from this facility.<BR>", "Il n\'y a pas d\'information sur les substances toxiques fournie par cette entreprise ou installation<BR>") %>\
             <%\

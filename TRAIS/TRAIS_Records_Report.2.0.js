@@ -115,7 +115,7 @@ globalConfig.layers = [{
 				<center><strong>Documents de sortie – Toutes les années</strong></center><br><br>\
 				Les documents de sortie suivants ont été présentés par l’installation au lieu d’un rapport annuel concernant une substance donnée du fait que l’installation ne remplissait plus un ou plusieurs des critères d’assujettissement établis par la <a href="http://www.ene.gov.on.ca/environment/fr/subject/toxics/index.htm" target="_blank">Loi sur la réduction des toxiques</a>. Les installations qui ont présenté un document de sortie ne sont plus tenues de comptabiliser, de planifier ou de déclarer ces substances, à moins qu’elles ne remplissent de nouveau les critères d’assujettissement.<br><br>\
 			<% } %>\
-			<TABLE class="fishTable" BORDER="1" WIDTH="600">\
+			<TABLE class="TRAISTable">\
 				<TR>\
 					<TH WIDTH=20%><%= globalConfig.chooseLang("Date", "Date") %></TD>\
 					<TH WIDTH=30%><%= globalConfig.chooseLang("Substances", "Substances") %></TD>\
@@ -187,7 +187,7 @@ globalConfig.layers = [{
 				Les documents d’exemption suivants ont été présentés par l’installation au lieu d’un rapport annuel concernant les congénères des dioxines et des furannes ou l’hexachlorobenzène, car l’installation a déterminé par des activités de surveillance ou d’analyse des sources que ces substances ne remplissaient pas les critères d’assujettissement énoncés dans le plus récent avis publié dans la Gazette concernant l’Inventaire national des rejets de polluants (INRP). <br><br>\
 				Lorsqu’une installation a présenté un document d’exemption concernant la substance pendant trois (3) années consécutives, elle n’est plus tenue de présenter ces documents. De plus, dès qu’une installation a présenté le premier document d’exemption, elle n’est plus tenue de comptabiliser, de planifier ou présenter un rapport annuel concernant ces substances, à moins qu’elle ne remplisse de nouveau les critères d’assujettissement. <br><br>\
 			<% } %>\
-			<TABLE class="fishTable" BORDER="1" WIDTH="600">\
+			<TABLE class="TRAISTable">\
 				<TR>\
 					<TH WIDTH=30%><%= globalConfig.chooseLang("Date", "Date") %></TD>\
 					<TH WIDTH=30%><%= globalConfig.chooseLang("Substances", "Substances") %></TD>\

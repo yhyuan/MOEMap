@@ -1,10 +1,4 @@
 globalConfig.TRAIS_PlanSummaries_Report = "TRAIS_PlanSummaries_Report.htm";
-yepnope({
-	load: "http://files.ontariogovernment.ca/moe_mapping/mapping/js/TRAIS/TRAIS.css", 
-	callback: function () {
-		//console.log("multipletabs.css loaded!");
-	}
-});
 globalConfig.getYears = function (year) {
 	if (year === "1") {
 		return year + globalConfig.chooseLang(" year", " an");
@@ -39,10 +33,14 @@ globalConfig.layers = [{
 			};
 			var NAICS = attr.NAICS;
 			if((fs.length > 1) || (fs[0].attributes.SubstanceName  !== null)){
-				var substances = [];
-				for (var i = 0, c = fs.length; i < c; i++) {
-					attr = fs[i].attributes;
-					var s = {
+				var groupbyResults = _.groupBy(_.map(fs, function(feature) {
+						return feature.attributes
+					}), function(attributes){
+						return attributes.SubstanceName;
+				});
+				renderResult.Substances = _.map(_.values(groupbyResults), function(array) {
+					var attr = array[0];
+					return {
 						Name: attr.SubstanceName,
 						Units: attr.Units,
 						VersionofthePlan: attr.VersionofthePlan,
@@ -62,23 +60,25 @@ globalConfig.layers = [{
 						StatementNoOptionImplementedYN: attr.StatementNoOptionImplementedYN,
 						ReasonsNoOptionImplemented: attr.ReasonsNoOptionImplemented,
 						DescriptionofAnyAdditionalActionsTaken: attr.DescriptionofAnyAdditionalActionsTaken,
-						OptionReductionCategory: attr.OptionReductionCategory,
-						ActivityTaken: attr.ActivityTaken,
-						EstimatedUseReductionPercent: attr.EstimatedUseReductionPercent,
-						EstimatedCreationReductionPercent: attr.EstimatedCreationReductionPercent,
-						EstimatedContainedinProductReductionPercent: attr.EstimatedContainedinProductReductionPercent,
-						EstimatedAirReleasesReductionPercent: attr.EstimatedAirReleasesReductionPercent,
-						EstimatedWaterReleasesReductionPercent: attr.EstimatedWaterReleasesReductionPercent,
-						EstimatedLandReleasesReductionPercent: attr.EstimatedLandReleasesReductionPercent,
-						EstimatedOnsiteDisposalsReductionPercent: attr.EstimatedOnsiteDisposalsReductionPercent,
-						EstimatedOffsiteDisposalsReductionPercent: attr.EstimatedOffsiteDisposalsReductionPercent,
-						EstimatedOffsiteRecyclingReductionPercent: attr.EstimatedOffsiteRecyclingReductionPercent,
-						AnticipatedTimelinesforAchievingReductionsinUse: attr.AnticipatedTimelinesforAchievingReductionsinUse,
-						AnticipatedTimelinesforAchievingReductionsinCreation: attr.AnticipatedTimelinesforAchievingReductionsinCreation
-					};
-					substances.push(s);
-				}
-				renderResult.Substances = substances;
+						options: _.map(array, function(item) {
+							return {
+								OptionReductionCategory: item.OptionReductionCategory,
+								ActivityTaken: item.ActivityTaken,
+								EstimatedUseReductionPercent: item.EstimatedUseReductionPercent,
+								EstimatedCreationReductionPercent: item.EstimatedCreationReductionPercent,
+								EstimatedContainedinProductReductionPercent: item.EstimatedContainedinProductReductionPercent,
+								EstimatedAirReleasesReductionPercent: item.EstimatedAirReleasesReductionPercent,
+								EstimatedWaterReleasesReductionPercent: item.EstimatedWaterReleasesReductionPercent,
+								EstimatedLandReleasesReductionPercent: item.EstimatedLandReleasesReductionPercent,
+								EstimatedOnsiteDisposalsReductionPercent: item.EstimatedOnsiteDisposalsReductionPercent,
+								EstimatedOffsiteDisposalsReductionPercent: item.EstimatedOffsiteDisposalsReductionPercent,
+								EstimatedOffsiteRecyclingReductionPercent: item.EstimatedOffsiteRecyclingReductionPercent,
+								AnticipatedTimelinesforAchievingReductionsinUse: item.AnticipatedTimelinesforAchievingReductionsinUse,
+								AnticipatedTimelinesforAchievingReductionsinCreation: item.AnticipatedTimelinesforAchievingReductionsinCreation
+							};
+						})
+					}
+				});
 			}
 			var NAICSLayerID = "4";
 			var NAICSQueryLayer = new gmaps.ags.Layer(globalConfig.url  + "/" + NAICSLayerID);
@@ -133,14 +133,8 @@ globalConfig.layers = [{
 			<TR><TD><%= globalConfig.chooseLang("Public Contact", "Personne-ressource") %>:</TD><TD><%= renderResult.PublicContact %><BR><%= renderResult.PublicContactPhone %><BR><A HREF=mailto:<%= renderResult.PublicContactEmail %>><%= renderResult.PublicContactEmail %></A></TD></TR>\
 			<TR><TD COLSPAN=2>&nbsp;<BR><%= globalConfig.chooseLang("Certified by", "Certifi&eacute; par") %> <U><%= renderResult.HighestRankingEmployee %></U>, <%= globalConfig.chooseLang("Highest Ranking Employee", "employ&eacute; le plus &eacute;lev&eacute; hi&eacute;rarchiquement") %><BR>&nbsp;</TD></TR>\
 			<TR><TD COLSPAN=2><A NAME="subst"></A><%= ((renderResult.hasOwnProperty("Substances") && renderResult.Substances.length > 0)) ? globalConfig.chooseLang("List of Substances:", "Liste des substances:") : "" %>\
-            <%\
-                _.each(renderResult.Substances,function(substance,key,list){\
-            %>\
-				<A HREF="#<%= substance.Name %>"><%= substance.Name %></A>,\
-            <%\
-                });\
-            %>\
-			<TR><TD COLSPAN=2><HR></TD><TR>			\
+			<%= _.map(renderResult.Substances, function(substance) {return \'<A HREF="#\' + substance.Name + \'">\' + substance.Name + \'</A>\';}).join(", ") %>\
+			<TR><TD COLSPAN=2><HR></TD><TR>\
 		</TABLE><P>\
 			<%= ((renderResult.hasOwnProperty("Substances") && renderResult.Substances.length > 0)) ? "" : globalConfig.chooseLang("There is no substance renderResultrmation provided from this facility.<BR>", "Il n\'y a pas d\'information sur les substances toxiques fournie par cette entreprise ou installation<BR>") %>\
             <%\
@@ -182,46 +176,52 @@ globalConfig.layers = [{
 						<th width="20%"><strong><%= globalConfig.chooseLang("Anticipated Timelines for Achieving Reductions in Use", "Délai prévu pour la réduction de l’utilisation") %></strong></th>\
 						<th width="20%"><strong><%= globalConfig.chooseLang("Anticipated Timelines for Achieving Reductions in Creation", "Délai prévu pour la réduction de la création") %></strong></th>\
 					  </tr>\
+					<%\
+						_.each(substance.options,function(option,key,list){\
+					%>\
 					  <tr>\
-					    <td rowspan="9"><%= globalConfig.processEmptyValue(substance.OptionReductionCategory) %></td>\
-						<td rowspan="9"><%= globalConfig.processEmptyValue(substance.ActivityTaken) %></td>\
+					    <td rowspan="9"><%= globalConfig.processEmptyValue(option.OptionReductionCategory) %></td>\
+						<td rowspan="9"><%= globalConfig.processEmptyValue(option.ActivityTaken) %></td>\
 						<td><%= globalConfig.chooseLang("Used", "Utilisée") %></td>\
-						<td><%= globalConfig.processEmptyValue(substance.EstimatedUseReductionPercent) %></td>\
-						<td rowspan="9"><%= (substance.AnticipatedTimelinesforAchievingReductionsinUse.length > 0) ? ( globalConfig.getYears(substance.AnticipatedTimelinesforAchievingReductionsinUse)) : "&nbsp;" %></td>\
-						<td rowspan="9"><%= (substance.AnticipatedTimelinesforAchievingReductionsinCreation.length > 0) ? ( globalConfig.getYears(substance.AnticipatedTimelinesforAchievingReductionsinCreation)) : "&nbsp;" %></td>\
+						<td><%= globalConfig.processEmptyValue(option.EstimatedUseReductionPercent) %></td>\
+						<td rowspan="9"><%= (option.AnticipatedTimelinesforAchievingReductionsinUse.length > 0) ? ( globalConfig.getYears(option.AnticipatedTimelinesforAchievingReductionsinUse)) : "&nbsp;" %></td>\
+						<td rowspan="9"><%= (option.AnticipatedTimelinesforAchievingReductionsinCreation.length > 0) ? ( globalConfig.getYears(option.AnticipatedTimelinesforAchievingReductionsinCreation)) : "&nbsp;" %></td>\
 					  </tr>\
 					  <tr>\
 						<td><%= globalConfig.chooseLang("Created", "Créée") %></td>\
-						<td><%= globalConfig.processEmptyValue(substance.EstimatedCreationReductionPercent) %></td>\
+						<td><%= globalConfig.processEmptyValue(option.EstimatedCreationReductionPercent) %></td>\
 					  </tr>\
 					  <tr>\
 						<td><%= globalConfig.chooseLang("Contained in Product", "Contenue dans un produit") %></td>\
-						<td><%= globalConfig.processEmptyValue(substance.EstimatedContainedinProductReductionPercent) %></td>\
+						<td><%= globalConfig.processEmptyValue(option.EstimatedContainedinProductReductionPercent) %></td>\
 					  </tr>\
 					  <tr>\
 						<td><%= globalConfig.chooseLang("Released to Air", "Rejetée dans l’air") %></td>\
-						<td><%= globalConfig.processEmptyValue(substance.EstimatedAirReleasesReductionPercent) %></td>\
+						<td><%= globalConfig.processEmptyValue(option.EstimatedAirReleasesReductionPercent) %></td>\
 					  </tr>\
 					  <tr>\
 						<td><%= globalConfig.chooseLang("Released to Land", "Rejetée dans la terre") %></td>\
-						<td><%= globalConfig.processEmptyValue(substance.EstimatedLandReleasesReductionPercent) %></td>\
+						<td><%= globalConfig.processEmptyValue(option.EstimatedLandReleasesReductionPercent) %></td>\
 					  </tr>\
 					  <tr>\
 						<td><%= globalConfig.chooseLang("Released to Water", "Rejetée dans l’eau") %></td>\
-						<td><%= globalConfig.processEmptyValue(substance.EstimatedWaterReleasesReductionPercent) %></td>\
+						<td><%= globalConfig.processEmptyValue(option.EstimatedWaterReleasesReductionPercent) %></td>\
 					  </tr>\
 					  <tr>\
 						<td><%= globalConfig.chooseLang("Disposed On-Site", "Éliminée sur place") %></td>\
-						<td><%= globalConfig.processEmptyValue(substance.EstimatedOnsiteDisposalsReductionPercent) %></td>\
+						<td><%= globalConfig.processEmptyValue(option.EstimatedOnsiteDisposalsReductionPercent) %></td>\
 					  </tr>\
 					  <tr>\
 						<td><%= globalConfig.chooseLang("Disposed Off-site", "Éliminée hors site") %></td>\
-						<td><%= globalConfig.processEmptyValue(substance.EstimatedOffsiteDisposalsReductionPercent) %></td>\
+						<td><%= globalConfig.processEmptyValue(option.EstimatedOffsiteDisposalsReductionPercent) %></td>\
 					  </tr>\
 					  <tr>\
 						<td><%= globalConfig.chooseLang("Recycled Off-site", "Recyclée hors site") %></td>\
-						<td><%= globalConfig.processEmptyValue(substance.EstimatedOffsiteRecyclingReductionPercent) %></td>\
+						<td><%= globalConfig.processEmptyValue(option.EstimatedOffsiteRecyclingReductionPercent) %></td>\
 					  </tr>\
+					<%\
+						});\
+					%>\
 					</table>\
 				<% } else {%>\
 					<%= globalConfig.chooseLang("Toxic Substance Reduction Plan indicated that no options will be implemented for the following reason(s): ", ") Le plan de réduction de substance toxique indiquait qu’aucune option ne serait mise en œuvre, et ce, pour la ou les raisons suivantes:") %><br><%= substance.ReasonsNoOptionImplemented %><br>\
