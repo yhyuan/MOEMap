@@ -4,8 +4,15 @@ globalConfig.processEmptyValue = function(str) {
 	}
 	return str;
 };
+
 globalConfig.testedFieldsForComparisonTable = ["UseEnteredtheFacilityAnnualPercentageChange", "CreatedAnnualPercentageChange", "ContainedinProductAnnualPercentageChange", "ReasonsforChangeTRAQuantifications", "ReleasestoAirAnnualPercentageChange", "ReleasestoWaterAnnualPercentageChange", "ReleasestoLandAnnualPercentageChange", "ReasonsforChangeAllMedia", "DisposedOnSiteAnnualPercentageChangeHTMLOnly", "DisposedOffSiteAnnualPercentageChangeHTMLOnly", "ReasonsforChangeDisposals", "RecycledOffSiteAnnualPercentageChange", "ReasonsForChangeRecycling"];
 globalConfig.testedFieldsForProgressOnPlanTable = ["NoOptionsIdentifiedforUseorCreation","ToxicsReductionCategory","OptionActivityTaken","OptionsImplementedAmountofreductioninuse","OptionsImplementedAmountofreductionincreation","OptionsImplementedAmountofreductionincontainedinproduct","OptionsImplementedAmountofreductioninreleasetoair","OptionsImplementedAmountofreductioninreleasetowater","OptionsImplementedAmountofreductioninreleasetoland","OptionsImplementedAmountofreductionindisposedonsite","OptionsImplementedAmountofreductioninthesubstancedisposedoffsite","OptionsImplementedAmountofreductioninrecycled","Willthetimelinesbemet","DescriptionofAdditionalAction","AmendmentsDescription"];
+globalConfig.calculateValuesLength = function(fields, attr) {
+	return _.reduce(_.map(fields, function(field) {
+		return attr[field].length;
+	}), function(memo, num){ return memo + num; }, 0)
+};
+
 globalConfig.layers = [{
 	url: globalConfig.url  + "/2",
 	renderTargetDiv: "target",
@@ -28,18 +35,14 @@ globalConfig.layers = [{
 				HighestRankingEmployee: attr.HighestRankingEmployee
 			};
 			if((fs.length > 1) || (fs[0].attributes.SubstanceName  !== null)){
-				var substances = [];
-				for (var i = 0, c = fs.length; i < c; i++) {
-					attr = fs[i].attributes;
-					var totalLength = 0;
-					for(var j = 0, arrlength = globalConfig.testedFieldsForComparisonTable.length; j < arrlength; j++) {
-						totalLength = totalLength + attr[globalConfig.testedFieldsForComparisonTable[j]].length;
-					}
-					var totalLengthPlanTable = 0;
-					for(var j = 0, arrlength = globalConfig.testedFieldsForProgressOnPlanTable.length; j < arrlength; j++) {
-						totalLengthPlanTable = totalLengthPlanTable + attr[globalConfig.testedFieldsForProgressOnPlanTable[j]].length;
-					}					
-					var s = {
+				var groupbyResults = _.groupBy(_.map(fs, function(feature) {
+						return feature.attributes
+					}), function(attributes){
+						return attributes.SubstanceName;
+				});
+				renderResult.Substances = _.map(_.values(groupbyResults), function(array) {
+					var attr = array[0];
+					return {
 						Name: attr.SubstanceName,
 						Units: attr.Units,
 						Used: attr.EnteredtheFacilityUsed,
@@ -66,26 +69,28 @@ globalConfig.layers = [{
 						RecycledOffSiteAnnualPercentageChange: attr.RecycledOffSiteAnnualPercentageChange,
 						ReasonsForChangeRecycling: attr.ReasonsForChangeRecycling,
 						NoOptionsIdentifiedforUseorCreation: attr.NoOptionsIdentifiedforUseorCreation,
-						ToxicsReductionCategory: attr.ToxicsReductionCategory,
-						OptionActivityTaken: attr.OptionActivityTaken,
-						OptionsImplementedAmountofreductioninuse: attr.OptionsImplementedAmountofreductioninuse,
-						OptionsImplementedAmountofreductionincreation: attr.OptionsImplementedAmountofreductionincreation,
-						OptionsImplementedAmountofreductionincontainedinproduct: attr.OptionsImplementedAmountofreductionincontainedinproduct,
-						OptionsImplementedAmountofreductioninreleasetoair: attr.OptionsImplementedAmountofreductioninreleasetoair,
-						OptionsImplementedAmountofreductioninreleasetowater: attr.OptionsImplementedAmountofreductioninreleasetowater,
-						OptionsImplementedAmountofreductioninreleasetoland : attr.OptionsImplementedAmountofreductioninreleasetoland,
-						OptionsImplementedAmountofreductionindisposedonsite : attr.OptionsImplementedAmountofreductionindisposedonsite,
-						OptionsImplementedAmountofreductioninthesubstancedisposedoffsite : attr.OptionsImplementedAmountofreductioninthesubstancedisposedoffsite,
-						OptionsImplementedAmountofreductioninrecycled : attr.OptionsImplementedAmountofreductioninrecycled,
 						Willthetimelinesbemet : attr.Willthetimelinesbemet,
 						DescriptionofAdditionalAction : attr.DescriptionofAdditionalAction,
 						AmendmentsDescription: attr.AmendmentsDescription,
-						isComparisonTableWide: (totalLength === 0) ? false : true,
-						isProgressOnPlanVisible: (totalLengthPlanTable === 0) ? false : true
-					};
-					substances.push(s);
-				}
-				renderResult.Substances = substances;
+						isComparisonTableWide: (globalConfig.calculateValuesLength(globalConfig.testedFieldsForComparisonTable, attr) === 0) ? false : true,
+						isProgressOnPlanVisible: (globalConfig.calculateValuesLength(globalConfig.testedFieldsForComparisonTable, attr) === 0) ? false : true,
+						options: _.map(array, function(item) {
+							return {
+								ToxicsReductionCategory: item.ToxicsReductionCategory,
+								OptionActivityTaken: item.OptionActivityTaken,
+								OptionsImplementedAmountofreductioninuse: item.OptionsImplementedAmountofreductioninuse,
+								OptionsImplementedAmountofreductionincreation: item.OptionsImplementedAmountofreductionincreation,
+								OptionsImplementedAmountofreductionincontainedinproduct: item.OptionsImplementedAmountofreductionincontainedinproduct,
+								OptionsImplementedAmountofreductioninreleasetoair: item.OptionsImplementedAmountofreductioninreleasetoair,
+								OptionsImplementedAmountofreductioninreleasetowater: item.OptionsImplementedAmountofreductioninreleasetowater,
+								OptionsImplementedAmountofreductioninreleasetoland : item.OptionsImplementedAmountofreductioninreleasetoland,
+								OptionsImplementedAmountofreductionindisposedonsite : item.OptionsImplementedAmountofreductionindisposedonsite,
+								OptionsImplementedAmountofreductioninthesubstancedisposedoffsite : item.OptionsImplementedAmountofreductioninthesubstancedisposedoffsite,
+								OptionsImplementedAmountofreductioninrecycled : item.OptionsImplementedAmountofreductioninrecycled								
+							};
+						})
+					}
+				});
 			}
 			var NAICSLayerID = "4";
 			var NAICSQueryLayer = new gmaps.ags.Layer(globalConfig.url  + "/" + NAICSLayerID);
@@ -266,68 +271,62 @@ globalConfig.layers = [{
 						<TR>\
 							<TH WIDTH=30%><%= globalConfig.chooseLang("Option Category", "Cat&eacute;gorie d’option") %></TH>\
 							<TH WIDTH=30%><%= globalConfig.chooseLang("Option Activity", "Activit&eacute; li&eacute;e &agrave; l’option") %></TH>\
-							<TH WIDTH=20%><%= globalConfig.chooseLang("Source", "Source") %></TH>\
+							<TH WIDTH=20%><%= globalConfig.chooseLang("Quantification Type", "Quantification Type") %></TH>\
 							<TH WIDTH=20%><%= globalConfig.chooseLang("Reduction achieved in " + renderResult.ReportingPeriod + "<br><br>(" + substance.Units, "R&eacute;duction atteinte en " + renderResult.ReportingPeriod + "<br><br>(" + substance.Units) %>)</TH>\
 						</TR>\
+						<%\
+							_.each(substance.options,function(option,key,list){\
+						%>\
 						<TR>\
-							<TD><%= globalConfig.processEmptyValue(substance.ToxicsReductionCategory) %></TD>\
-							<TD><%= globalConfig.processEmptyValue(substance.OptionActivityTaken) %></TD>\
+							<TD rowspan="9"><%= globalConfig.processEmptyValue(option.ToxicsReductionCategory) %></TD>\
+							<TD rowspan="9"><%= globalConfig.processEmptyValue(option.OptionActivityTaken) %></TD>\
 							<TD><%= globalConfig.chooseLang("Use", "Utilisation") %></TD>\
-							<TD><%= globalConfig.processEmptyValue(substance.OptionsImplementedAmountofreductioninuse) %></TD>\
+							<TD><%= globalConfig.processEmptyValue(option.OptionsImplementedAmountofreductioninuse) %></TD>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.processEmptyValue(substance.ToxicsReductionCategory) %></TD>\
-							<TD><%= globalConfig.processEmptyValue(substance.OptionActivityTaken) %></TD>\
 							<TD><%= globalConfig.chooseLang("Creation", "Cr&eacute;ation") %></TD>\
-							<TD><%= globalConfig.processEmptyValue(substance.OptionsImplementedAmountofreductionincreation) %></TD>\
+							<TD><%= globalConfig.processEmptyValue(option.OptionsImplementedAmountofreductionincreation) %></TD>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.processEmptyValue(substance.ToxicsReductionCategory) %></TD>\
-							<TD><%= globalConfig.processEmptyValue(substance.OptionActivityTaken) %></TD>\
 							<TD><%= globalConfig.chooseLang("Contained in Product", "Contenue dans un produit") %></TD>\
-							<TD><%= globalConfig.processEmptyValue(substance.OptionsImplementedAmountofreductionincontainedinproduct) %></TD>\
+							<TD><%= globalConfig.processEmptyValue(option.OptionsImplementedAmountofreductionincontainedinproduct) %></TD>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.processEmptyValue(substance.ToxicsReductionCategory) %></TD>\
-							<TD><%= globalConfig.processEmptyValue(substance.OptionActivityTaken) %></TD>\
 							<TD><%= globalConfig.chooseLang("Released into Air", "Rejet&eacute;e dans l’air") %></TD>\
-							<TD><%= globalConfig.processEmptyValue(substance.OptionsImplementedAmountofreductioninreleasetoair) %></TD>\
+							<TD><%= globalConfig.processEmptyValue(option.OptionsImplementedAmountofreductioninreleasetoair) %></TD>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.processEmptyValue(substance.ToxicsReductionCategory) %></TD>\
-							<TD><%= globalConfig.processEmptyValue(substance.OptionActivityTaken) %></TD>\
 							<TD><%= globalConfig.chooseLang("Released into Water", "Rejet&eacute;e dans l’eau") %></TD>\
-							<TD><%= globalConfig.processEmptyValue(substance.OptionsImplementedAmountofreductioninreleasetowater) %></TD>\
+							<TD><%= globalConfig.processEmptyValue(option.OptionsImplementedAmountofreductioninreleasetowater) %></TD>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.processEmptyValue(substance.ToxicsReductionCategory) %></TD>\
-							<TD><%= globalConfig.processEmptyValue(substance.OptionActivityTaken) %></TD>\
 							<TD><%= globalConfig.chooseLang("Released into Land", "Rejet&eacute;e dans la terre") %></TD>\
-							<TD><%= globalConfig.processEmptyValue(substance.OptionsImplementedAmountofreductioninreleasetoland) %></TD>\
+							<TD><%= globalConfig.processEmptyValue(option.OptionsImplementedAmountofreductioninreleasetoland) %></TD>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.processEmptyValue(substance.ToxicsReductionCategory) %></TD>\
-							<TD><%= globalConfig.processEmptyValue(substance.OptionActivityTaken) %></TD>\
 							<TD><%= globalConfig.chooseLang("Disposed On-Site", "&Eacute;limin&eacute;e sur place") %></TD>\
-							<TD><%= globalConfig.processEmptyValue(substance.OptionsImplementedAmountofreductionindisposedonsite) %></TD>\
+							<TD><%= globalConfig.processEmptyValue(option.OptionsImplementedAmountofreductionindisposedonsite) %></TD>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.processEmptyValue(substance.ToxicsReductionCategory) %></TD>\
-							<TD><%= globalConfig.processEmptyValue(substance.OptionActivityTaken) %></TD>\
 							<TD><%= globalConfig.chooseLang("Disposed Off-Site", "&Eacute;limin&eacute;e hors site") %></TD>\
-							<TD><%= globalConfig.processEmptyValue(substance.OptionsImplementedAmountofreductioninthesubstancedisposedoffsite) %></TD>\
+							<TD><%= globalConfig.processEmptyValue(option.OptionsImplementedAmountofreductioninthesubstancedisposedoffsite) %></TD>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.processEmptyValue(substance.ToxicsReductionCategory) %></TD>\
-							<TD><%= globalConfig.processEmptyValue(substance.OptionActivityTaken) %></TD>\
 							<TD><%= globalConfig.chooseLang("Recycled Off-Site", "Recycl&eacute;e hors site") %></TD>\
-							<TD><%= globalConfig.processEmptyValue(substance.OptionsImplementedAmountofreductioninrecycled) %></TD>\
+							<TD><%= globalConfig.processEmptyValue(option.OptionsImplementedAmountofreductioninrecycled) %></TD>\
 						</TR>\
+						<%\
+							});\
+						%>\
 						</TABLE>\
 						<%= globalConfig.chooseLang("Will all planned timelines for reduction be met?", "Tous les d&eacute;lais pr&eacute;vus pour la r&eacute;duction seront-ils respect&eacute;s?") %><br>\
 						<%= substance.Willthetimelinesbemet %><br>\
-						<%= globalConfig.chooseLang("Any actions outside the Toxics Reduction Plan that reduced the use or creation of this substance this year?", "Des mesures prises ind&eacute;pendamment du plan de r&eacute;duction de substance toxique ont-elles permis de r&eacute;duire l’utilisation et la cr&eacute;ation de la substance cette ann&eacute;e?") %><br>\
-						<%= substance.DescriptionofAdditionalAction %><br>\
+						<% if (substance.DescriptionofAdditionalAction.length !== 0 || substance.NoOptionsIdentifiedforUseorCreation.length !== 0 ) { %>\
+							<%= globalConfig.chooseLang("Any actions outside the Toxics Reduction Plan that reduced the use or creation of this substance this year?", "Des mesures prises ind&eacute;pendamment du plan de r&eacute;duction de substance toxique ont-elles permis de r&eacute;duire l’utilisation et la cr&eacute;ation de la substance cette ann&eacute;e?") %><br>\
+							<%= (substance.DescriptionofAdditionalAction.length !== 0) ? globalConfig.chooseLang("Yes", "Yes") : globalConfig.chooseLang("No", "No") %><br>\
+						<%\
+							}\
+						%>\
 						<%= globalConfig.chooseLang("Any amendment(s) to the Toxics Reduction Plan this year?", "Le plan de r&eacute;duction de substance toxique a-t-il &eacute;t&eacute; modifi&eacute; cette ann&eacute;e?") %><br>\
 						<%= substance.AmendmentsDescription %><br>\
 					<%\

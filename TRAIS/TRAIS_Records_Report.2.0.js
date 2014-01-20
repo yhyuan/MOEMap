@@ -1,3 +1,9 @@
+globalConfig.processEmptyValue = function(str) {
+	if (str.length === 0){
+		return "&nbsp;";
+	}
+	return str;
+};
 globalConfig.layerIDs = {
 	ExitRecords: "6",
 	ExemptionRecords: "8",
@@ -125,15 +131,15 @@ globalConfig.layers = [{
 	            <% _.each(_.keys(renderResult.dateSubstanceObject), function(dateofSubmission,key,list){%>\
 					<TR>\
 						<TD WIDTH=20% rowspan="<%= renderResult.dateSubstanceObject[dateofSubmission].length %>"><%= globalConfig.convertDateFormat(dateofSubmission) %></TD>\
-						<TD WIDTH=30%><%= renderResult.dateSubstanceObject[dateofSubmission][0].SubstanceName %></TD>\
-						<TD WIDTH=20%><%= renderResult.dateSubstanceObject[dateofSubmission][0].SubstanceCAS %></TD>\
-						<TD WIDTH=30%><%= renderResult.dateSubstanceObject[dateofSubmission][0].Reason %></TD>\
+						<TD WIDTH=30%><%= globalConfig.processEmptyValue(renderResult.dateSubstanceObject[dateofSubmission][0].SubstanceName) %></TD>\
+						<TD WIDTH=20%><%= globalConfig.processEmptyValue(renderResult.dateSubstanceObject[dateofSubmission][0].SubstanceCAS) %></TD>\
+						<TD WIDTH=30%><%= globalConfig.processEmptyValue(renderResult.dateSubstanceObject[dateofSubmission][0].Reason) %></TD>\
 					</TR>\
 					<% renderResult.dateSubstanceObject[dateofSubmission].shift();_.each(renderResult.dateSubstanceObject[dateofSubmission], function(attr,key,list){%>\
 						<TR>\
-							<TD WIDTH=30%><%= attr.SubstanceName %></TD>\
-							<TD WIDTH=20%><%= attr.SubstanceCAS %></TD>\
-							<TD WIDTH=30%><%= attr.Reason %></TD>\
+							<TD WIDTH=30%><%= globalConfig.processEmptyValue(attr.SubstanceName) %></TD>\
+							<TD WIDTH=20%><%= globalConfig.processEmptyValue(attr.SubstanceCAS) %></TD>\
+							<TD WIDTH=30%><%= globalConfig.processEmptyValue(attr.Reason) %></TD>\
 						</TR>\
 					<%});%>\
 				<%});%>\
@@ -196,13 +202,13 @@ globalConfig.layers = [{
 	            <% _.each(_.keys(renderResult.dateSubstanceObject), function(dateofSubmission,key,list){%>\
 					<TR>\
 						<TD WIDTH=30% rowspan="<%= renderResult.dateSubstanceObject[dateofSubmission].length %>"><%= globalConfig.convertDateFormat(dateofSubmission) %></TD>\
-						<TD WIDTH=30%><%= renderResult.dateSubstanceObject[dateofSubmission][0].SubstanceName %></TD>\
-						<TD WIDTH=30%><%= renderResult.dateSubstanceObject[dateofSubmission][0].RecordRank %></TD>\
+						<TD WIDTH=30%><%= globalConfig.processEmptyValue(renderResult.dateSubstanceObject[dateofSubmission][0].SubstanceName) %></TD>\
+						<TD WIDTH=30%><%= globalConfig.processEmptyValue(renderResult.dateSubstanceObject[dateofSubmission][0].RecordRank) %></TD>\
 					</TR>\
 					<% renderResult.dateSubstanceObject[dateofSubmission].shift();_.each(renderResult.dateSubstanceObject[dateofSubmission], function(attr,key,list){%>\
 						<TR>\
-							<TD WIDTH=30%><%= attr.SubstanceName %></TD>\
-							<TD WIDTH=30%><%= attr.RecordRank %></TD>\
+							<TD WIDTH=30%><%= globalConfig.processEmptyValue(attr.SubstanceName) %></TD>\
+							<TD WIDTH=30%><%= globalConfig.processEmptyValue(attr.RecordRank) %></TD>\
 						</TR>\
 					<%});%>\
 				<%});%>\
