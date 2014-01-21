@@ -4,7 +4,6 @@ globalConfig.processEmptyValue = function(str) {
 	}
 	return str;
 };
-
 globalConfig.testedFieldsForComparisonTable = ["UseEnteredtheFacilityAnnualPercentageChange", "CreatedAnnualPercentageChange", "ContainedinProductAnnualPercentageChange", "ReasonsforChangeTRAQuantifications", "ReleasestoAirAnnualPercentageChange", "ReleasestoWaterAnnualPercentageChange", "ReleasestoLandAnnualPercentageChange", "ReasonsforChangeAllMedia", "DisposedOnSiteAnnualPercentageChangeHTMLOnly", "DisposedOffSiteAnnualPercentageChangeHTMLOnly", "ReasonsforChangeDisposals", "RecycledOffSiteAnnualPercentageChange", "ReasonsForChangeRecycling"];
 globalConfig.testedFieldsForProgressOnPlanTable = ["NoOptionsIdentifiedforUseorCreation","ToxicsReductionCategory","OptionActivityTaken","OptionsImplementedAmountofreductioninuse","OptionsImplementedAmountofreductionincreation","OptionsImplementedAmountofreductionincontainedinproduct","OptionsImplementedAmountofreductioninreleasetoair","OptionsImplementedAmountofreductioninreleasetowater","OptionsImplementedAmountofreductioninreleasetoland","OptionsImplementedAmountofreductionindisposedonsite","OptionsImplementedAmountofreductioninthesubstancedisposedoffsite","OptionsImplementedAmountofreductioninrecycled","Willthetimelinesbemet","DescriptionofAdditionalAction","AmendmentsDescription"];
 globalConfig.calculateValuesLength = function(fields, attr) {
@@ -42,6 +41,14 @@ globalConfig.layers = [{
 				});
 				renderResult.Substances = _.map(_.values(groupbyResults), function(array) {
 					var attr = array[0];
+					//console.log(attr.SubstanceName);
+					//console.log(globalConfig.calculateValuesLength(globalConfig.testedFieldsForProgressOnPlanTable, attr));
+					//console.log(_.map(globalConfig.testedFieldsForComparisonTable, function(field) {return attr[field].length;}));
+					/*console.log(attr[globalConfig.testedFieldsForComparisonTable[0]]);
+					console.log(attr[globalConfig.testedFieldsForComparisonTable[1]]);
+					console.log(attr[globalConfig.testedFieldsForComparisonTable[3]]);
+					console.log(attr[globalConfig.testedFieldsForComparisonTable[4]]);
+					console.log(attr[globalConfig.testedFieldsForComparisonTable[7]]);*/
 					return {
 						Name: attr.SubstanceName,
 						Units: attr.Units,
@@ -73,7 +80,7 @@ globalConfig.layers = [{
 						DescriptionofAdditionalAction : attr.DescriptionofAdditionalAction,
 						AmendmentsDescription: attr.AmendmentsDescription,
 						isComparisonTableWide: (globalConfig.calculateValuesLength(globalConfig.testedFieldsForComparisonTable, attr) === 0) ? false : true,
-						isProgressOnPlanVisible: (globalConfig.calculateValuesLength(globalConfig.testedFieldsForComparisonTable, attr) === 0) ? false : true,
+						isProgressOnPlanVisible: (globalConfig.calculateValuesLength(globalConfig.testedFieldsForProgressOnPlanTable, attr) === 0) ? false : true,
 						options: _.map(array, function(item) {
 							return {
 								ToxicsReductionCategory: item.ToxicsReductionCategory,
@@ -271,7 +278,7 @@ globalConfig.layers = [{
 						<TR>\
 							<TH WIDTH=30%><%= globalConfig.chooseLang("Option Category", "Cat&eacute;gorie d’option") %></TH>\
 							<TH WIDTH=30%><%= globalConfig.chooseLang("Option Activity", "Activit&eacute; li&eacute;e &agrave; l’option") %></TH>\
-							<TH WIDTH=20%><%= globalConfig.chooseLang("Quantification Type", "Quantification Type") %></TH>\
+							<TH WIDTH=20%><%= globalConfig.chooseLang("Quantification Type", "Type de Quantification") %></TH>\
 							<TH WIDTH=20%><%= globalConfig.chooseLang("Reduction achieved in " + renderResult.ReportingPeriod + "<br><br>(" + substance.Units, "R&eacute;duction atteinte en " + renderResult.ReportingPeriod + "<br><br>(" + substance.Units) %>)</TH>\
 						</TR>\
 						<%\
@@ -321,16 +328,23 @@ globalConfig.layers = [{
 						</TABLE>\
 						<%= globalConfig.chooseLang("Will all planned timelines for reduction be met?", "Tous les d&eacute;lais pr&eacute;vus pour la r&eacute;duction seront-ils respect&eacute;s?") %><br>\
 						<%= substance.Willthetimelinesbemet %><br>\
+						<%\
+							}\
+						%><br>\
 						<% if (substance.DescriptionofAdditionalAction.length !== 0 || substance.NoOptionsIdentifiedforUseorCreation.length !== 0 ) { %>\
 							<%= globalConfig.chooseLang("Any actions outside the Toxics Reduction Plan that reduced the use or creation of this substance this year?", "Des mesures prises ind&eacute;pendamment du plan de r&eacute;duction de substance toxique ont-elles permis de r&eacute;duire l’utilisation et la cr&eacute;ation de la substance cette ann&eacute;e?") %><br>\
-							<%= (substance.DescriptionofAdditionalAction.length !== 0) ? globalConfig.chooseLang("Yes", "Yes") : globalConfig.chooseLang("No", "No") %><br>\
+							<%= (substance.DescriptionofAdditionalAction.length !== 0) ? globalConfig.chooseLang("Yes", "oui") : globalConfig.chooseLang("No", "aucun") %><br>\
 						<%\
 							}\
 						%>\
-						<%= globalConfig.chooseLang("Any amendment(s) to the Toxics Reduction Plan this year?", "Le plan de r&eacute;duction de substance toxique a-t-il &eacute;t&eacute; modifi&eacute; cette ann&eacute;e?") %><br>\
-						<%= substance.AmendmentsDescription %><br>\
+						<% if (substance.AmendmentsDescription.length !== 0 || substance.NoOptionsIdentifiedforUseorCreation.length !== 0 ) { %>\
+							<%= globalConfig.chooseLang("Any amendment(s) to the Toxics Reduction Plan this year?", "Le plan de r&eacute;duction de substance toxique a-t-il &eacute;t&eacute; modifi&eacute; cette ann&eacute;e?") %><br>\
+							<%= (substance.AmendmentsDescription.length !== 0) ? globalConfig.chooseLang("Yes", "oui") : globalConfig.chooseLang("No", "aucun") %><br>\
+						<%\
+							}\
+						%>\
 					<%\
-						} }\
+					}\
 					%>\
 				<BR><BR><I><A HREF="http://www.ene.gov.on.ca/environment/<%= globalConfig.chooseLang("en", "fr") %>/resources/collection/data_downloads/index.htm"><%= globalConfig.chooseLang("Full dataset available for download", "Jeu de donn&eacute;es complet disponible en t&eacute;l&eacute;chargement") %></A></I><BR>\
 				<A HREF="#top"><%= globalConfig.chooseLang("Back to top", "Haut de la page") %></A><BR><HR WIDTH=100%>\
