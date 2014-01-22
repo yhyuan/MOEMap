@@ -3,6 +3,8 @@ if (!String.prototype.trim) {
     return this.replace(/^\s+|\s+$/g, '');
   };
 }
+//globalConfig.Wells_Report_URL = "Wells_Report.htm";
+globalConfig.Wells_Report_URL = "well-record-information";
 globalConfig.layers = [{
 	url: globalConfig.url + "/1",
 	renderTargetDiv: "target",
@@ -81,7 +83,7 @@ globalConfig.layers = [{
 		
 		PubSub.emit(globalConfig.layers[0].event + "Data", {renderResult: (fs.length === 1) ? createSingleWellRenderResult(fs) : createWellsClusterRenderResult(fs)});
 	},
-	template: '			<%\
+	template: '<%\
 				if (Array.isArray(renderResult)) {\
 			%>\
 				<div class="row"><h1><%= globalConfig.chooseLang("Well ID Number", "Identification du puits") %>:&nbsp;<%= renderResult[0].WELL_ID %></h1></div>\
@@ -103,17 +105,15 @@ globalConfig.layers = [{
 					<TR><TH><CENTER><%= globalConfig.chooseLang("Well ID", "Identification du puits") %></CENTER></TH><TH><CENTER>Zone</CENTER></TH><TH><CENTER><%= globalConfig.chooseLang("Easting", "Abscisse") %></CENTER></TH><TH><CENTER><%= globalConfig.chooseLang("Northing", "Abscisse") %></CENTER></TH></TR>\
 					<%\
 						_.each(renderResult,function(result,key,list){\
-					%>		\
-						<TR><TD><A HREF="Wells_Report.htm?id=<%= result.BORE_HOLE_ID %>"><%= result.WELL_ID %></A></TD><TD><%= result.UTMZONE %></TD><TD><%= result.EAST83 %></TD><TD><%= result.NORTH83 %>  <%= (result.BHK === "MASTER") ? ("&nbsp;&nbsp;" + globalConfig.chooseLang("Master Well", "Puits principal")) : "" %></TD></TR>\
+					%>\
+						<TR><TD><A HREF="<%= globalConfig.Wells_Report_URL %>?id=<%= result.BORE_HOLE_ID %>"><%= result.WELL_ID %></A></TD><TD><%= result.UTMZONE %></TD><TD><%= result.EAST83 %></TD><TD><%= result.NORTH83 %>  <%= (result.BHK === "MASTER") ? ("&nbsp;&nbsp;" + globalConfig.chooseLang("Master Well", "Puits principal")) : "" %></TD></TR>\
 					<%\
 						});\
 					%>\
 				</TABLE>\
 			<% } else {%>\
 				<!-- new code for MOE Well Records pages  -->\
-				\
 				<h2>Well ID</h2>\
-				\
 				<%= globalConfig.chooseLang("Well ID Number", "Identification du puits") %>:&nbsp; <%= renderResult.WELL_ID %><BR>\
 				<%= globalConfig.chooseLang("Well Audit Number", "N<SUP>o</SUP> de v&eacute;rification") %>:&nbsp;<I><%= renderResult.AUDIT_NO %></I><BR>\
 				<%= globalConfig.chooseLang("Well Tag Number", "N<SUP>o</SUP> plaque") %>:&nbsp;<I><%= renderResult.TAG %></I><P>\
@@ -124,26 +124,24 @@ globalConfig.layers = [{
 				%>\
 								<BR>This well is part of a well cluster. <BR><SPAN STYLE=\'font-size:75%\'>The information below is extracted from the cluster well record.\
 								<BR>More information on the cluster well record (related to other wells in the cluster)</SPAN>\
-								<BR><A HREF=\'Wells_Report.htm?wellid=<%= renderResult.WELL_ID %>\'>is also available.</A><BR><BR>\
+								<BR><A HREF=\'<%= globalConfig.Wells_Report_URL %>?wellid=<%= renderResult.WELL_ID %>\'>is also available.</A><BR><BR>\
 						<%\
 							} else {\
 						%>\
 								<BR><BR>Ce puits fait partie d&acute;un groupe de puits. <BR><SPAN STYLE=\"font-size:75%\">Les donn&eacute;es ci-dessous sont extraites du registre du groupe de puits.\
 								<BR> D&acute;autres renseignements sur le dossier du groupe de puits (relatifs &agrave; d&acute;autres puits dans le groupe)</SPAN>\
-								<BR><A HREF=\'Wells_Report.htm?wellid=<%= renderResult.WELL_ID %>\'> sont &eacute;galement disponibles.</A><BR><BR>		\
+								<BR><A HREF=\'<%= globalConfig.Wells_Report_URL %>?wellid=<%= renderResult.WELL_ID %>\'> sont &eacute;galement disponibles.</A><BR><BR>		\
 						<%\
 							}\
 						%>\
 				<%\
 					}\
 				%>\
-				\
 				<h2><%= globalConfig.chooseLang("Well Location", "Emplacement du puits") %></h2>\
-				\
 				<TABLE class="noStripes">\
 				  <TBODY>\
 					   <tr>\
-						  <th<%= globalConfig.chooseLang("Address of Well Location", "Adresse de l\'emplacement du puits") %></th>\
+						  <th><%= globalConfig.chooseLang("Address of Well Location", "Adresse de l\'emplacement du puits") %></th>\
 						  <td><%= renderResult.STREET %></td>\
 						</tr>\
 						<tr>\
@@ -226,11 +224,7 @@ globalConfig.layers = [{
 						%>\
 					</TBODY>\
 				  </TABLE>\
-				\
-				\
-				\
 				<H2><%= globalConfig.chooseLang("Method of Construction", "M&eacute;thode de construction") %> &amp; <%= globalConfig.chooseLang("Well Use", "Utilisation du puits") %></H2>\
-				\
 				<TABLE class="noStripes">\
 				  <TBODY>\
 					<TR>\
@@ -255,19 +249,9 @@ globalConfig.layers = [{
 					</TR>\
 				  </TBODY>\
 				</TABLE>\
-				\
-				\
-				\
-				<!-- this does not need to be a table -->\
-				\
 				<h2><%= globalConfig.chooseLang("Status of Well", "Finalit&eacute; du puits") %></h2>\
 				<p><%= renderResult.FINAL_STATUS_DESCR %></p>\
-				\
-				\
-				\
-				\
 				<h2><%= globalConfig.chooseLang("Construction Record - Casing", "Construction - Tubage") %></h2>\
-				\
 				<TABLE class="noStripes">\
 				  <TBODY>\
 					<TR>\
@@ -289,12 +273,10 @@ globalConfig.layers = [{
 						});\
 					%>\
 				  </tbody>\
-				</table>          \
-				 \
+				</table>\
 				 <h2><%= globalConfig.chooseLang("Construction Record - Screen", "Construction - Cr&eacute;pine") %></h2>         \
-						  \
 				<TABLE class="noStripes">\
-				  <TBODY>    \
+				  <TBODY>\
 					<TR>\
 					  <TD><%= globalConfig.chooseLang("Outside<BR>Diameter", "Diam&egrave;tre<BR>ext&eacute;rieur") %></TD>\
 					  <TD><%= globalConfig.chooseLang("Material", "Mat&eacute;riau") %></TD>\
@@ -315,15 +297,9 @@ globalConfig.layers = [{
 					%>\
 				  </TBODY>\
 				</TABLE>\
-				\
-				\
-				\
 				<h2><%= globalConfig.chooseLang("Well Contractor and Well Technician Information", "Renseignements sur l\'entrepreneur et le technicien en contruction de puits") %></h2>\
 				<p><%= globalConfig.chooseLang("Well Contractor\'s Licence Number", "N<SUP>o</SUP> de licence de l\'entrepreneur en contruction de puits") %>: <%= renderResult.CONTRACTOR %></p>\
-				\
-				\
 				<h2><%= globalConfig.chooseLang("Results of Well Yield Testing", "R&eacute;sultats de l\'essai du puits") %></h2>\
-				\
 				<TABLE class="noStripes">\
 									<TBODY>\
 									<TR>\
@@ -369,11 +345,7 @@ globalConfig.layers = [{
 									</TR>\
 								  </TBODY>\
 								</TABLE>\
-				\
-				\
-				\
 				<h3><%= globalConfig.chooseLang("Draw Down", "C&ocirc;ne en d&eacute;pression") %> &amp; <%= globalConfig.chooseLang("Recovery", "R&eacute;tablissement") %></h3>\
-				\
 				<TABLE class="noStripes">\
 									<TBODY>\
 									<TR>\
@@ -393,19 +365,13 @@ globalConfig.layers = [{
 									%>\
 						  </TBODY>\
 						</TABLE>\
-				\
-				\
-				\
-						  \
-				\
 				<h3><%= globalConfig.chooseLang("Water Details", "Renseignements sur l\'eau") %></h3>           \
-				\
 						  <TABLE class="noStripes">\
 									<TBODY>\
 								   <TR>\
 									  <TH><%= globalConfig.chooseLang("Water Found at Depth", "Eau &agrave;") %></TH>\
 									  <TH><%= globalConfig.chooseLang("Kind", "Type d\'eau") %></TH>\
-									</TR>       \
+									</TR>\
 									<%\
 										_.each(renderResult.WAT,function(items,key,list){\
 									%>\
@@ -420,11 +386,7 @@ globalConfig.layers = [{
 									%>\
 						   </TBODY>\
 						 </TABLE>\
-				\
-				\
-				\
 				<h3><%= globalConfig.chooseLang("Hole Diameter", "Diam&egrave;tre du trou") %></h3>\
-				\
 				<TABLE class="noStripes">\
 									<TBODY>\
 									\
@@ -447,7 +409,6 @@ globalConfig.layers = [{
 									%>\
 						  </TBODY>\
 						</TABLE>\
-				\
 				<p><STRONG><%= globalConfig.chooseLang("Audit Number", "N<SUP>o</SUP> de v&eacute;rification") %>:</STRONG><%= renderResult.AUDIT_NO %></p>\
 				<p><STRONG><%= globalConfig.chooseLang("Date Well Completed", "Date de finition") %>:</STRONG> <%= renderResult.WELL_COMPLETED_DATE %></p>\
 				<p><STRONG><%= globalConfig.chooseLang("Date Well Record Received by MOE", "Date de r&eacute;ception du registre de puits<br>par le MEO") %>:</STRONG><%= renderResult.RECEIVED_DATE %></p>\
