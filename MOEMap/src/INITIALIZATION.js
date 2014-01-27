@@ -30,6 +30,7 @@
 	globalConfig.minMapScale = globalConfig.minMapScale || 5;
 	globalConfig.maxMapScale = globalConfig.maxMapScale || 21;
 	globalConfig.tableID = globalConfig.tableID || "myTable";
+	globalConfig.tableWidth = globalConfig.tableWidth || 650; //The total width of the table below the map
 	if(!globalConfig.accessible){
 		globalConfig.defaultMapTypeId = globalConfig.defaultMapTypeId || google.maps.MapTypeId.ROADMAP;
 	}
@@ -109,7 +110,9 @@
 		}else{
 			return true;
 		}
-	};	
+	};
+	globalConfig.searchTheMapDivId = globalConfig.searchTheMapDivId || 'searchTheMap';
+	globalConfig.searchHelpDivId = globalConfig.searchHelpDivId || 'searchHelp';
 	globalConfig.informationDivId = globalConfig.informationDivId || 'information';
 	globalConfig.createTablesInfoWindows = globalConfig.createTablesInfoWindows || function(tabsTableTemplate) {
 		var mapfunction = function(tab) {
@@ -123,16 +126,15 @@
 
 	globalConfig.createTableBelowMap = globalConfig.createTableBelowMap || function(tableSimpleTemplate) {
 		return {
-			head: tableSimpleTemplate.title + "<table id=\"" + globalConfig.tableID + "\" class=\"" + globalConfig.tableClassName + "\" border=\"0\" cellpadding=\"0\" cellspacing=\"1\"><thead><tr><th><center>" + tableSimpleTemplate.content.map(function(b) {return b.name;}).join("</center></th><th><center>") + "</center></th></tr></thead><tbody>",
+			head: tableSimpleTemplate.title + "<table id=\"" + globalConfig.tableID + "\" class=\"" + globalConfig.tableClassName + "\" width=\"" + globalConfig.tableWidth + "\" border=\"0\" cellpadding=\"0\" cellspacing=\"1\"><thead><tr><th><center>" + tableSimpleTemplate.content.map(function(b) {return b.name;}).join("</center></th><th><center>") + "</center></th></tr></thead><tbody>",
 			content: "<tr><td>" + tableSimpleTemplate.content.map(function(b) {return b.value;}).join('</td><td>') + "</td></tr>",
 			tail: "</tbody></table>"
 		};
 	};
-	globalConfig.noCoordinatesTableTitle = globalConfig.noCoordinatesTableTitle || "The following table contains the records without valid coordinates.";
 	globalConfig.noCoordinatesTableID = globalConfig.noCoordinatesTableID || "noCoordinatesTable";
 	globalConfig.createNoCoordinatesTableBelowMap = globalConfig.createNoCoordinatesTableBelowMap || function(tableSimpleTemplate) {
 		return {
-			head: globalConfig.noCoordinatesTableTitle + "<table id=\"" + globalConfig.noCoordinatesTableID + "\" class=\"" + globalConfig.tableClassName + "\" border=\"0\" cellpadding=\"0\" cellspacing=\"1\"><thead><tr><th><center>" + tableSimpleTemplate.content.map(function(b) {return b.name;}).join("</center></th><th><center>") + "</center></th></tr></thead><tbody>",
+			head: globalConfig.noCoordinatesTableTitleLang + "<table id=\"" + globalConfig.noCoordinatesTableID + "\" class=\"" + globalConfig.tableClassName + "\" width=\"" + globalConfig.tableWidth + "\" border=\"0\" cellpadding=\"0\" cellspacing=\"1\"><thead><tr><th><center>" + tableSimpleTemplate.content.map(function(b) {return b.name;}).join("</center></th><th><center>") + "</center></th></tr></thead><tbody>",
 			content: "<tr><td>" + tableSimpleTemplate.content.map(function(b) {return b.value;}).join('</td><td>') + "</td></tr>",
 			tail: "</tbody></table>"
 		};
@@ -374,9 +376,15 @@
 						document.getElementById(globalConfig.applicationTitleDivId).innerHTML = globalConfig.applicationTitle;
 					}
 				}										
-				if ((typeof(globalConfig.searchHelpTxt)!== "undefined") && globalConfig.testDivExist(globalConfig.informationDivId)){
+				/*if ((typeof(globalConfig.searchHelpTxt)!== "undefined") && globalConfig.testDivExist(globalConfig.informationDivId)){
 					document.getElementById(globalConfig.informationDivId).innerHTML = globalConfig.searchHelpTxt;
+				}*/
+				if (globalConfig.testDivExist(globalConfig.searchTheMapDivId)) {
+					document.getElementById(globalConfig.searchTheMapDivId).innerHTML = "<h2>" + globalConfig.SearchInteractiveMapLang + "</h2>";
 				}
+				if (globalConfig.testDivExist(globalConfig.searchHelpDivId)) {
+					document.getElementById(globalConfig.searchHelpDivId).innerHTML = globalConfig.searchHelpTxt;
+				}				
 				if ((typeof(globalConfig.disclaimerLang)!== "undefined") && globalConfig.displayDisclaimer && globalConfig.testDivExist(globalConfig.disclaimerDivId)){
 					document.getElementById(globalConfig.disclaimerDivId).innerHTML = globalConfig.disclaimerLang;
 				}

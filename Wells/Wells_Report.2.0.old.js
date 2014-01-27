@@ -3,6 +3,8 @@ if (!String.prototype.trim) {
     return this.replace(/^\s+|\s+$/g, '');
   };
 }
+//globalConfig.Wells_Report_URL = "Wells_Report.htm";
+globalConfig.Wells_Report_URL = globalConfig.chooseLang("en_wells_report", "fr_wells_report");
 globalConfig.layers = [{
 	url: globalConfig.url + "/1",
 	renderTargetDiv: "target",
@@ -104,7 +106,7 @@ globalConfig.layers = [{
 					<%\
 						_.each(renderResult,function(result,key,list){\
 					%>		\
-						<TR><TD><A HREF="Wells_Report.htm?id=<%= result.BORE_HOLE_ID %>"><%= result.WELL_ID %></A></TD><TD><%= result.UTMZONE %></TD><TD><%= result.EAST83 %></TD><TD><%= result.NORTH83 %>  <%= (result.BHK === "MASTER") ? ("&nbsp;&nbsp;" + globalConfig.chooseLang("Master Well", "Puits principal")) : "" %></TD></TR>\
+						<TR><TD><A HREF="<%= globalConfig.Wells_Report_URL %>?id=<%= result.BORE_HOLE_ID %>"><%= result.WELL_ID %></A></TD><TD><%= result.UTMZONE %></TD><TD><%= result.EAST83 %></TD><TD><%= result.NORTH83 %>  <%= (result.BHK === "MASTER") ? ("&nbsp;&nbsp;" + globalConfig.chooseLang("Master Well", "Puits principal")) : "" %></TD></TR>\
 					<%\
 						});\
 					%>\
@@ -126,7 +128,7 @@ globalConfig.layers = [{
 						%>\
 							<BR>This well is part of a well cluster. <BR><SPAN STYLE=\'font-size:75%\'>The information below is extracted from the cluster well record.\
 							<BR>More information on the cluster well record (related to other wells in the cluster)</SPAN>\
-							<BR><A HREF=\'Wells_Report.htm?wellid=<%= renderResult.WELL_ID %>\'>is also available.</A><BR><BR>\
+							<BR><A HREF=\'<%= globalConfig.Wells_Report_URL %>?wellid=<%= renderResult.WELL_ID %>\'>is also available.</A><BR><BR>\
 						<% }%>\
 					<% } else {%>\
 						<I>Le pr&eacute;sent tableau contient des renseignements du dossier original du puits d&acute;eau ainsi que toutes les mises &agrave; jour suivantes. <BR>\
@@ -136,7 +138,7 @@ globalConfig.layers = [{
 						%>\
 							<BR><BR>Ce puits fait partie d&acute;un groupe de puits. <BR><SPAN STYLE=\"font-size:75%\">Les donn&eacute;es ci-dessous sont extraites du registre du groupe de puits.\
 							<BR> D&acute;autres renseignements sur le dossier du groupe de puits (relatifs &agrave; d&acute;autres puits dans le groupe)</SPAN>\
-							<BR><A HREF=\'Wells_Report.htm?wellid=<%= renderResult.WELL_ID %>\'> sont &eacute;galement disponibles.</A><BR><BR>\
+							<BR><A HREF=\'<%= globalConfig.Wells_Report_URL %>?wellid=<%= renderResult.WELL_ID %>\'> sont &eacute;galement disponibles.</A><BR><BR>\
 						<% }%>\
 					<% }%>	\
 				</CENTER>\

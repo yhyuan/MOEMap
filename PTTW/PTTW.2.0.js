@@ -1,8 +1,43 @@
+globalConfig.InformationLang = "Information";
+globalConfig.chooseLang = function (en, fr) {return (globalConfig.language === "EN") ? en : fr;};
+globalConfig.searchControlHTML = '<div id="searchTheMap"></div><div id="searchHelp"></div><br><label class="element-invisible" for="map_query">' + globalConfig.chooseLang('Search the map', 'Recherche carte interactive') + '</label>\
+	<input id="map_query" type="text" title="' + globalConfig.chooseLang('Search term', 'Terme de recherche') + '" maxlength="100" size="50" onkeypress="return globalConfig.entsub(event)"></input>\
+	<label class="element-invisible" for="search_submit">' + globalConfig.chooseLang('Search', 'Recherche') + '</label>\
+	<input id="search_submit" type="submit" title="Search" onclick="globalConfig.search()" value="' + globalConfig.chooseLang('Search', 'Recherche') + '"></input>\
+	<fieldset>\
+		<input type="radio" id="searchWatershed" name="searchGroup" title="watershed" name="watershed" value="watershed" onclick="globalConfig.searchChange(\'Watershed\')"></input>\
+		<label class="option" for="watershed">\
+			' + globalConfig.chooseLang('Watershed', "Bassin versant") + '\
+		</label>\
+		<input type="radio" id="searchBusiness" name="searchGroup" title="business" name="business" value="business" onclick="globalConfig.searchChange(\'Business\')"></input>\
+		<label class="option" for="business">\
+			' + globalConfig.chooseLang('Permit Holder Name', "Nom du titulaire de permis") + '\
+		</label>\
+		<input type="radio" id="searchLocation" name="searchGroup" title="location" name="location" value="location" onclick="globalConfig.searchChange(\'Location\')"></input>\
+		<label class="option" for="location">\
+			' + globalConfig.chooseLang('Address with Radius of', "Adresse dans un rayon de") + '\
+			<select name="searchCriteria.radius" id="lstRadius">\
+				<option value="1" >1 km</option>\
+				<option value="2" >2 km</option>\
+				<option value="5" >5 km</option>\
+				<option value="10" >10 km</option>\
+				<option value="25" >25 km</option>\
+				<option value="50" >50 km</option>\
+			</select>\
+		</label>\
+	</fieldset>\
+<div id="information"></div>';
+
 if (globalConfig.accessible) {
 	globalConfig.usePredefinedMultipleTabs = false;
 } else {
 	globalConfig.usePredefinedMultipleTabs = true;
 }
+
+globalConfig.infoWindowWidth = '560px';
+globalConfig.infoWindowHeight = '200px';
+globalConfig.infoWindowContentHeight = '160px';
+
 globalConfig.isRoutingServiceAvailable = false;
 globalConfig.displayDisclaimer = true;
 if (globalConfig.language === "EN") {

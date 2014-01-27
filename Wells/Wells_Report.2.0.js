@@ -4,7 +4,7 @@ if (!String.prototype.trim) {
   };
 }
 //globalConfig.Wells_Report_URL = "Wells_Report.htm";
-globalConfig.Wells_Report_URL = "well-record-information";
+globalConfig.Wells_Report_URL = globalConfig.chooseLang("well-record-information", "donnees-completes-sur-le-puits");
 globalConfig.layers = [{
 	url: globalConfig.url + "/1",
 	renderTargetDiv: "target",

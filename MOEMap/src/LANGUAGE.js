@@ -39,9 +39,13 @@ if (globalConfig.language === "EN"){
 	//globalConfig.CurrentMapDisplayLang = globalConfig.CurrentMapDisplayLang || 'Current Map Display';
 	globalConfig.CurrentMapDisplayLang = globalConfig.CurrentMapDisplayLang || 'Search current map display only';
 	globalConfig.CurrentMapDisplayTitleLang = globalConfig.CurrentMapDisplayTitleLang || 'Current Map Display: Limit your search to the area displayed';
+	globalConfig.distanceFieldNote = globalConfig.distanceFieldNote || "The Distance(KM) column represents the distance between your search location and the permit location in the specific row.";
+	globalConfig.noCoordinatesTableTitleLang = globalConfig.noCoordinatesTableTitleLang || "The following table contains the records without valid coordinates. <a href='#WhyAmISeeingThis'>Why am I seeing this?</a>";
+	globalConfig.whyAmISeeingThisLang = globalConfig.whyAmISeeingThisLang || "<a id='WhyAmISeeingThis'><strong>Why am I seeing this?</strong></a><br>The map locations shown as points have been determined by using addresses or other information to calculate a physical location on the map.  In some cases, the information needed to calculate a location was incomplete, incorrect or missing.  The records provided in the table have been included because there is a close match on the name or city/town or other field(s). These records may or may not be near your specified location, and users are cautioned in using these records. They have been included as potential matches only.";
 } else {
 	globalConfig.SearchInteractiveMapFormLang = globalConfig.SearchInteractiveMapFormLang || 'Recherche carte interactive forme';
-	globalConfig.SearchInteractiveMapLang = globalConfig.SearchInteractiveMapLang || 'Recherche carte interactive';
+	//globalConfig.SearchInteractiveMapLang = globalConfig.SearchInteractiveMapLang || 'Recherche carte interactive';
+	globalConfig.SearchInteractiveMapLang = globalConfig.SearchInteractiveMapLang || 'Recherche dans la carte interactive';
 	globalConfig.SearchLang = globalConfig.SearchLang || 'Recherche';
 	globalConfig.TermLang = globalConfig.TermLang || 'Terme';
 	globalConfig.InputBoxSizeLang = globalConfig.InputBoxSizeLang || '450px';
@@ -76,6 +80,9 @@ if (globalConfig.language === "EN"){
 	globalConfig.InformationLang = globalConfig.InformationLang || "Information";
 	globalConfig.CurrentMapDisplayLang = globalConfig.CurrentMapDisplayLang || '\u00c9tendue de la carte courante';
 	globalConfig.CurrentMapDisplayTitleLang = globalConfig.CurrentMapDisplayTitleLang || 'Afficher la carte : Limiter la recherche \u00e0 la carte donn\u00e9e.';	
+	globalConfig.distanceFieldNote = globalConfig.distanceFieldNote || "La colonne de distance (en km) donne la distance entre le lieu de votre recherche et le lieu du puits dans la rang\u00e9e donn\u00e9e.";
+	globalConfig.noCoordinatesTableTitleLang = globalConfig.noCoordinatesTableTitleLang || "The following table contains the records without valid coordinates. <a href='#WhyAmISeeingThis'>Why am I seeing this?</a>";
+	globalConfig.whyAmISeeingThisLang = globalConfig.whyAmISeeingThisLang || "<a id='WhyAmISeeingThis'>Why am I seeing this?</a><br>The map locations shown as points have been determined by using addresses or other information to calculate a physical location on the map.  In some cases, the information needed to calculate a location was incomplete, incorrect or missing.  The records provided in the second table have been included because there is a close match on the name or city/town or other field(s). These records may or may not be near your specified location, and users are cautioned in using these records. They have been included as potential matches only.";	
 	globalConfig.dataTableLang = globalConfig.dataTableLang || {
 		"sProcessing":     "Traitement en cours...",
 		"sSearch":         "Rechercher&nbsp;:",

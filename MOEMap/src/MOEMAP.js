@@ -427,12 +427,18 @@ globalConfig.renderTable = function(features, templates, searchCenter){
 		return  !globalConfig.validFeaturesFilter(feature);
 	});
 	var tableHead = tableTemplate.head;
+	//console.log(tableHead);
 	var requireDistanceField = (typeof(searchCenter) !== "undefined");
 	if(requireDistanceField) {
-		var resArrays = tableTemplate.head.split("</tr>");
+		var resArrays = tableTemplate.head.split("<table");
+		if(resArrays.length === 2){
+			tableHead = resArrays[0] + globalConfig.distanceFieldNote + "<table" + resArrays[1];
+		}
+		var resArrays = tableHead.split("</tr>");
 		if(resArrays.length === 2){
 			tableHead = resArrays[0] + "<th><center>" + globalConfig.distanceLang + "</center></th></tr>" + resArrays[1];
 		}
+		//console.log(tableHead);
 	}
 	var getTableContent = function(features, requireDistanceField, tableTemplateContent){
 		var table = "";
@@ -452,8 +458,7 @@ globalConfig.renderTable = function(features, templates, searchCenter){
 	};
 	//var table = tableHead + getTableContent(features) + tableTemplate.tail + "<br><br><br>";
 	var table = (featuresValidCoors.length === 0) ? "" : (tableHead + getTableContent(featuresValidCoors, requireDistanceField, tableTemplate.content) + tableTemplate.tail + "<br><br><br>");
-	table = table + ((featuresInvalidCoors.length === 0) ? "" : (noCoordinatesTableTemplate.head + getTableContent(featuresInvalidCoors, false, noCoordinatesTableTemplate.content) + noCoordinatesTableTemplate.tail + "<br><br><br>"));
-	
+	table = table + ((featuresInvalidCoors.length === 0) ? "" : (noCoordinatesTableTemplate.head + getTableContent(featuresInvalidCoors, false, noCoordinatesTableTemplate.content) + noCoordinatesTableTemplate.tail + "<br><br><br>" + globalConfig.whyAmISeeingThisLang));
 	document.getElementById(globalConfig.queryTableDivId).innerHTML = table;
 	var tableID = globalConfig.tableID;
 	if(globalConfig.usejQueryUITable){
