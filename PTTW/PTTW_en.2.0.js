@@ -1,9 +1,9 @@
 globalConfig = {};
 globalConfig.language = "EN";
 //globalConfig.searchHelpTxt = "Zoom in, or Search with Watershed, Permit Holder Name, Address.";
-globalConfig.searchHelpTxt = "You may search by <strong>watershed</strong>, <strong>permit holder name</strong> or <strong>address</strong>.";
+//globalConfig.searchHelpTxt = "You may search by <strong>watershed</strong>, <strong>permit holder name</strong> or <strong>address</strong>.";
 //globalConfig.tableSimpleTemplateTitleLang = "Note: The Distance(KM) column represents the distance between your search location and the permit location in the specific row. Data is in English only.";
-globalConfig.tableSimpleTemplateTitleLang = "Note: Data is in English only.";
+//globalConfig.tableSimpleTemplateTitleLang = "Note: Data is in English only.";
 //globalConfig.tableSimpleTemplateTitleLang = "The following table contains the records with valid coordinates.";
 globalConfig.otherInfoHTML = ""; 
 

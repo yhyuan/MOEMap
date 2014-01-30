@@ -1,9 +1,9 @@
 globalConfig = {};
 globalConfig.language = "FR";
 //globalConfig.searchHelpTxt = "Zoom avant, ou Recherche par bassin versant, nom du titulaire de permis, adresse.";
-globalConfig.searchHelpTxt = "You may search by <strong>bassin versant</strong>, <strong>nom du titulaire de permis</strong> or <strong>adresse</strong>.";
+//globalConfig.searchHelpTxt = "You may search by <strong>bassin versant</strong>, <strong>nom du titulaire de permis</strong> or <strong>adresse</strong>.";
 //globalConfig.tableSimpleTemplateTitleLang = "\u00c0 noter : La colonne de distance (en km) donne la distance entre le lieu de votre recherche et le lieu du puits dans la rang\u00e9e donn\u00e9e. Les donn\u00e9es sont en anglais seulement.";
-globalConfig.tableSimpleTemplateTitleLang = "\u00c0 noter : Les donn\u00e9es sont en anglais seulement.";
+//globalConfig.tableSimpleTemplateTitleLang = "\u00c0 noter : Les donn\u00e9es sont en anglais seulement.";
 globalConfig.otherInfoHTML = '<p>Certaines donn&eacute;es scientifiques et de surveillance n&rsquo;existent qu&rsquo;en anglais.</p>';
 
 //globalConfig.InformationLang = "Information";
