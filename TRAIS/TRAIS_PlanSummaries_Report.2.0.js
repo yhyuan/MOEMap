@@ -16,7 +16,7 @@ globalConfig.layers = [{
 	renderTargetDiv: "target",
 	event: "reportReady",
 	where: QueryString.hasOwnProperty("year") ? ("(UniqueFacilityID = '" + QueryString.id + "') AND (ReportingPeriod = '" + QueryString.year + "')"):("(UniqueFacilityID = '" + QueryString.id + "')"),
-	outFields: QueryString.hasOwnProperty("year") ? ["FacilityName", "StreetAddressPhysicalAddress", "MunicipalityCityPhysicalAddress", "OrganizationName", "NPRIID", "NAICS", "PublicContactFullName", "PublicContactTelephone", "PublicContactEmail", "HighestRankingEmployee", "SubstanceName", "Units", "VersionofthePlan", "ReasonforNoIntenttoReduceUseText ", "ReasonforNoIntenttoReduceCreationText", "PlanObjectives", "UseReductionQuantityTargetValue", "UseReductionQuantityTargetUnit", "UseReductionTimelineTargetYears", "UseReductionTargetDescription", "CreationReductionQuantityTargetValue", "CreationReductionQuantityTargetUnit", "CreationReductionTimelineTargetYears", "CreationReductionTargetDescription", "ReasonsforUse", "ReasonsforUseSummary", "ReasonsforCreation", "ReasonsforCreationSummary", "StatementNoOptionImplementedYN", "ReasonsNoOptionImplemented", "DescriptionofAnyAdditionalActionsTaken", "OptionReductionCategory", "ActivityTaken", "DescriptionofOption", "EstimatedUseReductionPercent", "EstimatedCreationReductionPercent", "EstimatedContainedinProductReductionPercent", "EstimatedAirReleasesReductionPercent", "EstimatedWaterReleasesReductionPercent", "EstimatedLandReleasesReductionPercent", "EstimatedOnsiteDisposalsReductionPercent", "EstimatedOffsiteDisposalsReductionPercent", "EstimatedOffsiteRecyclingReductionPercent", "AnticipatedTimelinesforAchievingReductionsinUse", "AnticipatedTimelinesforAchievingReductionsinCreation"] : ["UniqueFacilityID", "ReportingPeriod"],
+	outFields: QueryString.hasOwnProperty("year") ? ["FacilityName", "StreetAddressPhysicalAddress", "MunicipalityCityPhysicalAddres", "OrganizationName", "NPRIID", "NAICS", "PublicContactFullName", "PublicContactTelephone", "PublicContactEMail", "HighestRankingEmployee", "SubstanceName", "Units", "VersionofthePlan", "ReasonforNoIntenttoReduceUse ", "ReasonforNoIntenttoReduceCreat", "PlanObjectives", "UseReductionQuantityTargetValu", "UseReductionQuantityTargetUnit", "UseReductionTimelineTargetYear", "UseReductionTargetDescription", "CreReductionQuantityTargetValu", "CreReductionQuantityTargetUnit", "CreReductionTimelineTargetYear", "CreReductionTargetDescription", "ReasonsforUse", "ReasonsforUseSummary", "ReasonsforCreation", "ReasonsforCreationSummary", "StatementNoOptionImplementedYN", "ReasonsNoOptionImplemented", "DescofAnyAdditActionsTaken", "OptionReductionCategory", "ActivityTaken", "DescriptionofOption", "EstUseReduPct", "EstCreReduPct", "EstContainedinProductReduPct", "EstAirReleasesReduPct", "EstWaterReleasesReduPct", "EstLandReleasesReduPct", "EstOnsiteDisposalsReduPct", "EstOffsiteDisposalsReduPct", "EstOffsiteRecyclingReduPct", "AntiTimelinesforAchieReduinUse", "AntiTimelinesforAchieReduinCre"] : ["UniqueFacilityID", "ReportingPeriod"],
 	processResults: function (fs) {
 		var calculateRenderResultwithYear = function (fs) {
 			var attr = fs[0].attributes;
@@ -24,11 +24,11 @@ globalConfig.layers = [{
 				ReportingPeriod: QueryString.year, 
 				FacilityName: attr.FacilityName,
 				CompanyName: attr.OrganizationName,
-				Address: attr.StreetAddressPhysicalAddress + " / " + attr.MunicipalityCityPhysicalAddress,
+				Address: attr.StreetAddressPhysicalAddress + " / " + attr.MunicipalityCityPhysicalAddres,
 				NPRIID: attr.NPRIID,
 				PublicContact: (attr.PublicContactFullName === null) ?  "[<I>" + globalConfig.chooseLang("no name available", "Aucun nom disponible") +  "</I>]" : attr.PublicContactFullName,
 				PublicContactPhone: attr.PublicContactTelephone,
-				PublicContactEmail: attr.PublicContactEmail,
+				PublicContactEMail: attr.PublicContactEMail,
 				HighestRankingEmployee: attr.HighestRankingEmployee
 			};
 			var NAICS = attr.NAICS;
@@ -44,40 +44,40 @@ globalConfig.layers = [{
 						Name: attr.SubstanceName,
 						Units: attr.Units,
 						VersionofthePlan: attr.VersionofthePlan,
-						ReasonforNoIntenttoReduceUseText: attr.ReasonforNoIntenttoReduceUseText ,
-						ReasonforNoIntenttoReduceCreationText: attr.ReasonforNoIntenttoReduceCreationText,
+						ReasonforNoIntenttoReduceUse: attr.ReasonforNoIntenttoReduceUse ,
+						ReasonforNoIntenttoReduceCreat: attr.ReasonforNoIntenttoReduceCreat,
 						PlanObjectives: attr.PlanObjectives,
-						UseReductionQuantityTargetValue: attr.UseReductionQuantityTargetValue,
+						UseReductionQuantityTargetValu: attr.UseReductionQuantityTargetValu,
 						UseReductionQuantityTargetUnit: attr.UseReductionQuantityTargetUnit,
-						UseReductionTimelineTargetYears: attr.UseReductionTimelineTargetYears,
+						UseReductionTimelineTargetYear: attr.UseReductionTimelineTargetYear,
 						UseReductionTargetDescription: attr.UseReductionTargetDescription,
-						CreationReductionQuantityTargetValue: attr.CreationReductionQuantityTargetValue,
-						CreationReductionQuantityTargetUnit: attr.CreationReductionQuantityTargetUnit,
-						CreationReductionTimelineTargetYears: attr.CreationReductionTimelineTargetYears,
-						CreationReductionTargetDescription: attr.CreationReductionTargetDescription,
+						CreReductionQuantityTargetValu: attr.CreReductionQuantityTargetValu,
+						CreReductionQuantityTargetUnit: attr.CreReductionQuantityTargetUnit,
+						CreReductionTimelineTargetYear: attr.CreReductionTimelineTargetYear,
+						CreReductionTargetDescription: attr.CreReductionTargetDescription,
 						ReasonsforUse: attr.ReasonsforUse,
 						ReasonsforUseSummary: attr.ReasonsforUseSummary,						
 						ReasonsforCreation: attr.ReasonsforCreation,
 						ReasonsforCreationSummary: attr.ReasonsforCreationSummary,
 						StatementNoOptionImplementedYN: attr.StatementNoOptionImplementedYN,
 						ReasonsNoOptionImplemented: attr.ReasonsNoOptionImplemented,
-						DescriptionofAnyAdditionalActionsTaken: attr.DescriptionofAnyAdditionalActionsTaken,
+						DescofAnyAdditActionsTaken: attr.DescofAnyAdditActionsTaken,
 						options: _.map(array, function(item) {
 							return {
 								OptionReductionCategory: item.OptionReductionCategory,
 								ActivityTaken: item.ActivityTaken,
 								DescriptionofOption: item.DescriptionofOption,
-								EstimatedUseReductionPercent: item.EstimatedUseReductionPercent,
-								EstimatedCreationReductionPercent: item.EstimatedCreationReductionPercent,
-								EstimatedContainedinProductReductionPercent: item.EstimatedContainedinProductReductionPercent,
-								EstimatedAirReleasesReductionPercent: item.EstimatedAirReleasesReductionPercent,
-								EstimatedWaterReleasesReductionPercent: item.EstimatedWaterReleasesReductionPercent,
-								EstimatedLandReleasesReductionPercent: item.EstimatedLandReleasesReductionPercent,
-								EstimatedOnsiteDisposalsReductionPercent: item.EstimatedOnsiteDisposalsReductionPercent,
-								EstimatedOffsiteDisposalsReductionPercent: item.EstimatedOffsiteDisposalsReductionPercent,
-								EstimatedOffsiteRecyclingReductionPercent: item.EstimatedOffsiteRecyclingReductionPercent,
-								AnticipatedTimelinesforAchievingReductionsinUse: item.AnticipatedTimelinesforAchievingReductionsinUse,
-								AnticipatedTimelinesforAchievingReductionsinCreation: item.AnticipatedTimelinesforAchievingReductionsinCreation
+								EstUseReduPct: item.EstUseReduPct,
+								EstCreReduPct: item.EstCreReduPct,
+								EstContainedinProductReduPct: item.EstContainedinProductReduPct,
+								EstAirReleasesReduPct: item.EstAirReleasesReduPct,
+								EstWaterReleasesReduPct: item.EstWaterReleasesReduPct,
+								EstLandReleasesReduPct: item.EstLandReleasesReduPct,
+								EstOnsiteDisposalsReduPct: item.EstOnsiteDisposalsReduPct,
+								EstOffsiteDisposalsReduPct: item.EstOffsiteDisposalsReduPct,
+								EstOffsiteRecyclingReduPct: item.EstOffsiteRecyclingReduPct,
+								AntiTimelinesforAchieReduinUse: item.AntiTimelinesforAchieReduinUse,
+								AntiTimelinesforAchieReduinCre: item.AntiTimelinesforAchieReduinCre
 							};
 						})
 					}
@@ -133,7 +133,7 @@ globalConfig.layers = [{
 			<TR><TD><%= globalConfig.chooseLang("Physical Address", "Adresse") %>:</TD><TD><%= renderResult.Address %></TD></TR>\
 			<TR><TD><%= globalConfig.chooseLang("Sector", "Secteur") %>:</TD><TD><%= renderResult.Sector %></TD></TR>\
 			<TR><TD><%= globalConfig.chooseLang("NPRI ID", "ID INRP") %>:</TD><TD><%= renderResult.NPRIID %></TD></TR>\
-			<TR><TD><%= globalConfig.chooseLang("Public Contact", "Personne-ressource") %>:</TD><TD><%= renderResult.PublicContact %><BR><%= renderResult.PublicContactPhone %><BR><A HREF=mailto:<%= renderResult.PublicContactEmail %>><%= renderResult.PublicContactEmail %></A></TD></TR>\
+			<TR><TD><%= globalConfig.chooseLang("Public Contact", "Personne-ressource") %>:</TD><TD><%= renderResult.PublicContact %><BR><%= renderResult.PublicContactPhone %><BR><A HREF=mailto:<%= renderResult.PublicContactEMail %>><%= renderResult.PublicContactEMail %></A></TD></TR>\
 			<TR><TD COLSPAN=2>&nbsp;<BR><%= globalConfig.chooseLang("Certified by", "Certifi&eacute; par") %> <U><%= renderResult.HighestRankingEmployee %></U>, <%= globalConfig.chooseLang("Highest Ranking Employee", "employ&eacute; le plus &eacute;lev&eacute; hi&eacute;rarchiquement") %><BR>&nbsp;</TD></TR>\
 			<TR><TD COLSPAN=2><A NAME="subst"></A><%= ((renderResult.hasOwnProperty("Substances") && renderResult.Substances.length > 0)) ? globalConfig.chooseLang("List of Substances:", "Liste des substances:") : "" %>\
 			<%= _.map(renderResult.Substances, function(substance) {return \'<A HREF="#\' + substance.Name + \'">\' + substance.Name + \'</A>\';}).join(", ") %>\
@@ -147,9 +147,9 @@ globalConfig.layers = [{
 				<strong><%= globalConfig.chooseLang("Which annual report is your plan summary based on?", "Sur quel rapport annuel votre sommaire de plan repose-t-il?") %></strong><br>\
 				<%= substance.VersionofthePlan %><br>\
 				<strong><%= globalConfig.chooseLang("Statement of Intent to Reduce Use:", "Déclaration de l’intention de réduire l’utilisation:") %></strong>\
-					<%= (substance.ReasonforNoIntenttoReduceUseText.length === 0) ? (globalConfig.chooseLang("Toxic Substance Reduction Plan includes a statement to reduce the use of the substance", "Le plan de réduction de substance toxique comprend une déclaration en vue de réduire l’utilisation de la substance")) : (globalConfig.chooseLang("Toxic Substance Reduction Plan does not include a statement to reduce the use of the substance because ", "Le plan de réduction de substance toxique ne comprend pas de déclaration en vue de réduire l’utilisation de la substance du fait que ") + substance.ReasonforNoIntenttoReduceUseText) %>\
+					<%= (substance.ReasonforNoIntenttoReduceUse.length === 0) ? (globalConfig.chooseLang("Toxic Substance Reduction Plan includes a statement to reduce the use of the substance", "Le plan de réduction de substance toxique comprend une déclaration en vue de réduire l’utilisation de la substance")) : (globalConfig.chooseLang("Toxic Substance Reduction Plan does not include a statement to reduce the use of the substance because ", "Le plan de réduction de substance toxique ne comprend pas de déclaration en vue de réduire l’utilisation de la substance du fait que ") + substance.ReasonforNoIntenttoReduceUse) %>\
 				<br><strong><%= globalConfig.chooseLang("Statement of Intent to Reduce Creation:", "Déclaration de l’intention de réduire la création:") %></strong>\
-					<%= (substance.ReasonforNoIntenttoReduceCreationText.length === 0) ? (globalConfig.chooseLang("Toxic Substance Reduction Plan includes a statement to reduce the creation of the substance", "Le plan de réduction de substance toxique comprend une déclaration en vue de réduire la création de la substance")) : (globalConfig.chooseLang("Toxic Substance Reduction Plan does not include a statement to reduce the use of the substance because ", "Le plan de réduction de substance toxique ne comprend pas de déclaration en vue de réduire la création de la substance du fait que ") + substance.ReasonforNoIntenttoReduceCreationText) %>\
+					<%= (substance.ReasonforNoIntenttoReduceCreat.length === 0) ? (globalConfig.chooseLang("Toxic Substance Reduction Plan includes a statement to reduce the creation of the substance", "Le plan de réduction de substance toxique comprend une déclaration en vue de réduire la création de la substance")) : (globalConfig.chooseLang("Toxic Substance Reduction Plan does not include a statement to reduce the use of the substance because ", "Le plan de réduction de substance toxique ne comprend pas de déclaration en vue de réduire la création de la substance du fait que ") + substance.ReasonforNoIntenttoReduceCreat) %>\
 				<TABLE class="TRAISTable">\
 				  <tr>\
 					<th width="25%"><strong><%= globalConfig.chooseLang("Objectives:", "Objectifs:") %></strong></th>\
@@ -158,11 +158,11 @@ globalConfig.layers = [{
 				  <tr>\
 					<td rowspan="2"><%= substance.PlanObjectives %></td>\
 					<td><%= globalConfig.chooseLang("Use", "Utilisation") %></td>\
-					<td><%= globalConfig.chooseLang("Reductions: ", "Réductions: ") %><br><br><%= (substance.UseReductionQuantityTargetValue + " " + substance.UseReductionQuantityTargetUnit) %><br><%= globalConfig.chooseLang("Target Timelines: ", "Délai visé: ") %> <%= (substance.UseReductionTimelineTargetYears.length === 0) ? "" : globalConfig.getYears(substance.UseReductionTimelineTargetYears) %><br><%= substance.CreationReductionTargetDescription %><br><br></td>\
+					<td><%= globalConfig.chooseLang("Reductions: ", "Réductions: ") %><br><br><%= (substance.UseReductionQuantityTargetValu + " " + substance.UseReductionQuantityTargetUnit) %><br><%= globalConfig.chooseLang("Target Timelines: ", "Délai visé: ") %> <%= (substance.UseReductionTimelineTargetYear.length === 0) ? "" : globalConfig.getYears(substance.UseReductionTimelineTargetYear) %><br><%= substance.CreReductionTargetDescription %><br><br></td>\
 				  </tr>\
 				  <tr>\
 					<td><%= globalConfig.chooseLang("Creation", "Création") %></td>\
-					<td><%= globalConfig.chooseLang("Reductions: ", "Réductions: ") %><br><br><%= (substance.CreationReductionQuantityTargetValue + " " + substance.CreationReductionQuantityTargetUnit) %><br><%= globalConfig.chooseLang("Target Timelines: ", "Délai visé: ") %> <%= (substance.CreationReductionTimelineTargetYears.length === 0) ? "" : globalConfig.getYears(substance.CreationReductionTimelineTargetYears) %><br><%= substance.CreationReductionTargetDescription %><br><br></td>\
+					<td><%= globalConfig.chooseLang("Reductions: ", "Réductions: ") %><br><br><%= (substance.CreReductionQuantityTargetValu + " " + substance.CreReductionQuantityTargetUnit) %><br><%= globalConfig.chooseLang("Target Timelines: ", "Délai visé: ") %> <%= (substance.CreReductionTimelineTargetYear.length === 0) ? "" : globalConfig.getYears(substance.CreReductionTimelineTargetYear) %><br><%= substance.CreReductionTargetDescription %><br><br></td>\
 				  </tr>\
 				</table>\
 				<br><strong><%= globalConfig.chooseLang("Reason for Use: ", "Raison de l’utilisation: ") %></strong><%= (substance.ReasonsforUse === "Other") ?  substance.ReasonsforUseSummary : substance.ReasonsforUse  %>\
@@ -186,41 +186,41 @@ globalConfig.layers = [{
 					    <td rowspan="9"><%= globalConfig.processEmptyValue(option.OptionReductionCategory) %></td>\
 						<td rowspan="9"><%= (option.ActivityTaken === "Other") ?  option.DescriptionofOption : globalConfig.processEmptyValue(option.ActivityTaken) %></td>\
 						<td><%= globalConfig.chooseLang("Used", "Utilisée") %></td>\
-						<td><%= globalConfig.processEmptyValue(option.EstimatedUseReductionPercent) %></td>\
-						<td rowspan="9"><%= (option.AnticipatedTimelinesforAchievingReductionsinUse.length > 0) ? ( globalConfig.getYears(option.AnticipatedTimelinesforAchievingReductionsinUse)) : "&nbsp;" %></td>\
-						<td rowspan="9"><%= (option.AnticipatedTimelinesforAchievingReductionsinCreation.length > 0) ? ( globalConfig.getYears(option.AnticipatedTimelinesforAchievingReductionsinCreation)) : "&nbsp;" %></td>\
+						<td><%= globalConfig.processEmptyValue(option.EstUseReduPct) %></td>\
+						<td rowspan="9"><%= (option.AntiTimelinesforAchieReduinUse.length > 0) ? ( globalConfig.getYears(option.AntiTimelinesforAchieReduinUse)) : "&nbsp;" %></td>\
+						<td rowspan="9"><%= (option.AntiTimelinesforAchieReduinCre.length > 0) ? ( globalConfig.getYears(option.AntiTimelinesforAchieReduinCre)) : "&nbsp;" %></td>\
 					  </tr>\
 					  <tr>\
 						<td><%= globalConfig.chooseLang("Created", "Créée") %></td>\
-						<td><%= globalConfig.processEmptyValue(option.EstimatedCreationReductionPercent) %></td>\
+						<td><%= globalConfig.processEmptyValue(option.EstCreReduPct) %></td>\
 					  </tr>\
 					  <tr>\
 						<td><%= globalConfig.chooseLang("Contained in Product", "Contenue dans un produit") %></td>\
-						<td><%= globalConfig.processEmptyValue(option.EstimatedContainedinProductReductionPercent) %></td>\
+						<td><%= globalConfig.processEmptyValue(option.EstContainedinProductReduPct) %></td>\
 					  </tr>\
 					  <tr>\
 						<td><%= globalConfig.chooseLang("Released to Air", "Rejetée dans l’air") %></td>\
-						<td><%= globalConfig.processEmptyValue(option.EstimatedAirReleasesReductionPercent) %></td>\
+						<td><%= globalConfig.processEmptyValue(option.EstAirReleasesReduPct) %></td>\
 					  </tr>\
 					  <tr>\
 						<td><%= globalConfig.chooseLang("Released to Land", "Rejetée dans la terre") %></td>\
-						<td><%= globalConfig.processEmptyValue(option.EstimatedLandReleasesReductionPercent) %></td>\
+						<td><%= globalConfig.processEmptyValue(option.EstLandReleasesReduPct) %></td>\
 					  </tr>\
 					  <tr>\
 						<td><%= globalConfig.chooseLang("Released to Water", "Rejetée dans l’eau") %></td>\
-						<td><%= globalConfig.processEmptyValue(option.EstimatedWaterReleasesReductionPercent) %></td>\
+						<td><%= globalConfig.processEmptyValue(option.EstWaterReleasesReduPct) %></td>\
 					  </tr>\
 					  <tr>\
 						<td><%= globalConfig.chooseLang("Disposed On-Site", "Éliminée sur place") %></td>\
-						<td><%= globalConfig.processEmptyValue(option.EstimatedOnsiteDisposalsReductionPercent) %></td>\
+						<td><%= globalConfig.processEmptyValue(option.EstOnsiteDisposalsReduPct) %></td>\
 					  </tr>\
 					  <tr>\
 						<td><%= globalConfig.chooseLang("Disposed Off-site", "Éliminée hors site") %></td>\
-						<td><%= globalConfig.processEmptyValue(option.EstimatedOffsiteDisposalsReductionPercent) %></td>\
+						<td><%= globalConfig.processEmptyValue(option.EstOffsiteDisposalsReduPct) %></td>\
 					  </tr>\
 					  <tr>\
 						<td><%= globalConfig.chooseLang("Recycled Off-site", "Recyclée hors site") %></td>\
-						<td><%= globalConfig.processEmptyValue(option.EstimatedOffsiteRecyclingReductionPercent) %></td>\
+						<td><%= globalConfig.processEmptyValue(option.EstOffsiteRecyclingReduPct) %></td>\
 					  </tr>\
 					<%\
 						});\
@@ -229,7 +229,7 @@ globalConfig.layers = [{
 				<% } else {%>\
 					<%= globalConfig.chooseLang("Toxic Substance Reduction Plan indicated that no options will be implemented for the following reason(s): ", ") Le plan de réduction de substance toxique indiquait qu’aucune option ne serait mise en œuvre, et ce, pour la ou les raisons suivantes:") %><br><%= substance.ReasonsNoOptionImplemented %><br>\
 				<% }%>\
-				<strong><%= globalConfig.chooseLang("Actions Taken Outside the Plan that Reduced the Use and Creation of the Substance (optional): ", "Mesures prises indépendamment du plan qui ont permis de réduire l’utilisation et la création de la substance (facultatif): ") %></strong><br><%= (substance.DescriptionofAnyAdditionalActionsTaken.length === 0) ? globalConfig.chooseLang("None at this time", "None at this time") : substance.DescriptionofAnyAdditionalActionsTaken %>\
+				<strong><%= globalConfig.chooseLang("Actions Taken Outside the Plan that Reduced the Use and Creation of the Substance (optional): ", "Mesures prises indépendamment du plan qui ont permis de réduire l’utilisation et la création de la substance (facultatif): ") %></strong><br><%= (substance.DescofAnyAdditActionsTaken.length === 0) ? globalConfig.chooseLang("None at this time", "None at this time") : substance.DescofAnyAdditActionsTaken %>\
 				<BR><BR><I><A HREF="http://www.ene.gov.on.ca/environment/<%= globalConfig.chooseLang("en", "fr") %>/resources/collection/data_downloads/index.htm"><%= globalConfig.chooseLang("Click here to access the full dataset", "Cliquez ici pour accéder au jeu de données complet") %></A></I><BR>\
 				<A HREF="#top"><%= globalConfig.chooseLang("Back to top", "Haut de la page") %></A><BR><HR WIDTH=100%>\
 				</OL><P>\

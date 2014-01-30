@@ -9,7 +9,7 @@ globalConfig.layerIDs = {
 	ExemptionRecords: "8",
 	NAICS: "4"
 };
-globalConfig.facilityInfoFields = ["FacilityName", "StreetAddressPhysicalAddress", "MunicipalityCityPhysicalAddress", "OrganizationName", "NPRIID", "NAICS", "PublicContactFullName", "PublicContactTelephone", "PublicContactEmail", "HighestRankingEmployee"];
+globalConfig.facilityInfoFields = ["FacilityName", "StreetAddressPhysicalAddress", "MunicipalityCityPhysicalAddres", "OrganizationName", "NPRIID", "NAICS", "PublicContactFullName", "PublicContactTelephone", "PublicContactEmail", "HighestRankingEmployee"];
 globalConfig.convertDateFormat = function(date) {
 	var items = date.split("/");
 	var monthDict = {
@@ -41,7 +41,7 @@ globalConfig.layers = [{
 				ReportingPeriod: QueryString.year, 
 				FacilityName: attr.FacilityName,
 				CompanyName: attr.OrganizationName,
-				Address: attr.StreetAddressPhysicalAddress + " / " + attr.MunicipalityCityPhysicalAddress,
+				Address: attr.StreetAddressPhysicalAddress + " / " + attr.MunicipalityCityPhysicalAddres,
 				NPRIID: attr.NPRIID,
 				PublicContact: (attr.PublicContactFullName === null) ?  "[<I>" + globalConfig.chooseLang("no name available", "Aucun nom disponible") +  "</I>]" : attr.PublicContactFullName,
 				PublicContactPhone: attr.PublicContactTelephone,
