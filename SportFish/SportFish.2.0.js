@@ -1,8 +1,51 @@
 //var globalConfig = globalConfig || {};
 //globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/sportfish/MapServer";
+globalConfig.chooseLang = function (en, fr) {return (globalConfig.language === "EN") ? en : fr;};
+globalConfig.otherInfoHTML = globalConfig.chooseLang("<h2>Find a map error?</h2> \
+	<p>It is possible you may encounter inaccuracies with map locations.</p> \
+	<p>If you find an error in the location of a lake, river or stream, please contact us.  Use the <a href='mailto:sportfish.moe@ontario.ca?subject=Sport Fish Map Error'>Report an error</a> link within the map pop-up.</p> \
+	<h2>Comments</h2> \
+	<p>For comments and suggestions, email us at <a href='mailto:sportfish.moe@ontario.ca?subject=Sport Fish Map Feedback'>sportfish.moe@ontario.ca</a>.</p>",'<h2>Une erreur sur la carte?</h2> \
+	<p>Il est possible que des impr&eacute;cisions se soient gliss&eacute;es sur les emplacements.</p> \
+	<p>Si vous trouvez une erreur d&rsquo;emplacement d&rsquo;un lac, d&rsquo;une rivi&egrave;re ou d&rsquo;un cours d&rsquo;eau, veuillez nous en avertir. Vous pouvez utiliser le lien &laquo; <a href="mailto:sportfish.moe@ontario.ca?subject=Sport%20Fish%20Map%20Error">Signaler une erreur</a> &raquo; du menu contextuel de la carte.</p> \
+	<h2>Commentaires</h2> \
+	<p>Veuillez formuler vos commentaires ou vos suggestions par courriel &agrave; <a href="mailto:sportfish.moe@ontario.ca">sportfish.moe@ontario.ca</a>.</p>');
+
+//globalConfig.report_URL = globalConfig.chooseLang("SportFish_Report.htm", "SportFish_Report.htm");
+globalConfig.report_URL = globalConfig.chooseLang("fish-consumption-report", "rapport-de-consommation-de-poisson");
+globalConfig.tabsTemplateContent = "<strong>{LOCNAME_" + globalConfig.chooseLang("EN", "FR") + "}</strong><br>{globalConfig.addBRtoLongText(GUIDELOC_" + globalConfig.chooseLang("EN", "FR") + ")}<br><br><a target='_blank' href='" + globalConfig.report_URL + "?id={WATERBODYC}'>" + globalConfig.chooseLang("Consumption Advisory Table", "Tableau des mises en garde en mati\u00e8re de<br> consommation") + "</a><br><br>Latitude <b>{globalConfig.deciToDegree(LATITUDE)}</b> Longitude <b>{globalConfig.deciToDegree(LONGITUDE)}</b><br><a href='mailto:sportfish.moe@ontario.ca?subject=" + globalConfig.chooseLang("Portal Error", "Erreur de portail") + " (Submission {LOCNAME_" + globalConfig.chooseLang("EN", "FR") + "})'>" + globalConfig.chooseLang("Report an error for this location", "Signalez un probl\u00e8me pour ce lieu") + "</a>.<br><br>";
+//globalConfig.tabsTemplateContent = "<b><font color='#799441'>{LOCNAME_" + globalConfig.language + "}</font></b><br>{globalConfig.addBRtoLongText(GUIDELOC_" + globalConfig.language + ")}<br><br><a target='_blank' href='SportFish_Report.htm?id={WATERBODYC}'>Consumption Advisory Table</a><br><br>Latitude <b>{globalConfig.deciToDegree(LATITUDE)}</b> Longitude <b>{globalConfig.deciToDegree(LONGITUDE)}</b><br><a href='mailto:sportfish.moe@ontario.ca?subject=Portal Error (Submission {LOCNAME_" + globalConfig.language + "})'>Report an error for this location</a>.<br><br>";
+
+globalConfig.searchableFieldsList = [{en: "waterbody name", fr: "plan d'eau"}, {en: "location", fr: "un lieu"}, {en: "species name", fr: "une espèce"}];
+globalConfig.searchHelpTxt = globalConfig.chooseLang("You may search by ", "Vous pouvez rechercher par ");
+for(var i=0; i<globalConfig.searchableFieldsList.length - 1; i++) {
+	globalConfig.searchHelpTxt = globalConfig.searchHelpTxt + "<strong>" + globalConfig.chooseLang(globalConfig.searchableFieldsList[i].en, globalConfig.searchableFieldsList[i].fr) + "</strong>, ";
+}
+globalConfig.searchHelpTxt = globalConfig.searchHelpTxt + "<strong>" + globalConfig.chooseLang(globalConfig.searchableFieldsList[i].en, globalConfig.searchableFieldsList[i].fr) + "</strong> " + globalConfig.chooseLang("or see help for advanced options.", "ou consulter l'aide pour de l'information sur les recherches avanc&eacute;es.");
+
+globalConfig.searchControlHTML = '<div id="searchTheMap"></div><div id="searchHelp"></div><br>\
+	<label class="element-invisible" for="map_query">' + globalConfig.chooseLang('Search the map', 'Recherche carte interactive') + '</label>\
+	<input id="map_query" type="text" title="' + globalConfig.chooseLang('Search term', 'Terme de recherche') + '" maxlength="100" size="50" onkeypress="return globalConfig.entsub(event)"></input>\
+	<label class="element-invisible" for="search_submit">' + globalConfig.chooseLang('Search', 'Recherche') + '</label>\
+	<input id="search_submit" type="submit" title="Search" onclick="globalConfig.search()" value="' + globalConfig.chooseLang('Search', 'Recherche') + '"></input>\
+	<fieldset>\
+		<input type="radio" id="searchMapLocation" name="searchGroup" checked="checked" title="' + globalConfig.chooseLang('Search Map Location', "Recherche d\'emplacements") + '" name="location" value="location" onclick="globalConfig.searchChange(this)"></input>\
+		<span class="tooltip" title="' + globalConfig.chooseLang("Search Map Location: Enter the name of an Ontario lake/river, city/town/township or street address to find fish consumption advice", "Recherche d\'emplacements : Indiquer le lieu en Ontario (lac/rivi\u00e8re, ville/canton, adresse) pour avoir des conseils sur la consommation des poissons du lieu.") + '">\
+		<label class="option" for="searchMapLocation">' + globalConfig.chooseLang('Search Map Location', "Recherche d\'emplacements") + '</label>\
+		</span>\
+		<br/>\
+		<input type="radio" id="searchFishSpecies" name="searchGroup" title="' + globalConfig.chooseLang('Search Fish Species', "Recherche d\'esp\u00e8ces") + '" name="species" value="species" onclick="globalConfig.searchChange(this)"></input>\
+		<span class="tooltip" title="' + globalConfig.chooseLang('Search Fish Species: Enter the name of a fish species to find lakes with fish consumption advice for the species', "Recherche d\'esp\u00e8ces : Indiquer une esp\u00e8ce de poisson pour trouver des lacs sur lesquels existent des conseils sur la consommation de l\'esp\u00e8ce. ") + '">\
+		<label class="option" for="searchFishSpecies">' + globalConfig.chooseLang('Search Fish Species', "Recherche d\'esp\u00e8ces") + '</label>\
+		</span>\
+		<br/>\
+		<input id="currentMapExtent" type="checkbox" name="currentExtent" title="' + globalConfig.chooseLang('Current Map Display', "Étendue de la carte courante") + '" /> <label for="currentExtent" class=\'option\'>' + globalConfig.chooseLang('Search current map display only', "\u00c9tendue de la carte courante") + '</label>\
+	</fieldset>\
+	<div id="information"></div>';
+	
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
-globalConfig.usejQueryUITable = false;  //Avoid loading extra javascript files
+globalConfig.usejQueryUITable = true;  //Avoid loading extra javascript files
 globalConfig.usePredefinedMultipleTabs = false; //Avoid loading extra javascript files
 globalConfig.allowMultipleIdentifyResult = false;
 globalConfig.displayTotalIdentifyCount = false;
@@ -11,15 +54,28 @@ globalConfig.maxQueryZoomLevel = 11;
 globalConfig.displayDisclaimer = true;
 globalConfig.InformationLang = "Information";
 globalConfig.postIdentifyCallbackName = "SportFish";
-globalConfig.postConditionsCallbackName = "SportFish";
+//globalConfig.postConditionsCallbackName = "SportFish";
 globalConfig.infoWindowWidth  = '280px';
 
+//globalConfig.tableSimpleTemplateTitleLang = globalConfig.chooseLang("Note: Data is in English only.", "\u00c0 noter : Les donn\u00e9es sont en anglais seulement.");
+globalConfig.tableSimpleTemplateTitleLang = "";
+globalConfig.tableFieldList = [
+	{name: globalConfig.chooseLang("Waterbody", "Plan d'eau"), value: "{LOCNAME_" + globalConfig.chooseLang("EN", "FR") + "}"}, 
+	{name: globalConfig.chooseLang("Location", "Un lieu"), value: "{globalConfig.addBRtoLongText(GUIDELOC_" + globalConfig.chooseLang("EN", "FR") + ")}"}, 
+	{name: "Latitude", value: "{globalConfig.deciToDegree(LATITUDE)}"}, 
+	{name: "Longitude", value: "{globalConfig.deciToDegree(LONGITUDE)}"}, 	
+	{name: globalConfig.chooseLang("Consumption Advisory Table", "Tableau des mises en garde en mati\u00e8re de consommation"), value: "<a target='_blank' href='" + globalConfig.report_URL + "?id={WATERBODYC}'>" + globalConfig.chooseLang("Consumption Advisory Table", "Tableau des mises en garde en mati\u00e8re de<br> consommation") + "</a>"}
+];
 globalConfig.queryLayerList = [{
 	url: globalConfig.url + "/0",
 	tabsTemplate: [{
 		label: globalConfig.InformationLang,
 		content:globalConfig.tabsTemplateContent
-	}]
+	}], 
+	tableSimpleTemplate: {
+		title: globalConfig.tableSimpleTemplateTitleLang, 
+		content: globalConfig.tableFieldList
+	} 
 }];
 globalConfig.search = function(){
 	var searchString = document.getElementById(globalConfig.searchInputBoxDivId).value.trim();

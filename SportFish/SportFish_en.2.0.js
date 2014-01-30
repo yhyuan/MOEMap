@@ -1,9 +1,9 @@
 globalConfig = {};
 globalConfig.language = "EN";
-globalConfig.searchHelpTxt = "Search <strong>waterbody name</strong>, <strong>location</strong>, <strong>species name</strong> or see help for more advanced options.";
+//globalConfig.searchHelpTxt = "Search <strong>waterbody name</strong>, <strong>location</strong>, <strong>species name</strong> or see help for more advanced options.";
 //globalConfig.searchHelpTxt = "Search <strong>waterbody name</strong>, <strong>location</strong>, <strong>species name</strong>";
 //globalConfig.tabsTemplateContent = "<b><font color='#799441'>{LOCNAME_" + globalConfig.language + "}</font></b><br>{globalConfig.addBRtoLongText(GUIDELOC_" + globalConfig.language + ")}<br><br><a target='_blank' href='{URL_" + globalConfig.language + "}'>Consumption Advisory Table</a><br><br>Latitude <b>{globalConfig.deciToDegree(LATITUDE)}</b> Longitude <b>{globalConfig.deciToDegree(LONGITUDE)}</b><br><a href='mailto:sportfish.moe@ontario.ca?subject=Portal Error (Submission {LOCNAME_" + globalConfig.language + "})'>Report an error for this location</a>.<br><br>";
-globalConfig.tabsTemplateContent = "<b><font color='#799441'>{LOCNAME_" + globalConfig.language + "}</font></b><br>{globalConfig.addBRtoLongText(GUIDELOC_" + globalConfig.language + ")}<br><br><a target='_blank' href='SportFish_Report.htm?id={WATERBODYC}'>Consumption Advisory Table</a><br><br>Latitude <b>{globalConfig.deciToDegree(LATITUDE)}</b> Longitude <b>{globalConfig.deciToDegree(LONGITUDE)}</b><br><a href='mailto:sportfish.moe@ontario.ca?subject=Portal Error (Submission {LOCNAME_" + globalConfig.language + "})'>Report an error for this location</a>.<br><br>";
+//globalConfig.tabsTemplateContent = "<b><font color='#799441'>{LOCNAME_" + globalConfig.language + "}</font></b><br>{globalConfig.addBRtoLongText(GUIDELOC_" + globalConfig.language + ")}<br><br><a target='_blank' href='SportFish_Report.htm?id={WATERBODYC}'>Consumption Advisory Table</a><br><br>Latitude <b>{globalConfig.deciToDegree(LATITUDE)}</b> Longitude <b>{globalConfig.deciToDegree(LONGITUDE)}</b><br><a href='mailto:sportfish.moe@ontario.ca?subject=Portal Error (Submission {LOCNAME_" + globalConfig.language + "})'>Report an error for this location</a>.<br><br>";
 //globalConfig.tabsTemplateContent = "<b><font color='#799441'>{LOCNAME_" + globalConfig.language + "}</font></b><br>{globalConfig.addBRtoLongText(GUIDELOC_" + globalConfig.language + ")}<br><br><a target='_blank' href='http://files.ontariogovernment.ca/moe_mapping/mapping/SportFish/EN/LAKE{WATERBODYC}.html'>Consumption Advisory Table</a><br><br>Latitude <b>{globalConfig.deciToDegree(LATITUDE)}</b> Longitude <b>{globalConfig.deciToDegree(LONGITUDE)}</b><br><a href='mailto:sportfish.moe@ontario.ca?subject=Portal Error (Submission {LOCNAME_" + globalConfig.language + "})'>Report an error for this location</a>.<br><br>";
 /*globalConfig.searchControlHTML = '<label class="element-invisible" for="map_query">Search the map</label> \
 	<input id="map_query" type="text" title="Term" maxlength="100" onkeypress="return globalConfig.entsub(event)" size="50" /> &nbsp; \
@@ -24,13 +24,14 @@ globalConfig.tabsTemplateContent = "<b><font color='#799441'>{LOCNAME_" + global
 		<input id="currentMapExtent" type="checkbox" name="currentExtent" title="Current Map Display" /> <label for="currentExtent" class=\'option\'>Search current map display only</label> \
 	</fieldset>';
 */
-
+/*
 globalConfig.otherInfoHTML = "<h2>Find a map error?</h2> \
 	<p>It is possible you may encounter inaccuracies with map locations.</p> \
 	<p>If you find an error in the location of a lake, river or stream, please contact us.  Use the <a href='mailto:sportfish.moe@ontario.ca?subject=Sport Fish Map Error'>Report an error</a> link within the map pop-up.</p> \
 	<h2>Comments</h2> \
 	<p>For comments and suggestions, email us at <a href='mailto:sportfish.moe@ontario.ca?subject=Sport Fish Map Feedback'>sportfish.moe@ontario.ca</a>.</p>"; 
-
+*/
+/*
 globalConfig.searchControlHTML = '<table width="100%" cellpadding="5" cellspacing="0" border="0" style="margin-bottom:15px;" summary="Search interactive map form"> \
 			<caption style="text-align:left;">Search interactive map</caption> \
 			<tr> \
@@ -48,4 +49,4 @@ globalConfig.searchControlHTML = '<table width="100%" cellpadding="5" cellspacin
 					<input id="currentMapExtent" type="checkbox" name="currentExtent" title="Current Map Display"><span title="Current Map Display: Limit your search to the area displayed" class="tooltip">Current Map Display</span> \
 				</td> \
 			</tr> \
-		</table>';	
+		</table>';	*/

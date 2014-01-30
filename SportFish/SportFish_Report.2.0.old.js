@@ -1,15 +1,3 @@
-var cssDeferred = new $.Deferred();
-var cssPrompt = (cssDeferred).promise();
-
-if (!!yepnope) {
-	yepnope({
-		load: "http://prod-ont-webserver.s3.amazonaws.com/moe_mapping/mapping/js/OneSite/SportFish/SportFish_Report.2.0.css", 
-		callback: function () {
-			cssDeferred.resolve();
-		}
-	});
-}
-
 globalConfig.lengthCategorySize = 13;
 //globalConfig.analysisDict stores the relationship between ANALYSIS_CLASS_ID and ANALYSIS_DESC.  ANALYSIS_DESC = globalConfig.analysisDict[ANALYSIS_CLASS_ID];
 /*
@@ -132,7 +120,10 @@ speciesQueryLayer.query({
 		return globalConfig.chooseLang(feature.attributes.SPECNAME, feature.attributes.NOM_D_ESPECE);
 	});
 	globalConfig.speciesDict = _.object(codes, species);
+	//console.log(speciesPrompt);
+	//console.log(globalConfig.speciesDict);
 	speciesDeferred.resolve();
+	//console.log(globalConfig.speciesDict);
 });
 
 var adivosryIndexDeferred = new $.Deferred();
@@ -155,7 +146,7 @@ adivosryIndexQueryLayer.query({
 	adivosryIndexDeferred.resolve();
 	//console.log(globalConfig.adivosryIndexDict);	
 });
-/*
+
 globalConfig.getSpeciesNameURL = function(speciesCode) {
 	//console.log(speciesCode);
 	if (speciesCode === "087") {
@@ -205,58 +196,7 @@ globalConfig.getSpeciesNameURL = function(speciesCode) {
 		return '<A HREF="http://www.mnr.gov.on.ca/' + globalConfig.chooseLang("en", "fr") + '/Business/SORR/2ColumnSubPage/' + speciesURLList[speciesCode] + '.html">' + globalConfig.speciesDict[speciesCode] + '</A>';
 	}
 	return globalConfig.speciesDict[speciesCode];
-};
-*/
-globalConfig.getSpeciesURL = function(speciesCode) {
-	//console.log(speciesCode);
-	if (speciesCode === "087") {
-		return 'http://www.mnr.gov.on.ca/' + globalConfig.chooseLang("en", "fr") + '/Business/SORR/2ColumnSubPage/STDPROD_085774.html';
-	}
-	var speciesURLList = {
-		"077": "STEL02_165688",
-		"093": "200075",
-		"151": "STEL02_173163",
-		"102": "STEL02_165840",
-		//"087": "http://www.mnr.gov.on.ca/en/Business/SORR/2ColumnSubPage/STDPROD_085774.html",
-		"319": "STEL02_165687",
-		"314": "STEL02_165686",
-		"080": "STEL02_165833",
-		"078": "200073",
-		"078": "STEL02_165834",
-		"186": "STEL02_173162",
-		"081": "STEL02_165837",
-		"091": "200077",
-		"317": "STEL02_165695",
-		"131": "STEL02_165828",
-		"313": "STEL02_173164",
-		"076": "STEL02_165839",
-		"076": "200079",
-		"311": "STEL02_173219",
-		"332": "STEL02_165829",
-		"316": "STEL02_165790",
-		"082": "200080",
-		"334": "STEL02_173221",
-		"331": "STEL02_173224",
-		"233": "STEL02_165692",
-		"301": "STEL02_173167",
-		"163": "STEL02_173222",
-		"318": "STEL02_165830",
-		"234": "STEL02_165693",
-		"121": "200078",
-		"371": "STEL02_173216",
-		"075": "STEL02_165835",
-		"302": "STEL02_173166",
-		"073": "STEL02_165836",
-		"051": "STEL02_173161",
-		"271": "200074",
-		"071": "STEL02_165838",
-		"152": "STEL02_165827"	
-	};
-	if (speciesURLList.hasOwnProperty(speciesCode))  {
-		return 'http://www.mnr.gov.on.ca/' + globalConfig.chooseLang("en", "fr") + '/Business/SORR/2ColumnSubPage/' + speciesURLList[speciesCode] + '.html';
-	}
-	return "";
-};
+}
 
 var adivosryDeferred = new $.Deferred();
 var adivosryPrompt = (adivosryDeferred).promise();
@@ -298,19 +238,6 @@ globalConfig.getAnalysisMethods = function (speciesCode, analysisMethodList) {
 	//console.log(analysisMethodList);
 	return analysisMethodList.split(",").join(", ");
 };
-globalConfig.generateLengthRanges = function (start, end, step) {
-	var startArray = _.range(start, end, step);
-	var endArray =  _.range(start + step, end + step, step);
-	var indexArray = _.range(startArray.length);
-	return _.map(indexArray, function(index) {
-		if (index < startArray.length - 1) { 
-			return startArray[index] + "&#8209;" + endArray[index];
-		} else {
-			return "&gt;" + startArray[index];
-		}
-	});
-};
-
 globalConfig.layers = [{
 	url: globalConfig.url  + "/0",
 	renderTargetDiv: "siteDescription",
@@ -350,6 +277,13 @@ globalConfig.layers = [{
 					<br><a href="JavaScript:window.print();">Imprimer cette page</a></p>\
 				<%\
 					}\
+				%>\
+				<TABLE class="fishTable" border="1">\
+				<TR><TH CLASS="measure" COLSPAN=2><I><%= globalConfig.chooseLang("Length", "Longueur") %> (cm) &rarr;</I></TH><TD SCOPE="col"><I><SMALL><CENTER>15&#8209;20</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>20&#8209;25</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>25&#8209;30</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>30&#8209;35</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>35&#8209;40</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>40&#8209;45</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>45&#8209;50</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>50&#8209;55</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>55&#8209;60</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>60&#8209;65</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>65&#8209;70</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>70&#8209;75</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>>75</CENTER></SMALL></I></TD>\
+				</TR>\
+				<TR><TH CLASS="measure" SCOPE="row" COLSPAN=2><I><%= globalConfig.chooseLang("Length", "Longueur") %>&nbsp;(in)&nbsp;&rarr;</I></TD><TD SCOPE="col"><I><SMALL><CENTER>6&#8209;8</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>8&#8209;10</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>10&#8209;12</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>12&#8209;14</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>14&#8209;16</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>16&#8209;18</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>18&#8209;20</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>20&#8209;22</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>22&#8209;24</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>24&#8209;26</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>26&#8209;28</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>28&#8209;30</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>>30</CENTER></SMALL></I></TD>\
+				</TR>\
+				<%\
 					var speciesList = _.keys(speciesObject).sort(function compare(a,b) {\
 						if (globalConfig.speciesDict[a] < globalConfig.speciesDict[b])\
 							return -1;\
@@ -357,46 +291,51 @@ globalConfig.layers = [{
 							return 1;\
 						return 0;\
 					});\
-					_.each(speciesList,function(speciesCode,key,list){ %>\
-						<!--<%= globalConfig.speciesDict[speciesCode] %><SUP><%= globalConfig.getAnalysisMethods(speciesCode, analysisObject[speciesCode]) %></SUP>-->\
-						<table>\
-						<caption><%= globalConfig.speciesDict[speciesCode] %><SUP><%= globalConfig.getAnalysisMethods(speciesCode, analysisObject[speciesCode]) %></SUP></caption>\
-							<tbody>\
-								<tr class="row1">\
-									<th scope="row"><%= globalConfig.chooseLang("Length", "Longueur") %>&nbsp;(cm)&nbsp;&rarr;</th>\
-									<% _.each(globalConfig.generateLengthRanges(15, 80, 5), function(lengthRange,key,list){ %>\
-										<td><%= lengthRange %></td>\
-									<% }); %>\
-								</tr>\
-								<tr class="row2">\
-									<th scope="row"><%= globalConfig.chooseLang("Length", "Longueur") %>&nbsp;(in)&nbsp;&rarr;</th>\
-									<% _.each(globalConfig.generateLengthRanges(6, 32, 2), function(lengthRange,key,list){ %>\
-										<td><%= lengthRange %></td>\
-									<% }); %>\
-								</tr>\
-								<tr>\
-									<th scope="row"><%= globalConfig.chooseLang("General population", "Population g&#233;n&#233;rale") %></th>\
-									<% _.each(speciesObject[speciesCode].G, function(adv, key, list) { %>\
-										<td><%= adv %></td>\
-									<% }); %>\
-								</tr>\
-								<tr>\
-									<th scope="row"><%= globalConfig.chooseLang("Sensitive population*", "Population sensible*") %></th>\
-									<% _.each(speciesObject[speciesCode].S, function(adv, key, list) { %>\
-										<td><%= adv %></td>\
-									<% }); %>\
-								</tr>\
-							</tbody>\
-						</table>\
-						<% var speciesURL = globalConfig.getSpeciesURL(speciesCode);\
-							if (speciesURL.length > 0) {\
-						%>\
-							<p><a href="<%= speciesURL %>">More information about the <%= globalConfig.speciesDict[speciesCode] %></a></p>\
-						<% } %>\
-						<p><%= globalConfig.chooseLang("*Sensitive Population: Women of child-bearing age and children under 15", "*Population sensible: Femmes en &#226;ge de procr&#233;er et enfants de moins de 15 ans") %></p>\
-						<p><%= globalConfig.chooseLang("Superscripts: the number identifies the contaminant or group of contaminants for which the fish was tested.", "Indice sup&#233;rieur : Le chiffre d&#233;signe le contaminant ou le groupe de contaminants pour lesquels on a analys&#233; le poisson.") %>\
-						</p>\
-					<% });%>'
+					_.each(speciesList,function(speciesCode,key,list){\
+						var advisory = speciesObject[speciesCode];\
+						var advisoryG = advisory.G;\
+						var advisoryS = advisory.S;\
+				%>\
+					<TR><TH ROWSPAN=2 SCOPE="row" ALIGN="left"><%= globalConfig.getSpeciesNameURL(speciesCode) %><SUP><%= globalConfig.getAnalysisMethods(speciesCode, analysisObject[speciesCode]) %></SUP></TD>\
+					<TD>G</TD>\
+					<%\
+						_.each(advisory.G, function(adv, key, list) {\
+					%>\
+						<TD WIDTH=30><B><CENTER><%= adv %></CENTER></B></TD>\
+					<%\
+						});\
+					%>\
+					</TR>\
+					<TR><TD>S</TD>\
+					<%\
+						_.each(advisory.S, function(adv, key, list) {\
+					%>\
+						<TD class="shaded" WIDTH=30><B><CENTER><%= adv %></CENTER></B></TD>\
+					<%\
+						});\
+					%>\
+					</TR>\
+				<%\
+					});\
+				%><TR><TH CLASS="measure" COLSPAN=2 SCOPE="row"><I><%= globalConfig.chooseLang("Length", "Longueur") %>&nbsp;(cm)&nbsp;&rarr;</I></TD><TD SCOPE="col"><I><SMALL><CENTER>15&#8209;20</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>20&#8209;25</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>25&#8209;30</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>30&#8209;35</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>35&#8209;40</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>40&#8209;45</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>45&#8209;50</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>50&#8209;55</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>55&#8209;60</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>60&#8209;65</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>65&#8209;70</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>70&#8209;75</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>>75</CENTER></SMALL></I></TD>\
+				</TR>\
+				<TR><TH CLASS="measure" SCOPE="row" COLSPAN=2><I><%= globalConfig.chooseLang("Length", "Longueur") %> (in) &rarr;</I></TD><TD SCOPE="col"><I><SMALL><CENTER>6&#8209;8</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>8&#8209;10</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>10&#8209;12</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>12&#8209;14</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>14&#8209;16</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>16&#8209;18</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>18&#8209;20</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>20&#8209;22</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>22&#8209;24</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>24&#8209;26</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>26&#8209;28</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>28&#8209;30</CENTER></SMALL></I></TD><TD SCOPE="col"><I><SMALL><CENTER>>30</CENTER></SMALL></I></TD>\
+				</TR>\
+				<TR><TD COLSPAN=15></TD>\
+				</TR></TABLE>\
+				<%\
+					if (globalConfig.isEnglish()){\
+				%>\
+					<B>G</B> = General Population<BR><B>S</B> = Sensitive Population: Women of child-bearing age and children under 15<BR>\
+					Superscripts: the number identifies the contaminant or group of contaminants for which the fish was <A HREF="http://www.ene.gov.on.ca/environment/en/mapping/sportfish/STDPROD_082936.html#contaminants">tested.</A><BR>\
+				<%\
+					} else { \
+				%>\
+					<B>G</B> = Population g&#233;n&#233;rale<BR><B>S</B> = Population sensible. Femmes en &#226;ge de procr&#233;er et enfants de moins de 15 ans<BR>\
+					Indice sup&#233;rieur : Le chiffre d&#233;signe le contaminant ou le groupe de contaminants pour lesquels on a <A HREF="http://www.ene.gov.on.ca/environment/fr/mapping/sportfish/STDPROD_083134.html">analys&#233; le poisson</A>.<BR>\
+				<%\
+					}\
+				%>'
 }];
 
 var documentReadyDeferred = new $.Deferred();
@@ -405,7 +344,7 @@ PubSub.on("DocumentReady", function() {
 	documentReadyDeferred.resolve();
 });
 
-$.when(documentReadyPrompt, speciesPrompt, adivosryIndexPrompt, adivosryPrompt, cssPrompt).done(function() {
+$.when(documentReadyPrompt, speciesPrompt, adivosryIndexPrompt, adivosryPrompt).done(function() {
 	//console.log(new Date() - globalConfig.startTime);
 	var renderResult = globalConfig.renderResult;		
 	var keys = _.keys(renderResult.speciesObject);
