@@ -1,7 +1,7 @@
 var http = require('http');
 var fs = require('fs');
-for (var i=0; i<=100; i++) {
-	var s = ((i<10) ? "0" : "") + i;
+var _= require('underscore');
+_.each(_.map(_.range(101), function(i) {return ((i<10) ? "0" : "") + i;}), function (s) {
 	var options = {
 	  host: 'wiki.webatlas.no',
 	  port: 80,
@@ -21,4 +21,4 @@ for (var i=0; i<=100; i++) {
 	}).on("error", function(e){
 	  console.log("Got error: " + e.message);
 	});
-}
+});
