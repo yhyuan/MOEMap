@@ -1,4 +1,22 @@
 //var globalConfig = globalConfig || {};
+globalConfig.chooseLang = function (en, fr) {return (globalConfig.language === "EN") ? en : fr;};
+globalConfig.searchableFieldsList = [{en: "address", fr: "adresse"}, {en: "city name", fr: "ville"}, {en: "coordinates", fr: "coordonn\u00e9es"}];
+globalConfig.searchHelpTxt = globalConfig.chooseLang("You may search by ", "Vous pouvez rechercher par ");
+for(var i=0; i<globalConfig.searchableFieldsList.length - 1; i++) {
+	globalConfig.searchHelpTxt = globalConfig.searchHelpTxt + "<strong>" + globalConfig.chooseLang(globalConfig.searchableFieldsList[i].en, globalConfig.searchableFieldsList[i].fr) + "</strong>, ";
+}
+globalConfig.searchHelpTxt = globalConfig.searchHelpTxt + "<strong>" + globalConfig.chooseLang(globalConfig.searchableFieldsList[i].en, globalConfig.searchableFieldsList[i].fr) + "</strong> " + globalConfig.chooseLang("or see help for advanced options.", "ou consulter l'aide pour de l'information sur les recherches avanc&eacute;es.");
+
+globalConfig.searchControlHTML = '<div id="searchTheMap"></div><div id="searchHelp"></div><br>\
+    <label class="element-invisible" for="map_query">' + globalConfig.chooseLang('Search the map', 'Recherche carte interactive') + '</label>\
+	<input id="map_query" type="text" title="' + globalConfig.chooseLang('Search term', 'Terme de recherche') + '" maxlength="100" onkeypress="return globalConfig.entsub(event)" size="50" />\
+	<label class="element-invisible" for="search_submit">' + globalConfig.chooseLang('Search', 'Recherche') + '</label>\
+	<input type="submit" onclick="globalConfig.search()" id="search_submit" value="' + globalConfig.chooseLang('Search', 'Recherche') + '" title="' + globalConfig.chooseLang('Search', 'Recherche') + '" />\
+	<label class="element-invisible" for="search_clear">' + globalConfig.chooseLang('Clear', 'Effacer') + '</label>\
+	<input type="submit" value="&nbsp;' + globalConfig.chooseLang('Clear', 'Effacer') + '&nbsp;" id="search_clear" title="' + globalConfig.chooseLang('Clear', 'Effacer') + '" onclick="INITIALIZATION.init()" />\
+	<div id="information"></div>';
+
+
 globalConfig.preIdentifyCallbackName = "SWPLocator"; 
 globalConfig.postIdentifyCallbackName = "SWPLocator"; 
 globalConfig.addressGeocodingCallbackName = "SWPLocator"	
@@ -36,11 +54,11 @@ if (globalConfig.language === "EN") {
 	globalConfig.SearchTheMapLang = "Search the map";
 	//globalConfig.disclaimerLang = "EN";
 	globalConfig.displayDisclaimer = true;
-	globalConfig.searchHelpTxt = "Search by <STRONG>Address</STRONG>, <STRONG>City Name</STRONG>, <STRONG>Coordinates</STRONG> or see help for more advanced options.";
+	//globalConfig.searchHelpTxt = "Search by <STRONG>Address</STRONG>, <STRONG>City Name</STRONG>, <STRONG>Coordinates</STRONG> or see help for more advanced options.";
 	globalConfig.otherInfoHTML = "<br>Data source: Land Information Ontario (LIO).<br>";
-	globalConfig.searchControlHTML = '<input id = "map_query" type="text" title="Term" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100" 	autocomplete="off"></input>&nbsp;&nbsp;<input type="submit" onclick="globalConfig.search()" value="Search" title="Search"></input> \
+	/*globalConfig.searchControlHTML = '<input id = "map_query" type="text" title="Term" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100" 	autocomplete="off"></input>&nbsp;&nbsp;<input type="submit" onclick="globalConfig.search()" value="Search" title="Search"></input> \
 		<input type="submit" onclick="INITIALIZATION.init()" title="Clear" value="&nbsp;Clear&nbsp;"></input> 	\
-		<br><br><div id="information" style="color:#000000">Search by <STRONG>Address</STRONG>, <STRONG>City Name</STRONG>, <STRONG>Coordinates</STRONG> or see help for more advanced options. </div>';
+		<br><br><div id="information" style="color:#000000">Search by <STRONG>Address</STRONG>, <STRONG>City Name</STRONG>, <STRONG>Coordinates</STRONG> or see help for more advanced options. </div>';*/
 } else {
 	globalConfig.ClearLang = "Effacer";
 	globalConfig.TermLang = "Terme";
@@ -48,11 +66,11 @@ if (globalConfig.language === "EN") {
 	globalConfig.SearchTheMapLang = "Rechercher le plan";
 	//globalConfig.disclaimerLang = "FR";
 	globalConfig.displayDisclaimer = true;
-	globalConfig.searchHelpTxt = "Rechercher par <STRONG>adresse</STRONG>, <STRONG>ville</STRONG>, <STRONG>coordonn\u00e9es</STRONG> ou cliquer sur aide pour plus d\u2019information sur la recherche avanc\u00e9e.";
+	//globalConfig.searchHelpTxt = "Rechercher par <STRONG>adresse</STRONG>, <STRONG>ville</STRONG>, <STRONG>coordonn\u00e9es</STRONG> ou cliquer sur aide pour plus d\u2019information sur la recherche avanc\u00e9e.";
 	globalConfig.otherInfoHTML = "<br>Source: Information sur les terres de l'Ontario (ITO).<br>";
-	globalConfig.searchControlHTML = '<input id = "map_query" type="text" title="Terme" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100" autocomplete="off"></input>&nbsp;&nbsp;<input type="submit" onclick="globalConfig.search()" value="Rechercher" title="Rechercher"></input> \
+	/*globalConfig.searchControlHTML = '<input id = "map_query" type="text" title="Terme" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100" autocomplete="off"></input>&nbsp;&nbsp;<input type="submit" onclick="globalConfig.search()" value="Rechercher" title="Rechercher"></input> \
 		<input type="submit" onclick="INITIALIZATION.init()" title="Effacer" value="&nbsp;Effacer&nbsp;"></input> 		\
-		<br><br><div id="information" style="color:#000000">Rechercher par <STRONG>adresse</STRONG>, <STRONG>ville</STRONG>, <STRONG>coordonnées</STRONG> ou cliquer sur aide pour de l’information sur la recherche avancée.</div>';	
+		<br><br><div id="information" style="color:#000000">Rechercher par <STRONG>adresse</STRONG>, <STRONG>ville</STRONG>, <STRONG>coordonnées</STRONG> ou cliquer sur aide pour de l’information sur la recherche avancée.</div>';	*/
 }
 /*
 globalConfig.searchControlHTML = '<label class="element-invisible" for="map_query">' + globalConfig.SearchTheMapLang + '</label> \
@@ -95,10 +113,9 @@ globalConfig.identifyMultiplePolygonLayersServicesTemplate = {
 	merge: function (gLatLng) {
 		var features = globalConfig.identifyMultiplePolygonLayersServicesTemplate.layerList[0]["result"].features;
 		if (features.length == 0) {
-			document.getElementById(globalConfig.informationDivId).innerHTML = "<i><b>" + globalConfig.returnedAddress + "</i></b>" + MOEMapLanguage.LocatedWithinTxt + "<b><i>" + MOEMapLanguage.NoGLWatershedMsg + ".</i></b>"; 
+			document.getElementById(globalConfig.informationDivId).innerHTML = "<i><strong>" + globalConfig.returnedAddress + "</strong></i>" + MOEMapLanguage.LocatedWithinTxt + "<strong><i>" + MOEMapLanguage.NoGLWatershedMsg + ".</i></strong>"; 
 			return '<i>' + globalConfig.returnedAddress + '</i><br><br>' +     
-				 '<table><tr><td><b><u>' + MOEMapLanguage.InfoResultTitle+ '</u></b></td></tr>' + 	 
-				 '<tr><td><font style="color:#003399; font-size: 11 pt; font-weight:bold;">' + MOEMapLanguage.NoGLWatershedMsg + '</font></td></tr></table>';
+				 '<strong>' + MOEMapLanguage.InfoResultTitle+ '</strong><br>' + MOEMapLanguage.NoGLWatershedMsg;
 		} else {		
 			var record = globalConfig.identifyMultiplePolygonLayersServicesTemplate.layerList[0]["result"].features[0].attributes;
 			var utm = globalConfig.convertLatLngtoUTM(gLatLng.lat(),gLatLng.lng());
@@ -112,10 +129,9 @@ globalConfig.identifyMultiplePolygonLayersServicesTemplate = {
 			}
 			document.getElementById(globalConfig.informationDivId).innerHTML = "<i><b>" + globalConfig.returnedAddress + "</i></b>" + MOEMapLanguage.LocatedWithinTxt + "<b><i>" + resultGL + ".</i></b>"; 							
 			return '<i>' + globalConfig.returnedAddress + '</i><br><br>' +   
-				 '<font style="color:#606060; font-size: 8 pt"><i><b>Latitude:</b> '+ gLatLng.lat().toFixed(6) + ' <b>Longitude:</b> ' + gLatLng.lng().toFixed(6) + '</i><br>' + 
-				 '<i><b>' + MOEMapLanguage.UTMZone + ':</b>  '+ utm.Zone + ' <b>' + MOEMapLanguage.Easting + ':</b>  ' + easting + ' <b>'+ MOEMapLanguage.Northing + ':</b> ' + northing + '</i></font><br><br>' +
-				 '<table><tr><td><b><u>' + MOEMapLanguage.InfoResultTitle+ '</u></b></td></tr>' + 	 
-				 '<tr><td><font style="color:#003399; font-size: 11 pt; font-weight:bold;">' + resultGL + '</font></td></tr></table>';		
+				 '<i><strong>Latitude:</strong> '+ gLatLng.lat().toFixed(6) + ' <strong>Longitude:</strong> ' + gLatLng.lng().toFixed(6) + '</i><br>' + 
+				 '<i><strong>' + MOEMapLanguage.UTMZone + ':</strong>  '+ utm.Zone + ' <strong>' + MOEMapLanguage.Easting + ':</strong>  ' + easting + ' <strong>'+ MOEMapLanguage.Northing + ':</strong> ' + northing + '</i><br><br>' +
+				 '<strong>' + MOEMapLanguage.InfoResultTitle+ '</strong><br>' + resultGL;		
 				//+ "<a href='javascript:void(0)' onclick='MOEMAP.showPolygonFeature(" + 0 + ","  + 0 + "," + 0 + ")'>Show " + record["MOE DISTRICT"]  + " Boundary</a>";		
 				 
 				 

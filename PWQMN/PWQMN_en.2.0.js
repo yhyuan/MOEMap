@@ -1,6 +1,6 @@
 globalConfig = {};
 globalConfig.language = "EN";
-globalConfig.searchHelpTxt = "Search <strong>Stream</strong>, <strong>Station ID</strong>, <strong>Address</strong> or see help for more advanced options.";
+//globalConfig.searchHelpTxt = "Search <strong>Stream</strong>, <strong>Station ID</strong>, <strong>Address</strong> or see help for more advanced options.";
 //globalConfig.searchHelpTxt = "Search <strong>Stream</strong>, <strong>Station ID</strong>, <strong>Address</strong>";
 //globalConfig.otherInfoHTML = 'Some scientific/monitoring data are only provided in English.';
 
@@ -14,7 +14,7 @@ globalConfig.SuspSolidsLang = "Susp. Solids";
 globalConfig.tabsTemplateContentSuspSolids = "<center>{mapConfig.getChart1(SUSPENDED_SOLIDS_CONT)}</center><br><center>Suspended Solids Concentrations (mg/L) for <b>{NAME}</b></center><br>";
 globalConfig.ChlorideLang = "Chloride";
 globalConfig.tabsTemplateContentChloride = "<center>{mapConfig.getChart1(CHLORIDE_CONT)}</center><br><center>Chloride Concentrations (mg/L) for <b>{NAME}</b></center><br>";
-globalConfig.searchControlHTML = '<table width="100%" cellpadding="5" cellspacing="0" border="0" style="margin-bottom:15px;" summary="Search interactive map form">\
+/*globalConfig.searchControlHTML = '<table width="100%" cellpadding="5" cellspacing="0" border="0" style="margin-bottom:15px;" summary="Search interactive map form">\
 			<caption style="text-align:left;">Search interactive map</caption>\
 			<tr>\
 				<th scope="col"></th>\
@@ -35,4 +35,4 @@ globalConfig.searchControlHTML = '<table width="100%" cellpadding="5" cellspacin
 					</div>\
 				</td>\
 			</tr>\
-		</table>';
+		</table>';*/

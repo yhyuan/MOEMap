@@ -34,7 +34,7 @@ globalConfig.searchControlHTML = '<label class="element-invisible" for="map_quer
 		<input id="currentMapExtent" type="checkbox" name="currentExtent" title="Current Map Display" /> <label for="currentExtent" class=\'option\'>Search current map display only</label> \
 	</fieldset>';
 */
-
+/*
 globalConfig.searchControlHTML = '<table width="100%" cellpadding="5" cellspacing="0" border="0" style="margin-bottom:15px;" summary="Search interactive map form"> \
 			<caption style="text-align:left;">Search interactive map</caption> \
 			<tr> \
@@ -52,5 +52,6 @@ globalConfig.searchControlHTML = '<table width="100%" cellpadding="5" cellspacin
 					<input id="currentMapExtent" type="checkbox" name="currentExtent" title="Current Map Display"><span title="Current Map Display: Limit your search to the area displayed" class="tooltip">Current Map Display</span> \
 				</td> \
 			</tr> \
-		</table>';
+		</table>';*/
+		
 	

@@ -409,9 +409,9 @@ globalConfig.layers = [{
 									%>\
 						  </TBODY>\
 						</TABLE>\
-				<p><STRONG><%= globalConfig.chooseLang("Audit Number", "N<SUP>o</SUP> de v&eacute;rification") %>:</STRONG><%= renderResult.AUDIT_NO %></p>\
+				<p><STRONG><%= globalConfig.chooseLang("Audit Number", "N<SUP>o</SUP> de v&eacute;rification") %>:</STRONG> <%= renderResult.AUDIT_NO %></p>\
 				<p><STRONG><%= globalConfig.chooseLang("Date Well Completed", "Date de finition") %>:</STRONG> <%= renderResult.WELL_COMPLETED_DATE %></p>\
-				<p><STRONG><%= globalConfig.chooseLang("Date Well Record Received by MOE", "Date de r&eacute;ception du registre de puits<br>par le MEO") %>:</STRONG><%= renderResult.RECEIVED_DATE %></p>\
+				<p><STRONG><%= globalConfig.chooseLang("Date Well Record Received by MOE", "Date de r&eacute;ception du registre de puits<br>par le MEO") %>: </STRONG><%= renderResult.RECEIVED_DATE %></p>\
 			<% }%>'
 }];
 

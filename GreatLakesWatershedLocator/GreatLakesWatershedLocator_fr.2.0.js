@@ -1,7 +1,7 @@
 globalConfig = {};
 globalConfig.language = "FR";
-globalConfig.searchHelpTxt = "Rechercher par <STRONG>adresse</STRONG>, <STRONG>ville</STRONG>, <STRONG>coordonn\u00e9es</STRONG> ou cliquer sur aide pour plus d\u2019information sur la recherche avanc\u00e9e.";
-globalConfig.otherInfoHTML = "Source: Information sur les terres de l'Ontario (ITO).";
+//globalConfig.searchHelpTxt = "Rechercher par <STRONG>adresse</STRONG>, <STRONG>ville</STRONG>, <STRONG>coordonn\u00e9es</STRONG> ou cliquer sur aide pour plus d\u2019information sur la recherche avanc\u00e9e.";
+//globalConfig.otherInfoHTML = "Source: Information sur les terres de l'Ontario (ITO).";
 var MOEMapLanguage = {	
 	InfoResultTitle : "R\u00e9sultat situ\u00e9 dans le",
 	LocatedWithinTxt : " est dans le ",	

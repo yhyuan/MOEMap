@@ -1,4 +1,21 @@
 //var globalConfig = globalConfig || {};
+globalConfig.chooseLang = function (en, fr) {return (globalConfig.language === "EN") ? en : fr;};
+globalConfig.searchableFieldsList = [{en: "address", fr: "adresse"}, {en: "city name", fr: "ville"}, {en: "postal code", fr: "code postal"}];
+globalConfig.searchHelpTxt = globalConfig.chooseLang("You may search by ", "Vous pouvez rechercher par ");
+for(var i=0; i<globalConfig.searchableFieldsList.length - 1; i++) {
+	globalConfig.searchHelpTxt = globalConfig.searchHelpTxt + "<strong>" + globalConfig.chooseLang(globalConfig.searchableFieldsList[i].en, globalConfig.searchableFieldsList[i].fr) + "</strong>, ";
+}
+globalConfig.searchHelpTxt = globalConfig.searchHelpTxt + "<strong>" + globalConfig.chooseLang(globalConfig.searchableFieldsList[i].en, globalConfig.searchableFieldsList[i].fr) + "</strong> " + globalConfig.chooseLang("or see help for advanced options.", "ou consulter l'aide pour de l'information sur les recherches avanc&eacute;es.");
+
+globalConfig.searchControlHTML = '<div id="searchTheMap"></div><div id="searchHelp"></div><br>\
+    <label class="element-invisible" for="map_query">' + globalConfig.chooseLang('Search the map', 'Recherche carte interactive') + '</label>\
+	<input id="map_query" type="text" title="' + globalConfig.chooseLang('Search term', 'Terme de recherche') + '" maxlength="100" onkeypress="return globalConfig.entsub(event)" size="50" />\
+	<label class="element-invisible" for="search_submit">' + globalConfig.chooseLang('Search', 'Recherche') + '</label>\
+	<input type="submit" onclick="globalConfig.search()" id="search_submit" value="' + globalConfig.chooseLang('Search', 'Recherche') + '" title="' + globalConfig.chooseLang('Search', 'Recherche') + '" />\
+	<label class="element-invisible" for="search_clear">' + globalConfig.chooseLang('Clear', 'Effacer') + '</label>\
+	<input type="submit" value="&nbsp;' + globalConfig.chooseLang('Clear', 'Effacer') + '&nbsp;" id="search_clear" title="' + globalConfig.chooseLang('Clear', 'Effacer') + '" onclick="INITIALIZATION.init()" />\
+	<div id="information"></div>';
+
 globalConfig.preIdentifyCallbackName = "SWPLocator"; 
 globalConfig.postIdentifyCallbackName = "SWPLocator"; 
 globalConfig.addressGeocodingCallbackName = "SWPLocator";
@@ -53,8 +70,8 @@ globalConfig.identifyMultiplePolygonLayersServicesTemplate = {
 			//document.getElementById(globalConfig.informationDivId).innerHTML = "<i><b>" + globalConfig.returnedAddress + "</i></b>" + MOEMapLanguage.LocatedWithinTxt + "<b><i>" + MOEMapLanguage.NoGLWatershedMsg + ".</i></b>"; 				  
 			document.getElementById(globalConfig.informationDivId).innerHTML = "<i><b>" + globalConfig.returnedAddress + "</i></b>" + MOEMapLanguage.LocatedWithinTxt + "<b><i>"+ MOEMapLanguage.NoMOEDistrictMsg + ".</i></b>"; 
 			var contentString = '<i>' + globalConfig.returnedAddress + '</i><br><br>' +     
-				'<table><tr><td><b><u>' + MOEMapLanguage.InfoResultTitle+ '</u></b></td></tr>' + 	 
-				'<tr><td><h3>' + MOEMapLanguage.NoMOEDistrictMsg + '</h3></td></tr></table>'  			
+				'<strong>' + MOEMapLanguage.InfoResultTitle+ '</strong><br>' + 	 
+				'<h3>' + MOEMapLanguage.NoMOEDistrictMsg + '</h3>';
 			return contentString; 				 
 		} else {		
 			var record = globalConfig.identifyMultiplePolygonLayersServicesTemplate.layerList[0]["result"].features[0].attributes;
@@ -88,15 +105,7 @@ globalConfig.identifyMultiplePolygonLayersServicesTemplate = {
 			var moeDistrictFax = MOEMapLanguage.FaxLbl + moeDistrictFaxNum;
 			var moeDistrictTollFree = MOEMapLanguage.TollFreeLbl + moeDistrictTollFreePhone;
 			var addressReturn = globalConfig.returnedAddress;
-			var contentString = '<i>' + addressReturn + '</i><br><br>' +     
-				//'<i>(Latitude: '+ latlng.lat().toFixed(6) + ', Longitude: ' + latlng.lng().toFixed(6) + ')</i><br><br>' + 
-				'<table><tr><td><b><u>' + MOEMapLanguage.InfoResultTitle+ '</u></b></td></tr>' + 	 
-				'<tr><td><h3>' +moeDistrict+ '</h3></td></tr>' +   
-				'<tr><td style="padding-bottom: 5px;">'+moeOfficeAddressLbl+ '</td></tr>' + 		
-				'<tr><td style="padding-bottom: 3px; ">'+moeDistrictStreet+ '</td></tr>' +
-				'<tr><td>'+moeDistrictCity+ ' ' + moeDistrictPostalCode+ '</td></tr>' + 
-				'<tr><td style="font-size:10px">'+moeDistrictTollFree+'</td></tr>' + 
-				'<tr><td style="font-size:10px">'+moeDistrictPhone+ moeDistrictFax+'</td></tr></table>'  			
+			var contentString = '<i>' + addressReturn + '</i><br><br>' + '<strong>' + MOEMapLanguage.InfoResultTitle+ '</strong><br>' + '<h3>' + moeDistrict + '</h3><br>' + moeOfficeAddressLbl + '<br>' + moeDistrictStreet + '<br>' + moeDistrictCity + ' ' + moeDistrictPostalCode+ '<br>' + moeDistrictTollFree + '<br>' + moeDistrictPhone+ moeDistrictFax;
 			return contentString; 
 		}
 	}

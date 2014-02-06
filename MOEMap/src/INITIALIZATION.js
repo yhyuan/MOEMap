@@ -133,6 +133,7 @@
 	};
 	globalConfig.noCoordinatesTableID = globalConfig.noCoordinatesTableID || "noCoordinatesTable";
 	globalConfig.createNoCoordinatesTableBelowMap = globalConfig.createNoCoordinatesTableBelowMap || function(tableSimpleTemplate) {
+		//console.log(tableSimpleTemplate);
 		return {
 			head: globalConfig.noCoordinatesTableTitleLang + "<table id=\"" + globalConfig.noCoordinatesTableID + "\" class=\"" + globalConfig.tableClassName + "\" width=\"" + globalConfig.tableWidth + "\" border=\"0\" cellpadding=\"0\" cellspacing=\"1\"><thead><tr><th><center>" + tableSimpleTemplate.content.map(function(b) {return b.name;}).join("</center></th><th><center>") + "</center></th></tr></thead><tbody>",
 			content: "<tr><td>" + tableSimpleTemplate.content.map(function(b) {return b.value;}).join('</td><td>') + "</td></tr>",
@@ -168,18 +169,34 @@
 			'</table>';
 	};
 */
+	globalConfig.chooseLang = globalConfig.chooseLang || function (en, fr) {return (globalConfig.language === "EN") ? en : fr;};
+	if ((globalConfig.searchableFieldsList) && (!globalConfig.searchHelpTxt)) {
+		globalConfig.searchHelpTxt = globalConfig.youMaySearchByLang;
+		for(var i=0; i<globalConfig.searchableFieldsList.length - 1; i++) {
+			globalConfig.searchHelpTxt = globalConfig.searchHelpTxt + "<strong>" + globalConfig.chooseLang(globalConfig.searchableFieldsList[i].en, globalConfig.searchableFieldsList[i].fr) + "</strong>, ";
+		}
+		globalConfig.searchHelpTxt = globalConfig.searchHelpTxt + "<strong>" + globalConfig.chooseLang(globalConfig.searchableFieldsList[i].en, globalConfig.searchableFieldsList[i].fr) + "</strong> " + globalConfig.seeHelpForAdvancedOptionsLang;
+	}
 	globalConfig.searchControlHTMLGenerator = globalConfig.searchControlHTMLGenerator || function () {
 		//return //'<h4>' + globalConfig.SearchInteractiveMapLang  + '</h4>' + 
 			//'<div id="information">' + globalConfig.searchHelpTxt + '</div>' + 
 			//'<input id="map_query" type="text" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100" title="' + globalConfig.TermLang  + '">' + globalConfig.nbspLang + '<input type="submit" onclick="globalConfig.search()" value="' + globalConfig.SearchLang  + '" title="' + globalConfig.SearchLang  + '"><br/>' + 
 			//'<input id="currentMapExtent" type="checkbox" name="currentExtent" title="' + globalConfig.CurrentMapDisplayLang  + '"> <label for="currentExtent" class=\'option\'>' + globalConfig.CurrentMapDisplayLang  + '</label>';			
-		return '<label class="element-invisible" for="map_query">Search the map</label> \
+		/*return '<label class="element-invisible" for="map_query">Search the map</label> \
 			<input id="map_query" type="text" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100" title="Search term" /> \
 			<label class="element-invisible" for="search_submit">Search</label> \
 			<input type="submit" onclick="globalConfig.search()" id="search_submit" value="Search" title="Search" /> \
 			<br/> \
 			<input id="currentMapExtent" type="checkbox" name="currentExtent" title="Current Map Display"> \
-			<label for="currentExtent" class=\'option\'>' + globalConfig.CurrentMapDisplayLang + '</label>';
+			<label for="currentExtent" class=\'option\'>' + globalConfig.CurrentMapDisplayLang + '</label>';*/
+		return '<div id="searchTheMap"></div><div id="searchHelp"></div><br>\
+			<label class="element-invisible" for="map_query">' + globalConfig.chooseLang('Search the map', 'Recherche carte interactive') + '</label>\
+			<input id="map_query" type="text" title="' + globalConfig.chooseLang('Search term', 'Terme de recherche') + '" maxlength="100" size="50" onkeypress="return globalConfig.entsub(event)"></input>\
+			<label class="element-invisible" for="search_submit">' + globalConfig.chooseLang('Search', 'Recherche') + '</label>\
+			<input id="search_submit" type="submit" title="Search" onclick="globalConfig.search()" value="' + globalConfig.chooseLang('Search', 'Recherche') + '"></input>\
+			<br/>\
+			<input id="currentMapExtent" type="checkbox" name="currentExtent" title="' + globalConfig.chooseLang('Current Map Display', "Étendue de la carte courante") + '" /> <label for="currentExtent" class=\'option\'>' + globalConfig.chooseLang('Search current map display only', "\u00c9tendue de la carte courante") + '</label>\
+			<div id="information"></div>';
 	};
 	
 	if(!globalConfig.hasOwnProperty('searchControlHTML')) {

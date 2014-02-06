@@ -1,4 +1,5 @@
 globalConfig.TRAIS_PlanSummaries_Report = "TRAIS_PlanSummaries_Report.htm";
+
 globalConfig.getYears = function (year) {
 	if (year === "1") {
 		return year + globalConfig.chooseLang(" year", " an");
@@ -122,7 +123,7 @@ globalConfig.layers = [{
 				<%\
 				 _.each(renderResult.reportingPeriods,function(reportingPeriod,key,list){\
 				%>\
-				<A HREF="<%= globalConfig.TRAIS_PlanSummaries_Report %>?id=<%= renderResult.UniqueFacilityID %>&year=<%= reportingPeriod %>"><%= reportingPeriod + " " + globalConfig.chooseLang("Plan Summary", "Sommaires de Plan") %> </A><br>\
+				<A HREF="<%= globalConfig.chooseLang("plan-summary-report", "sommaires-de-plan") %>?id=<%= renderResult.UniqueFacilityID %>&year=<%= reportingPeriod %>"><%= reportingPeriod + " " + globalConfig.chooseLang("Plan Summary", "Sommaires de Plan") %> </A><br>\
 				<%});%>\
 			<% } else {%>\
 			<TABLE BORDER=0 WIDTH=600>\
@@ -134,7 +135,7 @@ globalConfig.layers = [{
 			<TR><TD><%= globalConfig.chooseLang("Sector", "Secteur") %>:</TD><TD><%= renderResult.Sector %></TD></TR>\
 			<TR><TD><%= globalConfig.chooseLang("NPRI ID", "ID INRP") %>:</TD><TD><%= renderResult.NPRIID %></TD></TR>\
 			<TR><TD><%= globalConfig.chooseLang("Public Contact", "Personne-ressource") %>:</TD><TD><%= renderResult.PublicContact %><BR><%= renderResult.PublicContactPhone %><BR><A HREF=mailto:<%= renderResult.PublicContactEMail %>><%= renderResult.PublicContactEMail %></A></TD></TR>\
-			<TR><TD COLSPAN=2>&nbsp;<BR><%= globalConfig.chooseLang("Certified by", "Certifi&eacute; par") %> <U><%= renderResult.HighestRankingEmployee %></U>, <%= globalConfig.chooseLang("Highest Ranking Employee", "employ&eacute; le plus &eacute;lev&eacute; hi&eacute;rarchiquement") %><BR>&nbsp;</TD></TR>\
+			<TR><TD COLSPAN=2>&nbsp;<BR><%= globalConfig.chooseLang("Certified by", "Certifi&eacute; par") %> <%= renderResult.HighestRankingEmployee %>, <%= globalConfig.chooseLang("Highest Ranking Employee", "employ&eacute; le plus &eacute;lev&eacute; hi&eacute;rarchiquement") %><BR>&nbsp;</TD></TR>\
 			<TR><TD COLSPAN=2><A NAME="subst"></A><%= ((renderResult.hasOwnProperty("Substances") && renderResult.Substances.length > 0)) ? globalConfig.chooseLang("List of Substances:", "Liste des substances:") : "" %>\
 			<%= _.map(renderResult.Substances, function(substance) {return \'<A HREF="#\' + substance.Name + \'">\' + substance.Name + \'</A>\';}).join(", ") %>\
 			<TR><TD COLSPAN=2><HR></TD><TR>\
@@ -144,12 +145,11 @@ globalConfig.layers = [{
                 _.each(renderResult.Substances,function(substance,key,list){\
             %>\
 				<A NAME="<%= substance.Name %>"></A><U><B><%= substance.Name %></B></U><P>\
-				<strong><%= globalConfig.chooseLang("Which annual report is your plan summary based on?", "Sur quel rapport annuel votre sommaire de plan repose-t-il?") %></strong><br>\
-				<%= substance.VersionofthePlan %><br>\
-				<strong><%= globalConfig.chooseLang("Statement of Intent to Reduce Use:", "Déclaration de l’intention de réduire l’utilisation:") %></strong>\
-					<%= (substance.ReasonforNoIntenttoReduceUse.length === 0) ? (globalConfig.chooseLang("Toxic Substance Reduction Plan includes a statement to reduce the use of the substance", "Le plan de réduction de substance toxique comprend une déclaration en vue de réduire l’utilisation de la substance")) : (globalConfig.chooseLang("Toxic Substance Reduction Plan does not include a statement to reduce the use of the substance because ", "Le plan de réduction de substance toxique ne comprend pas de déclaration en vue de réduire l’utilisation de la substance du fait que ") + substance.ReasonforNoIntenttoReduceUse) %>\
-				<br><strong><%= globalConfig.chooseLang("Statement of Intent to Reduce Creation:", "Déclaration de l’intention de réduire la création:") %></strong>\
-					<%= (substance.ReasonforNoIntenttoReduceCreat.length === 0) ? (globalConfig.chooseLang("Toxic Substance Reduction Plan includes a statement to reduce the creation of the substance", "Le plan de réduction de substance toxique comprend une déclaration en vue de réduire la création de la substance")) : (globalConfig.chooseLang("Toxic Substance Reduction Plan does not include a statement to reduce the use of the substance because ", "Le plan de réduction de substance toxique ne comprend pas de déclaration en vue de réduire la création de la substance du fait que ") + substance.ReasonforNoIntenttoReduceCreat) %>\
+				<%= globalConfig.chooseLang("This plan summary is a reflection of a/an <strong>" + substance.VersionofthePlan + "</strong> based on the <strong>" + renderResult.ReportingPeriod + "</strong> reporting period.", "This plan summary is a reflection of a/an <strong>" + substance.VersionofthePlan + "</strong> based on the <strong>" + renderResult.ReportingPeriod + "</strong> reporting period.") %>\
+				<br><br><strong><%= globalConfig.chooseLang("Statement of Intent to Reduce Use:", "Déclaration de l’intention de réduire l’utilisation:") %></strong><br>\
+					<%= (substance.ReasonforNoIntenttoReduceUse.length === 0) ? (globalConfig.chooseLang("Toxic Substance Reduction Plan includes a statement to reduce the use of the substance", "Le plan de réduction de substance toxique comprend une déclaration en vue de réduire l’utilisation de la substance")) : (globalConfig.chooseLang("Toxic Substance Reduction Plan does not include a statement to reduce the use of the substance because: <br>", "Le plan de réduction de substance toxique ne comprend pas de déclaration en vue de réduire l’utilisation de la substance du fait que: <br>") + substance.ReasonforNoIntenttoReduceUse) %>\
+				<br><br><strong><%= globalConfig.chooseLang("Statement of Intent to Reduce Creation:", "Déclaration de l’intention de réduire la création:") %></strong><br>\
+					<%= (substance.ReasonforNoIntenttoReduceCreat.length === 0) ? (globalConfig.chooseLang("Toxic Substance Reduction Plan includes a statement to reduce the creation of the substance", "Le plan de réduction de substance toxique comprend une déclaration en vue de réduire la création de la substance")) : (globalConfig.chooseLang("Toxic Substance Reduction Plan does not include a statement to reduce the creation of the substance because: <br>", "Le plan de réduction de substance toxique ne comprend pas de déclaration en vue de réduire la création de la substance du fait que: <br>") + substance.ReasonforNoIntenttoReduceCreat) %>\
 				<TABLE class="TRAISTable">\
 				  <tr>\
 					<th width="25%"><strong><%= globalConfig.chooseLang("Objectives:", "Objectifs:") %></strong></th>\
@@ -166,8 +166,8 @@ globalConfig.layers = [{
 				  </tr>\
 				</table>\
 				<br><strong><%= globalConfig.chooseLang("Reason for Use: ", "Raison de l’utilisation: ") %></strong><%= (substance.ReasonsforUse === "Other") ?  substance.ReasonsforUseSummary : substance.ReasonsforUse  %>\
-				<br><strong><%= globalConfig.chooseLang("Reason for Creation: ", "Raison de la création: ") %></strong><%= (substance.ReasonsforCreation === "Other") ?  substance.ReasonsforCreationSummary : substance.ReasonsforCreation %>\
-				<br><strong><%= globalConfig.chooseLang("Implementing Toxic Substance Reduction Options", "Options de mise en œuvre de la réduction de la substance toxique") %></strong><br>\
+				<br><br><strong><%= globalConfig.chooseLang("Reason for Creation: ", "Raison de la création: ") %></strong><%= (substance.ReasonsforCreation === "Other") ?  substance.ReasonsforCreationSummary : substance.ReasonsforCreation %>\
+				<br><br><strong><%= globalConfig.chooseLang("Implementing Toxic Substance Reduction Options", "Options de mise en œuvre de la réduction de la substance toxique") %></strong><br>\
 				<% if (substance.StatementNoOptionImplementedYN === "No") { %>\
 					<br><%= globalConfig.chooseLang("Toxic Substance Reduction Plan indicated that the following options will be implemented", "Le plan de réduction de substance toxique indique que les options suivantes seront mises en œuvre") %><br>\
 					<TABLE class="TRAISTable">\
@@ -229,13 +229,12 @@ globalConfig.layers = [{
 				<% } else {%>\
 					<%= globalConfig.chooseLang("Toxic Substance Reduction Plan indicated that no options will be implemented for the following reason(s): ", ") Le plan de réduction de substance toxique indiquait qu’aucune option ne serait mise en œuvre, et ce, pour la ou les raisons suivantes:") %><br><%= substance.ReasonsNoOptionImplemented %><br>\
 				<% }%>\
-				<strong><%= globalConfig.chooseLang("Actions Taken Outside the Plan that Reduced the Use and Creation of the Substance (optional): ", "Mesures prises indépendamment du plan qui ont permis de réduire l’utilisation et la création de la substance (facultatif): ") %></strong><br><%= (substance.DescofAnyAdditActionsTaken.length === 0) ? globalConfig.chooseLang("None at this time", "None at this time") : substance.DescofAnyAdditActionsTaken %>\
+				<br><strong><%= globalConfig.chooseLang("Actions Taken Outside the Plan that Reduced the Use and Creation of the Substance (optional): ", "Mesures prises indépendamment du plan qui ont permis de réduire l’utilisation et la création de la substance (facultatif): ") %></strong><br><%= (substance.DescofAnyAdditActionsTaken.length === 0) ? globalConfig.chooseLang("None at this time", "None at this time") : substance.DescofAnyAdditActionsTaken %>\
 				<BR><BR><I><A HREF="http://www.ene.gov.on.ca/environment/<%= globalConfig.chooseLang("en", "fr") %>/resources/collection/data_downloads/index.htm"><%= globalConfig.chooseLang("Click here to access the full dataset", "Cliquez ici pour accéder au jeu de données complet") %></A></I><BR>\
 				<A HREF="#top"><%= globalConfig.chooseLang("Back to top", "Haut de la page") %></A><BR><HR WIDTH=100%>\
 				</OL><P>\
             <%\
                 });\
             %>\
-		<BR><BR><%= globalConfig.chooseLang("An <A HREF=\'TRAIS_Accessible.htm\'>accessible copy of the reports</A> for all facilities is available.", "Les rapports d\'installations ou d\'entreprise sont aussi disponibles sous <A HREF=\'TRAIS_Accessible.htm\'>format texte-pur</A>.") %>\
 		<% }%>'
 }];

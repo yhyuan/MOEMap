@@ -1,4 +1,4 @@
-var cssDeferred = new $.Deferred();
+/*var cssDeferred = new $.Deferred();
 var cssPrompt = (cssDeferred).promise();
 
 if (!!yepnope) {
@@ -9,7 +9,7 @@ if (!!yepnope) {
 		}
 	});
 }
-
+*/
 globalConfig.lengthCategorySize = 13;
 //globalConfig.analysisDict stores the relationship between ANALYSIS_CLASS_ID and ANALYSIS_DESC.  ANALYSIS_DESC = globalConfig.analysisDict[ANALYSIS_CLASS_ID];
 /*
@@ -206,7 +206,7 @@ globalConfig.getSpeciesNameURL = function(speciesCode) {
 	}
 	return globalConfig.speciesDict[speciesCode];
 };
-*/
+
 globalConfig.getSpeciesURL = function(speciesCode) {
 	//console.log(speciesCode);
 	if (speciesCode === "087") {
@@ -257,7 +257,98 @@ globalConfig.getSpeciesURL = function(speciesCode) {
 	}
 	return "";
 };
-
+*/
+globalConfig.getSpeciesURL = function(speciesCode) {
+	/*var speciesURLList = {
+		"077": ["Atlantic Salmon", "Saumon de l'Atlantique"], 
+		"093": ["Cisco (or Lake Herring)", "Cisco de lac"],
+		"151": ["Goldeye", "Laquaiche aux yeux d'or"],
+		"102": ["Round Whitefish", "Ménomini rond"],
+		"319": ["Black Crappie", "Marigane noire"],
+		"314": ["Bluegill", "Crapet arlequin"],
+		"080": ["Brook Trout", "Omble de fontaine"],
+		"078": ["Brown Trout (Inland)", "Truite brune (eaux intérieures)"],
+		"078": ["Brown Trout (Great Lakes)", "Truite brune - Grands Lacs"],
+		"186": ["Common Carp", "Carpe"],
+		"081": ["Lake Trout", "Touladi"],
+		"091": ["Lake Whitefish", "Grand corégone"],
+		"317": ["Largemouth Bass", "Achigan à grande bouche"],
+		"131": ["Northern Pike", "Grand Brochet"],
+		"313": ["Pumpkinseed", "Crapet-soleil"],
+		"076": ["Rainbow Trout (Inland)", "Truite arc-en-ciel - eaux intérieures"],
+		"076": ["Rainbow Trout (Great Lakes)", "Truite arc-en-ciel - Grands Lacs"],
+		"311": ["Rock Bass", "Crapet de roche"],
+		"332": ["Sauger", "Doré noir"],
+		"316": ["Smallmouth Bass", "Achigan à petite bouche"],
+		"082": ["Splake", "Truite moulac"],
+		"334": ["Walleye", "Doré jaune"],
+		"331": ["Yellow Perch", "Perchaude"],
+		"233": ["Brown Bullhead", "Barbotte brune"],
+		"301": ["White Perch", "Bar-perche"],
+		"163": ["White Sucker", "Meunier noir"],
+		"318": ["White Crappie", "Marigane blanche"], 
+		"234": ["Channel Catfish", "Barbue de rivière"],
+		"121": ["Rainbow Smelt", "Éperlan arc-en-ciel"],
+		"371": ["Freshwater Drum", "Malachigan d’eau douce"],
+		"075": ["Chinook Salmon", "Saumon Chinook"],
+		"302": ["White Bass", "Bar blanc"],
+		"073": ["Coho Salmon", "Saumon coho"],
+		"051": ["Bowfin", "Poisson-castor"],
+		"271": ["Burbot", "Lotte"],
+		"071": ["Pink Salmon", "Saumon rose"],
+		"152": ["Mooneye", "Laquaiche argentée"]
+	};*/
+	var speciesURLList = {
+		"077": ["Atlantic-Salmon", "Saumon-de-lAtlantique"], 
+		"093": ["Cisco-or-Lake-Herring)", "Cisco-de-lac"],
+		"151": ["Goldeye", "Laquaiche-aux-yeux-dor"],
+		"102": ["Round-Whitefish", "Menomini-rond"],
+		"319": ["Black-Crappie", "Marigane-noire"],
+		"314": ["Bluegill", "Crapet-arlequin"],
+		"080": ["Brook-Trout", "Omble-de-fontaine"],
+		"078": ["Brown-Trout-Inland", "Truite-brune-eaux-interieures"],
+		"078": ["Brown-Trout-Great-Lakes", "Truite-brune-Grands-Lacs"],
+		"186": ["Common-Carp", "Carpe"],
+		"081": ["Lake-Trout", "Touladi"],
+		"091": ["Lake-Whitefish", "Grand-coregone"],
+		"317": ["Largemouth-Bass", "Achigan-a-grande-bouche"],
+		"131": ["Northern-Pike", "Grand-Brochet"],
+		"313": ["Pumpkinseed", "Crapet-soleil"],
+		"076": ["Rainbow-Trout-Inland", "Truite-arc-en-ciel-eaux-interieures"],
+		"076": ["Rainbow-Trout-Great-Lakes", "Truite-arc-en-ciel-Grands-Lacs"],
+		"311": ["Rock-Bass", "Crapet-de-roche"],
+		"332": ["Sauger", "Dore-noir"],
+		"316": ["Smallmouth-Bass", "Achigan-a-petite-bouche"],
+		"082": ["Splake", "Truite-moulac"],
+		"334": ["Walleye", "Dore-jaune"],
+		"331": ["Yellow-Perch", "Perchaude"],
+		"233": ["Brown-Bullhead", "Barbotte-brune"],
+		"301": ["White-Perch", "Bar-perche"],
+		"163": ["White-Sucker", "Meunier-noir"],
+		"318": ["White-Crappie", "Marigane-blanche"], 
+		"234": ["Channel-Catfish", "Barbue-de-riviere"],
+		"121": ["Rainbow-Smelt", "Eperlan arc-en-ciel"],
+		"371": ["Freshwater-Drum", "Malachigan-deau-douce"],
+		"075": ["Chinook-Salmon", "Saumon-Chinook"],
+		"302": ["White-Bass", "Bar-blanc"],
+		"073": ["Coho-Salmon", "Saumon-coho"],
+		"051": ["Bowfin", "Poisson-castor"],
+		"271": ["Burbot", "Lotte"],
+		"071": ["Pink-Salmon", "Saumon-rose"],
+		"152": ["Mooneye", "Laquaiche-argentee"]
+	};	
+	/*
+	_.each(_.values(speciesURLList), function(item) {
+		console.log(item[0] + "(English): /environment-and-energy/fish-and-wildlife/" + item[0].split(' ').join("-").toLowerCase());
+		console.log(item[0] + "(French): /environment-and-energy/fish-and-wildlife/" + item[1].split(' ').join("-").toLowerCase());
+	});
+	console.log("kkk");*/
+	if (speciesURLList.hasOwnProperty(speciesCode))  {
+		return "/environment-and-energy/fish-and-wildlife/" + speciesURLList[speciesCode][globalConfig.chooseLang(0, 1)].toLowerCase(); //lake-whitefish
+	} else {
+		return "";
+	}
+}
 var adivosryDeferred = new $.Deferred();
 var adivosryPrompt = (adivosryDeferred).promise();
 globalConfig.startTime = new Date();
@@ -329,8 +420,8 @@ globalConfig.layers = [{
 		globalConfig.renderResult = renderResult;
 		adivosryDeferred.resolve();
 	},
-	template: '<h1><%= locName %></h1>\
-				<div style="margin-right:20px;margin-bottom:15px;float:right;"><a href="http://www.ontario.ca/fishguide"><img alt="2011-2012" style="border:1px solid black;" hspace="10" src="http://files.ontariogovernment.ca/moe_mapping/mapping/SportFish/EN/images/fish3.jpg" /></a></div>\
+	template: '<h2><%= locName %></h2>\
+				<div style="margin-right:20px;margin-bottom:15px;float:right;"><a href="http://www.ontario.ca/fishguide"><img alt="<%= globalConfig.chooseLang("Guide to Eating Ontario Sport Fish (2013-2014)", "Guide de consommation du poisson gibier de l’Ontario (2013-2014)") %>" style="border:1px solid black;" hspace="10" src="http://files.ontariogovernment.ca/moe_mapping/mapping/SportFish/EN/images/fish3.jpg" /></a></div>\
 				<strong><%= locDesc %></strong>\
 				<%\
 					if (globalConfig.isEnglish()){\
@@ -339,7 +430,7 @@ globalConfig.layers = [{
 					<P>Consult the help page if you are eating multiple species of fish or fish from multiple locations.</P>\
 					<p>Advisories may be provided for specific species and/or size ranges which are not legal to possess. Learn more about Ontario&#39s <a href="http://www.mnr.gov.on.ca/stdprodconsume/groups/lr/@mnr/@letsfish/documents/document/mnr_e001325.pdf">recreational fishing regulations</a> before going fishing.</p>\
 					<p><a href="http://www.ene.gov.on.ca/environment/en/mapping/sportfish/STDPROD_082936.html#advisories">Help understanding the fish consumption advisories</a>\
-					<br><a href="JavaScript:window.print();">Print this page</a></p>\
+					</p>\
 				<%\
 					} else { \
 				%>\
@@ -347,7 +438,7 @@ globalConfig.layers = [{
 					<P>Consultez la page d\'aide si vous consommez de multiples esp&#232;ces de poissons ou des poissons en provenance de plusieurs lieux.</P>\
 					<p>Il peut y avoir des mises en garde concernant des esp&#232;ces et des fourchettes de dimensions de poissons que la r&#233;glementation ontarienne en mati&#232;re de p&#234;che interdit de poss&#233;der. Avant d\'aller p&#234;cher, informez-vous plus en d&#233;tail des  <a href="http://www.mnr.gov.on.ca/stdprodconsume/groups/lr/@mnr/@letsfish/documents/document/mnr_f001325.pdf"> r&#232;glements de la p&#234;che sportive</a>.</p>\
 					<p><a href="http://www.ene.gov.on.ca/environment/fr/mapping/sportfish/STDPROD_083134.html">Aide pour l\'interpr&#233;tation des mises en garde relatives &#224; la consommation de poisson</a>\
-					<br><a href="JavaScript:window.print();">Imprimer cette page</a></p>\
+					</p>\
 				<%\
 					}\
 					var speciesList = _.keys(speciesObject).sort(function compare(a,b) {\
@@ -358,17 +449,16 @@ globalConfig.layers = [{
 						return 0;\
 					});\
 					_.each(speciesList,function(speciesCode,key,list){ %>\
-						<!--<%= globalConfig.speciesDict[speciesCode] %><SUP><%= globalConfig.getAnalysisMethods(speciesCode, analysisObject[speciesCode]) %></SUP>-->\
-						<table>\
-						<caption><%= globalConfig.speciesDict[speciesCode] %><SUP><%= globalConfig.getAnalysisMethods(speciesCode, analysisObject[speciesCode]) %></SUP></caption>\
+						<h3><%= globalConfig.speciesDict[speciesCode] %><SUP><%= globalConfig.getAnalysisMethods(speciesCode, analysisObject[speciesCode]) %></SUP></h3>\
+						<table class="noStripes">\
 							<tbody>\
-								<tr class="row1">\
+								<tr>\
 									<th scope="row"><%= globalConfig.chooseLang("Length", "Longueur") %>&nbsp;(cm)&nbsp;&rarr;</th>\
 									<% _.each(globalConfig.generateLengthRanges(15, 80, 5), function(lengthRange,key,list){ %>\
 										<td><%= lengthRange %></td>\
 									<% }); %>\
 								</tr>\
-								<tr class="row2">\
+								<tr>\
 									<th scope="row"><%= globalConfig.chooseLang("Length", "Longueur") %>&nbsp;(in)&nbsp;&rarr;</th>\
 									<% _.each(globalConfig.generateLengthRanges(6, 32, 2), function(lengthRange,key,list){ %>\
 										<td><%= lengthRange %></td>\
@@ -405,7 +495,7 @@ PubSub.on("DocumentReady", function() {
 	documentReadyDeferred.resolve();
 });
 
-$.when(documentReadyPrompt, speciesPrompt, adivosryIndexPrompt, adivosryPrompt, cssPrompt).done(function() {
+$.when(documentReadyPrompt, speciesPrompt, adivosryIndexPrompt, adivosryPrompt).done(function() {
 	//console.log(new Date() - globalConfig.startTime);
 	var renderResult = globalConfig.renderResult;		
 	var keys = _.keys(renderResult.speciesObject);

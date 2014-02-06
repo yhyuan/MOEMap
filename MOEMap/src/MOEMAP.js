@@ -310,7 +310,10 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 					MOEMAP.addOverlay(geometryPoly);	
 				}
 			}
-		}/*
+		}
+		//console.log(container.innerHTML);
+		document.getElementById(globalConfig.queryTableDivId).innerHTML = "<br>" + container.innerHTML;
+		/*
 		if (globalConfig.identifyMultiplePolygonLayersServicesTemplate.hasOwnProperty('success')) {
 			globalConfig.identifyMultiplePolygonLayersServicesTemplate.success();
 		}*/
@@ -561,6 +564,7 @@ globalConfig.postConditionsCallbackList = globalConfig.postConditionsCallbackLis
 				"coordinatesTable": queryParams.layerList[0].tableTemplate,
 				"noCoordinatesTable": queryParams.layerList[0].noCoordinatesTableTemplate
 			};
+			//console.log(templates);
 			//globalConfig.renderTable(features,queryParams.layerList[0].tableTemplate);
 			globalConfig.renderTable(features,templates);
 		}

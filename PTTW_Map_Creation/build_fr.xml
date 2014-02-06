@@ -35,7 +35,6 @@
 		<concat destfile="${build.dir}/PTTW_Map_Creation_fr.2.0-min.js" >
 			<header> /* Build Time: ${build.time} */ </header>
 			<filelist  dir="${MOEMap.src.dir}" >
-				<!--<file name="yepnope-min.js" />-->
 				<file name="jquery.corner-min.js" />
 				<file name="jquery-impromptu.3.1-min.js" />
 				<file name="addGoogleMapsDependency.js" />

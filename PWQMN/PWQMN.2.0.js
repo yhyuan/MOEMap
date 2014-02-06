@@ -1,13 +1,12 @@
 //var globalConfig = globalConfig || {};
-if (globalConfig.language === "EN") {
-	globalConfig.otherInfoHTML = "Some scientific/monitoring data are only provided in English."; 
-} else {
-	globalConfig.otherInfoHTML = 'Certaines donn&eacute;es scientifiques et de surveillance n&rsquo;existent qu&rsquo;en anglais.';
-}
+globalConfig.chooseLang = function (en, fr) {return (globalConfig.language === "EN") ? en : fr;};
+
+globalConfig.searchableFieldsList = [{en: "stream", fr: "cours d\u0027eau"}, {en: "station ID", fr: "Num\u00e9ro de station"}, {en: "address", fr: "adresse"}];
+globalConfig.otherInfoHTML = globalConfig.chooseLang("Some scientific/monitoring data are only provided in English.", 'Certaines donn&eacute;es scientifiques et de surveillance n&rsquo;existent qu&rsquo;en anglais.');
 //globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/PWQMN/MapServer";
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
-globalConfig.usejQueryUITable = false;  //Avoid loading extra javascript files
+globalConfig.usejQueryUITable = true;  //Avoid loading extra javascript files
 if (globalConfig.accessible) {
 	globalConfig.usePredefinedMultipleTabs = false;  //Avoid loading extra javascript files
 } else {
@@ -21,11 +20,22 @@ globalConfig.displayDisclaimer = true;
 globalConfig.InformationLang = "Information";
 globalConfig.postIdentifyCallbackName = "Wells";
 globalConfig.postConditionsCallbackName = "Wells";
-//globalConfig.infoWindowWidth = '470px';
-//globalConfig.infoWindowHeight = "240px";
-//globalConfig.infoWindowContentHeight = "200px";
-//globalConfig.infoWindowContentWidth = "450px";
-
+globalConfig.infoWindowWidth = '470px';
+globalConfig.infoWindowHeight = "240px";
+globalConfig.infoWindowContentHeight = "200px";
+globalConfig.infoWindowContentWidth = "450px";
+globalConfig.tableSimpleTemplateTitleLang = "";
+globalConfig.fieldNamesList = globalConfig.chooseLang(["Station ID", "Stream", "Location", "Status", "First Year Sampled", "Last Year Sampled", "Latitude", "Longitude"], ["Num\u00e9ro", "Cours d'eau", "Lieu", "Rapport d'\u00e9tape", "Premi\u00e8re ann\u00e9e \u00e9chantillonn\u00e9e", "Derni\u00e8re ann\u00e9e \u00e9chantillonn\u00e9e", "Latitude", "Longitude"]);
+globalConfig.tableFieldList = [
+	{name: globalConfig.fieldNamesList[0], value: "{STATION}"}, 
+	{name: globalConfig.fieldNamesList[1], value: "{NAME}"}, 
+	{name: globalConfig.fieldNamesList[2], value: "{LOCATION}"}, 
+	{name: globalConfig.fieldNamesList[3], value: "{mapConfig.getStatus(STATUS)}"}, 
+	{name: globalConfig.fieldNamesList[4], value: "{FIRST_YR}"}, 
+	{name: globalConfig.fieldNamesList[5], value: "{LAST_YR}"},
+	{name: globalConfig.fieldNamesList[6], value: "{globalConfig.deciToDegree(LATITUDE)}"},		
+	{name: globalConfig.fieldNamesList[7], value: "{globalConfig.deciToDegree(LONGITUDE)}"}
+];
 if (globalConfig.accessible) {
 	globalConfig.queryLayerList = [{
 		url: globalConfig.url + "/0",
@@ -58,7 +68,11 @@ if (globalConfig.accessible) {
 		}];
 	globalConfig.queryLayerList = [{
 		url: globalConfig.url + "/0",
-		tabsTemplate: globalConfig.tabsTemplate
+		tabsTemplate: globalConfig.tabsTemplate, 
+		tableSimpleTemplate: {
+			title: globalConfig.tableSimpleTemplateTitleLang, 
+			content: globalConfig.tableFieldList
+		}
 	}];	
 }
 

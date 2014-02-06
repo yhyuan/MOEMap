@@ -1,4 +1,3 @@
-
 //http://blog.mridey.com/2009/09/label-overlay-example-for-google-maps.html
 // Define the overlay, derived from google.maps.OverlayView
 function Label(opt_options) {
@@ -1750,7 +1749,7 @@ MOEMap = (function () {
 		if(permitId <= 9){
 			iconName = "0" + permitId;
 		}
-		return "http://www.downloads.ene.gov.on.ca/files/mapping/images/icons/red" + iconName + ".png";
+		return "http://files.ontariogovernment.ca/moe_mapping/mapping/js/PTTW_Map_Creation/images/red" + iconName + ".png";
 	}
 	
 	function getUTMString(permitId){

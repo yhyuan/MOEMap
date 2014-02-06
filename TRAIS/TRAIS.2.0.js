@@ -1,3 +1,32 @@
+globalConfig.chooseLang = function (en, fr) {return (globalConfig.language === "EN") ? en : fr;};
+
+globalConfig.searchableFieldsList = [{en: "city", fr: "ville"}, {en: "facility name", fr: "installation"}, {en: "company", fr: "entreprise"}, {en: "sector", fr: "substance"}, {en: "substance", fr: "secteur"}];
+
+globalConfig.searchControlHTML = '<div id="searchTheMap"></div><div id="searchHelp"></div><br>\
+	<label class="element-invisible" for="map_query">' + globalConfig.chooseLang('Search the map', 'Recherche carte interactive') + '</label>\
+	<input id="map_query" type="text" title="' + globalConfig.chooseLang('Search term', 'Terme de recherche') + '" maxlength="100" size="50" onkeypress="return globalConfig.entsub(event)"></input>\
+	<label class="element-invisible" for="search_submit">' + globalConfig.chooseLang('Search', 'Recherche') + '</label>\
+	<input id="search_submit" type="submit" title="Search" onclick="globalConfig.search()" value="' + globalConfig.chooseLang('Search', 'Recherche') + '"></input>\
+	<fieldset>\
+		<input type="radio" id="searchLocation" name="searchGroup" checked="checked" title="' + globalConfig.chooseLang('Search Map Location or Facility', "Recherche par lieu ou par installation") + '" name="location" value="location" onclick="globalConfig.searchChange(\'Location\')"></input>\
+		<span class="tooltip" title="' + globalConfig.chooseLang("Search Map Location or Facility: Enter facility name or street address to find facilities", "Recherche par lieu ou par installation : entrez le nom de l\u0027installation ou son adresse.") + '">\
+		<label class="option" for="searchLocation">' + globalConfig.chooseLang('Search Map Location or Facility', "Recherche par lieu ou par installation") + '</label>\
+		</span>\
+		<br/>\
+		<input type="radio" id="searchSubstance" name="searchGroup" title="' + globalConfig.chooseLang('Search Substance', "Recherche par substance") + '" value="substance" onclick="globalConfig.searchChange(\'Substance\')"></input>\
+		<span class="tooltip" title="' + globalConfig.chooseLang('Search Substance: Enter the name of a substance to find facilities', "Recherche par substance : entrez le nom de la substance pour trouver les installations avec cette substance") + '">\
+		<label class="option" for="searchSubstance">' + globalConfig.chooseLang('Search Substance', "Recherche par substance") + '</label>\
+		</span>\
+		<br/>\
+		<input type="radio" id="searchSector" name="searchGroup" title="' + globalConfig.chooseLang('Search Sector', "Recherche par secteur") + '" value="secteur" onclick="globalConfig.searchChange(\'Sector\')"></input>\
+		<span class="tooltip" title="' + globalConfig.chooseLang('Search Sector: Enter the name of a sector to find facilities', "Recherche par secteur : entrez le nom d\u0027un secteur pour trouver les installations dans ce secteur") + '">\
+		<label class="option" for="searchSector">' + globalConfig.chooseLang('Search Sector', "Recherche par secteur") + '</label>\
+		</span>\
+		<br/>\
+		<input id="currentMapExtent" type="checkbox" name="currentExtent" title="' + globalConfig.chooseLang('Current Map Display', "Étendue de la carte courante") + '" /> <label for="currentExtent" class=\'option\'>' + globalConfig.chooseLang('Search current map display only', "\u00c9tendue de la carte courante") + '</label>\
+	</fieldset>\
+	<div id="information"></div>';
+	
 //var globalConfig = globalConfig || {};
 	
 //globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/TRAIS/MapServer";
@@ -37,10 +66,14 @@ substancesNameQueryLayer.query({
 	globalConfig.substancesDict = _.object(substancesNames, codes);
 });
 
+//globalConfig.annualReportURL = globalConfig.chooseLang("TRAIS_Report.htm", "TRAIS_Report.htm");
+globalConfig.annualReportURL = globalConfig.chooseLang("annual-report", "rapport-annuel");
+//globalConfig.planSummaryURL = globalConfig.chooseLang("TRAIS_PlanSummaries_Report.htm", "TRAIS_PlanSummaries_Report.htm");
+globalConfig.planSummaryURL = globalConfig.chooseLang("plan-summary-report", "sommaires-de-plan");
+//globalConfig.recordsURL = globalConfig.chooseLang("TRAIS_Records_Report.htm", "TRAIS_Records_Report.htm");
+globalConfig.recordsURL = globalConfig.chooseLang("record-report", "rapport-record");
+
 if (globalConfig.language === "EN") {
-	globalConfig.annualReportURL = "TRAIS_Report.htm";
-	globalConfig.planSummaryURL = "TRAIS_PlanSummaries_Report.htm";
-	globalConfig.recordsURL = "TRAIS_Records_Report.htm";
 	globalConfig.NoAnnualReportSubmittedLang = "No Annual Report submitted.";
 	globalConfig.NoPlanSummarySubmittedLang = "No Plan Summary submitted.";
 	globalConfig.NoRecordSubmittedLang = "No Record submitted.";
@@ -48,12 +81,9 @@ if (globalConfig.language === "EN") {
 	globalConfig.LinktoPlanSummariesLang = "Links to Plan Summaries";
 	globalConfig.LinktoRecordsLang = "Links to Records";
 	globalConfig.OpenNewWindowLang = "These links will open in a new browser window.";
-	globalConfig.searchHelpTxt = "Search <strong>city</strong>, <strong>facility name</strong>, <strong>company</strong>, <strong>sector</strong>, <strong>substance</strong> or see help for more advanced options.";
+	//globalConfig.searchHelpTxt = "Search <strong>city</strong>, <strong>facility name</strong>, <strong>company</strong>, <strong>sector</strong>, <strong>substance</strong> or see help for more advanced options.";
 	globalConfig.tabsTemplateContent = "Facility: <b>{Facility}</b><br>Organization: <b>{Organisation}</b><br>Physical Address: <b>{StreetAddress} / {City}</b><br>NPRI ID: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Sector: <b>{mapConfig.displaySector(Sector)}</b><br>Toxic Substances: <b>{NUMsubst}</b><br><br>[{NUMsubst}? " + globalConfig.NoAnnualReportSubmittedLang + " ?<a target='_blank' href='" + globalConfig.annualReportURL + "?id={UniqueID}'>" + globalConfig.LinktoAnnualReportsLang + "</a>]<br>[{NUMPlanSummary}? " + globalConfig.NoPlanSummarySubmittedLang + " ?<a target='_blank' href='" + globalConfig.planSummaryURL + "?id={UniqueID}'>" + globalConfig.LinktoPlanSummariesLang + "</a>]<br>[{NUMRecord}? " + globalConfig.NoRecordSubmittedLang + " ?<a target='_blank' href='" + globalConfig.recordsURL + "?id={UniqueID}'>" + globalConfig.LinktoRecordsLang + "</a>]<br><i>" + globalConfig.OpenNewWindowLang + "</i><br>";
 } else {
-	globalConfig.annualReportURL = "TRAIS_Report.htm";
-	globalConfig.planSummaryURL = "TRAIS_PlanSummaries_Report.htm";
-	globalConfig.recordsURL = "TRAIS_Records_Report.htm";
 	globalConfig.NoAnnualReportSubmittedLang = "Aucun rapport annuel pr&eacute;sent&eacute;.";
 	globalConfig.NoPlanSummarySubmittedLang = "Aucun sommaire de plan pr&eacute;sent&eacute;.";
 	globalConfig.NoRecordSubmittedLang = "Aucun document pr&eacute;sent&eacute;.";
@@ -61,7 +91,7 @@ if (globalConfig.language === "EN") {
 	globalConfig.LinktoPlanSummariesLang = "Lien aux sommaires de plan";
 	globalConfig.LinktoRecordsLang = "Lien aux documents";
 	globalConfig.OpenNewWindowLang = "En cliquant sur ces liens, vous ouvrirez une nouvelle fen&ecirc;tre dans votre navigateur.";	
-	globalConfig.searchHelpTxt = "Rechercher par <strong>ville</strong>, <strong>installation</strong>, <strong>entreprise</strong>, <strong>substance</strong>, <strong>secteur</strong> ou cliquer sur aide pour plus d\u0027information sur la recherche avanc\u00e9e.";
+	//globalConfig.searchHelpTxt = "Rechercher par <strong>ville</strong>, <strong>installation</strong>, <strong>entreprise</strong>, <strong>substance</strong>, <strong>secteur</strong> ou cliquer sur aide pour plus d\u0027information sur la recherche avanc\u00e9e.";
 	globalConfig.tabsTemplateContent = "Installation: <b>{Facility}</b><br>Entreprise: <b>{Organisation}</b><br>Adresse: <b>{StreetAddress} / {City}</b><br>N&deg; INRP: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Secteur: <b>{mapConfig.displaySector(Sector)}</b><br>Substances toxiques: <b>{NUMsubst}</b><br><br>[{NUMsubst}? " + globalConfig.NoAnnualReportSubmittedLang + " ?<a target='_blank' href='" + globalConfig.annualReportURL + "?id={UniqueID}'>" + globalConfig.LinktoAnnualReportsLang + "</a>]<br>[{NUMPlanSummary}? " + globalConfig.NoPlanSummarySubmittedLang + " ?<a target='_blank' href='" + globalConfig.planSummaryURL + "?id={UniqueID}'>" + globalConfig.LinktoPlanSummariesLang + "</a>]<br>[{NUMRecord}? " + globalConfig.NoRecordSubmittedLang + " ?<a target='_blank' href='" + globalConfig.recordsURL + "?id={UniqueID}'>" + globalConfig.LinktoRecordsLang + "</a>]<br><i>" + globalConfig.OpenNewWindowLang + "</i><br>";	
 }
 
@@ -78,7 +108,7 @@ globalConfig.InformationLang = "Information";
 globalConfig.postIdentifyCallbackName = "SportFish";
 //globalConfig.infoWindowContentHeight = '700px';
 globalConfig.infoWindowWidth  = '320px';
-globalConfig.infoWindowHeight = '200px';
+globalConfig.infoWindowHeight = '250px';
 if (globalConfig.accessible) {
 /*	var reportLang = "";
 	if (globalConfig.language === "EN") {
@@ -147,6 +177,40 @@ globalConfig.search = function(){
 		queryParams.requireGeocode = true;
 		queryParams.where = "(UPPER(" + globalConfig.searchFieldFacilityName + ") LIKE '%" + str + "%') OR (UPPER(" + globalConfig.searchFieldOrganizationName + ") LIKE '%" + str + "%')";
 		MOEMAP.queryLayersWithConditionsExtent(queryParams);
+	}
+};
+
+globalConfig.searchChange = function(type){
+	document.getElementById('map_query').value = "";
+	if(type === "Substance"){
+		$( "#map_query" ).autocomplete({source: substancesNames,
+			select: function(e, ui) {
+				var queryParams = {
+					searchString: ui.item.value
+				};	
+				if (!globalConfig.accessible) {
+					queryParams.withinExtent = document.getElementById(globalConfig.currentMapExtentDivId).checked;
+				}
+				MOEMAP.clearOverlays();			
+				mapConfig.searchSubstances(queryParams);
+			},
+			disabled: false });
+	}else if(type === "Sector"){
+		$( "#map_query" ).autocomplete({source: sectorNames,
+			select: function(e, ui) {
+				var queryParams = {
+					searchString: ui.item.value
+				};	
+				if (!globalConfig.accessible) {
+					queryParams.withinExtent = document.getElementById(globalConfig.currentMapExtentDivId).checked;
+				}
+				MOEMAP.clearOverlays();
+				mapConfig.searchSector(queryParams);
+			},			
+			disabled: false });
+	}else{
+		$( "#map_query" ).autocomplete({source: [], 
+			disabled: true });
 	}
 };
 
@@ -221,39 +285,6 @@ var mapConfig = {
 			}
 		}
 		return str;
-	},
-	searchChange: function(type){
-		document.getElementById('map_query').value = "";
-		if(type === "Substance"){
-			$( "#map_query" ).autocomplete({source: substancesNames,
-				select: function(e, ui) {
-					var queryParams = {
-						searchString: ui.item.value
-					};	
-					if (!globalConfig.accessible) {
-						queryParams.withinExtent = document.getElementById(globalConfig.currentMapExtentDivId).checked;
-					}
-					MOEMAP.clearOverlays();			
-					mapConfig.searchSubstances(queryParams);
-				},
-				disabled: false });
-		}else if(type === "Sector"){
-			$( "#map_query" ).autocomplete({source: sectorNames,
-				select: function(e, ui) {
-					var queryParams = {
-						searchString: ui.item.value
-					};	
-					if (!globalConfig.accessible) {
-						queryParams.withinExtent = document.getElementById(globalConfig.currentMapExtentDivId).checked;
-					}
-					MOEMAP.clearOverlays();
-					mapConfig.searchSector(queryParams);
-				},			
-				disabled: false });
-		}else{
-			$( "#map_query" ).autocomplete({source: [], 
-				disabled: true });
-		}
 	},
 	searchSubstances: function(queryParams){
 		/*var ii = -1; //substancesNames.indexOf(name) + 1;

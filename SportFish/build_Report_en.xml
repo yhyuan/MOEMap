@@ -37,7 +37,6 @@
 		<concat destfile="${build.dir}/SportFish_Report_en.2.0-min.js" >
 			<header> /* Build Time: ${build.time} */ </header>
 			<filelist  dir="${MOEMap.src.dir}" >
-				<file name="yepnope-min.js" />
 				<file name="json2-min.js" />
 				<file name="underscore-min.js" />
 				<file name="removeGoogleMapsDependency.js" />

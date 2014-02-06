@@ -1,10 +1,12 @@
 globalConfig = {};
 globalConfig.language = "FR";
-globalConfig.searchHelpTxt = "Rechercher par <STRONG>adresse</STRONG>, <STRONG>ville</STRONG>, <STRONG>code postal</STRONG> ou cliquer sur aide pour plus d\u0027information sur la recherche avanc\u00e9e.";
+//globalConfig.searchHelpTxt = "Rechercher par <STRONG>adresse</STRONG>, <STRONG>ville</STRONG>, <STRONG>code postal</STRONG> ou cliquer sur aide pour plus d\u0027information sur la recherche avanc\u00e9e.";
 globalConfig.otherInfoHTML = "";
+/*
 globalConfig.searchControlHTML = '<input id = "map_query" type="text" title="Terme" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100" autocomplete="off"></input>&nbsp;&nbsp;<input type="submit" onclick="globalConfig.search()" value="Rechercher" title="Rechercher"></input> \
 	<input type="submit" onclick="INITIALIZATION.init()" title="Effacer" value="&nbsp;Effacer&nbsp;"></input> 		\
 	<br><br><div id="information" style="color:#000000">' + globalConfig.searchHelpTxt + '</div>';
+*/
 var MOEMapLanguage = {
 	MarkerAlt: "Lieu",
     InfoResultTitle : "R\u00e9sultat situ\u00e9 dans le",
