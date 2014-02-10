@@ -63,7 +63,7 @@ globalConfig.layers = [{
 		PubSub.emit(globalConfig.layers[0].event + "Data", {dataArray: dataArray});
 		//document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, {dataArray: globalConfig.dataArray});		
 	},
-	template: '<br><center><table border="1">\
+	template: '<br><center><table   class="noStripes" border="1">\
 			<caption><%= globalConfig.chooseLang("Water Transparency (Secchi Depth in meters)", "Transparence de l\'eau (profondeur en m&egrave;tres d\'apr&egrave;s le disque Secchi)") %> </caption>\
 			<tbody>\
 				<tr><th scope="col" class="shaded"><center><%= globalConfig.chooseLang("Year", "Ann&eacute;e") %></center></th><th class="shaded" scope="col"><center><%= globalConfig.chooseLang("Secchi Depth (m)", "Mesure du disque Secchi (m)") %></center></th></tr>\

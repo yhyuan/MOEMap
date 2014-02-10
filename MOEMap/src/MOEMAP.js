@@ -232,6 +232,20 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 		var container = globalConfig.createControllableInfoWindowContent(calculateContents[0].content);
 		MOEMAP.openInfoWindow(queryParams.gLatLng, container);
 	},
+	"SWPLocatorReverseGeocoding": function (queryParams) {
+		var geocoder = new google.maps.Geocoder();
+		var latlng = queryParams.gLatLng;
+		geocoder.geocode({
+			'address': latlng.lat() + ',' + latlng.lng()
+		}, function (results, status) {
+			if (status === google.maps.GeocoderStatus.OK) {
+				globalConfig.returnedAddress = results[0].formatted_address.toString();
+				globalConfig.postIdentifyCallbackList["SWPLocator"](queryParams);
+			} else {
+				alert("Geocode was not successful for the following reason: " + status);
+			}
+		});		
+	},
 	"SWPLocator": function (queryParams) {
 		MOEMAP.clearOverlays();	
 		var layerList = queryParams.layerList;
@@ -312,7 +326,9 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 			}
 		}
 		//console.log(container.innerHTML);
-		document.getElementById(globalConfig.queryTableDivId).innerHTML = "<br>" + container.innerHTML;
+		if (globalConfig.testDivExist(globalConfig.queryTableDivId)) {
+			document.getElementById(globalConfig.queryTableDivId).innerHTML = "<br>" + container.innerHTML;
+		}
 		/*
 		if (globalConfig.identifyMultiplePolygonLayersServicesTemplate.hasOwnProperty('success')) {
 			globalConfig.identifyMultiplePolygonLayersServicesTemplate.success();

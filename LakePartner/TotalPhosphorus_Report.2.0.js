@@ -70,7 +70,7 @@ globalConfig.layers = [{
 		//globalConfig.drawChart();
 		//document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, {dataArray: globalConfig.dataArray});		
 	},
-	template: '<br><table border=\'1\'>\
+	template: '<br><table   class="noStripes" border=\'1\'>\
 			<caption><%= globalConfig.chooseLang("Average Total Phosphorus (TP) Concentration (&micro;g/L)", "Concentration moyennes de phosphore total (&micro;g/L)") %> </caption>\
 			<tbody>\
 				<tr><th class="shaded" scope=\'col\'><center><%= globalConfig.chooseLang("Date", "Ann&eacute;e") %></center></th><th class="shaded" scope=\'col\'><center><%=  globalConfig.chooseLang("Sample", "&Eacute;chantillon") %> 1 (&micro;g/L)</center></th><th class="shaded" scope=\'col\'><center><%=  globalConfig.chooseLang("Sample", "&Eacute;chantillon") %> 2 (&micro;g/L)</center></th><th class="shaded" scope=\'col\'><center><%=  globalConfig.chooseLang("Average", "Moyenne") %> (&micro;g/L)</center></th></tr>\

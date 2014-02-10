@@ -1,3 +1,5 @@
+//globalConfig.annualReportURL = globalConfig.chooseLang("annual-report", "rapport-annuel");
+globalConfig.annualReportURL = globalConfig.chooseLang("TRAIS_Report.htm", "TRAIS_Report.htm");
 globalConfig.processEmptyValue = function(str) {
 	if (str.length === 0){
 		return "&nbsp;";
@@ -128,7 +130,7 @@ globalConfig.layers = [{
 				<%\
 				 _.each(renderResult.reportingPeriods,function(reportingPeriod,key,list){\
 				%>\
-				<A HREF="<%= globalConfig.chooseLang("annual-report", "rapport-annuel") %>?id=<%= renderResult.UniqueFacilityID %>&year=<%= reportingPeriod %>"><%= globalConfig.chooseLang(reportingPeriod + " Annual Report", "Rapport annuel " + reportingPeriod) %> </A><br>\
+				<A HREF="<%= globalConfig.annualReportURL %>?id=<%= renderResult.UniqueFacilityID %>&year=<%= reportingPeriod %>"><%= globalConfig.chooseLang(reportingPeriod + " Annual Report", "Rapport annuel " + reportingPeriod) %> </A><br>\
 				<%});%>\
 			<% } else {%>\
 			\
@@ -153,7 +155,7 @@ globalConfig.layers = [{
 				<%\
 					if (substance.isComparisonTableWide){\
 				%>\
-				<TABLE class="TRAISTable">\
+				<TABLE class="noStripes">\
 						<TR>\
 							<TH WIDTH=25%>&nbsp;</TH>\
 							<TH WIDTH=25%><%= renderResult.ReportingPeriod %><BR><%= globalConfig.chooseLang("Amount Reported", "Quantit&eacute; d&eacute;clar&eacute;e") %> <BR>(<%= substance.Units %>)</TH>\
@@ -213,7 +215,7 @@ globalConfig.layers = [{
 				<%\
 					} else {\
 				%>\
-				<TABLE class="TRAISTable">\
+				<TABLE class="noStripes">\
 						<TR>\
 							<TH WIDTH=25%>&nbsp;</TH>\
 							<TH WIDTH=75%><%= renderResult.ReportingPeriod %><BR><%= globalConfig.chooseLang("Amount Reported", "Quantit&eacute; d&eacute;clar&eacute;e") %> <BR>(<%= substance.Units %>)</TH>\
@@ -267,7 +269,7 @@ globalConfig.layers = [{
 						} else {\
 					%>\
 						<%= globalConfig.chooseLang("Option(s) to reduce the use or creation of " + substance.Name + " was/were identified for implementation in the Toxics Reduction Plan.", "Une ou plusieurs options visant &agrave; r&eacute;duire l’utilisation ou la cr&eacute;ation de " + substance.Name + " ont &eacute;t&eacute; mentionn&eacute;es en vue de leur mise en œuvre dans le plan de r&eacute;duction de substance toxique.") %>\
-				<TABLE class="TRAISTable">\
+				<TABLE class="noStripes">\
 						<TR>\
 							<TH WIDTH=30%><%= globalConfig.chooseLang("Option Category", "Cat&eacute;gorie d’option") %></TH>\
 							<TH WIDTH=30%><%= globalConfig.chooseLang("Option Activity", "Activit&eacute; li&eacute;e &agrave; l’option") %></TH>\

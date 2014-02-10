@@ -78,7 +78,7 @@ globalConfig.layers = [{
 	},
 	template: '		<h2><%= globalConfig.chooseLang("Water Chemistry  in PGMN Well", "Composition chimique de l&acute;eau des puits du R&eacute;seau provincial de contr&ocirc;le des eaux souterraines") %>: <%= renderResult.PGMN_WELL %></h2>\
 		<a name="top"></a><a href="http://files.ontariogovernment.ca/moe_mapping/mapping/PGMN/WaterChemistry/<%= renderResult.PGMN_WELL %>.txt"><%= globalConfig.chooseLang("Water Chemistry Data Download (Tab Separated Text File)", "T&eacute;l&eacute;chargement des donn&eacute;es hydro-chimiques (Fichier texte s&eacute;par&eacute;)") %></a>\
-		<table <!--class="fishTable"-->  border="1">\
+		<table class="noStripes" border="1">\
             <%\
 				var chemicalList = renderResult.availableChartedChemicals;\
 				if (chemicalList.length % 3 === 1) {\
@@ -110,7 +110,7 @@ globalConfig.layers = [{
 		%>\
 			<h3><a name="index<%= key %>"><%= chemicalName %></a></h3>\
 			<img src="http://chart.apis.google.com/chart?cht=s&chd=t:<%= chartedValues.dates.join(",") %>|<%= chartedValues.values.join(",") %>&chxt=x,y&chs=500x200&chxl=|0:|2002|2003|2004|2005|2006|2007|2008|2009|2010|2011|2012|2013|1:|0|<%= chartedValues.maxValue*0.5 %>|<%= chartedValues.maxValue %>(<%= chartedValues.unit %>)"/>\
-			<table <!--class="fishTable"-->  border="1">\
+			<table  class="noStripes" border="1">\
 				<tr><th class="shaded"><center>Date</center></th><th class="shaded"><center><%= globalConfig.chooseLang("Value", "Valeur") %></center></th><th class="shaded"><center><%= globalConfig.chooseLang("Units", "Unit&eacute;") %></center></th><th class="shaded"><center><%= globalConfig.chooseLang("Qualifiers", "Qualificateurs") %></center></th><th class="shaded"><center><%= globalConfig.chooseLang("Remark 1", "Observation 1") %></center></th><th class="shaded"><center><%= globalConfig.chooseLang("Remark 2", "Observation 2") %></center></th><th class="shaded"><center><%= globalConfig.chooseLang("Confidence Level", "Niveau de confiance") %></center></th><th class="shaded"><center><%= globalConfig.chooseLang("Comments", "Commentaires") %></center></th><th class="shaded"><center><%= globalConfig.chooseLang("Sample Number", "Num&eacute;ro d&acute;&eacute;chantillon") %></center></th></tr>\
 	            <%\
                 _.each(chemicalSamples,function(sample,key,list){\
@@ -131,7 +131,7 @@ globalConfig.layers = [{
 				var chemicalSamples = renderResult.parameterObject[chemical].sort(globalConfig.sortByDate);\
 		%>\
 			<h3><%= chemical %></h3>\
-			<table <!--class="fishTable"-->  border="1">\
+			<table  class="noStripes" border="1">\
 				<tr><th class="shaded"><center>Date</center></th><th class="shaded"><center><%= globalConfig.chooseLang("Value", "Valeur") %></center></th><th class="shaded"><center><%= globalConfig.chooseLang("Units", "Unit&eacute;") %></center></th><th class="shaded"><center><%= globalConfig.chooseLang("Qualifiers", "Qualificateurs") %></center></th><th class="shaded"><center><%= globalConfig.chooseLang("Remark 1", "Observation 1") %></center></th><th class="shaded"><center><%= globalConfig.chooseLang("Remark 2", "Observation 2") %></center></th><th class="shaded"><center><%= globalConfig.chooseLang("Confidence Level", "Niveau de confiance") %></center></th><th class="shaded"><center><%= globalConfig.chooseLang("Comments", "Commentaires") %></center></th><th class="shaded"><center><%= globalConfig.chooseLang("Sample Number", "Num&eacute;ro d&acute;&eacute;chantillon") %></center></th></tr>\
 	            <%\
                 _.each(chemicalSamples,function(sample,key,list){\

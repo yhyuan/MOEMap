@@ -1,5 +1,6 @@
-globalConfig.TRAIS_PlanSummaries_Report = "TRAIS_PlanSummaries_Report.htm";
-
+//globalConfig.TRAIS_PlanSummaries_Report = "TRAIS_PlanSummaries_Report.htm";
+//globalConfig.planSummaryURL = globalConfig.chooseLang("plan-summary-report", "sommaires-de-plan");
+globalConfig.planSummaryURL = globalConfig.chooseLang("TRAIS_PlanSummaries_Report.htm", "TRAIS_PlanSummaries_Report.htm");
 globalConfig.getYears = function (year) {
 	if (year === "1") {
 		return year + globalConfig.chooseLang(" year", " an");
@@ -123,23 +124,23 @@ globalConfig.layers = [{
 				<%\
 				 _.each(renderResult.reportingPeriods,function(reportingPeriod,key,list){\
 				%>\
-				<A HREF="<%= globalConfig.chooseLang("plan-summary-report", "sommaires-de-plan") %>?id=<%= renderResult.UniqueFacilityID %>&year=<%= reportingPeriod %>"><%= reportingPeriod + " " + globalConfig.chooseLang("Plan Summary", "Sommaires de Plan") %> </A><br>\
+				<A HREF="<%= globalConfig.planSummaryURL %>?id=<%= renderResult.UniqueFacilityID %>&year=<%= reportingPeriod %>"><%= reportingPeriod + " " + globalConfig.chooseLang("Plan Summary", "Sommaires de Plan") %> </A><br>\
 				<%});%>\
 			<% } else {%>\
-			<TABLE BORDER=0 WIDTH=600>\
+			\
 			<A NAME="top"></A>\
-			<TR><TD COLSPAN=2><CENTER><H2><%= globalConfig.chooseLang("Plan Summary " + renderResult.ReportingPeriod, "Sommaires de Plan " + renderResult.ReportingPeriod) %></H2></CENTER><P></TD></TR>\
-			<TR><TD><%= globalConfig.chooseLang("Facility Name", "Nom de l\'installation") %>:</TD><TD><%= renderResult.FacilityName %></TD></TR>\
-			<TR><TD><%= globalConfig.chooseLang("Company Name", "Nom de l\'entreprise") %>:</TD><TD><%= renderResult.CompanyName %></TD></TR>\
-			<TR><TD><%= globalConfig.chooseLang("Physical Address", "Adresse") %>:</TD><TD><%= renderResult.Address %></TD></TR>\
-			<TR><TD><%= globalConfig.chooseLang("Sector", "Secteur") %>:</TD><TD><%= renderResult.Sector %></TD></TR>\
-			<TR><TD><%= globalConfig.chooseLang("NPRI ID", "ID INRP") %>:</TD><TD><%= renderResult.NPRIID %></TD></TR>\
-			<TR><TD><%= globalConfig.chooseLang("Public Contact", "Personne-ressource") %>:</TD><TD><%= renderResult.PublicContact %><BR><%= renderResult.PublicContactPhone %><BR><A HREF=mailto:<%= renderResult.PublicContactEMail %>><%= renderResult.PublicContactEMail %></A></TD></TR>\
-			<TR><TD COLSPAN=2>&nbsp;<BR><%= globalConfig.chooseLang("Certified by", "Certifi&eacute; par") %> <%= renderResult.HighestRankingEmployee %>, <%= globalConfig.chooseLang("Highest Ranking Employee", "employ&eacute; le plus &eacute;lev&eacute; hi&eacute;rarchiquement") %><BR>&nbsp;</TD></TR>\
-			<TR><TD COLSPAN=2><A NAME="subst"></A><%= ((renderResult.hasOwnProperty("Substances") && renderResult.Substances.length > 0)) ? globalConfig.chooseLang("List of Substances:", "Liste des substances:") : "" %>\
+			<H2><%= globalConfig.chooseLang("Plan Summary " + renderResult.ReportingPeriod, "Sommaires de Plan " + renderResult.ReportingPeriod) %></H2><BR>\
+			<%= globalConfig.chooseLang("Facility Name", "Nom de l\'installation") %>: <strong><%= renderResult.FacilityName %></strong><BR>\
+			<%= globalConfig.chooseLang("Company Name", "Nom de l\'entreprise") %>: <strong><%= renderResult.CompanyName %></strong><BR>\
+			<%= globalConfig.chooseLang("Physical Address", "Adresse") %>: <strong><%= renderResult.Address %></strong><BR>\
+			<%= globalConfig.chooseLang("Sector", "Secteur") %>: <strong><%= renderResult.Sector %></strong><BR>\
+			<%= globalConfig.chooseLang("NPRI ID", "ID INRP") %>: <strong><%= renderResult.NPRIID %></strong><BR>\
+			<%= globalConfig.chooseLang("Public Contact", "Personne-ressource") %>: <strong><%= renderResult.PublicContact %><BR>&nbsp&nbsp&nbsp&nbsp&nbsp<%= renderResult.PublicContactPhone %><BR>&nbsp&nbsp&nbsp&nbsp&nbsp<A HREF=mailto:<%= renderResult.PublicContactEmail %>><%= renderResult.PublicContactEmail %></A></strong><BR>\
+			<%= globalConfig.chooseLang("Certified by", "Certifi&eacute; par") %> <strong><%= renderResult.HighestRankingEmployee %></strong>, <%= globalConfig.chooseLang("Highest Ranking Employee", "employ&eacute; le plus &eacute;lev&eacute; hi&eacute;rarchiquement") %><BR><BR>\
+			<A NAME="subst"></A><%= ((renderResult.hasOwnProperty("Substances") && renderResult.Substances.length > 0)) ? globalConfig.chooseLang("List of Substances:", "Liste des substances:") : "" %>\
 			<%= _.map(renderResult.Substances, function(substance) {return \'<A HREF="#\' + substance.Name + \'">\' + substance.Name + \'</A>\';}).join(", ") %>\
-			<TR><TD COLSPAN=2><HR></TD><TR>\
-		</TABLE><P>\
+			<BR>\
+           <P>\
 			<%= ((renderResult.hasOwnProperty("Substances") && renderResult.Substances.length > 0)) ? "" : globalConfig.chooseLang("There is no substance renderResultrmation provided from this facility.<BR>", "Il n\'y a pas d\'information sur les substances toxiques fournie par cette entreprise ou installation<BR>") %>\
             <%\
                 _.each(renderResult.Substances,function(substance,key,list){\
@@ -150,7 +151,7 @@ globalConfig.layers = [{
 					<%= (substance.ReasonforNoIntenttoReduceUse.length === 0) ? (globalConfig.chooseLang("Toxic Substance Reduction Plan includes a statement to reduce the use of the substance", "Le plan de réduction de substance toxique comprend une déclaration en vue de réduire l’utilisation de la substance")) : (globalConfig.chooseLang("Toxic Substance Reduction Plan does not include a statement to reduce the use of the substance because: <br>", "Le plan de réduction de substance toxique ne comprend pas de déclaration en vue de réduire l’utilisation de la substance du fait que: <br>") + substance.ReasonforNoIntenttoReduceUse) %>\
 				<br><br><strong><%= globalConfig.chooseLang("Statement of Intent to Reduce Creation:", "Déclaration de l’intention de réduire la création:") %></strong><br>\
 					<%= (substance.ReasonforNoIntenttoReduceCreat.length === 0) ? (globalConfig.chooseLang("Toxic Substance Reduction Plan includes a statement to reduce the creation of the substance", "Le plan de réduction de substance toxique comprend une déclaration en vue de réduire la création de la substance")) : (globalConfig.chooseLang("Toxic Substance Reduction Plan does not include a statement to reduce the creation of the substance because: <br>", "Le plan de réduction de substance toxique ne comprend pas de déclaration en vue de réduire la création de la substance du fait que: <br>") + substance.ReasonforNoIntenttoReduceCreat) %>\
-				<TABLE class="TRAISTable">\
+				<TABLE class="noStripes">\
 				  <tr>\
 					<th width="25%"><strong><%= globalConfig.chooseLang("Objectives:", "Objectifs:") %></strong></th>\
 					<th colspan="2" width="75%"><strong><%= globalConfig.chooseLang("Targets (optional): ", "Cibles (facultatif):") %></strong></th>\
@@ -170,7 +171,7 @@ globalConfig.layers = [{
 				<br><br><strong><%= globalConfig.chooseLang("Implementing Toxic Substance Reduction Options", "Options de mise en œuvre de la réduction de la substance toxique") %></strong><br>\
 				<% if (substance.StatementNoOptionImplementedYN === "No") { %>\
 					<br><%= globalConfig.chooseLang("Toxic Substance Reduction Plan indicated that the following options will be implemented", "Le plan de réduction de substance toxique indique que les options suivantes seront mises en œuvre") %><br>\
-					<TABLE class="TRAISTable">\
+					<TABLE class="noStripes">\
 					  <tr>\
 						<th width="15%"><strong><%= globalConfig.chooseLang("Reduction Categories", "Catégories de réduction") %></strong></th>\
 						<th width="15%"><strong><%= globalConfig.chooseLang("Reduction Options", "Options de réduction") %></strong></th>\

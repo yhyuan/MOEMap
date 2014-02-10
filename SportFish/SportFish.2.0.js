@@ -51,6 +51,11 @@ globalConfig.InformationLang = "Information";
 globalConfig.postIdentifyCallbackName = "SportFish";
 //globalConfig.postConditionsCallbackName = "SportFish";
 globalConfig.infoWindowWidth  = '280px';
+//globalConfig.infoWindowWidth = '320px';
+//globalConfig.infoWindowHeight = "140px";
+//globalConfig.infoWindowContentHeight = "200px";
+//globalConfig.infoWindowContentWidth = "300px";
+
 
 //globalConfig.tableSimpleTemplateTitleLang = globalConfig.chooseLang("Note: Data is in English only.", "\u00c0 noter : Les donn\u00e9es sont en anglais seulement.");
 globalConfig.tableSimpleTemplateTitleLang = "";
