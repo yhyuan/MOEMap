@@ -1,5 +1,3 @@
-//globalConfig.annualReportURL = globalConfig.chooseLang("annual-report", "rapport-annuel");
-globalConfig.annualReportURL = globalConfig.chooseLang("TRAIS_Report.htm", "TRAIS_Report.htm");
 globalConfig.processEmptyValue = function(str) {
 	if (str.length === 0){
 		return "&nbsp;";

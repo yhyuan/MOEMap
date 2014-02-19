@@ -1,4 +1,4 @@
-globalConfig.chooseLang = function (en, fr) {return (globalConfig.language === "EN") ? en : fr;};
+
 
 globalConfig.searchableFieldsList = [{en: "city", fr: "ville"}, {en: "facility name", fr: "installation"}, {en: "company", fr: "entreprise"}, {en: "sector", fr: "substance"}, {en: "substance", fr: "secteur"}];
 
@@ -66,12 +66,7 @@ substancesNameQueryLayer.query({
 	globalConfig.substancesDict = _.object(substancesNames, codes);
 });
 
-globalConfig.annualReportURL = globalConfig.chooseLang("TRAIS_Report.htm", "TRAIS_Report.htm");
-//globalConfig.annualReportURL = globalConfig.chooseLang("annual-report", "rapport-annuel");
-globalConfig.planSummaryURL = globalConfig.chooseLang("TRAIS_PlanSummaries_Report.htm", "TRAIS_PlanSummaries_Report.htm");
-//globalConfig.planSummaryURL = globalConfig.chooseLang("plan-summary-report", "sommaires-de-plan");
-globalConfig.recordsURL = globalConfig.chooseLang("TRAIS_Records_Report.htm", "TRAIS_Records_Report.htm");
-//globalConfig.recordsURL = globalConfig.chooseLang("record-report", "rapport-record");
+
 
 if (globalConfig.language === "EN") {
 	globalConfig.NoAnnualReportSubmittedLang = "No Annual Report submitted.";

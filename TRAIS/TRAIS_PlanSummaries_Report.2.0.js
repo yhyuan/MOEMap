@@ -1,6 +1,3 @@
-//globalConfig.TRAIS_PlanSummaries_Report = "TRAIS_PlanSummaries_Report.htm";
-//globalConfig.planSummaryURL = globalConfig.chooseLang("plan-summary-report", "sommaires-de-plan");
-globalConfig.planSummaryURL = globalConfig.chooseLang("TRAIS_PlanSummaries_Report.htm", "TRAIS_PlanSummaries_Report.htm");
 globalConfig.getYears = function (year) {
 	if (year === "1") {
 		return year + globalConfig.chooseLang(" year", " an");

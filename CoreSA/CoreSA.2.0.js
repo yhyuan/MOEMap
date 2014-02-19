@@ -69,7 +69,8 @@ globalConfig.search = function(){
 			return;
 		}
 		MOEMAP.clearOverlays();
-		globalConfig.maxQueryZoomLevel = 15;			
+		globalConfig.maxQueryZoomLevel = 15;
+		globalConfig.avoidReverseGeocoding = true;
 		MOEMAP.identifyMultiplePolygonLayersWithLocation(name);		
 };
 
@@ -161,6 +162,7 @@ globalConfig.identifyMultiplePolygonLayersServicesTemplate = {
 		}
 	}
 };
+/*
 globalConfig.preIdentifyCallback = function (queryParams) {
 	globalConfig.identifyResults = {};
 	var layerSetting = queryParams.layerList[0];
@@ -171,7 +173,7 @@ globalConfig.preIdentifyCallback = function (queryParams) {
 		outFields: ["OBJECTID","Residentia","WW_SA_30m", "WW_SA_15m", "DaycareSA", "DWS_SA", "EducationSA", "Healthcare", "IPZ_1_SA", "IPZ_2_SA", "RecreationalSA", "WHPA_A_SA", "WHPA_B_SA", "BeachSA","Total_HSA_Score"]
 	};			
 	return params;
-};
+};*/
 /*
     google.maps.event.addDomListener(document.getElementById('lyrTransp1'), 'checked', function(){
              var op = 1.0;
