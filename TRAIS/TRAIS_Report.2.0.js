@@ -157,7 +157,7 @@ globalConfig.layers = [{
 						<TR>\
 							<TH WIDTH=25%>&nbsp;</TH>\
 							<TH WIDTH=25%><%= renderResult.ReportingPeriod %><BR><%= globalConfig.chooseLang("Amount Reported", "Quantit&eacute; d&eacute;clar&eacute;e") %> <BR>(<%= substance.Units %>)</TH>\
-							<TH WIDTH=25%><%= globalConfig.chooseLang("Change from Previous Annual Report<BR>(%)", "Variation en par rapport au rapport annuel pr&eacute;c&eacute;dent<BR>(%)") %> </TH>\
+							<TH WIDTH=25%><%= globalConfig.chooseLang("Change from Previous Annual Report<BR>(%)", "Modification par rapport au rapport annuel pr&eacute;c&eacute;dent<BR>(%)") %> </TH>\
 							<TH WIDTH=25%><%= globalConfig.chooseLang("Reasons for Change", "Raisons de la variation") %></TH>\
 						</TR>\
 						<TR>\
@@ -271,7 +271,7 @@ globalConfig.layers = [{
 						<TR>\
 							<TH WIDTH=30%><%= globalConfig.chooseLang("Option Category", "Cat&eacute;gorie d’option") %></TH>\
 							<TH WIDTH=30%><%= globalConfig.chooseLang("Option Activity", "Activit&eacute; li&eacute;e &agrave; l’option") %></TH>\
-							<TH WIDTH=20%><%= globalConfig.chooseLang("Quantification Type", "Type de Quantification") %></TH>\
+							<TH WIDTH=20%><%= globalConfig.chooseLang("Quantification Type", "Type de quantification") %></TH>\
 							<TH WIDTH=20%><%= globalConfig.chooseLang("Reduction achieved in " + renderResult.ReportingPeriod + "<br>(" + substance.Units, "R&eacute;duction atteinte en " + renderResult.ReportingPeriod + "<br><br>(" + substance.Units) %>)</TH>\
 						</TR>\
 						<%\

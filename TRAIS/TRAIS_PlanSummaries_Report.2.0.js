@@ -143,7 +143,7 @@ globalConfig.layers = [{
                 _.each(renderResult.Substances,function(substance,key,list){\
             %>\
 				<A NAME="<%= substance.Name %>"></A><U><B><%= substance.Name %></B></U><P>\
-				<%= globalConfig.chooseLang("This plan summary is a reflection of a/an <strong>" + substance.VersionofthePlan + "</strong> based on the <strong>" + renderResult.ReportingPeriod + "</strong> reporting period.", "This plan summary is a reflection of a/an <strong>" + substance.VersionofthePlan + "</strong> based on the <strong>" + renderResult.ReportingPeriod + "</strong> reporting period.") %>\
+				<%= globalConfig.chooseLang("This plan summary is a reflection of a/an <strong>" + substance.VersionofthePlan + "</strong> based on the <strong>" + renderResult.ReportingPeriod + "</strong> reporting period.", "Ce sommaire de plan refl&egrave;te un plan <strong>" + substance.VersionofthePlan + "</strong> fond&eacute; sur la p&eacute;riode de d&eacute;claration de <strong>" + renderResult.ReportingPeriod + "</strong>.") %>\
 				<br><br><strong><%= globalConfig.chooseLang("Statement of Intent to Reduce Use:", "Déclaration de l’intention de réduire l’utilisation:") %></strong><br>\
 					<%= (substance.ReasonforNoIntenttoReduceUse.length === 0) ? (globalConfig.chooseLang("Toxic Substance Reduction Plan includes a statement to reduce the use of the substance", "Le plan de réduction de substance toxique comprend une déclaration en vue de réduire l’utilisation de la substance")) : (globalConfig.chooseLang("Toxic Substance Reduction Plan does not include a statement to reduce the use of the substance because: <br>", "Le plan de réduction de substance toxique ne comprend pas de déclaration en vue de réduire l’utilisation de la substance du fait que: <br>") + substance.ReasonforNoIntenttoReduceUse) %>\
 				<br><br><strong><%= globalConfig.chooseLang("Statement of Intent to Reduce Creation:", "Déclaration de l’intention de réduire la création:") %></strong><br>\
@@ -172,7 +172,7 @@ globalConfig.layers = [{
 					  <tr>\
 						<th width="15%"><strong><%= globalConfig.chooseLang("Reduction Categories", "Catégories de réduction") %></strong></th>\
 						<th width="15%"><strong><%= globalConfig.chooseLang("Reduction Options", "Options de réduction") %></strong></th>\
-						<th width="15%"><strong><%= globalConfig.chooseLang("Quantification Type", "Quantification Type") %></strong></th>\
+						<th width="15%"><strong><%= globalConfig.chooseLang("Quantification Type", "Type de quantification") %></strong></th>\
 						<th width="15%"><strong><%= globalConfig.chooseLang("Percentage Reductions", "Réductions en pourcentage") %></strong></th>\
 						<th width="20%"><strong><%= globalConfig.chooseLang("Anticipated Timelines for Achieving Reductions in Use", "Délai prévu pour la réduction de l’utilisation") %></strong></th>\
 						<th width="20%"><strong><%= globalConfig.chooseLang("Anticipated Timelines for Achieving Reductions in Creation", "Délai prévu pour la réduction de la création") %></strong></th>\
@@ -197,27 +197,27 @@ globalConfig.layers = [{
 						<td><%= globalConfig.processEmptyValue(option.EstContainedinProductReduPct) %></td>\
 					  </tr>\
 					  <tr>\
-						<td><%= globalConfig.chooseLang("Released to Air", "Rejetée dans l’air") %></td>\
+						<td><%= globalConfig.chooseLang("Released to Air", "Rejet dans l\'air") %></td>\
 						<td><%= globalConfig.processEmptyValue(option.EstAirReleasesReduPct) %></td>\
 					  </tr>\
 					  <tr>\
-						<td><%= globalConfig.chooseLang("Released to Land", "Rejetée dans la terre") %></td>\
+						<td><%= globalConfig.chooseLang("Released to Land", "Rejet dans le sol") %></td>\
 						<td><%= globalConfig.processEmptyValue(option.EstLandReleasesReduPct) %></td>\
 					  </tr>\
 					  <tr>\
-						<td><%= globalConfig.chooseLang("Released to Water", "Rejetée dans l’eau") %></td>\
+						<td><%= globalConfig.chooseLang("Released to Water", "Rejet dans l\'eau") %></td>\
 						<td><%= globalConfig.processEmptyValue(option.EstWaterReleasesReduPct) %></td>\
 					  </tr>\
 					  <tr>\
-						<td><%= globalConfig.chooseLang("Disposed On-Site", "Éliminée sur place") %></td>\
+						<td><%= globalConfig.chooseLang("Disposed On-Site", "Éliminé dans le site") %></td>\
 						<td><%= globalConfig.processEmptyValue(option.EstOnsiteDisposalsReduPct) %></td>\
 					  </tr>\
 					  <tr>\
-						<td><%= globalConfig.chooseLang("Disposed Off-site", "Éliminée hors site") %></td>\
+						<td><%= globalConfig.chooseLang("Disposed Off-site", "Éliminé à l\'extérieur du site") %></td>\
 						<td><%= globalConfig.processEmptyValue(option.EstOffsiteDisposalsReduPct) %></td>\
 					  </tr>\
 					  <tr>\
-						<td><%= globalConfig.chooseLang("Recycled Off-site", "Recyclée hors site") %></td>\
+						<td><%= globalConfig.chooseLang("Recycled Off-site", "Recyclée à l\'extérieur du site") %></td>\
 						<td><%= globalConfig.processEmptyValue(option.EstOffsiteRecyclingReduPct) %></td>\
 					  </tr>\
 					<%\
