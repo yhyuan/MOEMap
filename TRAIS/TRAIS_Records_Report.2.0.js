@@ -144,7 +144,7 @@ globalConfig.layers = [{
 					<%});%>\
 				<%});%>\
 			</TABLE>\
-		<BR><BR><I><A HREF="http://www.ene.gov.on.ca/environment/<%= globalConfig.chooseLang("en", "fr") %>/resources/collection/data_downloads/index.htm"><%= globalConfig.chooseLang("Download the full dataset", "Ensemble de donn&eacute;es &agrave; t&eacute;l&eacute;charger") %></A></I><BR>'
+		<BR><BR><I><A HREF="<%= globalConfig.dataDownloadURL %>"><%= globalConfig.chooseLang("Download the full dataset", "Ensemble de donn&eacute;es &agrave; t&eacute;l&eacute;charger") %></A></I><BR>'
 },{
 	url: globalConfig.url  + "/" + globalConfig.layerIDs.ExemptionRecords,
 	renderTargetDiv: "exemptionRecords",
@@ -213,5 +213,5 @@ globalConfig.layers = [{
 					<%});%>\
 				<%});%>\
 			</TABLE>\
-		<BR><BR><I><A HREF="http://www.ene.gov.on.ca/environment/<%= globalConfig.chooseLang("en", "fr") %>/resources/collection/data_downloads/index.htm"><%= globalConfig.chooseLang("Download the full dataset", "Ensemble de donn&eacute;es &agrave; t&eacute;l&eacute;charger") %></A></I><BR>'
+		<BR><BR><I><A HREF="<%= globalConfig.dataDownloadURL %>"><%= globalConfig.chooseLang("Download the full dataset", "Ensemble de donn&eacute;es &agrave; t&eacute;l&eacute;charger") %></A></I><BR>'
 }];

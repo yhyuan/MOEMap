@@ -42,6 +42,10 @@ if (globalConfig.language === "EN"){
 	globalConfig.distanceFieldNote = globalConfig.distanceFieldNote || "The Distance(KM) column represents the distance between your search location and the permit location in the specific row.";
 	globalConfig.noCoordinatesTableTitleLang = globalConfig.noCoordinatesTableTitleLang || "The following table contains the records without valid coordinates. <a href='#WhyAmISeeingThis'>Why am I seeing this?</a>";
 	globalConfig.whyAmISeeingThisLang = globalConfig.whyAmISeeingThisLang || "<a id='WhyAmISeeingThis'><strong>Why am I seeing this?</strong></a><br>The map locations shown as points have been determined by using addresses or other information to calculate a physical location on the map.  In some cases, the information needed to calculate a location was incomplete, incorrect or missing.  The records provided in the table have been included because there is a close match on the name or city/town or other field(s). These records may or may not be near your specified location, and users are cautioned in using these records. They have been included as potential matches only.";
+	globalConfig.ThisResultDoesNotHaveValidCoordinates = globalConfig.ThisResultDoesNotHaveValidCoordinates || "This result does not have valid coordinates.";
+	globalConfig.AmongReturnedResults = globalConfig.AmongReturnedResults || "Among returned results";
+	globalConfig.ResultDoesNotHaveValidCoordinates = globalConfig.ResultDoesNotHaveValidCoordinates || " result does not have valid coordinates.";
+	globalConfig.ResultsDoNotHaveValidCoordinates = globalConfig.ResultsDoNotHaveValidCoordinates || " results do not have valid coordinates";
 	globalConfig.youMaySearchByLang = globalConfig.youMaySearchByLang || "You may search by ";
 	globalConfig.seeHelpForAdvancedOptionsLang = globalConfig.seeHelpForAdvancedOptionsLang || "or see help for advanced options.";
 } else {
@@ -85,6 +89,11 @@ if (globalConfig.language === "EN"){
 	globalConfig.distanceFieldNote = globalConfig.distanceFieldNote || "La colonne de distance (en km) donne la distance entre le lieu de votre recherche et le lieu du puits dans la rang\u00e9e donn\u00e9e.";
 	globalConfig.noCoordinatesTableTitleLang = globalConfig.noCoordinatesTableTitleLang || "The following table contains the records without valid coordinates. <a href='#WhyAmISeeingThis'>Why am I seeing this?</a>";
 	globalConfig.whyAmISeeingThisLang = globalConfig.whyAmISeeingThisLang || "<a id='WhyAmISeeingThis'>Why am I seeing this?</a><br>The map locations shown as points have been determined by using addresses or other information to calculate a physical location on the map.  In some cases, the information needed to calculate a location was incomplete, incorrect or missing.  The records provided in the second table have been included because there is a close match on the name or city/town or other field(s). These records may or may not be near your specified location, and users are cautioned in using these records. They have been included as potential matches only.";	
+	globalConfig.ThisResultDoesNotHaveValidCoordinates = globalConfig.ThisResultDoesNotHaveValidCoordinates || "This result does not have valid coordinates.";
+	globalConfig.AmongReturnedResults = globalConfig.AmongReturnedResults || "Among returned results";
+	globalConfig.ResultDoesNotHaveValidCoordinates = globalConfig.ResultDoesNotHaveValidCoordinates || " result does not have valid coordinates.";
+	globalConfig.ResultsDoNotHaveValidCoordinates = globalConfig.ResultsDoNotHaveValidCoordinates || " results do not have valid coordinates";
+	
 	globalConfig.youMaySearchByLang = globalConfig.youMaySearchByLang || "Vous pouvez rechercher par ";
 	globalConfig.seeHelpForAdvancedOptionsLang = globalConfig.seeHelpForAdvancedOptionsLang || "ou consulter l'aide pour de l'information sur les recherches avanc&eacute;es.";
 	globalConfig.dataTableLang = globalConfig.dataTableLang || {

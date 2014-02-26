@@ -339,7 +339,7 @@ globalConfig.layers = [{
 					<%\
 					}\
 					%>\
-				<BR><BR><I><A HREF="http://www.ene.gov.on.ca/environment/<%= globalConfig.chooseLang("en", "fr") %>/resources/collection/data_downloads/index.htm"><%= globalConfig.chooseLang("Full dataset available for download", "Jeu de donn&eacute;es complet disponible en t&eacute;l&eacute;chargement") %></A></I><BR>\
+				<BR><BR><I><A HREF="<%= globalConfig.dataDownloadURL %>"><%= globalConfig.chooseLang("Full dataset available for download", "Jeu de donn&eacute;es complet disponible en t&eacute;l&eacute;chargement") %></A></I><BR>\
 				<A HREF="#top"><%= globalConfig.chooseLang("Back to top", "Haut de la page") %></A><BR><HR WIDTH=100%>\
 				</OL><P>\
             <%\

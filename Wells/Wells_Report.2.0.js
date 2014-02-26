@@ -113,7 +113,7 @@ globalConfig.layers = [{
 				</TABLE>\
 			<% } else {%>\
 				<!-- new code for MOE Well Records pages  -->\
-				<h2>Well ID</h2>\
+				<h2><%= globalConfig.chooseLang("Well ID", "Identification du puits") %></h2>\
 				<%= globalConfig.chooseLang("Well ID Number", "Identification du puits") %>:&nbsp; <%= renderResult.WELL_ID %><BR>\
 				<%= globalConfig.chooseLang("Well Audit Number", "N<SUP>o</SUP> de v&eacute;rification") %>:&nbsp;<I><%= renderResult.AUDIT_NO %></I><BR>\
 				<%= globalConfig.chooseLang("Well Tag Number", "N<SUP>o</SUP> plaque") %>:&nbsp;<I><%= renderResult.TAG %></I><P>\
@@ -224,7 +224,7 @@ globalConfig.layers = [{
 						%>\
 					</TBODY>\
 				  </TABLE>\
-				<H2><%= globalConfig.chooseLang("Method of Construction", "M&eacute;thode de construction") %> &amp; <%= globalConfig.chooseLang("Well Use", "Utilisation du puits") %></H2>\
+				<H2><%= globalConfig.chooseLang("Method of Construction", "M&eacute;thode de construction") %> &amp; <%= globalConfig.chooseLang("Well Use", "utilisation du puits") %></H2>\
 				<TABLE class="noStripes">\
 				  <TBODY>\
 					<TR>\
@@ -251,12 +251,12 @@ globalConfig.layers = [{
 				</TABLE>\
 				<h2><%= globalConfig.chooseLang("Status of Well", "Finalit&eacute; du puits") %></h2>\
 				<p><%= renderResult.FINAL_STATUS_DESCR %></p>\
-				<h2><%= globalConfig.chooseLang("Construction Record - Casing", "Construction - Tubage") %></h2>\
+				<h2><%= globalConfig.chooseLang("Construction Record - Casing", "Construction - tubage") %></h2>\
 				<TABLE class="noStripes">\
 				  <TBODY>\
 					<TR>\
 					  <TH><%= globalConfig.chooseLang("Inside<BR>Diameter", "Diam&egrave;tre<BR>int&eacute;rieur") %></TH>\
-					  <TH><%= globalConfig.chooseLang("Open Hole OR material", "Ouverture du trou OU mat&eacute;riau") %></TH>\
+					  <TH><%= globalConfig.chooseLang("Open Hole or material", "Ouverture du trou ou mat&eacute;riau") %></TH>\
 					  <TH><%= globalConfig.chooseLang("Depth", "Profondeur") %><BR><%= globalConfig.chooseLang("From", "De") %></TH>\
 					  <TH><%= globalConfig.chooseLang("Depth", "Profondeur") %><BR><%= globalConfig.chooseLang("To", "&agrave;") %></TH>\
 					</TR>\
@@ -274,7 +274,7 @@ globalConfig.layers = [{
 					%>\
 				  </tbody>\
 				</table>\
-				 <h2><%= globalConfig.chooseLang("Construction Record - Screen", "Construction - Cr&eacute;pine") %></h2>         \
+				 <h2><%= globalConfig.chooseLang("Construction Record - Screen", "Construction - cr&eacute;pine") %></h2>         \
 				<TABLE class="noStripes">\
 				  <TBODY>\
 					<TR>\
@@ -349,9 +349,9 @@ globalConfig.layers = [{
 				<TABLE class="noStripes">\
 									<TBODY>\
 									<TR>\
-									  <TH><%= globalConfig.chooseLang("Draw Down", "C&ocirc;ne en d&eacute;pression") %> <%= globalConfig.chooseLang("Time", "Temps") %><BR>(min)</TH>\
+									  <TH><%= globalConfig.chooseLang("Draw Down", "C&ocirc;ne en d&eacute;pression") %> <%= globalConfig.chooseLang("Time", "Temps") %>(min)</TH>\
 									  <TH><%= globalConfig.chooseLang("Draw Down", "C&ocirc;ne en d&eacute;pression") %> <%= globalConfig.chooseLang("Water level", "Niveau d\'eau") %></TH>\
-									  <TH><%= globalConfig.chooseLang("Recovery", "R&eacute;tablissement") %> <%= globalConfig.chooseLang("Time", "Temps") %><BR>(min)</TH>\
+									  <TH><%= globalConfig.chooseLang("Recovery", "R&eacute;tablissement") %> <%= globalConfig.chooseLang("Time", "Temps") %>(min)</TH>\
 									  <TH><%= globalConfig.chooseLang("Recovery", "R&eacute;tablissement") %> <%= globalConfig.chooseLang("Water level", "Niveau d\'eau") %></TH>\
 									</TR>\
 									<TR><TD height=26><%= globalConfig.chooseLang("SWL", "NS") %></TD><TD><%= renderResult.PT[0] + ((renderResult.PT[9] === "Y") ? " FLW" : "") %></TD><TD>&nbsp;</TD><TD>&nbsp;</TD></TR>\

@@ -38,14 +38,16 @@ globalConfig.resultFoundSimple = globalConfig.resultFoundSimple || function(quer
 	
 	var message = "";
 	if (queryParams.hasOwnProperty("invalidCount") && (queryParams.invalidCount > 0)) {
+		var invalidResultMsg = (queryParams.invalidCount === 1) ? globalConfig.ResultDoesNotHaveValidCoordinates : globalConfig.ResultsDoNotHaveValidCoordinates;
+		
 		if(totalCount === 0){
 			message = globalConfig.yourSearchLang + searchString + globalConfig.returnedNoResultLang + regionName + ". " + globalConfig.pleaseRefineSearchLang + ".";
 		} else if(totalCount === 1){
-			message = globalConfig.oneResultFoundLang  + searchString + regionName + "." + "This result does not have valid coordinates.";
+			message = globalConfig.oneResultFoundLang  + searchString + regionName + "." + globalConfig.ThisResultDoesNotHaveValidCoordinates;
 		} else if(totalCount >= globalConfig.maxQueryReturn){
-			message = globalConfig.moreThanLang + " " + globalConfig.maxQueryReturn + " " + globalConfig.resultsFoundLang + searchString + regionName + ". " + globalConfig.onlyLang + " " + globalConfig.maxQueryReturn + " " + globalConfig.returnedLang + ". " + globalConfig.seeHelpLang + "." + "Among returned results, " + queryParams.invalidCount + " results do not have valid coordinates.";
+			message = globalConfig.moreThanLang + " " + globalConfig.maxQueryReturn + " " + globalConfig.resultsFoundLang + searchString + regionName + ". " + globalConfig.onlyLang + " " + globalConfig.maxQueryReturn + " " + globalConfig.returnedLang + ". " + globalConfig.seeHelpLang + "." + globalConfig.AmongReturnedResults + ", " + queryParams.invalidCount + invalidResultMsg;
 		} else {
-			message = totalCount + " " + globalConfig.resultsFoundLang + searchString + regionName + "." + "Among returned results, " + queryParams.invalidCount + " results do not have valid coordinates.";
+			message = totalCount + " " + globalConfig.resultsFoundLang + searchString + regionName + ". " + globalConfig.AmongReturnedResults + ", " + queryParams.invalidCount + invalidResultMsg;
 		}	
 	} else {
 		if(totalCount === 0){
