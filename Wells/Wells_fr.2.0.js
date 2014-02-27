@@ -1,5 +1,6 @@
 globalConfig = {};
 globalConfig.language = "FR";
+globalConfig.otherInfoHTML = "Certaines donn\u00e9es scientifiques et de surveillance n\u0027existent qu\u0027en anglais."; 
 //globalConfig.searchHelpTxt = "Par exemple: <strong>Adresse</strong>, <strong>No de la plaque d\u0027identification du puits</strong>, <strong></strong> ou consulter l\u0027aide pour de l\u0027information sur les recherches avanc\u00e9es.";
 //globalConfig.searchHelpTxt = "";
 //globalConfig.tableSimpleTemplateTitleLang = "\u00c0 noter : La colonne de distance (en km) donne la distance entre le lieu de votre recherche et le lieu du puits dans la rang\u00e9e donn\u00e9e. Les donn\u00e9es sont en anglais seulement.";

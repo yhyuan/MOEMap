@@ -193,7 +193,7 @@
 			<label class="element-invisible" for="map_query">' + globalConfig.chooseLang('Search the map', 'Recherche carte interactive') + '</label>\
 			<input id="map_query" type="text" title="' + globalConfig.chooseLang('Search term', 'Terme de recherche') + '" maxlength="100" size="50" onkeypress="return globalConfig.entsub(event)"></input>\
 			<label class="element-invisible" for="search_submit">' + globalConfig.chooseLang('Search', 'Recherche') + '</label>\
-			<input id="search_submit" type="submit" title="Search" onclick="globalConfig.search()" value="' + globalConfig.chooseLang('Search', 'Recherche') + '"></input>\
+			<input id="search_submit" type="submit" title="' + globalConfig.chooseLang('Search', 'Recherche') + '" onclick="globalConfig.search()" value="' + globalConfig.chooseLang('Search', 'Recherche') + '"></input>\
 			<br/>\
 			<input id="currentMapExtent" type="checkbox" name="currentExtent" title="' + globalConfig.chooseLang('Current Map Display', "Étendue de la carte courante") + '" /> <label for="currentExtent" class=\'option\'>' + globalConfig.chooseLang('Search current map display only', "\u00c9tendue de la carte courante") + '</label>\
 			<div id="information"></div>';

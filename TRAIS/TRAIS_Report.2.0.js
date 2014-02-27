@@ -161,7 +161,7 @@ globalConfig.layers = [{
 							<TH WIDTH=25%><%= globalConfig.chooseLang("Reasons for Change", "Raisons de la variation") %></TH>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.chooseLang("Entered the Facility (Used)", "Ayant p&eacute;n&eacute;tr&eacute; dans l’installation (Utilis&eacute;e)") %></TD>\
+							<TD><%= globalConfig.chooseLang("Entered the Facility (Used)", "Ayant p&eacute;n&eacute;tr&eacute; dans l’installation (utilis&eacute;e)") %></TD>\
 							<TD><%= globalConfig.processEmptyValue(substance.Used) %></TD>\
 							<TD><%= globalConfig.processEmptyValue(substance.UseEnteredtheFacAnnPctChange) %></TD>\
 							<TD rowspan="3"><%= globalConfig.processEmptyValue(substance.ReasonsforChangeTRAQnt) %></TD>\
@@ -219,7 +219,7 @@ globalConfig.layers = [{
 							<TH WIDTH=75%><%= renderResult.ReportingPeriod %><BR><%= globalConfig.chooseLang("Amount Reported", "Quantit&eacute; d&eacute;clar&eacute;e") %> <BR>(<%= substance.Units %>)</TH>\
 						</TR>\
 						<TR>\
-							<TD><%= globalConfig.chooseLang("Entered the Facility (Used)", "Ayant p&eacute;n&eacute;tr&eacute; dans l’installation (Utilis&eacute;e)") %></TD>\
+							<TD><%= globalConfig.chooseLang("Entered the Facility (Used)", "Ayant p&eacute;n&eacute;tr&eacute; dans l’installation (utilis&eacute;e)") %></TD>\
 							<TD><%= globalConfig.processEmptyValue(substance.Used) %></TD>\
 						</TR>\
 						<TR>\
@@ -326,13 +326,13 @@ globalConfig.layers = [{
 						%><br>\
 						<% if (substance.DescriptionofAdditionalAction.length !== 0 || substance.NoOptionsIdentifiedforUseorCre.length !== 0 ) { %>\
 							<strong><%= globalConfig.chooseLang("Any actions outside the Toxics Reduction Plan that reduced the use or creation of this substance this year?", "Des mesures prises ind&eacute;pendamment du plan de r&eacute;duction de substance toxique ont-elles permis de r&eacute;duire l’utilisation et la cr&eacute;ation de la substance cette ann&eacute;e?") %></strong><br>\
-							<%= (substance.DescriptionofAdditionalAction.length !== 0) ? globalConfig.chooseLang("Yes", "oui") : globalConfig.chooseLang("No", "aucun") %><br>\
+							<%= (substance.DescriptionofAdditionalAction.length !== 0) ? globalConfig.chooseLang("Yes", "oui") : globalConfig.chooseLang("No", "Non") %><br>\
 						<%\
 							}\
 						%><br>\
 						<% if (substance.AmendmentsDescription.length !== 0 || substance.NoOptionsIdentifiedforUseorCre.length !== 0 ) { %>\
 							<strong><%= globalConfig.chooseLang("Any amendment(s) to the Toxics Reduction Plan this year?", "Le plan de r&eacute;duction de substance toxique a-t-il &eacute;t&eacute; modifi&eacute; cette ann&eacute;e?") %></strong><br>\
-							<%= (substance.AmendmentsDescription.length !== 0) ? globalConfig.chooseLang("Yes", "oui") : globalConfig.chooseLang("No", "aucun") %><br>\
+							<%= (substance.AmendmentsDescription.length !== 0) ? globalConfig.chooseLang("Yes", "oui") : globalConfig.chooseLang("No", "Non") %><br>\
 						<%\
 							}\
 						%>\

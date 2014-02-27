@@ -1,7 +1,7 @@
 //var globalConfig = globalConfig || {};
 globalConfig.chooseLang = function (en, fr) {return (globalConfig.language === "EN") ? en : fr;};
 
-globalConfig.searchableFieldsList = [{en: "stream", fr: "cours d\u0027eau"}, {en: "station ID", fr: "Num\u00e9ro de station"}, {en: "address", fr: "adresse"}];
+globalConfig.searchableFieldsList = [{en: "stream", fr: "cours d\u0027eau"}, {en: "station ID", fr: "num\u00e9ro de station"}, {en: "address", fr: "adresse"}];
 globalConfig.otherInfoHTML = globalConfig.chooseLang("Some scientific/monitoring data are only provided in English.", 'Certaines donn&eacute;es scientifiques et de surveillance n&rsquo;existent qu&rsquo;en anglais.');
 //globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/PWQMN/MapServer";
 globalConfig.pointBufferTool = {available: false};

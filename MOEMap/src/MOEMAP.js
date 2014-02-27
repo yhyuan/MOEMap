@@ -218,6 +218,7 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 		MOEMAP.openInfoWindow(queryParams.gLatLng, container);
 	},
 	"SportFish": function (queryParams) {
+		//console.log("In Identify");
 		var features = Array.range(0, queryParams.layerList.length - 1).reduce(function(previousValue, currentValue) {
 			var result = queryParams.layerList[currentValue].result;
 			if (result.hasOwnProperty('features')) {
@@ -549,6 +550,7 @@ globalConfig.validFeaturesFilter = globalConfig.validFeaturesFilter || function(
 globalConfig.postConditionsCallbackName = globalConfig.postConditionsCallbackName || "Wells";
 globalConfig.postConditionsCallbackList = globalConfig.postConditionsCallbackList || {
 	"Wells": function (queryParams) {
+		//console.log("In Search");
 		var features = Array.range(0, queryParams.layerList.length - 1).reduce(function(previousValue, currentValue) {
 			var result = queryParams.layerList[currentValue].result;
 			if (result.hasOwnProperty('features')) {
@@ -618,6 +620,7 @@ globalConfig.postConditionsCallbackList = globalConfig.postConditionsCallbackLis
 		document.getElementById(globalConfig.queryTableDivId).innerHTML = table;
 	},
 	"SportFish": function (queryParams) {
+		console.log("In Search");
 		var features = Array.range(0, queryParams.layerList.length - 1).reduce(function(previousValue, currentValue) {
 			var result = queryParams.layerList[currentValue].result;
 			if (result.hasOwnProperty('features')) {

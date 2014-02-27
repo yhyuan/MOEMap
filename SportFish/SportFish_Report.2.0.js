@@ -421,7 +421,7 @@ globalConfig.layers = [{
 		adivosryDeferred.resolve();
 	},
 	template: '<h2><%= locName %></h2>\
-				<div style="margin-right:20px;margin-bottom:15px;float:right;"><a href="http://www.ontario.ca/fishguide"><img alt="<%= globalConfig.chooseLang("Guide to Eating Ontario Sport Fish (2013-2014)", "Guide de consommation du poisson gibier de l’Ontario (2013-2014)") %>" style="border:1px solid black;" hspace="10" src="http://files.ontariogovernment.ca/moe_mapping/mapping/SportFish/EN/images/fish3.jpg" /></a></div>\
+				<div style="margin-right:20px;margin-bottom:15px;float:right;"><a href="http://www.ontario.ca/fishguide"><img alt="<%= globalConfig.chooseLang("Guide to Eating Ontario Sport Fish (2013-2014)", "Guide de consommation du poisson gibier de l’Ontario (2013-2014)") %>" style="border:1px solid black;" hspace="10" src="http://files.ontariogovernment.ca/moe_mapping/mapping/js/OneSite/SportFish/cover_<%= globalConfig.chooseLang("en", "fr") %>.jpg" /></a></div>\
 				<strong><%= locDesc %></strong>\
 				<%\
 					if (globalConfig.isEnglish()){\
@@ -467,13 +467,13 @@ globalConfig.layers = [{
 								<tr>\
 									<th scope="row"><%= globalConfig.chooseLang("General population", "Population g&#233;n&#233;rale") %></th>\
 									<% _.each(speciesObject[speciesCode].G, function(adv, key, list) { %>\
-										<td><%= adv %></td>\
+										<td><center><%= adv %></center></td>\
 									<% }); %>\
 								</tr>\
 								<tr>\
 									<th scope="row"><%= globalConfig.chooseLang("Sensitive population*", "Population sensible*") %></th>\
 									<% _.each(speciesObject[speciesCode].S, function(adv, key, list) { %>\
-										<td><%= adv %></td>\
+										<td><center><%= adv %></center></td>\
 									<% }); %>\
 								</tr>\
 							</tbody>\
@@ -481,10 +481,10 @@ globalConfig.layers = [{
 						<% var speciesURL = globalConfig.getSpeciesURL(speciesCode);\
 							if (speciesURL.length > 0) {\
 						%>\
-							<p><a href="<%= speciesURL %>">More information about the <%= globalConfig.speciesDict[speciesCode] %></a></p>\
+							<p><a href="<%= speciesURL %>"><%= globalConfig.chooseLang("More information about the ", "More information about the ") + globalConfig.speciesDict[speciesCode] %></a></p>\
 						<% } %>\
-						<p><%= globalConfig.chooseLang("*Sensitive Population: Women of child-bearing age and children under 15", "*Population sensible: Femmes en &#226;ge de procr&#233;er et enfants de moins de 15 ans") %></p>\
-						<p><%= globalConfig.chooseLang("Superscripts: the number identifies the contaminant or group of contaminants for which the fish was tested.", "Indice sup&#233;rieur : Le chiffre d&#233;signe le contaminant ou le groupe de contaminants pour lesquels on a analys&#233; le poisson.") %>\
+						<p><%= globalConfig.chooseLang("*Sensitive Population: Women of child-bearing age and children under 15.", "*Population sensible: Femmes en &#226;ge de procr&#233;er et enfants de moins de 15 ans.") %></p>\
+						<p><%= globalConfig.chooseLang("Superscripts: the number identifies the contaminant or group of contaminants for which the fish was tested.", "Indice sup&#233;rieur : le chiffre d&#233;signe le contaminant ou le groupe de contaminants pour lesquels on a analys&#233; le poisson.") %>\
 						</p>\
 					<% });%>'
 }];

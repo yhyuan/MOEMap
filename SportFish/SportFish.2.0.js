@@ -22,7 +22,7 @@ globalConfig.searchControlHTML = '<div id="searchTheMap"></div><div id="searchHe
 	<label class="element-invisible" for="map_query">' + globalConfig.chooseLang('Search the map', 'Recherche carte interactive') + '</label>\
 	<input id="map_query" type="text" title="' + globalConfig.chooseLang('Search term', 'Terme de recherche') + '" maxlength="100" size="50" onkeypress="return globalConfig.entsub(event)"></input>\
 	<label class="element-invisible" for="search_submit">' + globalConfig.chooseLang('Search', 'Recherche') + '</label>\
-	<input id="search_submit" type="submit" title="Search" onclick="globalConfig.search()" value="' + globalConfig.chooseLang('Search', 'Recherche') + '"></input>\
+	<input id="search_submit" type="submit" title="' + globalConfig.chooseLang('Search', 'Recherche') + '" onclick="globalConfig.search()" value="' + globalConfig.chooseLang('Search', 'Recherche') + '"></input>\
 	<fieldset>\
 		<input type="radio" id="searchMapLocation" name="searchGroup" checked="checked" title="' + globalConfig.chooseLang('Search Map Location', "Recherche d\'emplacements") + '" name="location" value="location" onclick="globalConfig.searchChange(this)"></input>\
 		<span class="tooltip" title="' + globalConfig.chooseLang("Search Map Location: Enter the name of an Ontario lake/river, city/town/township or street address to find fish consumption advice", "Recherche d\'emplacements : Indiquer le lieu en Ontario (lac/rivi\u00e8re, ville/canton, adresse) pour avoir des conseils sur la consommation des poissons du lieu.") + '">\

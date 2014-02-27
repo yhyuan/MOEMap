@@ -6,22 +6,22 @@ for(var i=0; i<globalConfig.searchableFieldsList.length - 1; i++) {
 	globalConfig.searchHelpTxt = globalConfig.searchHelpTxt + "<strong>" + globalConfig.chooseLang(globalConfig.searchableFieldsList[i].en, globalConfig.searchableFieldsList[i].fr) + "</strong>, ";
 }
 globalConfig.searchHelpTxt = globalConfig.searchHelpTxt + "<strong>" + globalConfig.chooseLang(globalConfig.searchableFieldsList[i].en, globalConfig.searchableFieldsList[i].fr) + "</strong> " + globalConfig.chooseLang("or see help for advanced options.", "ou consulter l'aide pour de l'information sur les recherches avanc&eacute;es.");
-globalConfig.tableSimpleTemplateTitleLang = globalConfig.chooseLang("Note: Data is in English only.", "\u00c0 noter : Les donn\u00e9es sont en anglais seulement.");
+globalConfig.tableSimpleTemplateTitleLang = globalConfig.chooseLang("Note: Data is in English only.", "\u00c0 noter : les donn\u00e9es sont en anglais seulement.");
 
 globalConfig.searchControlHTML = '<div id="searchTheMap"></div><div id="searchHelp"></div><br><label class="element-invisible" for="map_query">' + globalConfig.chooseLang('Search the map', 'Recherche carte interactive') + '</label>\
 	<input id="map_query" type="text" title="' + globalConfig.chooseLang('Search term', 'Terme de recherche') + '" maxlength="100" size="50" onkeypress="return globalConfig.entsub(event)"></input>\
 	<label class="element-invisible" for="search_submit">' + globalConfig.chooseLang('Search', 'Recherche') + '</label>\
-	<input id="search_submit" type="submit" title="Search" onclick="globalConfig.search()" value="' + globalConfig.chooseLang('Search', 'Recherche') + '"></input>\
+	<input id="search_submit" type="submit" title="' + globalConfig.chooseLang('Search', 'Recherche') + '" onclick="globalConfig.search()" value="' + globalConfig.chooseLang('Search', 'Recherche') + '"></input>\
 	<fieldset>\
-		<input type="radio" id="searchWatershed" name="searchGroup" title="watershed" name="watershed" value="watershed" onclick="globalConfig.searchChange(\'Watershed\')"></input>\
+		<input type="radio" id="searchWatershed" name="searchGroup" title="' + globalConfig.chooseLang('Watershed', "Bassin versant") + '" name="watershed" value="watershed" onclick="globalConfig.searchChange(\'Watershed\')"></input>\
 		<label class="option" for="watershed">\
 			' + globalConfig.chooseLang('Watershed', "Bassin versant") + '\
 		</label>\
-		<input type="radio" id="searchBusiness" name="searchGroup" title="business" name="business" value="business" onclick="globalConfig.searchChange(\'Business\')"></input>\
+		<input type="radio" id="searchBusiness" name="searchGroup" title="' + globalConfig.chooseLang('Permit Holder Name', "Nom du titulaire de permis") + '" name="business" value="business" onclick="globalConfig.searchChange(\'Business\')"></input>\
 		<label class="option" for="business">\
 			' + globalConfig.chooseLang('Permit Holder Name', "Nom du titulaire de permis") + '\
 		</label>\
-		<input type="radio" id="searchLocation" name="searchGroup" title="location" name="location" value="location" onclick="globalConfig.searchChange(\'Location\')"></input>\
+		<input type="radio" id="searchLocation" name="searchGroup" title="' + globalConfig.chooseLang('Address with Radius of', "Adresse dans un rayon de") + '" name="location" value="location" onclick="globalConfig.searchChange(\'Location\')"></input>\
 		<label class="option" for="location">\
 			' + globalConfig.chooseLang('Address with Radius of', "Adresse dans un rayon de") + '\
 			<select name="searchCriteria.radius" id="lstRadius">\
