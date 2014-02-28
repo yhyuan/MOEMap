@@ -1,4 +1,4 @@
-
+globalConfig.chooseLang = function (en, fr) {return (globalConfig.language === "EN") ? en : fr;};
 
 globalConfig.searchableFieldsList = [{en: "city", fr: "ville"}, {en: "facility name", fr: "installation"}, {en: "company", fr: "entreprise"}, {en: "sector", fr: "substance"}, {en: "substance", fr: "secteur"}];
 
@@ -89,10 +89,11 @@ if (globalConfig.language === "EN") {
 	//globalConfig.searchHelpTxt = "Rechercher par <strong>ville</strong>, <strong>installation</strong>, <strong>entreprise</strong>, <strong>substance</strong>, <strong>secteur</strong> ou cliquer sur aide pour plus d\u0027information sur la recherche avanc\u00e9e.";
 	globalConfig.tabsTemplateContent = "Installation: <b>{Facility}</b><br>Entreprise: <b>{Organisation}</b><br>Adresse: <b>{StreetAddress} / {City}</b><br>N&deg; INRP: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Secteur: <b>{mapConfig.displaySector(Sector)}</b><br>Substances toxiques: <b>{NUMsubst}</b><br><br>[{NUMsubst}? " + globalConfig.NoAnnualReportSubmittedLang + " ?<a target='_blank' href='" + globalConfig.annualReportURL + "?id={UniqueID}'>" + globalConfig.LinktoAnnualReportsLang + "</a>]<br>[{NUMPlanSummary}? " + globalConfig.NoPlanSummarySubmittedLang + " ?<a target='_blank' href='" + globalConfig.planSummaryURL + "?id={UniqueID}'>" + globalConfig.LinktoPlanSummariesLang + "</a>]<br>[{NUMRecord}? " + globalConfig.NoRecordSubmittedLang + " ?<a target='_blank' href='" + globalConfig.recordsURL + "?id={UniqueID}'>" + globalConfig.LinktoRecordsLang + "</a>]<br><i>" + globalConfig.OpenNewWindowLang + "</i><br>";	
 }
-
+globalConfig.tableSimpleTemplateTitleLang = globalConfig.chooseLang("Note: Data is in English only.", "\u00c0 noter : les donn\u00e9es sont en anglais seulement.");
+globalConfig.otherInfoHTML = globalConfig.chooseLang("Note: The information and data reflected in this report is a consolidation of data reported by facilities regulated under Toxics Reduction Act, 2009 and is up to date as of December 20, 2013. The facilities have the opportunity to notify the ministry of errors.", "Note: The information and data reflected in this report is a consolidation of data reported by facilities regulated under Toxics Reduction Act, 2009 and is up to date as of December 20, 2013. The facilities have the opportunity to notify the ministry of errors.");
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
-globalConfig.usejQueryUITable = false;  //Avoid loading extra javascript files
+//globalConfig.usejQueryUITable = false;  //Avoid loading extra javascript files
 globalConfig.usePredefinedMultipleTabs = false;  //Avoid loading extra javascript files
 globalConfig.allowMultipleIdentifyResult = false;
 globalConfig.displayTotalIdentifyCount = false;
@@ -104,6 +105,33 @@ globalConfig.postIdentifyCallbackName = "SportFish";
 //globalConfig.infoWindowContentHeight = '700px';
 globalConfig.infoWindowWidth  = '320px';
 globalConfig.infoWindowHeight = (globalConfig.language === "EN") ? '250px' : '270px';
+
+if (globalConfig.language === "EN") {
+	globalConfig.fieldNamesList = [
+		"Facility", 
+		"Organization", 
+		"Physical Address", 
+		"NPRI ID", 
+		"Sector", 
+		"Toxic Substances", 
+		"Annual Reports",
+		"Plan Summary",
+		"Record"
+	];
+} else {
+	globalConfig.fieldNamesList = [
+		"Installation", 
+		"Entreprise", 
+		"Adresse", 
+		"N&deg; INRP", 
+		"Secteur", 
+		"Substances toxiques", 
+		"Rapports annuels",
+		"Sommaires de plan",
+		"Documents"
+	];
+}
+
 if (globalConfig.accessible) {
 /*	var reportLang = "";
 	if (globalConfig.language === "EN") {
@@ -133,14 +161,30 @@ if (globalConfig.accessible) {
 	globalConfig.postConditionsCallbackName = "AccessibleWells";*/		
 } else {
 	//globalConfig.usePredefinedMultipleTabs = true;  //Avoid loading extra javascript files
+	globalConfig.tableFieldList = [
+		{name: globalConfig.fieldNamesList[0], value: "{Facility}"}, 
+		{name: globalConfig.fieldNamesList[1], value: "{Organisation}"}, 
+		{name: globalConfig.fieldNamesList[2], value: "{StreetAddress}"}, 
+		{name: globalConfig.fieldNamesList[3], value: "{mapConfig.displayNPRI_ID(NPRI_ID)}"}, 
+		{name: globalConfig.fieldNamesList[4], value: "{mapConfig.displaySector(Sector)}"}, 
+		{name: globalConfig.fieldNamesList[5], value: "{NUMsubst}"},
+		{name: globalConfig.fieldNamesList[6], value: "[{NUMsubst}? N/A ?<a target='_blank' href='" + globalConfig.annualReportURL + "?id={UniqueID}'>" + globalConfig.chooseLang('Link', "Lien") + "</a>]"},
+		{name: globalConfig.fieldNamesList[7], value: "[{NUMPlanSummary}? N/A ?<a target='_blank' href='" + globalConfig.planSummaryURL + "?id={UniqueID}'>" + globalConfig.chooseLang('Link', "Lien") + "</a>]"},
+		{name: globalConfig.fieldNamesList[8], value: "[{NUMRecord}? N/A ?<a target='_blank' href='" + globalConfig.recordsURL + "?id={UniqueID}'>" + globalConfig.chooseLang('Link', "Lien") + "</a>]"}
+	];
+	
 	globalConfig.queryLayerList = [{
 		url: globalConfig.url + "/0",
 		tabsTemplate: [{
 			label: globalConfig.InformationLang,
 			content:globalConfig.tabsTemplateContent
-		}]
+		}], 
+		tableSimpleTemplate: {
+			title: globalConfig.tableSimpleTemplateTitleLang, 
+			content: globalConfig.tableFieldList
+		} 
 	}];
-	globalConfig.postConditionsCallbackName = "SportFish";	
+	//globalConfig.postConditionsCallbackName = "SportFish";	
 }
 
 globalConfig.search = function(){

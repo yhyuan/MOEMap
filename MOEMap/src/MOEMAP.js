@@ -620,7 +620,7 @@ globalConfig.postConditionsCallbackList = globalConfig.postConditionsCallbackLis
 		document.getElementById(globalConfig.queryTableDivId).innerHTML = table;
 	},
 	"SportFish": function (queryParams) {
-		console.log("In Search");
+		//console.log("In Search");
 		var features = Array.range(0, queryParams.layerList.length - 1).reduce(function(previousValue, currentValue) {
 			var result = queryParams.layerList[currentValue].result;
 			if (result.hasOwnProperty('features')) {

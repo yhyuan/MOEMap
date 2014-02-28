@@ -11,7 +11,16 @@ globalConfig.calculateValuesLength = function(fields, attr) {
 		return attr[field].length;
 	}), function(memo, num){ return memo + num; }, 0)
 };
-
+globalConfig.createIndexTable = function(substances) {
+	var textArray = _.map(substances, function(substance) {return '<A HREF="#' + substance.Name + '">' + substance.Name + '</A>';});
+	if (textArray.length%2 === 1) {	
+		textArray.push("&nbsp;");	
+	}
+	var result = '<table class="noStripes" border="1">' + _.map(_.range(textArray.length/2), function (i) {
+		return "<tr><td>" + textArray[2*i] + "</td><td>" + textArray[2*i + 1] + "</td></tr>";
+	}).join(" ") + '</table>';
+	return result;
+};
 globalConfig.layers = [{
 	url: globalConfig.url  + "/2",
 	renderTargetDiv: "target",
@@ -140,9 +149,9 @@ globalConfig.layers = [{
 			<%= globalConfig.chooseLang("Sector", "Secteur") %>: <strong><%= renderResult.Sector %></strong><BR>\
 			<%= globalConfig.chooseLang("NPRI ID", "ID INRP") %>: <strong><%= renderResult.NPRIID %></strong><BR>\
 			<%= globalConfig.chooseLang("Public Contact", "Personne-ressource") %>: <strong><%= renderResult.PublicContact %><BR>&nbsp&nbsp&nbsp&nbsp&nbsp<%= renderResult.PublicContactPhone %><BR>&nbsp&nbsp&nbsp&nbsp&nbsp<A HREF=mailto:<%= renderResult.PublicContactEmail %>><%= renderResult.PublicContactEmail %></A></strong><BR>\
-			<%= globalConfig.chooseLang("Certified by", "Certifi&eacute; par") %> <strong><%= renderResult.HighestRankingEmployee %></strong>, <%= globalConfig.chooseLang("Highest Ranking Employee", "employ&eacute; le plus &eacute;lev&eacute; hi&eacute;rarchiquement") %><BR><BR>\
+			<strong><%= renderResult.HighestRankingEmployee %></strong>, <%= globalConfig.chooseLang("Highest Ranking Employee", "employ&eacute; le plus &eacute;lev&eacute; hi&eacute;rarchiquement") %><BR><BR>\
 			<A NAME="subst"></A><%= ((renderResult.hasOwnProperty("Substances") && renderResult.Substances.length > 0)) ? globalConfig.chooseLang("List of Substances:", "Liste des substances:") : "" %>\
-			<%= _.map(renderResult.Substances, function(substance) {return \'<A HREF="#\' + substance.Name + \'">\' + substance.Name + \'</A>\';}).join(", ") %>\
+			<%= globalConfig.createIndexTable(renderResult.Substances)	%>\
 			<BR>\
 		<P>\
 			<%= ((renderResult.hasOwnProperty("Substances") && renderResult.Substances.length > 0)) ? "" : globalConfig.chooseLang("There is no substance renderResultrmation provided from this facility.<BR>", "Il n\'y a pas d\'information sur les substances toxiques fournie par cette entreprise ou installation<BR>") %>\

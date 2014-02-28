@@ -3,6 +3,14 @@ if (!String.prototype.trim) {
     return this.replace(/^\s+|\s+$/g, '');
   };
 }
+
+Array.prototype.fill = function(val){
+    for (var i = 0; i < this.length; i++){
+        this[i] = val;
+    }
+    return this;
+};
+
 //globalConfig.Wells_Report_URL = "Wells_Report.htm";
 globalConfig.Wells_Report_URL = globalConfig.chooseLang("well-record-information", "donnees-completes-sur-le-puits");
 globalConfig.layers = [{
@@ -49,6 +57,23 @@ globalConfig.layers = [{
 			_.each(keys, function(key) {
 				renderResult[key] = renderResult[key] || "";
 			});
+			renderResult.GEO = renderResult.GEO.trim();
+			renderResult.PLUG = renderResult.PLUG.trim();
+			renderResult.CM = renderResult.CM.trim();
+			renderResult.CAS = renderResult.CAS.trim();
+			renderResult.SCRN = renderResult.SCRN.trim();
+			renderResult.WAT = renderResult.WAT.trim();
+			renderResult.HOLE = renderResult.HOLE.trim();
+			
+			renderResult.GEO = (renderResult.GEO.length === 0) ? [new Array(6)​.fill("&nbsp;")] : createRenderItems(renderResult.GEO);
+			renderResult.PLUG = (renderResult.PLUG.length === 0) ? [new Array(3)​.fill("&nbsp;")] : createRenderItems(renderResult.PLUG);
+			renderResult.CM = (renderResult.CM.length === 0) ? [new Array(2)​.fill("&nbsp;")] : createRenderItems(renderResult.CM);
+			renderResult.CAS = (renderResult.CAS.length === 0) ? [new Array(4)​.fill("&nbsp;")] : createRenderItems(renderResult.CAS);
+			renderResult.SCRN = (renderResult.SCRN.length === 0) ? [new Array(4)​.fill("&nbsp;")] : createRenderItems(renderResult.SCRN);
+			renderResult.WAT = (renderResult.WAT.length === 0) ? [new Array(2)​.fill("&nbsp;")] : createRenderItems(renderResult.WAT);
+			renderResult.HOLE = (renderResult.HOLE.length === 0) ? [new Array(3)​.fill("&nbsp;")] : createRenderItems(renderResult.HOLE);
+			
+			/*
 			renderResult.GEO = createRenderItems(renderResult.GEO);
 			renderResult.PLUG = createRenderItems(renderResult.PLUG);
 			renderResult.CM = createRenderItems(renderResult.CM);
@@ -56,6 +81,7 @@ globalConfig.layers = [{
 			renderResult.SCRN = createRenderItems(renderResult.SCRN);
 			renderResult.WAT = createRenderItems(renderResult.WAT);
 			renderResult.HOLE = createRenderItems(renderResult.HOLE);
+			*/
 			renderResult.WELL_COMPLETED_DATE = convertDate(renderResult.WELL_COMPLETED_DATE);
 			renderResult.RECEIVED_DATE = convertDate(renderResult.RECEIVED_DATE);
 			renderResult.PT = renderResult.PT.trim();
