@@ -144,7 +144,7 @@ globalConfig.layers = [{
 					<%});%>\
 				<%});%>\
 			</TABLE>\
-		<BR><BR><I><A HREF="<%= globalConfig.dataDownloadURL %>"><%= globalConfig.chooseLang("Download the full dataset", "Ensemble de donn&eacute;es &agrave; t&eacute;l&eacute;charger") %></A></I><BR>'
+		<BR><BR><I><A HREF="<%= globalConfig.dataDownloadURL %>"><%= globalConfig.chooseLang("Click here to access the full dataset", "Cliquez ici pour acc&eacute;der au jeu de donn&eacute;es complet") %></A></I><BR>'
 },{
 	url: globalConfig.url  + "/" + globalConfig.layerIDs.ExemptionRecords,
 	renderTargetDiv: "exemptionRecords",
@@ -213,5 +213,5 @@ globalConfig.layers = [{
 					<%});%>\
 				<%});%>\
 			</TABLE>\
-		<BR><BR><I><A HREF="<%= globalConfig.dataDownloadURL %>"><%= globalConfig.chooseLang("Download the full dataset", "Ensemble de donn&eacute;es &agrave; t&eacute;l&eacute;charger") %></A></I><BR>'
+		<BR><BR><I><A HREF="<%= globalConfig.dataDownloadURL %>"><%= globalConfig.chooseLang("Click here to access the full dataset", "Cliquez ici pour acc&eacute;der au jeu de donn&eacute;es complet") %></A></I><BR>'
 }];

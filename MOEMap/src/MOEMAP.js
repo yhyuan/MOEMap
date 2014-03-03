@@ -581,9 +581,13 @@ globalConfig.postConditionsCallbackList = globalConfig.postConditionsCallbackLis
 			var bounds = globalConfig.calculatePointsBounds(featuresValidCoors);
 			globalConfig.setMapBound(queryParams.map,bounds);	
 		}
-		//globalConfig.addMarkers(features,queryParams.layerList[0].tabsTemplate);
-		globalConfig.addMarkers(featuresValidCoors,queryParams.layerList[0].tabsTemplate);
-		//globalConfig.addMarkers(featuresValidCoors,queryParams.layerList[0].tabsTemplate);
+		if (globalConfig.usePredefinedMultipleTabs) {
+			//globalConfig.addMarkers(features,queryParams.layerList[0].tabsTemplate);
+			globalConfig.addMarkers(featuresValidCoors,queryParams.layerList[0].tabsTemplate);
+			//globalConfig.addMarkers(featuresValidCoors,queryParams.layerList[0].tabsTemplate);
+		} else {
+			globalConfig.addMarkersSimple(featuresValidCoors, queryParams.layerList[0].tabsTemplate);
+		}
 		if (queryParams.layerList[0].hasOwnProperty('tableTemplate')){
 			var templates = {
 				"coordinatesTable": queryParams.layerList[0].tableTemplate,

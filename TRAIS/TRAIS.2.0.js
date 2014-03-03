@@ -90,7 +90,7 @@ if (globalConfig.language === "EN") {
 	globalConfig.tabsTemplateContent = "Installation: <b>{Facility}</b><br>Entreprise: <b>{Organisation}</b><br>Adresse: <b>{StreetAddress} / {City}</b><br>N&deg; INRP: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Secteur: <b>{mapConfig.displaySector(Sector)}</b><br>Substances toxiques: <b>{NUMsubst}</b><br><br>[{NUMsubst}? " + globalConfig.NoAnnualReportSubmittedLang + " ?<a target='_blank' href='" + globalConfig.annualReportURL + "?id={UniqueID}'>" + globalConfig.LinktoAnnualReportsLang + "</a>]<br>[{NUMPlanSummary}? " + globalConfig.NoPlanSummarySubmittedLang + " ?<a target='_blank' href='" + globalConfig.planSummaryURL + "?id={UniqueID}'>" + globalConfig.LinktoPlanSummariesLang + "</a>]<br>[{NUMRecord}? " + globalConfig.NoRecordSubmittedLang + " ?<a target='_blank' href='" + globalConfig.recordsURL + "?id={UniqueID}'>" + globalConfig.LinktoRecordsLang + "</a>]<br><i>" + globalConfig.OpenNewWindowLang + "</i><br>";	
 }
 globalConfig.tableSimpleTemplateTitleLang = globalConfig.chooseLang("Note: Data is in English only.", "\u00c0 noter : les donn\u00e9es sont en anglais seulement.");
-globalConfig.otherInfoHTML = globalConfig.chooseLang("Note: The information and data reflected in this report is a consolidation of data reported by facilities regulated under Toxics Reduction Act, 2009 and is up to date as of December 20, 2013. The facilities have the opportunity to notify the ministry of errors.", "Note: The information and data reflected in this report is a consolidation of data reported by facilities regulated under Toxics Reduction Act, 2009 and is up to date as of December 20, 2013. The facilities have the opportunity to notify the ministry of errors.");
+//globalConfig.otherInfoHTML = globalConfig.chooseLang("Note: The information and data reflected in this report is a consolidation of data reported by facilities regulated under Toxics Reduction Act, 2009 and is up to date as of December 20, 2013. The facilities have the opportunity to notify the ministry of errors.", "Note: The information and data reflected in this report is a consolidation of data reported by facilities regulated under Toxics Reduction Act, 2009 and is up to date as of December 20, 2013. The facilities have the opportunity to notify the ministry of errors.");
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
 //globalConfig.usejQueryUITable = false;  //Avoid loading extra javascript files
@@ -104,7 +104,7 @@ globalConfig.InformationLang = "Information";
 globalConfig.postIdentifyCallbackName = "SportFish";
 //globalConfig.infoWindowContentHeight = '700px';
 globalConfig.infoWindowWidth  = '320px';
-globalConfig.infoWindowHeight = (globalConfig.language === "EN") ? '250px' : '270px';
+globalConfig.infoWindowHeight = (globalConfig.language === "EN") ? '220px' : '270px';
 
 if (globalConfig.language === "EN") {
 	globalConfig.fieldNamesList = [
@@ -139,7 +139,7 @@ if (globalConfig.accessible) {
 	} else {
 		reportLang = "Signaler";
 	}
-	//globalConfig.usePredefinedMultipleTabs = false;  //Avoid loading extra javascript files
+
 	globalConfig.tableFieldList = [
 		{name: globalConfig.fieldNamesList[0], value: "{globalConfig.wordCapitalize(LAKENAME)}"}, 
 		{name: globalConfig.fieldNamesList[1], value: "{STN}"}, 
@@ -160,7 +160,6 @@ if (globalConfig.accessible) {
 	}];
 	globalConfig.postConditionsCallbackName = "AccessibleWells";*/		
 } else {
-	//globalConfig.usePredefinedMultipleTabs = true;  //Avoid loading extra javascript files
 	globalConfig.tableFieldList = [
 		{name: globalConfig.fieldNamesList[0], value: "{Facility}"}, 
 		{name: globalConfig.fieldNamesList[1], value: "{Organisation}"}, 

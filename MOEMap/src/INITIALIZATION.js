@@ -13,7 +13,7 @@
 	globalConfig.updateCoordinates = globalConfig.updateCoordinates || function(lat, lng){
 		var utm = globalConfig.convertLatLngtoUTM(lat, lng);
 		//document.getElementById(globalConfig.coordinatesDivId).innerHTML = "Latitude:" + lat.toFixed(6) + ", Longitude:" + lng.toFixed(6) + " (" + globalConfig.UTM_ZoneLang + ":" + utm.Zone + ", " + globalConfig.EastingLang + ":" + utm.Easting + ", " + globalConfig.NorthingLang +":" + utm.Northing + ") <br><br><div align=\"left\">" + globalConfig.designLang + "</div><br>";
-		document.getElementById(globalConfig.coordinatesDivId).innerHTML = "Latitude:" + lat.toFixed(6) + ", Longitude:" + lng.toFixed(6) + " (" + globalConfig.UTM_ZoneLang + ":" + utm.Zone + ", " + globalConfig.EastingLang + ":" + utm.Easting + ", " + globalConfig.NorthingLang +":" + utm.Northing + ")<br>";
+		document.getElementById(globalConfig.coordinatesDivId).innerHTML = "Latitude:" + lat.toFixed(5) + ", Longitude:" + lng.toFixed(5) + " (" + globalConfig.UTM_ZoneLang + ":" + utm.Zone + ", " + globalConfig.EastingLang + ":" + utm.Easting + ", " + globalConfig.NorthingLang +":" + utm.Northing + ")<br>";
 	};
 	//globalConfig.defaultCoordinateLang = globalConfig.defaultCoordinateLang || "Latitude : 48.950861, Longitude : -83.486242 (" + globalConfig.UTM_ZoneLang + ":17, " + globalConfig.EastingLang + ":317978.96, " + globalConfig.NorthingLang + ":5424971.70)  <br><br><div align=\"left\">" + globalConfig.designLang + "</div><br>";		
 	

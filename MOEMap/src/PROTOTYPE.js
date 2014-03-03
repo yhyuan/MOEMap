@@ -259,8 +259,8 @@ globalConfig.convertLatLngtoUTM = globalConfig.convertLatLngtoUTM || function(la
 	}
 	var res = {
 		Zone: zone,
-		Easting: x.toFixed(2),
-		Northing: y.toFixed(2)
+		Easting: x.toFixed(0),
+		Northing: y.toFixed(0)
 	};
 	return res;
 };	
