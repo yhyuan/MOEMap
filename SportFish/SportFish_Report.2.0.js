@@ -426,7 +426,7 @@ globalConfig.layers = [{
 				<%\
 					if (globalConfig.isEnglish()){\
 				%>\
-					<p>Consumption advisories in the table below represent the maximum number of meals per month recommended for each species/size range indicated.</p>\
+					<p>Consumption advisories in the tables below represent the maximum number of meals per month recommended for each species/size range indicated.</p>\
 					<P>Consult the help page if you are eating multiple species of fish or fish from multiple locations.</P>\
 					<p>Advisories may be provided for specific species and/or size ranges which are not legal to possess. Learn more about Ontario&#39s <a href="http://www.mnr.gov.on.ca/stdprodconsume/groups/lr/@mnr/@letsfish/documents/document/mnr_e001325.pdf">recreational fishing regulations</a> before going fishing.</p>\
 					<p><a href="http://www.ene.gov.on.ca/environment/en/mapping/sportfish/STDPROD_082936.html#advisories">Help understanding the fish consumption advisories</a>\
@@ -455,13 +455,13 @@ globalConfig.layers = [{
 								<tr>\
 									<th scope="row"><%= globalConfig.chooseLang("Length", "Longueur") %>&nbsp;(cm)&nbsp;&rarr;</th>\
 									<% _.each(globalConfig.generateLengthRanges(15, 80, 5), function(lengthRange,key,list){ %>\
-										<td><%= lengthRange %></td>\
+										<td><center><%= lengthRange %></center></td>\
 									<% }); %>\
 								</tr>\
 								<tr>\
 									<th scope="row"><%= globalConfig.chooseLang("Length", "Longueur") %>&nbsp;(in)&nbsp;&rarr;</th>\
 									<% _.each(globalConfig.generateLengthRanges(6, 32, 2), function(lengthRange,key,list){ %>\
-										<td><%= lengthRange %></td>\
+										<td><center><%= lengthRange %></center></td>\
 									<% }); %>\
 								</tr>\
 								<tr>\
