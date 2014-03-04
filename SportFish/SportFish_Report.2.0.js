@@ -421,7 +421,7 @@ globalConfig.layers = [{
 		adivosryDeferred.resolve();
 	},
 	template: '<h2><%= locName %></h2>\
-				<div style="margin-right:20px;margin-bottom:15px;float:right;"><a href="http://www.ontario.ca/fishguide"><img alt="<%= globalConfig.chooseLang("Guide to Eating Ontario Sport Fish (2013-2014)", "Guide de consommation du poisson gibier de l’Ontario (2013-2014)") %>" style="border:1px solid black;" hspace="10" src="http://files.ontariogovernment.ca/moe_mapping/mapping/js/OneSite/SportFish/cover_<%= globalConfig.chooseLang("en", "fr") %>.jpg" /></a></div>\
+				<!--<div style="margin-right:20px;margin-bottom:15px;float:right;"><a href="http://www.ontario.ca/fishguide"><img alt="<%= globalConfig.chooseLang("Guide to Eating Ontario Sport Fish (2013-2014)", "Guide de consommation du poisson gibier de l’Ontario (2013-2014)") %>" style="border:1px solid black;" hspace="10" src="http://files.ontariogovernment.ca/moe_mapping/mapping/js/OneSite/SportFish/cover_<%= globalConfig.chooseLang("en", "fr") %>.jpg" /></a></div>-->\
 				<strong><%= locDesc %></strong>\
 				<%\
 					if (globalConfig.isEnglish()){\
@@ -430,15 +430,15 @@ globalConfig.layers = [{
 					<P>Consult the help page if you are eating multiple species of fish or fish from multiple locations.</P>\
 					<p>Advisories may be provided for specific species and/or size ranges which are not legal to possess. Learn more about Ontario&#39s <a href="http://www.mnr.gov.on.ca/stdprodconsume/groups/lr/@mnr/@letsfish/documents/document/mnr_e001325.pdf">recreational fishing regulations</a> before going fishing.</p>\
 					<p><a href="http://www.ene.gov.on.ca/environment/en/mapping/sportfish/STDPROD_082936.html#advisories">Help understanding the fish consumption advisories</a>\
-					</p>\
+					</p><br>\
 				<%\
 					} else { \
 				%>\
-					<p>Le tableau ci-dessous contient des mises en garde relatives &#224; la consommation de poisson, c&rsquo;est-&#224;-dire qu&rsquo;il indique la quantit&#233; maximale de repas par mois recommand&#233;e pour chaque esp&#232;ce et fourchette de dimensions de poisson indiqu&#233;e.</p>\
+					<p>Le tableaux ci-dessous contient des mises en garde relatives &#224; la consommation de poisson, c&rsquo;est-&#224;-dire qu&rsquo;il indique la quantit&#233; maximale de repas par mois recommand&#233;e pour chaque esp&#232;ce et fourchette de dimensions de poisson indiqu&#233;e.</p>\
 					<P>Consultez la page d\'aide si vous consommez de multiples esp&#232;ces de poissons ou des poissons en provenance de plusieurs lieux.</P>\
 					<p>Il peut y avoir des mises en garde concernant des esp&#232;ces et des fourchettes de dimensions de poissons que la r&#233;glementation ontarienne en mati&#232;re de p&#234;che interdit de poss&#233;der. Avant d\'aller p&#234;cher, informez-vous plus en d&#233;tail des  <a href="http://www.mnr.gov.on.ca/stdprodconsume/groups/lr/@mnr/@letsfish/documents/document/mnr_f001325.pdf"> r&#232;glements de la p&#234;che sportive</a>.</p>\
 					<p><a href="http://www.ene.gov.on.ca/environment/fr/mapping/sportfish/STDPROD_083134.html">Aide pour l\'interpr&#233;tation des mises en garde relatives &#224; la consommation de poisson</a>\
-					</p>\
+					</p><br>\
 				<%\
 					}\
 					var speciesList = _.keys(speciesObject).sort(function compare(a,b) {\
