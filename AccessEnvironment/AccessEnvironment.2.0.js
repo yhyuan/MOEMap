@@ -4,7 +4,13 @@ globalConfig.displayDisclaimer = true;
 globalConfig.maxQueryReturn = 100000;
 globalConfig.maxDisplayReturn = 500;  
 globalConfig.accessible = globalConfig.accessible || false;
-
+globalConfig.chooseLang = function (en, fr) {return (globalConfig.language === "EN") ? en : fr;};
+/*
+globalConfig.validFeaturesFilter = globalConfig.validFeaturesFilter || function(feature) {
+	var p = feature.geometry[0].position; 
+	return (Math.abs(p.d - 45.5) > 0.0001 && Math.abs(p.e + 81) > 0.0001);  // the poistion of holding invalid points is at lat: 45.5, long: -81. 
+};
+*/
 globalConfig.resultFoundSimple = globalConfig.resultFoundSimple || function(queryParams){
 	var searchString = queryParams.searchString;
 	var totalCount = queryParams.totalCount;
@@ -114,7 +120,12 @@ if (globalConfig.accessible) {
 		}
 		globalConfig.addMarkers(features,queryParams.layerList[0].tabsTemplate);
 		if (queryParams.layerList[0].hasOwnProperty('tableTemplate')){ 
-			globalConfig.renderTable(features,queryParams.layerList[0].tableTemplate);
+			//globalConfig.renderTable(features,queryParams.layerList[0].tableTemplate);
+			var templates = {
+				"coordinatesTable": queryParams.layerList[0].tableTemplate,
+				"noCoordinatesTable": queryParams.layerList[0].noCoordinatesTableTemplate
+			};
+			globalConfig.renderTable(features,templates);			
 		}
 	};
 	globalConfig.postBufferCallback = function (queryParams) {
@@ -136,7 +147,13 @@ if (globalConfig.accessible) {
 			features = features.slice(0, globalConfig.maxDisplayReturn);
 		}		
 		globalConfig.addMarkers(features, queryParams.layerList[0].tabsTemplate);
-		globalConfig.renderTable(features, queryParams.layerList[0].tableTemplate, queryParams.gLatLng);
+		var templates = {
+			"coordinatesTable": queryParams.layerList[0].tableTemplate,
+			"noCoordinatesTable": queryParams.layerList[0].noCoordinatesTableTemplate
+		};
+		globalConfig.renderTable(features,templates);
+		
+		//globalConfig.renderTable(features, queryParams.layerList[0].tableTemplate, queryParams.gLatLng);
 		//queryParams.totalCount = features.length;
 		globalConfig.resultFoundSimple(queryParams);		
 	}	
@@ -403,7 +420,7 @@ if (globalConfig.language === "EN") {
 			globalConfig.searchControlHTML = '<center><input id="map_query" type="text" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100" title="Term"></input>&nbsp;<input type="submit" onclick="globalConfig.search()" value="Search" title="Search"></input><a href=\'AccessEnvironmentAdv_Accessible_en.htm\'>' + globalConfig.AdvancedSearchLang + '</a><br><div id="information" style="margin-top:10px;">' + globalConfig.searchHelpTxt + '</div></center>';			
 		} else {
 			globalConfig.searchHelpTxt = "Zoom in, or Search with Business Name, Address.";
-			globalConfig.searchControlHTML = '<center>\
+/*			globalConfig.searchControlHTML = '<center>\
 				<input id = "map_query" type="text" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100"></input>&nbsp;&nbsp;<input type="submit" onclick="globalConfig.search()" value="Search"></input>&nbsp;&nbsp;\
 				<a href=\'AccessEnvironmentAdv.htm\'>Advanced Search</a>\
 				<br><input id = "searchBusiness" type="radio" name="searchGroup" value="business" onclick="globalConfig.searchChange(\'Business\')">Business Name\
@@ -415,7 +432,32 @@ if (globalConfig.language === "EN") {
 										<option value="25" >25 km</option>\
 										<option value="50" >50 km</option>\
 									</select>\
-				<div id="information" style="color:#0000FF">' + globalConfig.searchHelpTxt + '</div></center>';			
+				<div id="information" style="color:#0000FF">' + globalConfig.searchHelpTxt + '</div></center>';		
+*/
+			globalConfig.tableSimpleTemplateTitleLang = globalConfig.chooseLang("Note: Data is in English only.", "\u00c0 noter : les donn\u00e9es sont en anglais seulement.");
+			globalConfig.searchControlHTML = '<div id="searchTheMap"></div><div id="searchHelp"></div><br><label class="element-invisible" for="map_query">' + globalConfig.chooseLang('Search the map', 'Recherche carte interactive') + '</label>\
+				<input id="map_query" type="text" title="' + globalConfig.chooseLang('Search term', 'Terme de recherche') + '" maxlength="100" size="50" onkeypress="return globalConfig.entsub(event)"></input>\
+				<label class="element-invisible" for="search_submit">' + globalConfig.chooseLang('Search', 'Recherche') + '</label>\
+				<input id="search_submit" type="submit" title="' + globalConfig.chooseLang('Search', 'Recherche') + '" onclick="globalConfig.search()" value="' + globalConfig.chooseLang('Search', 'Recherche') + '"></input>\
+				<fieldset>\
+					<input type="radio" id="searchBusiness" name="searchGroup" title="' + globalConfig.chooseLang('Business Name', "Nom de l'entreprise") + '" name="business" value="business" onclick="globalConfig.searchChange(\'Business\')"></input>\
+					<label class="option" for="business">\
+						' + globalConfig.chooseLang('Business Name', "Nom de l'entreprise") + '\
+					</label>\
+					<input type="radio" id="searchLocation" name="searchGroup" title="' + globalConfig.chooseLang('Address with Radius of', "Adresse dans un rayon de") + '" name="location" value="location" onclick="globalConfig.searchChange(\'Location\')"></input>\
+					<label class="option" for="location">\
+						' + globalConfig.chooseLang('Address with Radius of', "Adresse dans un rayon de") + '\
+						<select name="searchCriteria.radius" id="lstRadius">\
+							<option value="1" >1 km</option>\
+							<option value="2" >2 km</option>\
+							<option value="5" >5 km</option>\
+							<option value="10" >10 km</option>\
+							<option value="25" >25 km</option>\
+							<option value="50" >50 km</option>\
+						</select>\
+					</label>\
+				</fieldset>\
+			<div id="information"></div>';
 		}
 	}
 } else {
@@ -684,7 +726,7 @@ if (globalConfig.language === "EN") {
 			globalConfig.BusinessNameLang = "Nom de l'entreprise";
 			globalConfig.SearchLang = "Recherche";
 			globalConfig.AddresswithRadiusofLang = "Adresse dans un rayon de";
-			globalConfig.searchControlHTML = '<center>\
+/*			globalConfig.searchControlHTML = '<center>\
 				<input id = "map_query" type="text" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100"></input>&nbsp;&nbsp;<input type="submit" onclick="globalConfig.search()" value="' + globalConfig.SearchLang + '"></input>&nbsp;&nbsp;\
 				<a href=\'AccessEnvironmentAdv_fr.htm\'>' + globalConfig.AdvancedSearchLang + '</a>\
 				<br><input id = "searchBusiness" type="radio" name="searchGroup" value="business" onclick="globalConfig.searchChange(\'Business\')">' + globalConfig.BusinessNameLang + '\
@@ -696,7 +738,32 @@ if (globalConfig.language === "EN") {
 										<option value="25" >25 km</option>\
 										<option value="50" >50 km</option>\
 									</select>\
-				<div id="information" style="color:#0000FF">' + globalConfig.searchHelpTxt + '</div></center>';			
+				<div id="information" style="color:#0000FF">' + globalConfig.searchHelpTxt + '</div></center>';		
+*/
+			globalConfig.tableSimpleTemplateTitleLang = globalConfig.chooseLang("Note: Data is in English only.", "\u00c0 noter : les donn\u00e9es sont en anglais seulement.");
+			globalConfig.searchControlHTML = '<div id="searchTheMap"></div><div id="searchHelp"></div><br><label class="element-invisible" for="map_query">' + globalConfig.chooseLang('Search the map', 'Recherche carte interactive') + '</label>\
+				<input id="map_query" type="text" title="' + globalConfig.chooseLang('Search term', 'Terme de recherche') + '" maxlength="100" size="50" onkeypress="return globalConfig.entsub(event)"></input>\
+				<label class="element-invisible" for="search_submit">' + globalConfig.chooseLang('Search', 'Recherche') + '</label>\
+				<input id="search_submit" type="submit" title="' + globalConfig.chooseLang('Search', 'Recherche') + '" onclick="globalConfig.search()" value="' + globalConfig.chooseLang('Search', 'Recherche') + '"></input>\
+				<fieldset>\
+					<input type="radio" id="searchBusiness" name="searchGroup" title="' + globalConfig.chooseLang('Business Name', "Nom de l'entreprise") + '" name="business" value="business" onclick="globalConfig.searchChange(\'Business\')"></input>\
+					<label class="option" for="business">\
+						' + globalConfig.chooseLang('Business Name', "Nom de l'entreprise") + '\
+					</label>\
+					<input type="radio" id="searchLocation" name="searchGroup" title="' + globalConfig.chooseLang('Address with Radius of', "Adresse dans un rayon de") + '" name="location" value="location" onclick="globalConfig.searchChange(\'Location\')"></input>\
+					<label class="option" for="location">\
+						' + globalConfig.chooseLang('Address with Radius of', "Adresse dans un rayon de") + '\
+						<select name="searchCriteria.radius" id="lstRadius">\
+							<option value="1" >1 km</option>\
+							<option value="2" >2 km</option>\
+							<option value="5" >5 km</option>\
+							<option value="10" >10 km</option>\
+							<option value="25" >25 km</option>\
+							<option value="50" >50 km</option>\
+						</select>\
+					</label>\
+				</fieldset>\
+			<div id="information"></div>';						
 		}
 	}	
 }
@@ -741,6 +808,7 @@ globalConfig.formatProjectType = function(str){
 	return str;
 };
 globalConfig.calculateReportURL = function(pdflink){
+	
 	if(typeof(pdflink) != "undefined"){
 		if(pdflink == "N/A"){
 			return "N/A";
@@ -759,6 +827,7 @@ globalConfig.calculateReportURL = function(pdflink){
 };
 globalConfig.calculateCERTIFICATE_NUMBER = function(pdflink, CERTIFICATE_NUMBER){
 	var certficateNumber = globalConfig.processNA(CERTIFICATE_NUMBER);
+	//console.log(pdflink);
 	if(typeof(pdflink) != "undefined"){
 		if(pdflink == "N/A"){
 			return certficateNumber;
@@ -766,11 +835,18 @@ globalConfig.calculateCERTIFICATE_NUMBER = function(pdflink, CERTIFICATE_NUMBER)
 			if(pdflink.indexOf(".pdf") > 0){
 				return "<a target='_blank' href='http://www.environet.ene.gov.on.ca/instruments/" + pdflink + "'>" + certficateNumber + "</a>";
 			}
-			var reg = /^\d+$/;
+			var preURL = 'http://www.accessenvironment.ene.gov.on.ca/PiwWeb/piw/ViewDocument.action?documentRefId="';
+			var index = pdflink.indexOf(preURL);
+			if (index === 0) {
+				var str = pdflink.substring(preURL.length, pdflink.length - 1);
+				return "<a target='_blank' href='http://www.accessenvironment.ene.gov.on.ca/AEWeb/ae/ViewDocument.action?documentRefID=" + str + "'>" + certficateNumber + "</a>";
+			}			
+			/*var reg = /^\d+$/;
 			if(reg.test(pdflink)){
 				//return "<a target='_blank' href='http://www.accessenvironment.ene.gov.on.ca/PiwWeb/piw/ViewDocument.action?documentRefID=" + pdflink + "'>PDF</a>";
 				return "<a target='_blank' href='http://www.accessenvironment.ene.gov.on.ca/AEWeb/ae/ViewDocument.action?documentRefID=" + pdflink + "'>" + certficateNumber + "</a>";
 			}
+			*/
 		}
 	}		
 	return certficateNumber;
@@ -840,7 +916,7 @@ globalConfig.postInitialize = function(map){
 	} else {
 		globalConfig.postInitializeSimple();
 	}
-	
+	/*
 	if (!globalConfig.accessible) {
 		var triangleRecordsWithoutLatLng = [
 			new google.maps.LatLng(45.6, -81),
@@ -855,7 +931,7 @@ globalConfig.postInitialize = function(map){
 			strokeWeight: 2
 		});
 		triangle.setMap(map);
-	}
+	} */
 };
 globalConfig.searchChange = function(type){
 	if(type === "Business"){

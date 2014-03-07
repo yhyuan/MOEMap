@@ -1,8 +1,4 @@
 build_en.bat
 build_fr.bat
-build_Accessible_en.bat
-build_Accessible_fr.bat
 build_Adv_en.bat
 build_Adv_fr.bat
-build_AdvAccessible_en.bat
-build_AdvAccessible_fr.bat

@@ -544,13 +544,15 @@ globalConfig.preConditionsCallbackList = globalConfig.preConditionsCallbackList 
 };
 globalConfig.preConditionsCallback = globalConfig.preConditionsCallback || globalConfig.preConditionsCallbackList[globalConfig.preConditionsCallbackName];
 globalConfig.validFeaturesFilter = globalConfig.validFeaturesFilter || function(feature) {
-	var p = feature.geometry[0].position; 
-		return (Math.abs(p.d) > 0.0001 && Math.abs(p.e) > 0.0001);
+	var p = feature.geometry[0].position;
+	//console.log(p);
+	return (Math.abs(p.d) > 0.0001 && Math.abs(p.e) > 0.0001);
 };
 globalConfig.postConditionsCallbackName = globalConfig.postConditionsCallbackName || "Wells";
+//console.log(globalConfig.postConditionsCallbackName);
 globalConfig.postConditionsCallbackList = globalConfig.postConditionsCallbackList || {
 	"Wells": function (queryParams) {
-		//console.log("In Search");
+		//console.log("Wells inside");
 		var features = Array.range(0, queryParams.layerList.length - 1).reduce(function(previousValue, currentValue) {
 			var result = queryParams.layerList[currentValue].result;
 			if (result.hasOwnProperty('features')) {
@@ -599,6 +601,7 @@ globalConfig.postConditionsCallbackList = globalConfig.postConditionsCallbackLis
 		}
 	},
 	"AccessibleWells": function (queryParams) {
+		//console.log("AccessibleWells inside");
 		var features = Array.range(0, queryParams.layerList.length - 1).reduce(function(previousValue, currentValue) {
 			var result = queryParams.layerList[currentValue].result;
 			if (result.hasOwnProperty('features')) {
@@ -625,6 +628,7 @@ globalConfig.postConditionsCallbackList = globalConfig.postConditionsCallbackLis
 	},
 	"SportFish": function (queryParams) {
 		//console.log("In Search");
+		//console.log("SportFish inside");
 		var features = Array.range(0, queryParams.layerList.length - 1).reduce(function(previousValue, currentValue) {
 			var result = queryParams.layerList[currentValue].result;
 			if (result.hasOwnProperty('features')) {

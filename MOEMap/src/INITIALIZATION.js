@@ -261,7 +261,9 @@
 					}
 					if ((!layerSetting.hasOwnProperty('tableTemplate')) && layerSetting.hasOwnProperty('tableSimpleTemplate')) {
 						layerSetting.tableTemplate = globalConfig.createTableBelowMap(layerSetting.tableSimpleTemplate);
+						//console.log(layerSetting.tableTemplate);
 						layerSetting.noCoordinatesTableTemplate = globalConfig.createNoCoordinatesTableBelowMap(layerSetting.tableSimpleTemplate);
+						//console.log(layerSetting.noCoordinatesTableTemplate);
 					}
 					if(layerSetting.hasOwnProperty('tableTemplate')) {
 						var outFields2 = getRequiredFields([{ label:globalConfig.InformationLang, content:layerSetting.tableTemplate.content}]); 
