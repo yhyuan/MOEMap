@@ -61,7 +61,7 @@ globalConfig.infoWindowWidth  = '280px';
 globalConfig.tableSimpleTemplateTitleLang = "";
 globalConfig.tableFieldList = [
 	{name: globalConfig.chooseLang("Waterbody", "Plan d'eau"), value: "{LOCNAME_" + globalConfig.chooseLang("EN", "FR") + "}"}, 
-	{name: globalConfig.chooseLang("Location", "Un lieu"), value: "{globalConfig.addBRtoLongText(GUIDELOC_" + globalConfig.chooseLang("EN", "FR") + ")}"}, 
+	{name: globalConfig.chooseLang("Location", "Lieu"), value: "{globalConfig.addBRtoLongText(GUIDELOC_" + globalConfig.chooseLang("EN", "FR") + ")}"}, 
 	{name: "Latitude", value: "{globalConfig.deciToDegree(LATITUDE)}"}, 
 	{name: "Longitude", value: "{globalConfig.deciToDegree(LONGITUDE)}"}, 	
 	{name: globalConfig.chooseLang("Consumption Advisory Table", "Tableau des mises en garde en mati\u00e8re de consommation"), value: "<a target='_blank' href='" + globalConfig.report_URL + "?id={WATERBODYC}'>" + globalConfig.chooseLang("Consumption Advisory Table", "Tableau des mises en garde en mati\u00e8re de<br> consommation") + "</a>"}

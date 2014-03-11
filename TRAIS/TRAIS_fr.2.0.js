@@ -6,7 +6,7 @@ globalConfig.language = "FR";
 //globalConfig.tabsTemplateContent = "Installation: <b>{FacilityName}</b><br>Entreprise: <b>{OrganizationName}</b><br>Adresse: <b>{Address}</b><br>N&deg; INRP: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Secteur: <b>{mapConfig.displaySector(Sector)}</b><br>Substances toxiques: <b>{NUMsubst}</b><br><br><a target='_blank' href='TRAIS_Report.htm?id={ID}'>Lien aux rapports annuels</a><br><i>Ce lien s'ouvre dans une nouvelle fen\u00eatre.</i><br>";
 
 //globalConfig.tabsTemplateContent = "Installation: <b>{FacilityName}</b><br>Entreprise: <b>{OrganizationName}</b><br>Adresse: <b>{Address}</b><br>N&deg; INRP: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Secteur: <b>{mapConfig.displaySector(Sector)}</b><br>Substances toxiques: <b>{NUMsubst}</b><br><br><a target='_blank' href='fr_trais_report?id={ID}'>Lien aux rapports annuels</a><br><i>Ce lien s'ouvre dans une nouvelle fen\u00eatre.</i><br>";
-globalConfig.otherInfoHTML = "Certaines donn\u00e9es scientifiques et de surveillance n\u0027existent qu\u0027en anglais."; 
+//globalConfig.otherInfoHTML = "Certaines donn\u00e9es scientifiques et de surveillance n\u0027existent qu\u0027en anglais."; 
 /*
 globalConfig.searchControlHTML = '<table width="100%" cellpadding="5" cellspacing="0" border="0" style="margin-bottom:15px;" summary="Recherche dans la carte interactive">\
 			<caption style="text-align:left;">Recherche carte interactive</caption>\

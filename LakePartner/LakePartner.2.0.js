@@ -36,8 +36,8 @@ globalConfig.tableFieldList = [
 	{name: globalConfig.fieldNamesList[2], value: "{SITEID}"}, 
 	{name: globalConfig.fieldNamesList[3], value: "{globalConfig.wordCapitalize(TOWNSHIP)}"}, 
 	{name: globalConfig.fieldNamesList[4], value: "{SITEDESC}"}, 
-	{name: globalConfig.fieldNamesList[5], value: "[{SE_COUNT}?N/A?<a target='_blank' href='" + globalConfig.SecchiDepth_ReportName + "?id={ID}'>" + globalConfig.chooseLang("Report", "Signaler") + "</a>]"},
-	{name: globalConfig.fieldNamesList[6], value: "[{PH_COUNT}?N/A?<a target='_blank' href='" + globalConfig.TotalPhosphorus_ReportName + "?id={ID}'>" + globalConfig.chooseLang("Report", "Signaler") + "</a>]"},		
+	{name: globalConfig.fieldNamesList[5], value: "[{SE_COUNT}?N/A?<a target='_blank' href='" + globalConfig.SecchiDepth_ReportName + "?id={ID}'>" + globalConfig.chooseLang("Report", "Rapport") + "</a>]"},
+	{name: globalConfig.fieldNamesList[6], value: "[{PH_COUNT}?N/A?<a target='_blank' href='" + globalConfig.TotalPhosphorus_ReportName + "?id={ID}'>" + globalConfig.chooseLang("Report", "Rapport") + "</a>]"},		
 	{name: globalConfig.fieldNamesList[7], value: "{globalConfig.deciToDegree(LATITUDE)}"}, 
 	{name: globalConfig.fieldNamesList[8], value: "{globalConfig.deciToDegree(LONGITUDE)}"}
 ];

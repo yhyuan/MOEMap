@@ -16,7 +16,7 @@ globalConfig.createIndexTable = function(substances) {
 		textArray.push("&nbsp;");	
 	}
 	var result = '<table class="noStripes" border="1">' + _.map(_.range(textArray.length/2), function (i) {
-		return "<tr><td>" + textArray[2*i] + "</td><td>" + textArray[2*i + 1] + "</td></tr>";
+		return "<tr><td width='50%'>" + textArray[2*i] + "</td><td width='50%'>" + textArray[2*i + 1] + "</td></tr>";
 	}).join(" ") + '</table>';
 	return result;
 };
@@ -244,5 +244,5 @@ globalConfig.layers = [{
             <%\
                 });\
             %>\
-		<% }%>'
+		<% }%><%= globalConfig.chooseLang("", "Certains renseignements ne sont disponibles qu&acute;en anglais.") %>'
 }];

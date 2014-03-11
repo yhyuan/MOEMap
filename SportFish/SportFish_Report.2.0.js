@@ -459,7 +459,7 @@ globalConfig.layers = [{
 									<% }); %>\
 								</tr>\
 								<tr>\
-									<th scope="row"><%= globalConfig.chooseLang("Length", "Longueur") %>&nbsp;(in)&nbsp;&rarr;</th>\
+									<th scope="row"><%= globalConfig.chooseLang("Length", "Longueur") %>&nbsp;(<%= globalConfig.chooseLang("in", "En pouces") %>)&nbsp;&rarr;</th>\
 									<% _.each(globalConfig.generateLengthRanges(6, 32, 2), function(lengthRange,key,list){ %>\
 										<td><center><%= lengthRange %></center></td>\
 									<% }); %>\
@@ -481,7 +481,7 @@ globalConfig.layers = [{
 						<% var speciesURL = globalConfig.getSpeciesURL(speciesCode);\
 							if (speciesURL.length > 0) {\
 						%>\
-							<p><a href="<%= speciesURL %>"><%= globalConfig.chooseLang("More information about the ", "More information about the ") + globalConfig.speciesDict[speciesCode] %></a></p>\
+							<p><a href="<%= speciesURL %>"><%= globalConfig.chooseLang("More information about the ", "Plus de renseignements sur ") + globalConfig.speciesDict[speciesCode] %></a></p>\
 						<% } %>\
 						<p><%= globalConfig.chooseLang("*Sensitive Population: Women of child-bearing age and children under 15.", "*Population sensible: Femmes en &#226;ge de procr&#233;er et enfants de moins de 15 ans.") %></p>\
 						<p><%= globalConfig.chooseLang("Superscripts: the number identifies the contaminant or group of contaminants for which the fish was tested.", "Indice sup&#233;rieur : le chiffre d&#233;signe le contaminant ou le groupe de contaminants pour lesquels on a analys&#233; le poisson.") %>\

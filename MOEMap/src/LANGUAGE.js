@@ -45,7 +45,7 @@ if (globalConfig.language === "EN"){
 	globalConfig.ThisResultDoesNotHaveValidCoordinates = globalConfig.ThisResultDoesNotHaveValidCoordinates || "This result does not have valid coordinates.";
 	globalConfig.AmongReturnedResults = globalConfig.AmongReturnedResults || "Among returned results";
 	globalConfig.ResultDoesNotHaveValidCoordinates = globalConfig.ResultDoesNotHaveValidCoordinates || " result does not have valid coordinates.";
-	globalConfig.ResultsDoNotHaveValidCoordinates = globalConfig.ResultsDoNotHaveValidCoordinates || " results do not have valid coordinates";
+	globalConfig.ResultsDoNotHaveValidCoordinates = globalConfig.ResultsDoNotHaveValidCoordinates || " results do not have valid coordinates.";
 	globalConfig.youMaySearchByLang = globalConfig.youMaySearchByLang || "You may search by ";
 	globalConfig.seeHelpForAdvancedOptionsLang = globalConfig.seeHelpForAdvancedOptionsLang || "or see help for advanced options.";
 } else {
@@ -87,12 +87,12 @@ if (globalConfig.language === "EN"){
 	globalConfig.CurrentMapDisplayLang = globalConfig.CurrentMapDisplayLang || '\u00c9tendue de la carte courante';
 	globalConfig.CurrentMapDisplayTitleLang = globalConfig.CurrentMapDisplayTitleLang || 'Afficher la carte : Limiter la recherche \u00e0 la carte donn\u00e9e.';	
 	globalConfig.distanceFieldNote = globalConfig.distanceFieldNote || "La colonne de distance (en km) donne la distance entre le lieu de votre recherche et le lieu du puits dans la rang\u00e9e donn\u00e9e.";
-	globalConfig.noCoordinatesTableTitleLang = globalConfig.noCoordinatesTableTitleLang || "The following table contains the records without valid coordinates. <a href='#WhyAmISeeingThis'>Why am I seeing this?</a>";
-	globalConfig.whyAmISeeingThisLang = globalConfig.whyAmISeeingThisLang || "<a id='WhyAmISeeingThis'>Why am I seeing this?</a><br>The map locations shown as points have been determined by using addresses or other information to calculate a physical location on the map.  In some cases, the information needed to calculate a location was incomplete, incorrect or missing.  The records provided in the second table have been included because there is a close match on the name or city/town or other field(s). These records may or may not be near your specified location, and users are cautioned in using these records. They have been included as potential matches only.";	
+	globalConfig.noCoordinatesTableTitleLang = globalConfig.noCoordinatesTableTitleLang || "Le tableau suivant contient des données sans coordonnées valides.  <a href='#WhyAmISeeingThis'>Pourquoi cela s’affiche-t-il?</a>";
+	globalConfig.whyAmISeeingThisLang = globalConfig.whyAmISeeingThisLang || "<a id='WhyAmISeeingThis'>Pourquoi cela s’affiche-t-il?</a><br>Les lieux indiqués par des points sur la carte ont été déterminés en fonction d’adresses ou d’autres renseignements servant à calculer un emplacement physique sur la carte. Dans certains cas, ces renseignements étaient incomplets, incorrects ou manquants. Les données fournies dans le deuxième tableau ont été incluses, car il y a une correspondance étroite avec le nom de la ville ou d’autre champ. Ces données peuvent ou non être proches du lieu précisé, et on doit les utiliser avec prudence. Elles ont été incluses seulement parce qu’il peut y avoir une correspondance.";	
 	globalConfig.ThisResultDoesNotHaveValidCoordinates = globalConfig.ThisResultDoesNotHaveValidCoordinates || "This result does not have valid coordinates.";
-	globalConfig.AmongReturnedResults = globalConfig.AmongReturnedResults || "Among returned results";
-	globalConfig.ResultDoesNotHaveValidCoordinates = globalConfig.ResultDoesNotHaveValidCoordinates || " result does not have valid coordinates.";
-	globalConfig.ResultsDoNotHaveValidCoordinates = globalConfig.ResultsDoNotHaveValidCoordinates || " results do not have valid coordinates";
+	globalConfig.AmongReturnedResults = globalConfig.AmongReturnedResults || "Parmi les résultats obtenus";
+	globalConfig.ResultDoesNotHaveValidCoordinates = globalConfig.ResultDoesNotHaveValidCoordinates || " résultat n’a pas de coordonnées valides.";
+	globalConfig.ResultsDoNotHaveValidCoordinates = globalConfig.ResultsDoNotHaveValidCoordinates || " résultats n’ont pas de coordonnées valides.";
 	
 	globalConfig.youMaySearchByLang = globalConfig.youMaySearchByLang || "Vous pouvez rechercher par ";
 	globalConfig.seeHelpForAdvancedOptionsLang = globalConfig.seeHelpForAdvancedOptionsLang || "ou consulter l'aide pour de l'information sur les recherches avanc&eacute;es.";

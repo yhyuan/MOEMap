@@ -99,7 +99,7 @@ globalConfig.layers = [{
             <%\
                 });\
             %>			\
-			<tr><td colspan="3"><center><a href="#indexOther"><%= globalConfig.chooseLang("Pesticides, Volatile Organic Compounds, and other parameters", "Pesticides, compos&eacute;s organiques volatiles et autres param&egrave;tres") %></a></center></td></tr>\
+			<tr><td colspan="3"><center><a href="#indexOther"><%= globalConfig.chooseLang("Pesticides, Volatile Organic Compounds, and other parameters", "Pesticides, compos&eacute;s organiques volatils et autres param&egrave;tres") %></a></center></td></tr>\
 		</table>\
 \
 		<%\

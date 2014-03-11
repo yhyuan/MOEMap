@@ -336,18 +336,18 @@ if (globalConfig.language === "EN") {
 						 <div style="font-weight: normal;">Project Type</div>\
 						<div><label for="lstAllEASRsType"></label> \
 						<select	name="searchCriteria.easrApprovalTypes" size="4" multiple="multiple"	class="selections" id="lstAllEASRsType">\
-							<option value=\'AUTOMOTIVE_REFINISHING\' >\
-							&nbsp;Automotive Refinishing</option>\
-							<option value=\'STANDBY_POWER_SYSTEM\' >\
-							&nbsp;Standby Power System</option>\
-							<option value=\'HEATING_SYSTEM\' >\
-							&nbsp;Heating System</option>\
-							<option value=\'WASTE_TRANSPORTATION_SYSTEM\' >\
+							<option value=\'004\' selected>\
 							&nbsp;Waste Management System</option>\
-							<option value=\'PRINTING_FACILITY\' >\
+							<option value=\'005\' selected>\
 							&nbsp;Printing Facility</option>\
-							<option value=\'SOLAR_FACILITY\' >\
+							<option value=\'006\' selected>\
 							&nbsp;Solar Facility</option>\
+							<option value=\'001\' selected>\
+							&nbsp;Automotive Refinishing Facility</option>\
+							<option value=\'002\' selected>\
+							&nbsp;Standby Power System</option>\
+							<option value=\'003\' selected>\
+							&nbsp;Heating System</option>\
 						</select></div>\
 						</div>\
 						</th>\
@@ -635,18 +635,18 @@ if (globalConfig.language === "EN") {
 						 <div style="font-weight: normal;">Type de projet</div>\
 						<div><label for="lstAllEASRsType"></label> \
 						<select	name="searchCriteria.easrApprovalTypes" size="4" multiple="multiple"	class="selections" id="lstAllEASRsType">\
-							<option value=\'AUTOMOTIVE_REFINISHING\' >\
-							&nbsp;Finition Automobile</option>\
-							<option value=\'STANDBY_POWER_SYSTEM\' >\
-							&nbsp;Syst&egrave;me d&acute;alimentation &eacute;lectrique d&acute;appoint</option>\
-							<option value=\'HEATING_SYSTEM\' >\
-							&nbsp;Syst&egrave;me de chauffage</option>\
-							<option value=\'WASTE_TRANSPORTATION_SYSTEM\' >\
-							&nbsp;Syst&egrave;me de gestion des d&eacute;chets</option>\
-							<option value=\'PRINTING_FACILITY\' >\
-							&nbsp;Installation d&acute;impression</option>\
-							<option value=\'SOLAR_FACILITY\' >\
-							&nbsp;Installation de panneaux solaires</option>\
+							<option value=\'004\' >\
+							&nbsp;Syst&egrave;me de Gestion des D&eacute;chets</option>\
+							<option value=\'005\' >\
+							&nbsp;Imprimeries</option>\
+							<option value=\'006\' >\
+							&nbsp;Installations solaires</option>\
+							<option value=\'001\' >\
+							&nbsp;Installations de finition automobile</option>\
+							<option value=\'002\' >\
+							&nbsp;Syst&egrave;mes d\'alimentation &eacute;lectrique d\'appoint</option>\
+							<option value=\'003\' >\
+							&nbsp;Syst&egrave;mes de chauffage</option>\
 						</select></div>\
 						</div>\
 						</th>\
@@ -792,6 +792,25 @@ globalConfig.formatDate = function(timestamp){
 		}
 	}
 };
+if (globalConfig.language === "EN") {
+	globalConfig.EASRProjectTypes = {
+		"004":"Waste Management System",
+		"005":"Printing Facility",
+		"006":"Solar Facility",
+		"001":"Automotive Refinishing Facility",
+		"002":"Standby Power System",
+		"003":"Heating System"
+	};
+} else {
+	globalConfig.EASRProjectTypes = {
+		"004":"Syst&egrave;me de Gestion des D&eacute;chets",
+		"005":"Imprimeries",
+		"006":"Installations solaires",
+		"001":"Installations de finition automobile",
+		"002":"Syst&egrave;mes d'alimentation &eacute;lectrique d'appoint",
+		"003":"Syst&egrave;mes de chauffage"
+	};
+}
 globalConfig.formatProjectType = function(str){
 	if(typeof (str) == 'undefined'){
 		return "N/A";
@@ -804,7 +823,10 @@ globalConfig.formatProjectType = function(str){
 	}
 	if(str.indexOf("_") > 0){
 		return globalConfig.replaceChar(str, "_", " ");
-	}			
+	}
+	if (globalConfig.EASRProjectTypes.hasOwnProperty(str)) {
+		return globalConfig.EASRProjectTypes[str];
+	}
 	return str;
 };
 globalConfig.calculateReportURL = function(pdflink){
