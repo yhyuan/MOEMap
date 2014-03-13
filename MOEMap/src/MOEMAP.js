@@ -79,14 +79,14 @@ if (typeof globalConfig.usejQueryUITable === "undefined"){
 }
 if(globalConfig.usejQueryUITable && (!globalConfig.accessible) && (!!yepnope)){	
 	yepnope({
-		load: "http://files.ontariogovernment.ca/moe_mapping/mapping/js/MOEMap/css/jquery.dataTables.css", 
+		load: "http://files.ontario.ca/moe_mapping/mapping/js/MOEMap/css/jquery.dataTables.css", 
 		callback: function () {
 			//console.log("multipletabs.css loaded!");
 		}
 	});
 	
 	yepnope({
-		load: "http://files.ontariogovernment.ca/moe_mapping/mapping/js/MOEMap/js/jquery.dataTables.js", 
+		load: "http://files.ontario.ca/moe_mapping/mapping/js/MOEMap/js/jquery.dataTables.js", 
 		callback: function () {
 			//console.log("closure-library-multipletabs-min.js loaded!");
 		}
@@ -100,14 +100,14 @@ if (typeof globalConfig.usePredefinedMultipleTabs === "undefined"){
 }
 if(globalConfig.usePredefinedMultipleTabs && (!globalConfig.accessible) && (!!yepnope)){	
 		yepnope({
-			load: "http://files.ontariogovernment.ca/moe_mapping/mapping/js/MOEMap/css/multipletabs.css", 
+			load: "http://files.ontario.ca/moe_mapping/mapping/js/MOEMap/css/multipletabs.css", 
 			callback: function () {
 				//console.log("multipletabs.css loaded!");
 			}
 		});
 		
 		yepnope({
-			load: "http://files.ontariogovernment.ca/moe_mapping/mapping/js/MOEMap/js/closure-library-multipletabs-min.js", 
+			load: "http://files.ontario.ca/moe_mapping/mapping/js/MOEMap/js/closure-library-multipletabs-min.js", 
 			callback: function () {
 				//console.log("closure-library-multipletabs-min.js loaded!");
 			}
@@ -499,7 +499,7 @@ globalConfig.renderTable = function(features, templates, searchCenter){
 		if ((globalConfig.supportTableDownload) && (!$.browser.msie)) {
 			dataTableOptions["sDom"] = 'T<"clear">lfrtip';
 			dataTableOptions["oTableTools"] = {
-					"sSwfPath": "http://files.ontariogovernment.ca/moe_mapping/mapping/js/MOEMap/js/TableTools-2.1.4/media/swf/copy_csv_xls.swf",
+					"sSwfPath": "http://files.ontario.ca/moe_mapping/mapping/js/MOEMap/js/TableTools-2.1.4/media/swf/copy_csv_xls.swf",
 					"aButtons": ["xls"]
 				};
 		}
@@ -545,8 +545,7 @@ globalConfig.preConditionsCallbackList = globalConfig.preConditionsCallbackList 
 globalConfig.preConditionsCallback = globalConfig.preConditionsCallback || globalConfig.preConditionsCallbackList[globalConfig.preConditionsCallbackName];
 globalConfig.validFeaturesFilter = globalConfig.validFeaturesFilter || function(feature) {
 	var p = feature.geometry[0].position;
-	//console.log(p);
-	return (Math.abs(p.d) > 0.0001 && Math.abs(p.e) > 0.0001);
+	return (p.lat() > 0.0001 && p.lng() < 0.0001);
 };
 globalConfig.postConditionsCallbackName = globalConfig.postConditionsCallbackName || "Wells";
 //console.log(globalConfig.postConditionsCallbackName);
