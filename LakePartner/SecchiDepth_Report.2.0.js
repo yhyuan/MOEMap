@@ -70,7 +70,7 @@ globalConfig.layers = [{
 				<%\
 					_.each(dataArray,function(entry,key,list){\
 				%>\
-					<tr><td><%= entry.year %></td><td><%= entry.value %></td></tr>\
+					<tr><td><%= entry.year %></td><td><%= entry.value.toFixed(2) %></td></tr>\
 				<%\
 					});\
 				%>\
