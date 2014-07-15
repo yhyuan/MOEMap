@@ -155,7 +155,7 @@ adivosryIndexQueryLayer.query({
 	adivosryIndexDeferred.resolve();
 	//console.log(globalConfig.adivosryIndexDict);	
 });
-/*
+
 globalConfig.getSpeciesNameURL = function(speciesCode) {
 	//console.log(speciesCode);
 	if (speciesCode === "087") {
@@ -257,9 +257,9 @@ globalConfig.getSpeciesURL = function(speciesCode) {
 	}
 	return "";
 };
-*/
-globalConfig.getSpeciesURL = function(speciesCode) {
-	/*var speciesURLList = {
+/* comment out for original MNR site*/
+/*globalConfig.getSpeciesURL = function(speciesCode) {*/
+/*	var speciesURLList = {
 		"077": ["Atlantic Salmon", "Saumon de l'Atlantique"], 
 		"093": ["Cisco (or Lake Herring)", "Cisco de lac"],
 		"151": ["Goldeye", "Laquaiche aux yeux d'or"],
@@ -298,6 +298,7 @@ globalConfig.getSpeciesURL = function(speciesCode) {
 		"071": ["Pink Salmon", "Saumon rose"],
 		"152": ["Mooneye", "Laquaiche argentée"]
 	};*/
+	/* comment out for original MNR site
 	var speciesURLList = {
 		"077": ["Atlantic-Salmon", "Saumon-de-lAtlantique"], 
 		"093": ["Cisco-or-Lake-Herring)", "Cisco-de-lac"],
@@ -336,19 +337,20 @@ globalConfig.getSpeciesURL = function(speciesCode) {
 		"271": ["Burbot", "Lotte"],
 		"071": ["Pink-Salmon", "Saumon-rose"],
 		"152": ["Mooneye", "Laquaiche-argentee"]
-	};	
+	};*/
 	/*
 	_.each(_.values(speciesURLList), function(item) {
 		console.log(item[0] + "(English): /environment-and-energy/fish-and-wildlife/" + item[0].split(' ').join("-").toLowerCase());
 		console.log(item[0] + "(French): /environment-and-energy/fish-and-wildlife/" + item[1].split(' ').join("-").toLowerCase());
 	});
 	console.log("kkk");*/
-	if (speciesURLList.hasOwnProperty(speciesCode))  {
+	/* comment out for original MNR site*/
+	/*if (speciesURLList.hasOwnProperty(speciesCode))  {
 		return "/environment-and-energy/fish-and-wildlife/" + speciesURLList[speciesCode][globalConfig.chooseLang(0, 1)].toLowerCase(); //lake-whitefish
 	} else {
 		return "";
 	}
-}
+}*/
 var adivosryDeferred = new $.Deferred();
 var adivosryPrompt = (adivosryDeferred).promise();
 globalConfig.startTime = new Date();
@@ -429,16 +431,16 @@ globalConfig.layers = [{
 					<p>Consumption advisories in the tables below represent the maximum number of meals per month recommended for each species/size range indicated.</p>\
 					<P>Consult the help page if you are eating multiple species of fish or fish from multiple locations.</P>\
 					<p>Advisories may be provided for specific species and/or size ranges which are not legal to possess. Learn more about Ontario&#39s <a href="http://www.mnr.gov.on.ca/stdprodconsume/groups/lr/@mnr/@letsfish/documents/document/mnr_e001325.pdf">recreational fishing regulations</a> before going fishing.</p>\
-					<p><a href="http://www.ene.gov.on.ca/environment/en/mapping/sportfish/STDPROD_082936.html#advisories">Help understanding the fish consumption advisories</a>\
-					</p><br>\
+					<p><a href="http://www.ontario.ca/environment-and-energy/how-use-ministry-environment-map#advisories">Help understanding the fish consumption advisories</a>\
+					</p>\
 				<%\
 					} else { \
 				%>\
-					<p>Le tableaux ci-dessous contient des mises en garde relatives &#224; la consommation de poisson, c&rsquo;est-&#224;-dire qu&rsquo;il indique la quantit&#233; maximale de repas par mois recommand&#233;e pour chaque esp&#232;ce et fourchette de dimensions de poisson indiqu&#233;e.</p>\
+					<p>Le tableau ci-dessous contient des mises en garde relatives &#224; la consommation de poisson, c&rsquo;est-&#224;-dire qu&rsquo;il indique la quantit&#233; maximale de repas par mois recommand&#233;e pour chaque esp&#232;ce et fourchette de dimensions de poisson indiqu&#233;e.</p>\
 					<P>Consultez la page d\'aide si vous consommez de multiples esp&#232;ces de poissons ou des poissons en provenance de plusieurs lieux.</P>\
 					<p>Il peut y avoir des mises en garde concernant des esp&#232;ces et des fourchettes de dimensions de poissons que la r&#233;glementation ontarienne en mati&#232;re de p&#234;che interdit de poss&#233;der. Avant d\'aller p&#234;cher, informez-vous plus en d&#233;tail des  <a href="http://www.mnr.gov.on.ca/stdprodconsume/groups/lr/@mnr/@letsfish/documents/document/mnr_f001325.pdf"> r&#232;glements de la p&#234;che sportive</a>.</p>\
-					<p><a href="http://www.ene.gov.on.ca/environment/fr/mapping/sportfish/STDPROD_083134.html">Aide pour l\'interpr&#233;tation des mises en garde relatives &#224; la consommation de poisson</a>\
-					</p><br>\
+					<p><a href="http://www.ontario.ca/fr/environnement-et-energie/savoir-utiliser-une-carte-du-ministere-de-lenvironnement#advisories">Aide pour l\'interpr&#233;tation des mises en garde relatives &#224; la consommation de poisson</a>\
+					</p>\
 				<%\
 					}\
 					var speciesList = _.keys(speciesObject).sort(function compare(a,b) {\
@@ -459,7 +461,7 @@ globalConfig.layers = [{
 									<% }); %>\
 								</tr>\
 								<tr>\
-									<th scope="row"><%= globalConfig.chooseLang("Length", "Longueur") %>&nbsp;(<%= globalConfig.chooseLang("in", "En pouces") %>)&nbsp;&rarr;</th>\
+									<th scope="row"><%= globalConfig.chooseLang("Length", "Longueur") %>&nbsp;(in)&nbsp;&rarr;</th>\
 									<% _.each(globalConfig.generateLengthRanges(6, 32, 2), function(lengthRange,key,list){ %>\
 										<td><center><%= lengthRange %></center></td>\
 									<% }); %>\
@@ -481,7 +483,7 @@ globalConfig.layers = [{
 						<% var speciesURL = globalConfig.getSpeciesURL(speciesCode);\
 							if (speciesURL.length > 0) {\
 						%>\
-							<p><a href="<%= speciesURL %>"><%= globalConfig.chooseLang("More information about the ", "Plus de renseignements sur ") + globalConfig.speciesDict[speciesCode] %></a></p>\
+							<p><a href="<%= speciesURL %>"><%= globalConfig.chooseLang("More information about the ", "More information about the ") + globalConfig.speciesDict[speciesCode] %></a></p>\
 						<% } %>\
 						<p><%= globalConfig.chooseLang("*Sensitive Population: Women of child-bearing age and children under 15.", "*Population sensible: Femmes en &#226;ge de procr&#233;er et enfants de moins de 15 ans.") %></p>\
 						<p><%= globalConfig.chooseLang("Superscripts: the number identifies the contaminant or group of contaminants for which the fish was tested.", "Indice sup&#233;rieur : le chiffre d&#233;signe le contaminant ou le groupe de contaminants pour lesquels on a analys&#233; le poisson.") %>\
