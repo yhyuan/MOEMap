@@ -52,8 +52,11 @@ globalConfig.identifyLayerList = [
 		returnFields: ["LABEL"]
 	}, {
 		name: 	"Assessment Parcels",
-		id: 4,
-		returnFields: ["ARN", "MPAC_STREET_ADDRESS", "MUNICIPALITY_NAME"]
+		mapService: "http://intra.giscoeservices.lrc.gov.on.ca/ArcGIS/rest/services/MNR/GIB_AssessmentParcel/MapServer",
+		id: 2,
+		returnFields: ["ASSESSMENT_ROLL_NUMBER", "MPAC_STREET_ADDRESS", "MUNICIPALITY_NAME"]
+		//id: 4,
+		//returnFields: ["ARN", "MPAC_STREET_ADDRESS", "MUNICIPALITY_NAME"]
 	}, {
 		name: 	"Ownership Parcels",
 		id: 5,
@@ -117,6 +120,35 @@ globalConfig.queryTableTemplate = '<table class="lakepartner" border="1">\
 			<td>Municipal - Single and Lower Tier: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Municipal Boundaries - Single and Lower Tier")) ? globalConfig.concatenateAttributes("Municipal Boundaries - Single and Lower Tier", "LEGAL_NAME") : "N/A" %></strong></td></tr>\
 		<tr><td>MPAC Street Address: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Assessment Parcels")) ? globalConfig.concatenateAttributes("Assessment Parcels", "MPAC_STREET_ADDRESS") + " " + globalConfig.concatenateAttributes("Assessment Parcels", "MUNICIPALITY_NAME"): "N/A" %></strong></td>\
 			<td>Township, Concession and Lot: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Lots and Concessions")) ? globalConfig.concatenateAttributes("Lots and Concessions", "LABEL") : "N/A" %></strong></td></tr>\
+		<tr><td>Assessment Roll Number: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Assessment Parcels")) ? globalConfig.concatenateAttributes("Assessment Parcels", "ASSESSMENT_ROLL_NUMBER") : "N/A" %></strong></td>\
+			<td>Property Information Number: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Ownership Parcels")) ?  globalConfig.concatenateAttributes("Ownership Parcels", "PIN") : "N/A" %></strong></td></tr>\
+		<tr><td colspan = "2">Source Protection Area Name: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Source Protection Area - 2011")) ? globalConfig.concatenateAttributes("Source Protection Area - 2011", "LABEL") : "N/A" %></strong></td>\
+			</tr>\
+		<tr><td>Wellhead Protection Area (WHPA): <strong><%= (globalConfig.identifyResults.hasOwnProperty("Well Head Protection Zones")) ? globalConfig.concatenateAttributes("Well Head Protection Zones", "ZoneName") : "No" %></strong></td>\
+			<td>Groundwater Vulnerability Score: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Groundwater")) ? globalConfig.concatenateAttributes("Vulnerable Scoring Area - Groundwater", "vsg_vulnerabilityScore") : "N/A" %></strong></td></tr>\
+		<%= (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Groundwater")) ? "<tr><td colspan = \'2\'>" + _.map(globalConfig.identifyResults["Vulnerable Scoring Area - Groundwater"],   function(feature) {return "<a target=\'_blank\' href=\'http://maps.thamesriver.on.ca/swpPolicyEntry/parseLink/parse.aspx?zone=" + feature.attributes["vsg_whpa_id"]+ "&score=" + feature.attributes["vsg_vulnerabilityScore"] + "&sppid=" + feature.attributes["vsg_spp_id"] + "\'>Groundwater Policies – Score " + feature.attributes["vsg_vulnerabilityScore"] + " (link to external site)</a>";}).join("<br>")  + "<br></td></tr>": "" %>\
+		<tr><td>Intake Protection Zone 1 or 2: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Intake Protection Zones")) ? globalConfig.concatenateAttributes("Intake Protection Zones", "IPZType") : "No" %></strong></td>\
+			<td>Surface Water Vulnerability Score (if &ge; 8) : <strong><%= (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Surface Water")) ? globalConfig.concatenateAttributes("Vulnerable Scoring Area - Surface Water", "vss_vulnerabilityScore") : "N/A" %></strong></td></tr>\
+		<%= (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Surface Water")) ? "<tr><td colspan = \'2\'>" + _.map(globalConfig.identifyResults["Vulnerable Scoring Area - Surface Water"], function(feature) {return "<a target=\'_blank\' href=\'http://maps.thamesriver.on.ca/swpPolicyEntry/parseLink/parse.aspx?zone=" + feature.attributes["vss_ipz_id"] + "&score=" + feature.attributes["vss_vulnerabilityScore"] + "&sppid=" + feature.attributes["vss_spp_id"] + "&source=sw\'>Surface Water Policies – Score " + feature.attributes["vss_vulnerabilityScore"] + " (link to external site)</a>";}).join("<br>") + "<br></td></tr>": "" %>\
+		<tr><td>WHPA – Groundwater Under Direct Influence (GUDI): <strong><%= (globalConfig.identifyResults.hasOwnProperty("WHPA Groundwater Under Direct Influence: WHPA-E)")) ? globalConfig.concatenateAttributes("WHPA Groundwater Under Direct Influence: WHPA-E)", "ZoneName") : "No" %></strong></td>\
+			<td>GUDI Vulnerability Score: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Groundwater Under Direct Influence")) ? globalConfig.concatenateAttributes("Vulnerable Scoring Area - Groundwater Under Direct Influence", "vsu_vulnerabilityScore_GUDI") : "N/A" %></strong></td></tr>\
+		<tr><td>Significant Groundwater Recharge Area: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Significant Groundwater Recharge Area - SPPID NO BORDERS")) ? "Yes" : "No" %></strong></td>\
+			<td>Highly Vulnerable Aquifer: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Highly Vulnerable Areas")) ? globalConfig.concatenateAttributes("Highly Vulnerable Areas", "IntrinsicVulnerabilityLevel") : "N/A" %></strong></td></tr>\
+		<tr><td>Issue Contributing areas (ICA): <strong><%= (globalConfig.identifyResults.hasOwnProperty("Issue Contributing Areas")) ? "Yes" : "No" %></strong></td>\
+			<td>ICA Issues: <strong><%= (globalConfig.identifyResults.hasOwnProperty("ICA_ISSUES")) ? globalConfig.identifyResults["ICA_ISSUES"] : "N/A" %></strong></td></tr>\
+		<tr><td>Niagara Escarpment Development Control Area: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Niagara Escarpment Area of Development Control")) ? "Yes" : "No" %></strong></td>\
+			<td>Oak Ridges Moraine Planning Area: <strong><%= (globalConfig.identifyResults.hasOwnProperty("OakRidgesMorainePlanningArea")) ? "Yes" : "No" %></strong></td></tr>\
+	</tbody>\
+</table>';
+/*globalConfig.queryTableTemplate = '<table class="lakepartner" border="1">\
+	<caption>Search Results</caption>\
+	<tbody>\
+		<tr><td>Latitude: <strong><%= globalConfig.identifyResults["LatLng"].lat().toFixed(6) %></strong>  Longitude:<strong><%= globalConfig.identifyResults["LatLng"].lng().toFixed(6) %></strong></td>\
+			<td>UTM Zone: <strong><%= globalConfig.identifyResults["UTM"].Zone %></strong>   Easting: <strong><%= parseFloat(globalConfig.identifyResults["UTM"].Easting).toFixed(0) %></strong>     Northing: <strong><%= parseFloat(globalConfig.identifyResults["UTM"].Northing).toFixed(0) %></strong></td></tr>\
+		<tr><td>Municipal - Upper Tier: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Municipal Boundaries - Upper Tier")) ? globalConfig.concatenateAttributes("Municipal Boundaries - Upper Tier", "LEGAL_NAME") : "N/A" %></strong></td>\
+			<td>Municipal - Single and Lower Tier: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Municipal Boundaries - Single and Lower Tier")) ? globalConfig.concatenateAttributes("Municipal Boundaries - Single and Lower Tier", "LEGAL_NAME") : "N/A" %></strong></td></tr>\
+		<tr><td>MPAC Street Address: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Assessment Parcels")) ? globalConfig.concatenateAttributes("Assessment Parcels", "MPAC_STREET_ADDRESS") + " " + globalConfig.concatenateAttributes("Assessment Parcels", "MUNICIPALITY_NAME"): "N/A" %></strong></td>\
+			<td>Township, Concession and Lot: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Lots and Concessions")) ? globalConfig.concatenateAttributes("Lots and Concessions", "LABEL") : "N/A" %></strong></td></tr>\
 		<tr><td>Assessment Roll Number: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Assessment Parcels")) ? globalConfig.concatenateAttributes("Assessment Parcels", "ARN") : "N/A" %></strong></td>\
 			<td>Property Information Number: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Ownership Parcels")) ?  globalConfig.concatenateAttributes("Ownership Parcels", "PIN") : "N/A" %></strong></td></tr>\
 		<tr><td colspan = "2">Source Protection Area Name: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Source Protection Area - 2011")) ? globalConfig.concatenateAttributes("Source Protection Area - 2011", "LABEL") : "N/A" %></strong></td>\
@@ -137,6 +169,7 @@ globalConfig.queryTableTemplate = '<table class="lakepartner" border="1">\
 			<td>Oak Ridges Moraine Planning Area: <strong><%= (globalConfig.identifyResults.hasOwnProperty("OakRidgesMorainePlanningArea")) ? "Yes" : "No" %></strong></td></tr>\
 	</tbody>\
 </table>';
+*/
 globalConfig.popupTemplate = '<%= globalConfig.identifyResults.hasOwnProperty("Source Protection Area - 2011") ? "Source Protection Area Name: <strong>" +  globalConfig.concatenateAttributes("Source Protection Area - 2011", "LABEL") + "</strong><br>": "" %>\
 	MPAC Address: <strong><%= (globalConfig.identifyResults.hasOwnProperty("Assessment Parcels") && (globalConfig.identifyResults["Assessment Parcels"].length > 0) && (!!globalConfig.identifyResults["Assessment Parcels"][0].attributes["ARN"])) ? globalConfig.concatenateAttributes("Assessment Parcels", "MPAC_STREET_ADDRESS") + " " + globalConfig.concatenateAttributes("Assessment Parcels", "MUNICIPALITY_NAME"): "N/A" %></strong><br>\
 	Wellhead Protection Area(WHPA): <strong><%= globalConfig.identifyResults.hasOwnProperty("Well Head Protection Zones") ? (globalConfig.concatenateAttributes("Well Head Protection Zones", "ZoneName") + "</strong>  Score: <strong>" + (globalConfig.identifyResults.hasOwnProperty("Vulnerable Scoring Area - Groundwater") ? globalConfig.concatenateAttributes("Vulnerable Scoring Area - Groundwater", "vsg_vulnerabilityScore") : "N/A")) : "No" %></strong><br>\
@@ -148,7 +181,7 @@ globalConfig.popupTemplate = '<%= globalConfig.identifyResults.hasOwnProperty("S
 globalConfig.identifyMultiplePolygonLayersServicesTemplate = {
 	layerList: _.map(globalConfig.identifyLayerList, function (layer) {
 		return {
-			url: globalConfig.url + "/" + layer.id,
+			url: (layer.hasOwnProperty("mapService") ? layer.mapService : globalConfig.url) + "/" + layer.id,
 			name: layer.name,
 			returnFields: layer.returnFields/*,
 			callback: function(record){
