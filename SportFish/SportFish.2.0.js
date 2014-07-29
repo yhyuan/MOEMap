@@ -11,8 +11,8 @@ globalConfig.otherInfoHTML = globalConfig.chooseLang("<h2>Find a map error?</h2>
 	<h2>Commentaires</h2> \
 	<p>Veuillez formuler vos commentaires ou vos suggestions par courriel &agrave; <a href="mailto:sportfish.moe@ontario.ca">sportfish.moe@ontario.ca</a>.</p>');
 
-//globalConfig.report_URL = globalConfig.chooseLang("SportFish_Report.htm", "SportFish_Report.htm");
-globalConfig.report_URL = globalConfig.chooseLang("fish-consumption-report", "rapport-de-consommation-de-poisson");
+globalConfig.report_URL = globalConfig.chooseLang("SportFish_Report.htm", "SportFish_Report.htm");
+//globalConfig.report_URL = globalConfig.chooseLang("fish-consumption-report", "rapport-de-consommation-de-poisson");
 globalConfig.tabsTemplateContent = "<strong>{LOCNAME_" + globalConfig.chooseLang("EN", "FR") + "}</strong><br>{globalConfig.addBRtoLongText(GUIDELOC_" + globalConfig.chooseLang("EN", "FR") + ")}<br><br><a target='_blank' href='" + globalConfig.report_URL + "?id={WATERBODYC}'>" + globalConfig.chooseLang("Consumption Advisory Table", "Tableau des mises en garde en mati\u00e8re de<br> consommation") + "</a><br><br>Latitude <b>{globalConfig.deciToDegree(LATITUDE)}</b> Longitude <b>{globalConfig.deciToDegree(LONGITUDE)}</b><br><a href='mailto:sportfish.moe@ontario.ca?subject=" + globalConfig.chooseLang("Portal Error", "Erreur de portail") + " (Submission {LOCNAME_" + globalConfig.chooseLang("EN", "FR") + "})'>" + globalConfig.chooseLang("Report an error for this location", "Signalez un probl\u00e8me pour ce lieu") + "</a>.<br><br>";
 //globalConfig.tabsTemplateContent = "<b><font color='#799441'>{LOCNAME_" + globalConfig.language + "}</font></b><br>{globalConfig.addBRtoLongText(GUIDELOC_" + globalConfig.language + ")}<br><br><a target='_blank' href='SportFish_Report.htm?id={WATERBODYC}'>Consumption Advisory Table</a><br><br>Latitude <b>{globalConfig.deciToDegree(LATITUDE)}</b> Longitude <b>{globalConfig.deciToDegree(LONGITUDE)}</b><br><a href='mailto:sportfish.moe@ontario.ca?subject=Portal Error (Submission {LOCNAME_" + globalConfig.language + "})'>Report an error for this location</a>.<br><br>";
 
