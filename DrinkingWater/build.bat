@@ -1,3 +1,4 @@
 build_en.bat
 build_fr.bat
-
+build_TasteOdour_Report_en.bat
+build_TasteOdour_Report_fr.bat
