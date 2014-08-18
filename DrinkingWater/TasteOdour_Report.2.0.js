@@ -43,9 +43,11 @@ globalConfig.layers = [{
 					})).toFixed(2));
 				});
 			});
+			var parameterList = _.keys(groupbyParameter[parameter]);
+			console.log(parameterList);
 			var results = _.map(years, function(year) {
 				var yearStr = '' + year;
-				var data = _.map(_.keys(groupbyParameter[parameter]), function (type) {
+				var data = _.map(parameterList, function (type) {
 					if (groupbyParameter[parameter][type].hasOwnProperty(yearStr)) {
 						return groupbyParameter[parameter][type][yearStr];
 					} else {
@@ -54,7 +56,7 @@ globalConfig.layers = [{
 				});
 				return [yearStr].concat(data);
 			});
-			groupbyParameter[parameter] = ([['Year'].concat(_.keys(groupbyParameter[parameter]))]).concat(results);			
+			groupbyParameter[parameter] = ([['Year'].concat(parameterList)]).concat(results);			
 		});
 		
 		//console.log();
@@ -92,7 +94,10 @@ $.when(chartDataPrompt, chartLibraryPrompt).done(function(chartData) {
 		var parameter = _.keys(chartData.data)[i];
 		var data = google.visualization.arrayToDataTable(chartData.data[parameter]);
 		var options = {
-			title: parameter
+			title: parameter,
+			width: 700, height: 480,
+			hAxis: {title: 'Year', titleColor:'black'}, 
+			vAxis: {title: 'Concentration', minValue: 0.0}
 		};
 		var chart = new google.visualization.LineChart(document.getElementById('chart_div' + i));
 		chart.draw(data, options);		
