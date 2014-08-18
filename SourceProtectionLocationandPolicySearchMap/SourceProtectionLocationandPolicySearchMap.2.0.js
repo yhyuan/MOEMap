@@ -1,5 +1,4 @@
 //var globalConfig = globalConfig || {};
-	
 //globalConfig.language = "EN";
 globalConfig.opacity = 0.7;
 globalConfig.orgLatitude = 45.44424;
@@ -111,7 +110,7 @@ globalConfig.concatenateAttributes = function(layerName, fieldName) {
 	return _.map(globalConfig.identifyResults[layerName], function(feature) {return feature.attributes[fieldName];}).join(", ")
 };
 globalConfig.identifyResults = {};
-globalConfig.queryTableTemplate = '<table class="lakepartner" border="1">\
+globalConfig.queryTableTemplate = '<table class="lakepartner" width="625" border="1">\
 	<caption>Search Results</caption>\
 	<tbody>\
 		<tr><td>Latitude: <strong><%= globalConfig.identifyResults["LatLng"].lat().toFixed(6) %></strong>  Longitude:<strong><%= globalConfig.identifyResults["LatLng"].lng().toFixed(6) %></strong></td>\
