@@ -20,14 +20,14 @@ Municipality Website: <strong><a target='_blank' href='{MUNICIPALITY_HOME_URL}'>
 Annual Report Directory: <strong><a target='_blank' href='{ARLIBRARYURL}'>Annual Report Directory</a></strong><br>";
 globalConfig.ComplianceMonitoringLang = "Compliance Monitoring";
 globalConfig.tabsTemplateContentComplianceMonitoring = "Drinking Water Quality: <strong>{PERCENTAGE_COMPLIED}</strong><br>\
-Reporting Period: <strong>{ENGLISH_TIME_PERIOD}</strong><br>\
+Reporting Period: <strong>{ENGLISH_TIME_PERIOD}</strong><br><br><br><br><br>\
 Inspection Risk Rating: <strong>{SCORE}</strong><br>\
 Reporting Period: <strong>{ENGLISH_DATE_RANGE}</strong><br>";
 globalConfig.ScientificMonitoringLang = "Scientific Monitoring";
 globalConfig.tabsTemplateContentScientificMonitoring = "The Drinking Water Surveillance Program (DWSP) is a voluntary water monitoring\
  program that monitors for many chemicals and radionuclides that are not regulated in Ontario. To learn more about the water quality at \
  this drinking water system, please click on the chemical or substance of interest:<br>\
--[{TASTE_AND_ODOUR}?Taste and Odour?<a target='_blank' href='TasteOdour_Report_en.htm?id={DWS_NUM}'>Taste and Odour</a>]<br>\
--[{CHLORIDE}?Chloride?<a target='_blank' href='Chloride_Report_en.htm?id={DWS_NUM}'>Chloride</a>]<br>\
--[{COLOUR}?Colour?<a target='_blank' href='Colour_Report_en.htm?id={DWS_NUM}'>Colour</a>]<br>\
--[{ALGAL_TOXINS}?Algal Toxins?<a target='_blank' href='AlgalToxins_Report_en.htm?id={DWS_NUM}'>Algal Toxins</a>]";
+-[{TASTE_AND_ODOUR}?Taste and Odour?<a target='_blank' href='TasteOdour_Report.htm?id={DWS_NUM}'>Taste and Odour</a>]<br>\
+-[{CHLORIDE}?Chloride?<a target='_blank' href='Chloride_Report.htm?id={DWS_NUM}'>Chloride</a>]<br>\
+-[{COLOUR}?Colour?<a target='_blank' href='Colour_Report.htm?id={DWS_NUM}'>Colour</a>]<br>\
+-[{ALGAL_TOXINS}?Algal Toxins?<a target='_blank' href='AlgalToxins_Report.htm?id={DWS_NUM}'>Algal Toxins</a>]";

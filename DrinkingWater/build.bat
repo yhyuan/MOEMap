@@ -2,3 +2,9 @@ build_en.bat
 build_fr.bat
 build_TasteOdour_Report_en.bat
 build_TasteOdour_Report_fr.bat
+build_Chloride_Report_en.bat
+build_Chloride_Report_fr.bat
+build_Colour_Report_en.bat
+build_Colour_Report_fr.bat
+build_AlgalToxins_Report_en.bat
+build_AlgalToxins_Report_fr.bat
