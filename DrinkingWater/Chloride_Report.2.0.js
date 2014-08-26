@@ -1,7 +1,7 @@
 globalConfig.parameters = {
 	'CHLORIDE': {
 		name: 'Chloride',
-		standard: 250
+		detectionLimit: 0.2
 	}
 };
 

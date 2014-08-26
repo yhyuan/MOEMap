@@ -120,11 +120,11 @@ $.when(chartDataPrompt, chartLibraryPrompt).done(function(chartData) {
 			title:  globalConfig.chooseLang('Median Concentration of ', 'Median Concentration of ') + chartData.data[parameter].name + globalConfig.chooseLang(' by Year in ', ' by Year in ') + chartData.name + ' (' + chartData.number + ')',
 			width: 700, height: 480,
 			hAxis: {title: globalConfig.chooseLang('Year', 'Year'), titleColor:'black'}, 
-			vAxis: {title: globalConfig.chooseLang('Median Concentration', 'Median Concentration') + ' (' + globalConfig.unitConverter[chartData.data[parameter].unit] + ')'/*, minValue: globalConfig.parameters[parameter].min, maxValue: globalConfig.parameters[parameter].max*/},
+			vAxis: {title: globalConfig.chooseLang('Median Concentration', 'Median Concentration') + ' (' + globalConfig.unitConverter[chartData.data[parameter].unit] + ')', minValue: globalConfig.parameters[parameter].detectionLimit/*, minValue: globalConfig.parameters[parameter].min, maxValue: globalConfig.parameters[parameter].max*/},
 			colors: chartData.data[parameter].colorList
 		};
 		var chart = new google.visualization.LineChart(document.getElementById('chart_div' + i));
 		chart.draw(data, options);
-		document.getElementById('chart_text_div' + i).innerHTML = "Current Dection Limit: " + chartData.data[parameter].detectionLimit + "<br><a target='_blank' href='https://www.ontario.ca/environment-and-energy/technical-support-document-ontario-drinking-water-standards-objectives-and'>Technical Support Document for Ontario Drinking Water Standards Objectives and Guidelines</a>";		
+		document.getElementById('chart_text_div' + i).innerHTML = "Note: For graphing purposes, the laboratory's minimum detection limit has been substituted for results that are reported as below the detection limit. <br>Current Dection Limit: " + chartData.data[parameter].detectionLimit + "<br><a target='_blank' href='https://www.ontario.ca/environment-and-energy/technical-support-document-ontario-drinking-water-standards-objectives-and'>Technical Support Document for Ontario Drinking Water Standards Objectives and Guidelines</a>";		
 	});
 });

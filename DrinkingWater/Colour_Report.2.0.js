@@ -1,7 +1,7 @@
 globalConfig.parameters = {
 	'COLOUR; TRUE': {
 		name: 'Colour',
-		standard: 5
+		detectionLimit: 0.2
 	}
 };
 
