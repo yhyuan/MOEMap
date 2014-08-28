@@ -16,8 +16,8 @@ Treatment Processes: <strong>{globalConfig.wordCapitalize(TREATMENT_PROCESSES)}<
 Municipality: <strong>{MUNICIPALITY_NAME}</strong><br>\
 Municipality Phone: <strong>{MUNICIPALITY_PHONE}</strong><br>\
 Municipality Email: <strong><a href='mailto:{MUNICIPALITY_EMAIL}'>{MUNICIPALITY_EMAIL}</a></strong><br>\
-Municipality Website: <strong><a target='_blank' href='{MUNICIPALITY_HOME_URL}'>Municipality Website</a></strong><br>\
-Annual Report Directory: <strong><a target='_blank' href='{ARLIBRARYURL}'>Annual Report Directory</a></strong><br>";
+<strong><a target='_blank' href='{MUNICIPALITY_HOME_URL}'>Municipality Website</a></strong><br>\
+<strong><a target='_blank' href='{ARLIBRARYURL}'>Annual Report Directory</a></strong><br>";
 globalConfig.ComplianceMonitoringLang = "Compliance Monitoring";
 globalConfig.tabsTemplateContentComplianceMonitoring = "Drinking Water Quality: <strong>{PERCENTAGE_COMPLIED}</strong><br>\
 Reporting Period: <strong>{ENGLISH_TIME_PERIOD}</strong><br><br><br><br><br>\

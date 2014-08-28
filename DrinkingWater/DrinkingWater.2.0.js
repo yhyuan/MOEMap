@@ -1,7 +1,7 @@
 //var globalConfig = globalConfig || {};
 globalConfig.chooseLang = function (en, fr) {return (globalConfig.language === "EN") ? en : fr;};
 globalConfig.searchableFieldsList = [{en: "Municipal Drinking Water System number", fr: "Municipal Drinking Water System number"}, {en: "Drinking Water System name", fr: "Drinking Water System name"}, {en: "address", fr: "adresse"}];
-
+globalConfig.maxMapScale = 15;
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
 globalConfig.usejQueryUITable = true;  //Avoid loading extra javascript files
@@ -40,15 +40,6 @@ globalConfig.tabsTemplate = [{
 	}];
 globalConfig.queryLayerList = [{
 	url: globalConfig.url + "/0",
-	tabsTemplate: globalConfig.tabsTemplate,
-	tableSimpleTemplate: {
-		title: globalConfig.tableSimpleTemplateTitleLang, 
-		content: globalConfig.tableFieldList/*globalConfig.tableContent,
-		head: "",
-		tail: ""*/
-	} 
-},{
-	url: globalConfig.url + "/1",
 	tabsTemplate: globalConfig.tabsTemplate,
 	tableSimpleTemplate: {
 		title: globalConfig.tableSimpleTemplateTitleLang, 
