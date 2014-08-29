@@ -1,28 +1,15 @@
 //var globalConfig = globalConfig || {};
 globalConfig.chooseLang = function (en, fr) {return (globalConfig.language === "EN") ? en : fr;};
 globalConfig.searchableFieldsList = [{en: "Municipal Drinking Water System number", fr: "Municipal Drinking Water System number"}, {en: "Drinking Water System name", fr: "Drinking Water System name"}, {en: "address", fr: "adresse"}];
-globalConfig.searchControlHTML = '<form name="formMap" method="get">\
-<label for="region">Filter by region:</label>\
-				<select name="region" id="region">\
-				   <option value="0">Regions</option>\
-					<option value="Ontario"> Ontario</option>\
-					<option value="Central">Central</option>\
-					<option value="Eastern">Eastern</option>\
-					<option value="Northern">Northern</option>\
-					<option value="Southwestern">Southwestern</option>\
-					<option value="West Central">West Central</option>\
-				</select>\
-<input type="submit" onclick="globalConfig.search()" value="Go!">\
-		</form>';
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
-globalConfig.usejQueryUITable = true;  //Avoid loading extra javascript files
-globalConfig.usePredefinedMultipleTabs = true;
+globalConfig.usejQueryUITable = false;  //Avoid loading extra javascript files
+globalConfig.usePredefinedMultipleTabs = false;
 globalConfig.allowMultipleIdentifyResult = false;
 globalConfig.displayTotalIdentifyCount = false;
 globalConfig.locationServicesList = [];
 globalConfig.maxQueryZoomLevel = 10;
-globalConfig.displayDisclaimer = true;
+globalConfig.displayDisclaimer = false;
 globalConfig.InformationLang = "Information";
 globalConfig.postIdentifyCallbackName = "SportFish";
 //globalConfig.postConditionsCallbackName = "Wells";
@@ -40,10 +27,6 @@ globalConfig.tableFieldList = [
 ];
 
 globalConfig.tableSimpleTemplateTitleLang = "";
-globalConfig.tabsTemplateContent = "<strong><h3>{SITE_NAME}</h3></strong><br>\
-<strong>Operation Status:</strong> {STATUS}<br>\
-<strong>Ownership Type:</strong> {TYPE}<br>\
-Go to <a target='_blank' href='http://www.ontario.ca/environment-and-energy/large-landfill-site-details?site={COFA_NUM}'>{SITE_NAME}</a>";
 globalConfig.queryLayerList = [{
 	url: globalConfig.url + "/0",
 	tabsTemplate: [{
@@ -56,54 +39,60 @@ globalConfig.queryLayerList = [{
 	} 
 }];
 
+globalConfig.createTable = function (features) {
+	var str = '<h2>' + features.length + globalConfig.chooseLang(' large landfills found in Ontario', ' sites trouvés Ontario')  + '</h2><table id="large-landfills">\
+		<thead>\
+			<tr><th scope="col">' + globalConfig.chooseLang('<abbr title="Environmental Compliance Approval">ECA</abbr>NUMBER', 'CA Numéro de certificat d\'autorisation') + '</th><th scope="col">' + globalConfig.chooseLang('Site Name', 'Nom du site') + '</th></tr>\
+		</thead>\
+		<tbody>';
+	for (var i=0; i<features.length; i++) {
+		str = str + '<tr><td>' + features[i].attributes.COFA_NUM  + '</td><td><a href="http://www.ontario.ca/environment-and-energy/large-landfill-site-details?site=' + features[i].attributes.COFA_NUM + '">' + features[i].attributes.SITE_NAME + '</a></td></tr>';
+	}
+	str = str + '</tbody></table>';
+	document.getElementById("query_table").innerHTML = str;
+};
 var layer = new gmaps.ags.Layer(globalConfig.url  + "/0");
 layer.query({
 	returnGeometry: false,
 	where: "1=1",
 	outFields: ["COFA_NUM", "SITE_NAME"]
 }, function (rs) {
-	var str = '<table id="large-landfills">\
-		<thead>\
-			<tr><th scope="col"><abbr title="Environmental Compliance Approval">ECA</abbr> NUMBER</th><th scope="col">SITE NAME</th></tr>\
-		</thead>\
-		<tbody>';
-	for (var i=0; i<rs.features.length; i++) {
-		str = str + '<tr><td>' + rs.features[i].attributes.COFA_NUM  + '</td><td><a href="http://www.ontario.ca/environment-and-energy/large-landfill-site-details?site=' + rs.features[i].attributes.COFA_NUM + '">' + rs.features[i].attributes.SITE_NAME + '</a></td></tr>';
-	}
-	str = str + '</tbody></table>';
-	document.getElementById("query_table").innerHTML = str;
+	globalConfig.createTable(rs.features);
 });
 
 globalConfig.search = function(){
-	var searchString = document.getElementById(globalConfig.searchInputBoxDivId).value.trim();
+	var searchString = document.getElementById('region').value.trim();
 	if(searchString.length === 0){
+		return;
+	}
+	if(searchString === '0'){
 		return;
 	}
 	MOEMAP.clearOverlays();
 	var queryParams = {
 		searchString: searchString
 	};
-	queryParams.withinExtent = document.getElementById(globalConfig.currentMapExtentDivId).checked;
-	/*Search for DWS number*/
-	var reg = /^\d+$/;	
-	if(reg.test(queryParams.searchString) && (queryParams.searchString.length === 9)){
-		queryParams.requireGeocode = false;
-		queryParams.where = "DWS_NUM = '" + queryParams.searchString + "'";
-		MOEMAP.queryLayersWithConditionsExtent(queryParams);
-		return;
+	queryParams.withinExtent = false;
+	queryParams.requireGeocode = false;
+	if (queryParams.searchString.toUpperCase() === "ONTARIO") {
+		queryParams.where = "1=1";
+	} else {
+		queryParams.where = "UPPER(MOE_REGION) = '" + queryParams.searchString.toUpperCase() + "'";
 	}
-	/*Search for Municipality Names*/
-	if (globalConfig.municipalityNames.contains(queryParams.searchString.toUpperCase())) {
-		queryParams.requireGeocode = false;
-		queryParams.where = "UPPER(MUNICIPALITY_NAME) = '" + queryParams.searchString.toUpperCase() + "'";
-		MOEMAP.queryLayersWithConditionsExtent(queryParams);
-		return;		
-	}
-	
-	var coorsArray = queryParams.searchString.split(/\s+/);
-	var str = coorsArray.join(" ").toUpperCase();
-	queryParams.requireGeocode = true;
-	queryParams.where = "UPPER(DWS_NAME) LIKE '%" + str + "%'";
-	queryParams.address = searchString;
 	MOEMAP.queryLayersWithConditionsExtent(queryParams);		
 };
+
+globalConfig.postConditionsCallback = function (queryParams) {
+		var features = Array.range(0, queryParams.layerList.length - 1).reduce(function(previousValue, currentValue) {
+			var result = queryParams.layerList[currentValue].result;
+			if (result.hasOwnProperty('features')) {
+				return previousValue.concat(result.features);
+			} else {
+				return previousValue;
+			}
+		}, []);
+		globalConfig.createTable(features);
+		var bounds = globalConfig.calculatePointsBounds(features);
+		globalConfig.setMapBound(queryParams.map,bounds);	
+		globalConfig.addMarkersSimple(features, queryParams.layerList[0].tabsTemplate);
+	}	
