@@ -1,6 +1,6 @@
 //var globalConfig = globalConfig || {};
 globalConfig.chooseLang = function (en, fr) {return (globalConfig.language === "EN") ? en : fr;};
-globalConfig.searchableFieldsList = [{en: "Municipal Drinking Water System number", fr: "Municipal Drinking Water System number"}, {en: "Drinking Water System name", fr: "Drinking Water System name"}, {en: "address", fr: "adresse"}];
+globalConfig.searchableFieldsList = [{en: "Municipality", fr: "Municipality"}, {en: "Street Address", fr: "Street Address"}, {en: "Postal Code", fr: "Postal Code"}, {en: "Drinking water system name or number", fr: "Drinking water system name or number"}];
 globalConfig.maxMapScale = 15;
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
