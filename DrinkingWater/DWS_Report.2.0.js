@@ -125,6 +125,13 @@ $.when(chartDataPrompt, chartLibraryPrompt).done(function(chartData) {
 		};
 		var chart = new google.visualization.LineChart(document.getElementById('chart_div' + i));
 		chart.draw(data, options);
-		document.getElementById('chart_text_div' + i).innerHTML = "Note: For graphing purposes, the laboratory's minimum detection limit has been substituted for results that are reported as below the detection limit. <br>Current Dection Limit: " + chartData.data[parameter].detectionLimit + "<br><a target='_blank' href='https://www.ontario.ca/environment-and-energy/technical-support-document-ontario-drinking-water-standards-objectives-and'>Technical Support Document for Ontario Drinking Water Standards Objectives and Guidelines</a>";		
+		var str = "Note: For graphing purposes, the laboratory's minimum detection limit has been substituted for results that are reported as below the detection limit.\
+			<br>The current detection limit is <i>" + chartData.data[parameter].detectionLimit + " " + globalConfig.unitConverter[chartData.data[parameter].unit] + "</i>.<br>";
+		if (_.has(globalConfig.parameters[parameter], 'OntarioStandard')) {
+			str = str + "The current Ontario standard is <i>" + globalConfig.parameters[parameter].OntarioStandard + "</i>.<br>";
+		}
+		str = str + "<a target='_blank' href='https://www.ontario.ca/environment-and-energy/technical-support-document-ontario-drinking-water-standards-objectives-and'>\
+			Technical Support Document for Ontario Drinking Water Standards Objectives and Guidelines</a>"
+		document.getElementById('chart_text_div' + i).innerHTML = str;
 	});
 });

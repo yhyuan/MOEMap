@@ -5,7 +5,8 @@ globalConfig.parameters = {
 	},
 	'MICROCYSTIN-LR': {
 		name: 'Microcystin-LR',
-		detectionLimit: 0.05
+		detectionLimit: 0.05,
+		OntarioStandard: '1.5 \u03BCg/L'
 	},
 	'MICROCYSTIN-RR': {
 		name: 'Microcystin-RR',
