@@ -38,7 +38,12 @@ globalConfig.queryLayerList = [{
 		content: globalConfig.tableFieldList
 	} 
 }];
-
+globalConfig.legend = {
+	available: true,	
+	url: "legend_en.png", 
+	size: {width: 141, height: 102},   //Width and Height
+	location: {ratioX: 0.01, ratioY: 0.25}  //
+};	
 globalConfig.createTable = function (features) {
 	var str = '<h2>' + features.length + globalConfig.chooseLang(' large landfills found in Ontario', ' sites trouvés Ontario')  + '</h2><table id="large-landfills">\
 		<thead>\

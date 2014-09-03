@@ -1,3 +1,7 @@
+if (!('trim' in String.prototype)){   
+	String.prototype.trim = function() { return this.replace(/^\s+|\s+$/g,""); };    
+}
+
 var chartLibraryDeferred = new $.Deferred();
 var chartLibraryPrompt = (chartLibraryDeferred).promise();
 google.load("visualization", "1", {packages:["corechart"]});
@@ -109,7 +113,7 @@ globalConfig.layers = [{
 		};
 		PubSub.emit(globalConfig.layers[0].event + "Data", {dws: dws});
 	},
-	template: '<center>Drinking Water Surveillance Program (DWSP) <br> Monitoring Results</center>'
+	template: '<strong><center>Drinking Water Surveillance Program (DWSP) <br> Monitoring Results</center></strong><br>' + globalConfig.parametersText
 }];
 
 $.when(chartDataPrompt, chartLibraryPrompt).done(function(chartData) {
@@ -117,21 +121,16 @@ $.when(chartDataPrompt, chartLibraryPrompt).done(function(chartData) {
 		var parameter = _.keys(chartData.data)[i];
 		var data = google.visualization.arrayToDataTable(chartData.data[parameter].chartData);
 		var options = {
-			title:  globalConfig.chooseLang('Median Concentration of ', 'Median Concentration of ') + chartData.data[parameter].name + globalConfig.chooseLang(' by Year in ', ' by Year in ') + chartData.name + ' (' + chartData.number + ')',
+			title:  globalConfig.chooseLang('Median Value of ', 'Median Value of ') + chartData.data[parameter].name + globalConfig.chooseLang(' by Year in ', ' by Year in ') + chartData.name + ' (' + chartData.number + ')',
 			width: 700, height: 480,
 			hAxis: {title: globalConfig.chooseLang('Year', 'Year'), titleColor:'black'}, 
-			vAxis: {title: globalConfig.chooseLang('Median Concentration', 'Median Concentration') + ' (' + globalConfig.unitConverter[chartData.data[parameter].unit] + ')', minValue: globalConfig.parameters[parameter].detectionLimit/*, minValue: globalConfig.parameters[parameter].min, maxValue: globalConfig.parameters[parameter].max*/},
+			vAxis: {title: globalConfig.chooseLang('Median Value', 'Median Value') + ' (' + globalConfig.unitConverter[chartData.data[parameter].unit] + ')', minValue: globalConfig.parameters[parameter].detectionLimit, maxValue: globalConfig.parameters[parameter].maximum},
 			colors: chartData.data[parameter].colorList
 		};
 		var chart = new google.visualization.LineChart(document.getElementById('chart_div' + i));
 		chart.draw(data, options);
 		var str = "Note: For graphing purposes, the laboratory's minimum detection limit has been substituted for results that are reported as below the detection limit.\
-			<br>Current detection limit is <i>" + chartData.data[parameter].detectionLimit + " " + globalConfig.unitConverter[chartData.data[parameter].unit] + "</i>.<br>";
-		if (_.has(globalConfig.parameters[parameter], 'OntarioStandard')) {
-			str = str + "Current Ontario standard is <i>" + globalConfig.parameters[parameter].OntarioStandard + "</i>.<br>";
-		}
-		str = str + "<a target='_blank' href='https://www.ontario.ca/environment-and-energy/technical-support-document-ontario-drinking-water-standards-objectives-and'>\
-			Technical Support Document for Ontario Drinking Water Standards Objectives and Guidelines</a>"
+			<br>The laboratory's current detection limit for " + chartData.data[parameter].name + " is <i>" + chartData.data[parameter].detectionLimit + " " + globalConfig.unitConverter[chartData.data[parameter].unit] + "</i>.<br>";
 		document.getElementById('chart_text_div' + i).innerHTML = str;
 	});
 });

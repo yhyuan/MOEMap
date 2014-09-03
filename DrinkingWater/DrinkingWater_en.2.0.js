@@ -24,10 +24,9 @@ Reporting Period: <strong>{ENGLISH_TIME_PERIOD}</strong><br><br><br><br><br>\
 Inspection Risk Rating: <strong>{SCORE}</strong><br>\
 Reporting Period: <strong>{ENGLISH_DATE_RANGE}</strong><br>";
 globalConfig.ScientificMonitoringLang = "Scientific Monitoring";
-globalConfig.tabsTemplateContentScientificMonitoring = "The Drinking Water Surveillance Program (DWSP) is a voluntary water monitoring\
- program that monitors for many chemicals and radionuclides that are not regulated in Ontario. To learn more about the water quality at \
- this drinking water system, please click on the chemical or substance of interest:<br>\
--[{TASTE_AND_ODOUR}?Taste and Odour?<a target='_blank' href='TasteOdour_Report.htm?id={DWS_NUM}'>Taste and Odour</a>]<br>\
--[{CHLORIDE}?Chloride?<a target='_blank' href='Chloride_Report.htm?id={DWS_NUM}'>Chloride</a>]<br>\
--[{COLOUR}?Colour?<a target='_blank' href='Colour_Report.htm?id={DWS_NUM}'>Colour</a>]<br>\
--[{ALGAL_TOXINS}?Algal Toxins?<a target='_blank' href='AlgalToxins_Report.htm?id={DWS_NUM}'>Algal Toxins</a>]";
+globalConfig.tabsTemplateContentScientificMonitoring = "The Drinking Water Surveillance Program (DWSP) is a voluntary water monitoring program that focuses on chemicals that are not regulated in Ontario. DWSP complements the drinking water quality monitoring that municipalities are required to do as part of operating their drinking water systems. DWSP and its partner municipalities make a valuable contribution to Ontario’s source-to-tap drinking water safety net by providing reliable test results for use in a variety of scientific and research activities.<br><br>\
+To learn more about DWSP’s data on water quality in untreated (raw) source water, treated drinking water, and water  distributed to consumers (i.e. distribution system) at the {DWS_NAME} ({DWS_NUM}), please click on one of the options below:<br>\
+[{TASTE_AND_ODOUR}? ?&nbsp&nbsp&nbsp&nbsp•Substances that may cause an objectionable <a target='_blank' href='TasteOdour_Report.htm?id={DWS_NUM}'>Taste and Odour</a> in water]<br>\
+[{CHLORIDE}? ?&nbsp&nbsp&nbsp&nbsp•<a target='_blank' href='Chloride_Report.htm?id={DWS_NUM}'>Chloride</a>, a common  material present in small amounts in drinking water that produces a detectable salty taste at certain levels]<br>\
+[{COLOUR}? ?&nbsp&nbsp&nbsp&nbsp•Water is sometimes a faint yellow/brown <a target='_blank' href='Colour_Report.htm?id={DWS_NUM}'>colour</a>. This may be caused by the decay of vegetation in lakes and rivers or by minerals, such as iron and manganese, present in underground aquifiers. Colour is monitored to assess the effectiveness of treatment and the potential formation of  disinfection by-products when water is treated with chlorine.]<br>\
+[{ALGAL_TOXINS}? ?&nbsp&nbsp&nbsp&nbsp•<a target='_blank' href='AlgalToxins_Report.htm?id={DWS_NUM}'>Algal toxins (or cyanobacterial toxins)</a>, which are produced by cyanobacteria or blue-green algae. Although many varieties of blue-green algae are harmless, some can produce toxins that are harmful to the health of both humans and animals.]";

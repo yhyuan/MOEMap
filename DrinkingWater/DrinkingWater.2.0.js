@@ -15,8 +15,8 @@ globalConfig.InformationLang = "Information";
 globalConfig.postIdentifyCallbackName = "Wells";
 globalConfig.postConditionsCallbackName = "Wells";
 globalConfig.infoWindowWidth = '470px';
-globalConfig.infoWindowHeight = "400px";
-globalConfig.infoWindowContentHeight = "330px";
+globalConfig.infoWindowHeight = "425px";
+globalConfig.infoWindowContentHeight = "385px";
 globalConfig.infoWindowContentWidth = "450px";
 globalConfig.fieldNamesList = globalConfig.chooseLang(["DWS ID", "DWS Name", "Drinking Water Quality", "Inspection Risk Rating", "Drinking Water Surveillance Program"], ["DWS ID", "DWS Name", "Drinking Water Quality", "Inspection Risk Rating", "Drinking Water Surveillance Program"]);
 globalConfig.tableFieldList = [
@@ -24,7 +24,7 @@ globalConfig.tableFieldList = [
 	{name: globalConfig.fieldNamesList[1], value: "{DWS_NAME}"},		
 	{name: globalConfig.fieldNamesList[2], value: "{PERCENTAGE_COMPLIED} ({ENGLISH_TIME_PERIOD})"}, 
 	{name: globalConfig.fieldNamesList[3], value: "{SCORE} ({ENGLISH_DATE_RANGE})"}, 
-	{name: globalConfig.fieldNamesList[4], value: "[{TASTE_AND_ODOUR}?Taste and Odour?<a target='_blank' href='TasteOdour_Report_en.htm?id={DWS_NUM}'>Taste and Odour</a>]<br>[{CHLORIDE}?Chloride?<a target='_blank' href='Chloride_Report_en.htm?id={DWS_NUM}'>Chloride</a>]<br>[{COLOUR}?Colour?<a target='_blank' href='Colour_Report_en.htm?id={DWS_NUM}'>Colour</a>]<br>[{ALGAL_TOXINS}?Algal Toxins?<a target='_blank' href='AlgalToxins_Report_en.htm?id={DWS_NUM}'>Algal Toxins</a>]"}
+	{name: globalConfig.fieldNamesList[4], value: "[{TASTE_AND_ODOUR}? ?<a target='_blank' href='TasteOdour_Report_en.htm?id={DWS_NUM}'>Taste and Odour</a>]<br>[{CHLORIDE}? ?<a target='_blank' href='Chloride_Report_en.htm?id={DWS_NUM}'>Chloride</a>]<br>[{COLOUR}? ?<a target='_blank' href='Colour_Report_en.htm?id={DWS_NUM}'>Colour</a>]<br>[{ALGAL_TOXINS}? ?<a target='_blank' href='AlgalToxins_Report_en.htm?id={DWS_NUM}'>Algal Toxins</a>]"}
 ];
 
 globalConfig.tableSimpleTemplateTitleLang = "";
