@@ -129,8 +129,25 @@ $.when(chartDataPrompt, chartLibraryPrompt).done(function(chartData) {
 		};
 		var chart = new google.visualization.LineChart(document.getElementById('chart_div' + i));
 		chart.draw(data, options);
-		var str = "Note: For graphing purposes, the laboratory's minimum detection limit has been substituted for results that are reported as below the detection limit.\
+		//console.log(chartData.data[parameter].chartData);
+		//
+		var table = globalConfig.chooseLang('Median Value of ', 'Median Value of ') + chartData.data[parameter].name + ' (' + globalConfig.unitConverter[chartData.data[parameter].unit] + ')' + globalConfig.chooseLang(' by Year in ', ' by Year in ') + chartData.name + ' (' + chartData.number + ')';
+		table = table + '<table class="noStripes" border="1"><tr>' + _.map(chartData.data[parameter].chartData, function (item) {
+			return '<th class="shaded"><center>' + item[0] + '</center></th>';
+		}).join('') + '</tr>';
+		_.each(_.range(chartData.data[parameter].chartData[0].length - 1), function(j) {
+			table = table + '<tr>' + _.map(chartData.data[parameter].chartData, function (item) {
+				var value = item[j + 1];
+				if (!value) {
+					value = "N/A";
+				}
+				return '<td>' + value + '</td>';
+			}).join('') + '</tr>';
+		});
+		table = table + '</table><br>';
+		//console.log(table);
+		var str = "Note: The laboratory’s minimum detection limit has been substituted to calculate the median value for results that are reported as below the detection limit.\
 			<br>The laboratory's current detection limit for " + chartData.data[parameter].name + " is <i>" + chartData.data[parameter].detectionLimit + " " + globalConfig.unitConverter[chartData.data[parameter].unit] + "</i>.<br>";
-		document.getElementById('chart_text_div' + i).innerHTML = str;
+		document.getElementById('chart_text_div' + i).innerHTML = table + str;
 	});
 });
