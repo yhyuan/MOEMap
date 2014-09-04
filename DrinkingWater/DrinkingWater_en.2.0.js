@@ -19,8 +19,13 @@ Municipality Email: <strong><a href='mailto:{MUNICIPALITY_EMAIL}'>{MUNICIPALITY_
 <strong><a target='_blank' href='{MUNICIPALITY_HOME_URL}'>Municipality Website</a></strong><br>\
 <strong><a target='_blank' href='{ARLIBRARYURL}'>Annual Report Directory</a></strong><br>";
 globalConfig.ComplianceMonitoringLang = "Compliance Monitoring";
-globalConfig.tabsTemplateContentComplianceMonitoring = "Drinking Water Quality: <strong>{PERCENTAGE_COMPLIED}</strong><br>\
-Reporting Period: <strong>{ENGLISH_TIME_PERIOD}</strong><br><br><br><br><br>\
+globalConfig.tabsTemplateContentComplianceMonitoring = "<strong>Drinking Water Quality:</strong><br>\
+The number represents a percentage of all the drinking water quality test results done during the time period indicated that met the Ontario Drinking Water Quality Standards. Includes test results of health-related standard parameters only; operational testing data (i.e., chlorine and turbidity) are not included in final water quality results.<br>\
+Drinking Water Quality: <strong>{PERCENTAGE_COMPLIED}</strong><br>\
+Reporting Period: <strong>{ENGLISH_TIME_PERIOD}</strong><br><br>\
+<strong>Inspection Risk Rating:</strong><br>\
+Every municipal residential drinking water system is inspected at least once a year, with one in three inspections unannounced.<br><br>\
+The ministry's annual inspection ratings are designed to encourage drinking water systems to strive for continuous improvement and ultimately to meet the ministry's long-term goal of 100 per cent compliance by all systems.<br>\
 Inspection Risk Rating: <strong>{SCORE}</strong><br>\
 Reporting Period: <strong>{ENGLISH_DATE_RANGE}</strong><br>";
 globalConfig.ScientificMonitoringLang = "Scientific Monitoring";
@@ -28,5 +33,5 @@ globalConfig.tabsTemplateContentScientificMonitoring = "The Drinking Water Surve
 To learn more about DWSP’s data on water quality at the {DWS_NAME} ({DWS_NUM}), click below:<br>\
 [{TASTE_AND_ODOUR}? ?&nbsp&nbsp&nbsp&nbsp•&nbspObjectionable <a target='_blank' href='TasteOdour_Report.htm?id={DWS_NUM}'>Taste and Odour</a>]<br>\
 [{CHLORIDE}? ?&nbsp&nbsp&nbsp&nbsp•&nbspSalty taste - <a target='_blank' href='Chloride_Report.htm?id={DWS_NUM}'>Chloride</a>]<br>\
-[{COLOUR}? ?&nbsp&nbsp&nbsp&nbsp•&nbspYellow/brown <a target='_blank' href='Colour_Report.htm?id={DWS_NUM}'>colour</a> waterWater]<br>\
+[{COLOUR}? ?&nbsp&nbsp&nbsp&nbsp•&nbspYellow/brown <a target='_blank' href='Colour_Report.htm?id={DWS_NUM}'>Colour</a> water]<br>\
 [{ALGAL_TOXINS}? ?&nbsp&nbsp&nbsp&nbsp•&nbsp<a target='_blank' href='AlgalToxins_Report.htm?id={DWS_NUM}'>Algal toxins (or cyanobacterial toxins)</a>]";
