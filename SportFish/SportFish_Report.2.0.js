@@ -404,19 +404,47 @@ globalConfig.generateLengthRanges = function (start, end, step) {
 	});
 };
 
+globalConfig.deciToDegree = function (degree){
+	if(Math.abs(degree) <= 0.1){
+		return "N/A";
+	}
+	var sym = "N";
+	if(degree<0){
+		degree = -degree;
+		sym = globalConfig.chooseLang("W", "O");
+	}
+	var deg = Math.floor(degree);
+	var temp = (degree - deg)*60;
+	var minute = Math.floor(temp);
+	var second = ((temp- minute)*60).toFixed(0);
+	var res = "";
+	if(second<1){
+		res ="" + deg + "&deg;" + minute + "'";
+	}else if(second>58){
+		res ="" + deg + "&deg;" + (minute+1) + "'";
+	}else{
+		res ="" + deg + "&deg;" + minute + "'" + second + "\"";
+	}
+	return res + sym;
+};
+
 globalConfig.layers = [{
 	url: globalConfig.url  + "/0",
 	renderTargetDiv: "siteDescription",
 	event: "siteDescriptionReady",
 	where: "WATERBODYC = " + QueryString.id,
-	outFields: [globalConfig.chooseLang("LOCNAME_EN", "LOCNAME_FR"), globalConfig.chooseLang("GUIDELOC_EN", "GUIDELOC_FR"), "ADVISORY", "ANALYMETHOD"],
+	//outFields: [globalConfig.chooseLang("LOCNAME_EN", "LOCNAME_FR"), globalConfig.chooseLang("GUIDELOC_EN", "GUIDELOC_FR"), "ADVISORY", "ANALYMETHOD", "LATITUDE", "LONGITUDE"],
+	outFields: [globalConfig.chooseLang("LOCNAME_EN", "LOCNAME_FR"), globalConfig.chooseLang("GUIDELOC_EN", "GUIDELOC_FR"), "ADVISORY", "CAUSE", "LATITUDE", "LONGITUDE"],
 	processResults: function (fs) {
 		var attr = fs[0].attributes;
 		var renderResult = {
 			"locName": globalConfig.chooseLang(attr.LOCNAME_EN, attr.LOCNAME_FR),
 			"locDesc": globalConfig.chooseLang(attr.GUIDELOC_EN, attr.GUIDELOC_FR),
+			"lat": globalConfig.deciToDegree(attr.LATITUDE),
+			"lng": globalConfig.deciToDegree(attr.LONGITUDE),
 			"speciesObject": JSON.parse(attr.ADVISORY), //(typeof(JSON) !== "undefined") ? JSON.parse(attr.ADVISORY) : globalConfig.parseJSON(attr.ADVISORY),
-			"analysisObject": JSON.parse(attr.ANALYMETHOD) //(typeof(JSON) !== "undefined") ? JSON.parse(attr.ANALYMETHOD) : globalConfig.parseJSON(attr.ANALYMETHOD)
+			//"analysisObject": JSON.parse(attr.ANALYMETHOD) //(typeof(JSON) !== "undefined") ? JSON.parse(attr.ANALYMETHOD) : globalConfig.parseJSON(attr.ANALYMETHOD)
+			"causeObject": JSON.parse(attr.CAUSE) 
 		};
 		
 		globalConfig.renderResult = renderResult;
@@ -424,7 +452,7 @@ globalConfig.layers = [{
 	},
 	template: '<h2><%= locName %></h2>\
 				<!--<div style="margin-right:20px;margin-bottom:15px;float:right;"><a href="http://www.ontario.ca/fishguide"><img alt="<%= globalConfig.chooseLang("Guide to Eating Ontario Sport Fish (2013-2014)", "Guide de consommation du poisson gibier de l’Ontario (2013-2014)") %>" style="border:1px solid black;" hspace="10" src="http://files.ontariogovernment.ca/moe_mapping/mapping/js/OneSite/SportFish/cover_<%= globalConfig.chooseLang("en", "fr") %>.jpg" /></a></div>-->\
-				<strong><%= locDesc %></strong>\
+				<strong><%= locDesc %></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<%= lat %>&nbsp;&nbsp;<%= lng %>)\
 				<%\
 					if (globalConfig.isEnglish()){\
 				%>\
@@ -451,7 +479,7 @@ globalConfig.layers = [{
 						return 0;\
 					});\
 					_.each(speciesList,function(speciesCode,key,list){ %>\
-						<h3><%= globalConfig.speciesDict[speciesCode] %><SUP><%= globalConfig.getAnalysisMethods(speciesCode, analysisObject[speciesCode]) %></SUP></h3>\
+						<h3><%= globalConfig.speciesDict[speciesCode] %><SUP><%= causeObject[speciesCode] /*globalConfig.getAnalysisMethods(speciesCode, analysisObject[speciesCode])*/ %></SUP></h3>\
 						<table class="noStripes">\
 							<tbody>\
 								<tr>\

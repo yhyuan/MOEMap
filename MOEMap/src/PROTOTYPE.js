@@ -352,7 +352,8 @@ globalConfig.deciToDegree = globalConfig.deciToDegree || function (degree){
 	var deg = Math.floor(degree);
 	var temp = (degree - deg)*60;
 	var minute = Math.floor(temp);
-	var second = Math.floor((temp- minute)*60);
+	//var second = Math.floor((temp- minute)*60);
+	var second = ((temp- minute)*60).toFixed(0);
 	var res = "";
 	if(second<1){
 		res ="" + deg + globalConfig.degreeSymbolLang + minute + "'";

@@ -121,7 +121,7 @@ $.when(chartDataPrompt, chartLibraryPrompt).done(function(chartData) {
 		var parameter = _.keys(chartData.data)[i];
 		var data = google.visualization.arrayToDataTable(chartData.data[parameter].chartData);
 		var options = {
-			title:  globalConfig.chooseLang('Median Value of ', 'Median Value of ') + chartData.data[parameter].name + globalConfig.chooseLang(' by Year in ', ' by Year in ') + chartData.name + ' (' + chartData.number + ')',
+			title:  globalConfig.chooseLang('Median Value of ', 'Median Value of ') + chartData.data[parameter].name + globalConfig.chooseLang(' by Year at the ', ' by Year at the ') + chartData.name + ' (' + chartData.number + ')',
 			width: 700, height: 480,
 			hAxis: {title: globalConfig.chooseLang('Year', 'Year'), titleColor:'black'}, 
 			vAxis: {title: globalConfig.chooseLang('Median Value', 'Median Value') + ' (' + globalConfig.unitConverter[chartData.data[parameter].unit] + ')', minValue: globalConfig.parameters[parameter].detectionLimit, maxValue: globalConfig.parameters[parameter].maximum},
@@ -133,13 +133,17 @@ $.when(chartDataPrompt, chartLibraryPrompt).done(function(chartData) {
 		//
 		var table = globalConfig.chooseLang('Median Value of ', 'Median Value of ') + chartData.data[parameter].name + ' (' + globalConfig.unitConverter[chartData.data[parameter].unit] + ')' + globalConfig.chooseLang(' by Year in ', ' by Year in ') + chartData.name + ' (' + chartData.number + ')';
 		table = table + '<table class="noStripes" border="1"><tr>' + _.map(chartData.data[parameter].chartData, function (item) {
-			return '<th class="shaded"><center>' + item[0] + '</center></th>';
+			var value = item[0];
+			if (value === "Year") {
+				value = "&nbsp;&nbsp;&nbsp;&nbsp;";
+			}
+			return '<th class="shaded"><center>' + value + '</center></th>';
 		}).join('') + '</tr>';
 		_.each(_.range(chartData.data[parameter].chartData[0].length - 1), function(j) {
 			table = table + '<tr>' + _.map(chartData.data[parameter].chartData, function (item) {
 				var value = item[j + 1];
 				if (!value) {
-					value = "N/A";
+					value = "-";
 				}
 				return '<td>' + value + '</td>';
 			}).join('') + '</tr>';
