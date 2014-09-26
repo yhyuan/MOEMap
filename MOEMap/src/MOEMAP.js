@@ -92,7 +92,7 @@ if(globalConfig.usejQueryUITable && (!globalConfig.accessible) && (!!yepnope)){
 		}
 	});
 }
-globalConfig.supportTableDownload = globalConfig.supportTableDownload || true;	
+//globalConfig.supportTableDownload = globalConfig.supportTableDownload || true;	
 
 //whether want to use the predefined multiple tab supports. If it is false, it will only support one tab. 
 if (typeof globalConfig.usePredefinedMultipleTabs === "undefined"){
@@ -495,14 +495,15 @@ globalConfig.renderTable = function(features, templates, searchCenter){
 			};
 		if (globalConfig.language !== "EN") {
 			dataTableOptions["oLanguage"] = globalConfig.dataTableLang;
-		}	
+		}
+		/*
 		if ((globalConfig.supportTableDownload) && (!$.browser.msie)) {
 			dataTableOptions["sDom"] = 'T<"clear">lfrtip';
 			dataTableOptions["oTableTools"] = {
 					"sSwfPath": "http://files.ontario.ca/moe_mapping/mapping/js/MOEMap/js/TableTools-2.1.4/media/swf/copy_csv_xls.swf",
 					"aButtons": ["xls"]
 				};
-		}
+		}*/
 		if(requireDistanceField) {
 			var fields = tableHead.split("</th><th>");
 			dataTableOptions["aaSorting"] = [[ fields.length-1, "asc" ]];

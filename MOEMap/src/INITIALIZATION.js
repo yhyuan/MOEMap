@@ -329,6 +329,7 @@
 		*/
 		
 		function init() {
+		
 			var map;
 			if(typeof(globalConfig.preInitialize) !== "undefined"){
 				globalConfig.preInitialize();

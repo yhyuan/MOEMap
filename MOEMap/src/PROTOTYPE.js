@@ -11,18 +11,27 @@ if (!('trim' in String.prototype)){
 /*Add contains function to Array. This function will test whether an Array contains an element or not.*/			
 if (!('contains' in Array.prototype)){
 	Array.prototype.contains = function(obj) {
-		var i = this.length;
+		return (this.indexOf(obj) >= 0);
+		/*var i = this.length;
 		while (i--) {
 			if (this[i] === obj) {
 				return true;
 			}
 		}
-		return false;
+		return false;*/
 	};
 }
 /*Add unique function to Array. This function will return the unique elements in an array*/						
 if (!('unique' in Array.prototype)){
 	Array.prototype.unique = function() {
+		var n = [];
+		for(var i = 0; i < this.length; i++) {
+			if(n.indexOf(this[i]) < 0) {
+				n.push(this[i]);
+			}
+		}
+		return n;
+	/*
 		var a = this.concat();
 		for(var i=0; i<a.length; ++i) {
 			for(var j=i+1; j<a.length; ++j) {
@@ -31,7 +40,7 @@ if (!('unique' in Array.prototype)){
 				}
 			}
 		}
-		return a;
+		return a;*/
 	};
 }
 

@@ -1,4 +1,5 @@
 globalConfig = {};
+globalConfig.development = true;
 globalConfig.language = "EN";
 globalConfig.otherInfoHTML = '';
 globalConfig.GeneralInformationLang = "General Information";
@@ -18,20 +19,47 @@ Municipality Phone: <strong>{MUNICIPALITY_PHONE}</strong><br>\
 Municipality Email: <strong><a href='mailto:{MUNICIPALITY_EMAIL}'>{MUNICIPALITY_EMAIL}</a></strong><br>\
 <strong><a target='_blank' href='{MUNICIPALITY_HOME_URL}'>Municipality Website</a></strong><br>\
 <strong><a target='_blank' href='{ARLIBRARYURL}'>Annual Report Directory</a></strong><br>";
-globalConfig.ComplianceMonitoringLang = "Compliance Monitoring";
-globalConfig.tabsTemplateContentComplianceMonitoring = "<strong>Drinking Water Quality:</strong><br>\
-The number represents a percentage of all the drinking water quality test results done during the time period indicated that met the Ontario Drinking Water Quality Standards. Includes test results of health-related standard parameters only; operational testing data (i.e., chlorine and turbidity) are not included in final water quality results.<br>\
-Drinking Water Quality: <strong>{PERCENTAGE_COMPLIED}</strong><br>\
-Reporting Period: <strong>{ENGLISH_TIME_PERIOD}</strong><br><br>\
-<strong>Inspection Risk Rating:</strong><br>\
-Every municipal residential drinking water system is inspected at least once a year, with one in three inspections unannounced.<br><br>\
-The ministry's annual inspection ratings are designed to encourage drinking water systems to strive for continuous improvement and ultimately to meet the ministry's long-term goal of 100 per cent compliance by all systems.<br>\
-Inspection Risk Rating: <strong>{SCORE}</strong><br>\
-Reporting Period: <strong>{ENGLISH_DATE_RANGE}</strong><br>";
+globalConfig.ComplianceMonitoringLang = "Regulated Monitoring";
+
+//<img src="tti.jpg" alt="Testing Treated Inspected" style="margin:5px;">
+
+globalConfig.tabsTemplateContentComplianceMonitoring = '<img src="http://files.ontariogovernment.ca/moe_mapping/mapping/js/OneSite/DrinkingWater/tti_en.jpg" alt="Testing Treated Inspected" style="width:201px;height:184px;float:right"><br>\
+<strong>Drinking Water Quality:</strong><br>\
+<div style="padding:10px;">\
+<div style="float:left;margin-top:5px;margin-right:10px;margin-bottom:10px;background-color:#DEEFDC;border:1px solid #256D20;padding:10px;width:186px;height:62px;text-align:center;">\
+		<br>\
+		<span style="font-size:1.5em;font-weight:bold;">{PERCENTAGE_COMPLIED}</span>\
+		<p>{ENGLISH_TIME_PERIOD}</p>\
+</div>\
+</div>\
+The number represents a percentage of all health-related test results that met the Ontario Drinking Water Quality Standards for the time period indicated.<br>\
+<br><strong>Inspection Rating:</strong><br>\
+<div style="padding:10px;">\
+<div style="float:left;margin-top:5px;margin-right:10px;margin-bottom:10px;background-color:#DEEFDC;border:1px solid #256D20;padding:10px;width:186px;height:62px;text-align:center;">\
+		<br>\
+		<span style="font-size:1.5em;font-weight:bold;">{SCORE}</span>\
+		<p>{ENGLISH_DATE_RANGE}</p>\
+</div>\
+</div>\
+Every municipal residential drinking water system is inspected at least once a year, with one in three inspections unannounced. Annual inspection ratings encourage owners/operators of drinking water systems to strive for continuous improvement and meet the ministry\'s long-term goal of 100 per cent compliance by all systems.<br>\
+<br><a target="_blank" href="">Learn more</a> (Questions and Answers)<br>';
+
 globalConfig.ScientificMonitoringLang = "Scientific Monitoring";
-globalConfig.tabsTemplateContentScientificMonitoring = "The Drinking Water Surveillance Program (DWSP) is a voluntary program that focuses on chemicals that are not regulated in Ontario. DWSP complements the monitoring that municipalities are required to do as part of operating their drinking water systems.<br><br>\
-To learn more about DWSP’s data on water quality at the {DWS_NAME} ({DWS_NUM}), click below:<br>\
-[{TASTE_AND_ODOUR}? ?&nbsp&nbsp&nbsp&nbsp•&nbspObjectionable <a target='_blank' href='TasteOdour_Report.htm?id={DWS_NUM}'>Taste and Odour</a>]<br>\
-[{CHLORIDE}? ?&nbsp&nbsp&nbsp&nbsp•&nbspSalty taste - <a target='_blank' href='Chloride_Report.htm?id={DWS_NUM}'>Chloride</a>]<br>\
-[{COLOUR}? ?&nbsp&nbsp&nbsp&nbsp•&nbspYellow/brown <a target='_blank' href='Colour_Report.htm?id={DWS_NUM}'>Colour</a> water]<br>\
-[{ALGAL_TOXINS}? ?&nbsp&nbsp&nbsp&nbsp•&nbsp<a target='_blank' href='AlgalToxins_Report.htm?id={DWS_NUM}'>Algal toxins (or cyanobacterial toxins)</a>]";
+if (globalConfig.development) {
+	globalConfig.TasteOdourReportURL = 'TasteOdour_Report.htm';
+	globalConfig.ChlorideReportURL = 'Chloride_Report.htm';
+	globalConfig.ColourReportURL = 'Colour_Report.htm';
+	globalConfig.AlgalToxinsReportURL = 'AlgalToxins_Report.htm';
+} else {
+	globalConfig.TasteOdourReportURL = '44050';
+	globalConfig.ChlorideReportURL = '44048';
+	globalConfig.ColourReportURL = '44049';
+	globalConfig.AlgalToxinsReportURL = '44047';
+}
+globalConfig.tabsTemplateContentScientificMonitoring = "<img src='CationsAtomicAdsorption.jpg' alt='Cations Atomic Adsorption' style='width:200px;height:133px;float:right'><br>\
+The Drinking Water Surveillance Program (DWSP) monitors water quality at a selected number of drinking water systems in Ontario. The DWSP complements the monitoring that municipalities are required to do as part of operating their drinking water systems.<br><br>\
+To learn more about DWSP’s data on water quality at the {DWS_NAME} click below:<br>\
+[{TASTE_AND_ODOUR}? ?&nbsp&nbsp&nbsp&nbsp&nbsp<a target='_blank' href='" + globalConfig.TasteOdourReportURL +"?id={DWS_NUM}'>Taste and Odour</a><br>]\
+[{CHLORIDE}? ?&nbsp&nbsp&nbsp&nbsp&nbsp<a target='_blank' href='" + globalConfig.ChlorideReportURL +"?id={DWS_NUM}'>Chloride</a><br>]\
+[{COLOUR}? ?&nbsp&nbsp&nbsp&nbsp&nbsp<a target='_blank' href='" + globalConfig.ColourReportURL +"?id={DWS_NUM}'>Colour</a><br>]\
+[{ALGAL_TOXINS}? ?&nbsp&nbsp&nbsp&nbsp&nbsp<a target='_blank' href='" + globalConfig.AlgalToxinsReportURL +"?id={DWS_NUM}'>Algal toxins</a>]";

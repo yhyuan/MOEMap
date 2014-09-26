@@ -28,79 +28,58 @@ globalConfig.unitConverter = {
 	'TCU': 'TCU'
 };
 globalConfig.layers = [{
-	url: globalConfig.url + "/1",
+	url: globalConfig.url + "/3",
 	renderTargetDiv: "station_description",
 	event: "TableReady",
-	where: "(DWS_NUMBER='" + QueryString.id + "')AND(" + _.map(_.keys(globalConfig.parameters), function (p) {return "(PARAMETER = '" + p + "')";}).join('OR') + ")",
-	outFields: ["DWS_NAME", "DWS_NUMBER", "SAMPLE_TYPE", "SAMPLE_DATE", "PARAMETER", "CURRENT_DETECTION_LIMIT", "DETECTION_LIMIT_UNIT", "RESULT", "RESULT_UNIT", "QUALIFIER"],
+	where: "CASING_ID='" + QueryString.id + "'",
+	outFields: ["CASING_ID", "Month_", "Year_", "LEVLE"],
 	processResults: function (fs) {
-		var median = function (values) {
-			values.sort( function(a,b) {return a - b;} );
-			var half = Math.floor(values.length/2);
-			if(values.length % 2)
-				return values[half];
-			else
-				return (values[half-1] + values[half]) / 2.0;
-		};
-
-		var minYear = _.min(fs, function(feature){ return feature.attributes.SAMPLE_DATE.substring(0, 4);}).attributes.SAMPLE_DATE.substring(0, 4);
-		var maxYear = _.max(fs, function(feature){ return feature.attributes.SAMPLE_DATE.substring(0, 4);}).attributes.SAMPLE_DATE.substring(0, 4);
-		var years = _.range(parseInt(minYear), parseInt(maxYear) + 1);
-		
-		var groupbyParameter = _.groupBy(fs, function(feature){ return feature.attributes.PARAMETER;});
-		_.each(_.keys(groupbyParameter), function (parameter) {
-			var unit = groupbyParameter[parameter][0].attributes.RESULT_UNIT;
-			var min = _.min(groupbyParameter[parameter], function(feature){ return feature.attributes.RESULT;}).attributes.RESULT;
-			var max = _.max(groupbyParameter[parameter], function(feature){ return feature.attributes.RESULT;}).attributes.RESULT;
-			var name = globalConfig.parameters[groupbyParameter[parameter][0].attributes.PARAMETER].name;
-			var detectionLimit = groupbyParameter[parameter][0].attributes.CURRENT_DETECTION_LIMIT;
-			
-			groupbyParameter[parameter] = _.groupBy(groupbyParameter[parameter], function(feature){ return feature.attributes.SAMPLE_TYPE;});	
-			_.each(_.keys(groupbyParameter[parameter]), function (type) {
-				groupbyParameter[parameter][type] = _.groupBy(groupbyParameter[parameter][type], function(feature){ return feature.attributes.SAMPLE_DATE.substring(0, 4);});
-				_.each(_.keys(groupbyParameter[parameter][type]), function (year) {
-					groupbyParameter[parameter][type][year] = parseFloat(median(_.map(groupbyParameter[parameter][type][year], function(feature) {
-						return feature.attributes.RESULT;
-					})).toFixed(2));
-				});
-			});
-			var typeListChart = [];
-			var colorList = [];
-			var typeList = _.keys(groupbyParameter[parameter]);
-			_.each([{name: 'Raw Water', color: 'orange'},{name:'Treated Water', color: 'blue'}, {name:'Distribution', color: 'green'}], function(item) {
-				if (_.find(typeList, function(type) {return type ===  item.name.toUpperCase();})) {
-					typeListChart.push(item.name);
-					colorList.push(item.color);
-				}
-			});
-			var results = _.map(years, function(year) {
-				var yearStr = '' + year;
-				var data = _.map(typeListChart, function (type) {
-					if ((groupbyParameter[parameter].hasOwnProperty(type.toUpperCase())) && (groupbyParameter[parameter][type.toUpperCase()].hasOwnProperty(yearStr))) {
-						return groupbyParameter[parameter][type.toUpperCase()][yearStr];
-					} else {
-						return null;
-					}
-				});
-				if(globalConfig.parameters[parameter].hasOwnProperty('standard')) {
-					return [yearStr].concat([globalConfig.parameters[parameter].standard]).concat(data);
-				} else {
-					return [yearStr].concat(data);
-				}
-			});
-			if(globalConfig.parameters[parameter].hasOwnProperty('standard')) {
-				groupbyParameter[parameter].chartData = ([['Year'].concat(['Ontario Standard']).concat(typeListChart)]).concat(results);
-				colorList = ['red'].concat(colorList);
-			} else {
-				groupbyParameter[parameter].chartData = ([['Year'].concat(typeListChart)]).concat(results);
-			}
-			groupbyParameter[parameter].unit = unit;
-			groupbyParameter[parameter].min = min;
-			groupbyParameter[parameter].max = max;
-			groupbyParameter[parameter].name = name;
-			groupbyParameter[parameter].colorList = colorList;
-			groupbyParameter[parameter].detectionLimit = detectionLimit;
+		console.log(fs);
+		_.each(fs, function(feature) {
+			feature.attributes['YearMonth'] =  feature.attributes['Year_'] * 100 + feature.attributes['Month_'];
 		});
+		var minYearMonth = _.min(fs, function(feature) {
+			return feature.attributes['YearMonth'];
+		}).attributes['YearMonth'];
+		var maxYearMonth = _.max(fs, function(feature) {
+			return feature.attributes['YearMonth'];
+		}).attributes['YearMonth'];
+		var yearMonthList = _.map(fs, function(feature) {
+			return  feature.attributes['Year_'] * 100 + feature.attributes['Month_'];
+		});
+		var levelList = _.map(fs, function(feature) {
+			return  feature.attributes['LEVLE'];
+		});
+		var results = _.object(yearMonthList, levelList);
+		var minYear = Math.floor(minYearMonth / 100);
+		var minMonth = minYearMonth - minYear * 100;
+		var maxYear = Math.floor(maxYearMonth / 100);
+		var maxMonth = maxYearMonth - maxYear * 100;
+		var yearMonthList = [];
+		for(var i = minMonth; i<= 12; i++) {
+			var yearMonth = minYear * 100 + i;
+			if(!results.hasOwnProperty(yearMonth)) {
+				results[yearMonth] = null;
+			}
+		}
+		for(var j = minYear + 1; j<= maxYear; j++) {
+			for(var i = 1; i<= 12; i++) {
+				var yearMonth = j * 100 + i;
+				if(!results.hasOwnProperty(yearMonth)) {
+					results[yearMonth] = null;
+				}
+			}
+		}
+		for(var i = 1; i<= maxMonth; i++) {
+			var yearMonth = maxYear * 100 + i;
+			if(!results.hasOwnProperty(yearMonth)) {
+				results[yearMonth] = null;
+			}
+		}
+		
+		console.log(minYear);
+		console.log(maxYear);
+		console.log(results);
 		var chartData = {
 			data: groupbyParameter,
 			name: globalConfig.wordCapitalize(fs[0].attributes.DWS_NAME),
