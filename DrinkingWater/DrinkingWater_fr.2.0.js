@@ -1,38 +1,64 @@
 globalConfig = {};
+globalConfig.development = false;
 globalConfig.language = "FR";
+globalConfig.otherInfoHTML = '';
+globalConfig.GeneralInformationLang = "Renseignements généraux";
+globalConfig.tabsTemplateContentGeneralInformationLang = "Nom du REP: <strong>{DWS_NAME}</strong><br>\
+N&deg; du REP: <strong>{DWS_NUM}</strong><br>\
+Propriétaire: <strong>{OWNER_LEGAL_NAME}</strong><br>\
+Organisme d’exploitation: <strong>{OPERATING_AUTHORITY_LEGAL_NAME}</strong><br>\
+Catégorie: <strong>{DWS_CATEGORY}</strong><br>\
+Population desservie: <strong>{POPULATION_SERVED}</strong><br>\
+Capacité nominale: <strong>{DESIGN_RATED_CAPACITY}</strong><br>\
+Unité de mesure de la capacité nominale: <strong>{CAPACITYUOM}</strong><br>\
+Source d’eau: <strong>{globalConfig.wordCapitalize(SOURCES)}</strong><br>\
+REP qui reçoivent de l’eau: <strong>{RECEIVING_DWS}</strong><br>\
+Procédés de traitement: <strong>{globalConfig.wordCapitalize(TREATMENT_PROCESSES)}</strong><br>\
+Municipalité: <strong>{MUNICIPALITY_NAME}</strong><br>\
+No de téléphone de la municipalité: <strong>{MUNICIPALITY_PHONE}</strong><br>\
+Adresse électronique de la municipalité: <strong><a href='mailto:{MUNICIPALITY_EMAIL}'>{MUNICIPALITY_EMAIL}</a></strong><br>\
+<strong><a target='_blank' href='{MUNICIPALITY_HOME_URL}'>Site Web de la municipalité</a></strong><br>\
+<strong><a target='_blank' href='{ARLIBRARYURL}'>Répertoire des rapports annuels</a></strong><br>";
+globalConfig.ComplianceMonitoringLang = "Surveillance réglementée";
 
-//globalConfig.searchHelpTxt = "Recherche de <b>num\u00e9ro du puits du r\u00e9seau</b>, <b>profondeur du puits</b>, <b>d\u0027adresse</b> ou cliquer sur aide pour plus d\u0027information sur la recherche avanc\u00e9e.";
-//globalConfig.otherInfoHTML = '<p><img src="http://files.ontariogovernment.ca/moe_mapping/mapping/js/OneSite/PGMN/legend_FR.jpg" alt="PGMN legend french" /></p><p>Certaines donn&eacute;es scientifiques et de surveillance n&rsquo;existent qu&rsquo;en anglais.</p>';
-globalConfig.otherInfoHTML = '<p>Certaines donn&eacute;es scientifiques et de surveillance n&rsquo;existent qu&rsquo;en anglais.</p>';
+globalConfig.tabsTemplateContentComplianceMonitoring = '<h3>Qualité de l’eau potable:</h3>\
+<div style="padding:10px;">\
+<div style="float:left;margin-top:5px;margin-right:10px;margin-bottom:5px;background-color:#DEEFDC;border:1px solid #256D20;padding:10px;width:186px;height:62px;text-align:center;">\
+		<span style="font-size:1.5em;font-weight:bold;">{PERCENTAGE_COMPLIED}</span>\
+		<p>{FRENCH_TIME_PERIOD}</p>\
+</div>\
+</div>\
+<p>Le chiffre représente le pourcentage de résultats de toutes les analyses liées à la santé effectuées au cours de la période indiquée qui ont répondu aux normes de qualité de l’eau potable de l’Ontario.</p>\
+<h3>Note d’inspection:</h3>\
+<div style="padding:10px;">\
+<div style="float:left;margin-top:5px;margin-right:10px;margin-bottom:5px;background-color:#DEEFDC;border:1px solid #256D20;padding:10px;width:186px;height:62px;text-align:center;">\
+		<span style="font-size:1.5em;font-weight:bold;">{SCORE}</span>\
+		<p>{FRENCH_DATE_RANGE}</p>\
+</div>\
+</div>\
+<p>Tous les réseaux résidentiels municipaux sont inspectés au moins une fois par année et une inspection sur trois est menée sans préavis. Les notes d’inspection annuelle encouragent les propriétaires et exploitants des réseaux d’eau potable à viser l’amélioration continue et à atteindre l’objectif à long terme du ministère, soit un taux de conformité de 100 % pour tous les réseaux.</p>\
+<p><a target="_blank" href="http://sb.ene.ontariogovernment.ca/environment-and-energy/how-use-ministry-environment-map#drinkingwaterQA">Pour en savoir plus</a> (Questions et réponses)</p>';
 
-globalConfig.WellLang = "Puits";
-globalConfig.tabsTemplateContentWell = "Num\u00e9ro du puits du r\u00e9seau: <b>{PGMN_WELL}</b><br>Office de protection de la nature: <b>{CONS_AUTHO}</b><br>Comt\u00e9: <b>{globalConfig.wordCapitalize(COUNTY)}</b><br>Canton: <b>{globalConfig.wordCapitalize(TOWNSHIP)}</b>, <b>{CONCESSION}</b>, <b>{LOT}</b><br>Num\u00e9ro du site: <b>{SiteID}</b><br>Latitude <b>{globalConfig.deciToDegree(LATITUDE)}</b>&nbsp;&nbsp;&nbsp;Longitude <b>{globalConfig.deciToDegree(LONGITUDE)}</b><br><BR>Altitude (a.n.m.):<b>{ELVA_GROUN}</b> m\u00e8tres<br>Profondeur du puits (m\u00e8tres sous le sol): <b>{WELL_DEPTH}</b><br>Type d'aquif\u00e8re: <b>{AQUIFER_TY}</b><br>Lithologie de l'aquif\u00e8re: <b>{AQUIFER_LI}</b><br>Num\u00e9ro du registre de puits d'eau (NRPE): <b>{STRATIGRAP}</b><br>Description stratigraphique des rapports ou notes: <b>{STRATI_DES}</b><br>NRPE des puits situ\u00e9s pr\u00e8s d'un puits du r\u00e9seau: <b>{NO_RECORD}</b><br>Diam\u00e8tre du puits ou pi\u00e9zom\u00e8tre: <b>{WEL_PIEZOM}</b> cm<br>Intervalle d'\u00e9cran ou intervalle \u00e0 trou ouvert (m\u00e8tres sous terre): <b>{SCREEN_HOL}</b>";
-globalConfig.WaterLevelLang = "Niveau d'eau";
-globalConfig.tabsTemplateContentWaterLevel = "<img height=300 width=400 src='http://files.ontariogovernment.ca/moe_mapping/mapping/PGMN/WaterLevel/png/FR/{PGMN_WELL}.png'/><br><a target='_blank' href='http://files.ontariogovernment.ca/moe_mapping/mapping/PGMN/WaterLevel/csv/{PGMN_WELL}.zip'>Donn\u00e9es sur le niveau d'eau (Fichier compress&eacute; CSV)</a>";
-globalConfig.ChemistryLang = "Chimie";
-//globalConfig.tabsTemplateContentChemistry = "Le minist\u00e8re de l'Environnement effectue en laboratoire une analyse chimique de l'eau de chaque puits du r\u00e9seau, notamment les param\u00e8tres chimiques g\u00e9n\u00e9raux, les m\u00e9taux, les ions majeurs, les compos\u00e9s organiques volatils et divers pesticides et herbicides. Le programme ne surveille pas les bact\u00e9ries. Environ 380 des puits du r\u00e9seau ont \u00e9t\u00e9 d\u00e9sign\u00e9s comme devant faire l'objet d'une surveillance chimique de l'eau \u00e0 long terme. Les param\u00e8tres de surveillance \u00e0 long terme sont les suivants : param\u00e8tres chimiques g\u00e9n\u00e9raux, m\u00e9taux, ions majeurs. Des \u00e9chantillons sont pr\u00e9lev\u00e9s \u00e0 l'automne, puis analys\u00e9s soit dans un laboratoire du minist\u00e8re, soit dans un laboratoire priv\u00e9.<br><br>Des \u00e9chantillons d'eau ont \u00e9t\u00e9 pr\u00e9lev\u00e9s dans ce puits les dates suivantes: {globalConfig.getTable(CHEM_CONTE)}. <br><br>En cliquant sur le rapport des donn\u00e9es chimiques de l'eau ci-dessous, on peut voir la liste des param\u00e8tres chimiques, les r\u00e9sultats d'analyse chimique et les diagrammes des param\u00e8tres chimiques de ce puits.<br><br><a target='_blank' href='PGMN_Report.htm?id={PGMN_WELL}'>Rapport des donn\u00e9es chimiques de l'eau</a>";
-//globalConfig.tabsTemplateContentChemistry = "Le minist\u00e8re de l'Environnement effectue en laboratoire une analyse chimique de l'eau de chaque puits du r\u00e9seau, notamment les param\u00e8tres chimiques g\u00e9n\u00e9raux, les m\u00e9taux, les ions majeurs, les compos\u00e9s organiques volatils et divers pesticides et herbicides. Le programme ne surveille pas les bact\u00e9ries. Environ 380 des puits du r\u00e9seau ont \u00e9t\u00e9 d\u00e9sign\u00e9s comme devant faire l'objet d'une surveillance chimique de l'eau \u00e0 long terme. Les param\u00e8tres de surveillance \u00e0 long terme sont les suivants : param\u00e8tres chimiques g\u00e9n\u00e9raux, m\u00e9taux, ions majeurs. Des \u00e9chantillons sont pr\u00e9lev\u00e9s \u00e0 l'automne, puis analys\u00e9s soit dans un laboratoire du minist\u00e8re, soit dans un laboratoire priv\u00e9.<br><br>Des \u00e9chantillons d'eau ont \u00e9t\u00e9 pr\u00e9lev\u00e9s dans ce puits les dates suivantes: {globalConfig.getTable(CHEM_CONTE)}. <br><br>En cliquant sur le rapport des donn\u00e9es chimiques de l'eau ci-dessous, on peut voir la liste des param\u00e8tres chimiques, les r\u00e9sultats d'analyse chimique et les diagrammes des param\u00e8tres chimiques de ce puits.<br><br><a target='_blank' href='fr_pgmn_report?id={PGMN_WELL}'>Rapport des donn\u00e9es chimiques de l'eau</a>";
-globalConfig.PrecipitationLang = "Pr\u00e9cipitation";
-globalConfig.tabsTemplateContentPrecipitation = "<img height=300 width=400 src='http://files.ontariogovernment.ca/moe_mapping/mapping/PGMN/Precipitation/png/FR/{Site_ID}.png'/><br><a target='_blank' href='http://files.ontariogovernment.ca/moe_mapping/mapping/PGMN/Precipitation/csv/{Site_ID}.csv'>Donn\u00e9es sur les pr\u00e9cipitations (CSV)</a>";
-/*globalConfig.searchControlHTML = '<table width="100%" cellpadding="5" cellspacing="0" border="0" style="margin-bottom:15px;" summary="Recherche carte interactive forme">\
-			<caption style="text-align:left;">Recherche carte interactive</caption>\
-			<tr>\
-				<th scope="col"></th>\
-				<th scope="col"></th>\
-			</tr>\
-			<tr>\
-				<td valign="top" width="450px">\
-					<input id="map_query" type="text" size="50" onkeypress="return globalConfig.entsub(event)" maxlength="100" title="Terme"></input>&nbsp;<input type="submit" onclick="globalConfig.search()" value="Recherche" title="Recherche"></input>								\
-				</td>\
-				<td valign="top">	\
-					<input id="currentMapExtent" type="checkbox" name="currentExtent" title="&Eacute;tendue de la carte courante"><span title="Afficher la carte : Limiter la recherche &agrave; la carte donn&eacute;e." class="tooltip">&Eacute;tendue de la carte courante</span>\
-				</td>\
-			</tr>\
-			<tr>\
-				<td colspan="2">\
-					<div id="information" style="margin-top:10px;">\
-						Recherche de <strong>numéro du puits du réseau</strong>, <strong>profondeur du puits</strong>, <strong>d’adress</strong> ou cliquer sur aide pour plus d’information sur la recherche avancée.\
-					</div>\
-				</td>\
-			</tr>\
-		</table>';*/
+globalConfig.ScientificMonitoringLang = "Surveillance scientifique";
+if (globalConfig.development) {
+	globalConfig.TasteOdourReportURL = 'TasteOdour_Report.htm';
+	globalConfig.ChlorideReportURL = 'Chloride_Report.htm';
+	globalConfig.ColourReportURL = 'Colour_Report.htm';
+	globalConfig.AlgalToxinsReportURL = 'AlgalToxins_Report.htm';
+} else {
+	globalConfig.TasteOdourReportURL = '44056';
+	globalConfig.ChlorideReportURL = '44054';
+	globalConfig.ColourReportURL = '44055';
+	globalConfig.AlgalToxinsReportURL = '44053';
+}
+globalConfig.TasteOdourLang = 'Goût et odeur';
+globalConfig.ChlorideLang = 'Chlorure';
+globalConfig.ColourLang = 'Couleur';
+globalConfig.AlgalToxinsLang = 'Toxines algaires';
+
+globalConfig.tabsTemplateContentScientificMonitoring = "Le Programme de surveillance de l’eau potable (PSEP) permet de surveiller la qualité de l’eau d’un certain nombre de réseaux d’eau potable en Ontario. Il se greffe aux activités de surveillance auxquelles les municipalités doivent se livrer dans le cadre de l’exploitation de leur réseau d’eau potable.<br><br>\
+Pour en savoir plus sur les données du PSEP au sujet de la qualité de l’eau du réseau d’eau potable {DWS_NAME} cliquez ci-dessous:<br>\
+[{TASTE_AND_ODOUR}? ?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='" + globalConfig.TasteOdourReportURL +"?id={DWS_NUM}'>" + globalConfig.TasteOdourLang + "</a><br>]\
+[{CHLORIDE}? ?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='" + globalConfig.ChlorideReportURL +"?id={DWS_NUM}'>" + globalConfig.ChlorideLang + "</a><br>]\
+[{COLOUR}? ?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='" + globalConfig.ColourReportURL +"?id={DWS_NUM}'>" + globalConfig.ColourLang + "</a><br>]\
+[{ALGAL_TOXINS}? ?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='" + globalConfig.AlgalToxinsReportURL +"?id={DWS_NUM}'>" + globalConfig.AlgalToxinsLang + "</a>]";

@@ -21,6 +21,17 @@ globalConfig.wordCapitalize = globalConfig.wordCapitalize || function (str){
 	}
 	return strArray.join(' ');
 };
+globalConfig.replaceChar =  globalConfig.replaceChar || function(str, charA, charB) {
+	var temp = [];
+	temp = str.split(charA);
+	var result = temp[0];
+	if (temp.length >= 2) {
+		for (var i = 1; i < temp.length; i++) {
+			result = result + charB + temp[i];
+		}
+	}
+	return result;
+};
 globalConfig.unitConverter = {
 	'MG/L': 'mg/L',
 	'NG/L': 'ng/L',
@@ -101,6 +112,7 @@ globalConfig.layers = [{
 			groupbyParameter[parameter].colorList = colorList;
 			groupbyParameter[parameter].detectionLimit = detectionLimit;
 		});
+		//console.log(groupbyParameter);
 		var chartData = {
 			data: groupbyParameter,
 			name: globalConfig.wordCapitalize(fs[0].attributes.DWS_NAME),
@@ -113,29 +125,40 @@ globalConfig.layers = [{
 		};
 		PubSub.emit(globalConfig.layers[0].event + "Data", {dws: dws});
 	},
-	template: '<strong><center>Drinking Water Surveillance Program (DWSP) <br> Monitoring Results</center></strong><br>' + globalConfig.parametersText
+	//template: '<strong><center>Drinking Water Surveillance Program (DWSP) <br> Monitoring Results</center></strong><br>' + globalConfig.parametersText
+	template: '' + globalConfig.parametersText
 }];
 
 $.when(chartDataPrompt, chartLibraryPrompt).done(function(chartData) {
 	_.each(_.range(_.keys(chartData.data).length), function (i) {
 		var parameter = _.keys(chartData.data)[i];
+		if (globalConfig.language === "FR") {
+			var columnNamesFrench = {
+				'Year': 'Année',
+				"Raw Water": 'Eau brute',
+				"Treated Water": 'Eau traitée',
+				"Distribution": 'Distribution'
+			};
+			chartData.data[parameter].chartData[0] = _.map(chartData.data[parameter].chartData[0], function(columnName) {
+				return columnNamesFrench[columnName];
+			});
+		}
+		//console.log(chartData.data[parameter].chartData);
+		
 		var data = google.visualization.arrayToDataTable(chartData.data[parameter].chartData);
 		var options = {
-			title:  globalConfig.chooseLang('Median Value of ', 'Median Value of ') + chartData.data[parameter].name + globalConfig.chooseLang(' by Year at the ', ' by Year at the ') + chartData.name + ' (' + chartData.number + ')',
+			title:  globalConfig.chooseLang('Median Value of ', 'Valeur médiane de ') + chartData.data[parameter].name + globalConfig.chooseLang(' by Year at the ', ' par année dans le ') + chartData.name + ' (' + chartData.number + ')',
 			width: 700, height: 480,
-			hAxis: {title: globalConfig.chooseLang('Year', 'Year'), titleColor:'black'}, 
-			vAxis: {title: globalConfig.chooseLang('Median Value', 'Median Value') + ' (' + globalConfig.unitConverter[chartData.data[parameter].unit] + ')', minValue: globalConfig.parameters[parameter].detectionLimit, maxValue: globalConfig.parameters[parameter].maximum},
+			hAxis: {title: globalConfig.chooseLang('Year', 'Année'), titleColor:'black'}, 
+			vAxis: {title: globalConfig.chooseLang('Median Value', 'Valeur médiane') + ' (' + globalConfig.unitConverter[chartData.data[parameter].unit] + ')', minValue: globalConfig.parameters[parameter].detectionLimit, maxValue: globalConfig.parameters[parameter].maximum},
 			colors: chartData.data[parameter].colorList
 		};
-		//console.log(globalConfig.parameters[parameter].maximum);
 		var chart = new google.visualization.LineChart(document.getElementById('chart_div' + i));
 		chart.draw(data, options);
-		//console.log(chartData.data[parameter].chartData);
-		//
-		var table = globalConfig.chooseLang('Median Value of ', 'Median Value of ') + chartData.data[parameter].name + ' (' + globalConfig.unitConverter[chartData.data[parameter].unit] + ')' + globalConfig.chooseLang(' by Year in ', ' by Year in ') + chartData.name + ' (' + chartData.number + ')';
+		var table = globalConfig.chooseLang('Median Value of ', 'Valeur médiane du ') + chartData.data[parameter].name + ' (' + globalConfig.unitConverter[chartData.data[parameter].unit] + ')' + globalConfig.chooseLang(' by Year in ', ' par année dans le ') + chartData.name + ' (' + chartData.number + ')';
 		table = table + '<table class="noStripes" border="1"><tr>' + _.map(chartData.data[parameter].chartData, function (item) {
 			var value = item[0];
-			if (value === "Year") {
+			if ((value === "Year") || (value === "Année")) {
 				value = "&nbsp;&nbsp;&nbsp;&nbsp;";
 			}
 			return '<th class="shaded"><center>' + value + '</center></th>';
@@ -146,13 +169,24 @@ $.when(chartDataPrompt, chartLibraryPrompt).done(function(chartData) {
 				if (!value) {
 					value = "-";
 				}
+				if (globalConfig.language === "FR") {
+					value = '' + value;
+					value = globalConfig.replaceChar(value, '.', ',');
+				}
 				return '<td>' + value + '</td>';
 			}).join('') + '</tr>';
 		});
 		table = table + '</table><br>';
-		var str = "For actual results, refer to <a target='_blank' href='https://www.ontario.ca/environment-and-energy/drinking-water-surveillance-program-dwsp-data'>Drinking Water Surveillance Program (DWSP) Data</a><br>\
-			Note: The laboratory’s minimum detection limit has been substituted to calculate the median value for results that are reported as below the detection limit.\
-			<br>The laboratory's current detection limit for " + chartData.data[parameter].name + " is <i>" + chartData.data[parameter].detectionLimit + " " + globalConfig.unitConverter[chartData.data[parameter].unit] + "</i>.<br>";
+		var str = "";
+		if (globalConfig.language === "EN") {
+			str = "For actual results, refer to <a target='_blank' href='https://www.ontario.ca/environment-and-energy/drinking-water-surveillance-program-dwsp-data'>Drinking Water Surveillance Program (DWSP) Data</a>.<br>\
+				Note: The laboratory’s minimum detection limit has been substituted to calculate the median value for results that are reported as below the detection limit.\
+				<br>The laboratory's current detection limit for " + chartData.data[parameter].name + " is <i>" + chartData.data[parameter].detectionLimit + " " + globalConfig.unitConverter[chartData.data[parameter].unit] + "</i>.<br>";
+		} else {
+			str = "Pour prendre connaissance des résultats réels, se reporter aux <a target='_blank' href='https://www.ontario.ca/fr/environnement-et-energie/drinking-water-surveillance-program-dwsp-data'>données du Programme de surveillance de l’eau potable (PSEP)</a>.<br>\
+				Remarque : Le seuil minimal de détection du laboratoire a été utilisé pour calculer la valeur médiane lorsque les résultats déclarés sont inférieurs au seuil de détection. \
+				<br>Le seuil de détection actuel du laboratoire pour le " + chartData.data[parameter].name + " est de <i>" + chartData.data[parameter].detectionLimit + " " + globalConfig.unitConverter[chartData.data[parameter].unit] + "</i>.<br>";		
+		}
 		document.getElementById('chart_text_div' + i).innerHTML = table + str;
 	});
 });
