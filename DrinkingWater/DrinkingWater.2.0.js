@@ -7,7 +7,7 @@ var newCSS = headTag + '<style type="text/css">#map_canvas label { width: auto; 
 //document.getElementsByTagName('head')[0].innerHTML += newCSS;
 
 globalConfig.chooseLang = function (en, fr) {return (globalConfig.language === "EN") ? en : fr;};
-globalConfig.searchableFieldsList = [{en: "Municipality", fr: "municipalité"}, {en: "Street address", fr: "adresse municipale"}, {en: "Postal code", fr: "code postal "}, {en: "Drinking water system name or number", fr: "nom ou numéro de réseau d’eau potable"}];
+globalConfig.searchableFieldsList = [{en: "Municipality", fr: "municipalité"}, {en: "Street address", fr: "adresse municipale"}, {en: "Postal code", fr: "code postal"}, {en: "Drinking water system name or number", fr: "nom ou numéro de réseau d’eau potable"}];
 globalConfig.maxMapScale = 15;
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
@@ -26,15 +26,15 @@ globalConfig.infoWindowHeight = "435px";
 globalConfig.infoWindowContentHeight = "395px";
 globalConfig.infoWindowContentWidth = "450px";
 if (globalConfig.language === "FR")  {
-	globalConfig.infoWindowWidth = '520px';
-	globalConfig.infoWindowContentWidth = "500px";
+	globalConfig.infoWindowWidth = '530px';
+	globalConfig.infoWindowContentWidth = "510px";
 }
 globalConfig.fieldNamesList = globalConfig.chooseLang(["DWS ID", "DWS Name", "Drinking Water Quality", "Inspection Risk Rating", "Drinking Water Surveillance Program"], ["N&deg; du REP", "Nom du REP", "Qualité de l’eau potable", "Note d’inspection", "Programme de surveillance de l’eau potable"]);
 globalConfig.tableFieldList = [
 	{name: globalConfig.fieldNamesList[0], value: "{DWS_NUM}&nbsp&nbsp"},
 	{name: globalConfig.fieldNamesList[1], value: "{DWS_NAME}"},		
-	{name: globalConfig.fieldNamesList[2], value: "{PERCENTAGE_COMPLIED} ({ENGLISH_TIME_PERIOD})"}, 
-	{name: globalConfig.fieldNamesList[3], value: "{SCORE} ({ENGLISH_DATE_RANGE})"}, 
+	{name: globalConfig.fieldNamesList[2], value: "{PERCENTAGE_COMPLIED} ({" + globalConfig.chooseLang("ENGLISH", "FRENCH")  + "_TIME_PERIOD})"}, 
+	{name: globalConfig.fieldNamesList[3], value: "{SCORE} ({" + globalConfig.chooseLang("ENGLISH", "FRENCH")  + "_DATE_RANGE})"}, 
 	{name: globalConfig.fieldNamesList[4], value: "[{TASTE_AND_ODOUR}? ?<a target='_blank' href='" + globalConfig.TasteOdourReportURL +"?id={DWS_NUM}'>" + globalConfig.TasteOdourLang + "</a><br>][{CHLORIDE}? ?<a target='_blank' href='" + globalConfig.ChlorideReportURL +"?id={DWS_NUM}'>" + globalConfig.ChlorideLang + "</a><br>][{COLOUR}? ?<a target='_blank' href='" + globalConfig.ColourReportURL +"?id={DWS_NUM}'>" + globalConfig.ColourLang + "</a><br>][{ALGAL_TOXINS}? ?<a target='_blank' href='" + globalConfig.AlgalToxinsReportURL +"?id={DWS_NUM}'>" + globalConfig.AlgalToxinsLang + "</a>]"}
 ];
 

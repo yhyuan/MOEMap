@@ -27,4 +27,5 @@ globalConfig.parameters = {
 		maximum: 0.3
 	}
 };
+globalConfig.bottomText = "Note: The laboratory’s minimum detection limit has been substituted to calculate the median value for results that are reported as below the detection limit.";
 

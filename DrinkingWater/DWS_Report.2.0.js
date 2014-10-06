@@ -144,10 +144,15 @@ $.when(chartDataPrompt, chartLibraryPrompt).done(function(chartData) {
 			});
 		}
 		//console.log(chartData.data[parameter].chartData);
-		
+		var title = '';
+		if (globalConfig.language === "EN") {
+			title = 'Median Value of ' + chartData.data[parameter].name + ' (' + globalConfig.unitConverter[chartData.data[parameter].unit] + ')' + ' by Year in ' + chartData.name + ' (' + chartData.number + ')';
+		} else {
+			title = 'Valeur médiane par année, ' + chartData.data[parameter].name + ' (' + globalConfig.unitConverter[chartData.data[parameter].unit] + '), dans le ' + chartData.name + ' (' + chartData.number + ')';
+		}		
 		var data = google.visualization.arrayToDataTable(chartData.data[parameter].chartData);
 		var options = {
-			title:  globalConfig.chooseLang('Median Value of ', 'Valeur médiane de ') + chartData.data[parameter].name + globalConfig.chooseLang(' by Year at the ', ' par année dans le ') + chartData.name + ' (' + chartData.number + ')',
+			title:  title,
 			width: 700, height: 480,
 			hAxis: {title: globalConfig.chooseLang('Year', 'Année'), titleColor:'black'}, 
 			vAxis: {title: globalConfig.chooseLang('Median Value', 'Valeur médiane') + ' (' + globalConfig.unitConverter[chartData.data[parameter].unit] + ')', minValue: globalConfig.parameters[parameter].detectionLimit, maxValue: globalConfig.parameters[parameter].maximum},
@@ -155,7 +160,7 @@ $.when(chartDataPrompt, chartLibraryPrompt).done(function(chartData) {
 		};
 		var chart = new google.visualization.LineChart(document.getElementById('chart_div' + i));
 		chart.draw(data, options);
-		var table = globalConfig.chooseLang('Median Value of ', 'Valeur médiane du ') + chartData.data[parameter].name + ' (' + globalConfig.unitConverter[chartData.data[parameter].unit] + ')' + globalConfig.chooseLang(' by Year in ', ' par année dans le ') + chartData.name + ' (' + chartData.number + ')';
+		var table = '<strong><h3>' + title + '</h3></strong>';
 		table = table + '<table class="noStripes" border="1"><tr>' + _.map(chartData.data[parameter].chartData, function (item) {
 			var value = item[0];
 			if ((value === "Year") || (value === "Année")) {
@@ -177,16 +182,12 @@ $.when(chartDataPrompt, chartLibraryPrompt).done(function(chartData) {
 			}).join('') + '</tr>';
 		});
 		table = table + '</table><br>';
-		var str = "";
+		var str = '';
 		if (globalConfig.language === "EN") {
-			str = "For actual results, refer to <a target='_blank' href='https://www.ontario.ca/environment-and-energy/drinking-water-surveillance-program-dwsp-data'>Drinking Water Surveillance Program (DWSP) Data</a>.<br>\
-				Note: The laboratory’s minimum detection limit has been substituted to calculate the median value for results that are reported as below the detection limit.\
-				<br>The laboratory's current detection limit for " + chartData.data[parameter].name + " is <i>" + chartData.data[parameter].detectionLimit + " " + globalConfig.unitConverter[chartData.data[parameter].unit] + "</i>.<br>";
+			str = "<br>The laboratory's current detection limit for " + chartData.data[parameter].name + " is <i>" + chartData.data[parameter].detectionLimit + " " + globalConfig.unitConverter[chartData.data[parameter].unit] + "</i>.<br>";
 		} else {
-			str = "Pour prendre connaissance des résultats réels, se reporter aux <a target='_blank' href='https://www.ontario.ca/fr/environnement-et-energie/drinking-water-surveillance-program-dwsp-data'>données du Programme de surveillance de l’eau potable (PSEP)</a>.<br>\
-				Remarque : Le seuil minimal de détection du laboratoire a été utilisé pour calculer la valeur médiane lorsque les résultats déclarés sont inférieurs au seuil de détection. \
-				<br>Le seuil de détection actuel du laboratoire pour le " + chartData.data[parameter].name + " est de <i>" + chartData.data[parameter].detectionLimit + " " + globalConfig.unitConverter[chartData.data[parameter].unit] + "</i>.<br>";		
+			str = "<br>Le seuil de détection actuel du laboratoire pour le " + chartData.data[parameter].name + " est de <i>" + chartData.data[parameter].detectionLimit + " " + globalConfig.unitConverter[chartData.data[parameter].unit] + "</i>.<br>";		
 		}
-		document.getElementById('chart_text_div' + i).innerHTML = table + str;
+		document.getElementById('chart_text_div' + i).innerHTML = table + globalConfig.bottomText + str;
 	});
 });

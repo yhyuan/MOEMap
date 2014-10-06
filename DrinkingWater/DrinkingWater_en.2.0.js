@@ -1,5 +1,5 @@
 globalConfig = {};
-globalConfig.development = true;
+globalConfig.development = false;
 globalConfig.language = "EN";
 globalConfig.otherInfoHTML = '';
 globalConfig.GeneralInformationLang = "General Information";
@@ -9,8 +9,7 @@ Owner: <strong>{OWNER_LEGAL_NAME}</strong><br>\
 Operating Authority: <strong>{OPERATING_AUTHORITY_LEGAL_NAME}</strong><br>\
 Category: <strong>{DWS_CATEGORY}</strong><br>\
 Population Served: <strong>{POPULATION_SERVED}</strong><br>\
-Design Rated Capacity: <strong>{DESIGN_RATED_CAPACITY}</strong><br>\
-Design Rated Capacity Unit of Measure: <strong>{CAPACITYUOM}</strong><br>\
+Design Rated Capacity: <strong>{DESIGN_RATED_CAPACITY}&nbsp;{CAPACITYUOM}</strong><br>\
 Source of Water: <strong>{globalConfig.wordCapitalize(SOURCES)}</strong><br>\
 DWS That Receive Water: <strong>{RECEIVING_DWS}</strong><br>\
 Treatment Processes: <strong>{globalConfig.wordCapitalize(TREATMENT_PROCESSES)}</strong><br>\
@@ -21,6 +20,7 @@ Municipality Email: <strong><a href='mailto:{MUNICIPALITY_EMAIL}'>{MUNICIPALITY_
 <strong><a target='_blank' href='{ARLIBRARYURL}'>Annual Report Directory</a></strong><br>";
 globalConfig.ComplianceMonitoringLang = "Regulated Monitoring";
 
+//Design Rated Capacity Unit of Measure: <strong>{CAPACITYUOM}</strong><br>\
 //<img src="tti.jpg" alt="Testing Treated Inspected" style="margin:5px;">
 /*
 globalConfig.tabsTemplateContentComplianceMonitoring = '<img src="http://files.ontariogovernment.ca/moe_mapping/mapping/js/OneSite/DrinkingWater/tti_en.jpg" alt="Testing Treated Inspected" style="width:190px;height:174px;float:right"><br>\
@@ -69,10 +69,10 @@ if (globalConfig.development) {
 	globalConfig.ColourReportURL = 'Colour_Report.htm';
 	globalConfig.AlgalToxinsReportURL = 'AlgalToxins_Report.htm';
 } else {
-	globalConfig.TasteOdourReportURL = '44050';
-	globalConfig.ChlorideReportURL = '44048';
-	globalConfig.ColourReportURL = '44049';
-	globalConfig.AlgalToxinsReportURL = '44047';
+	globalConfig.TasteOdourReportURL = 'drinking-water-surveillance-program-dwsp-monitoring-results-taste-and-odour';
+	globalConfig.ChlorideReportURL = 'drinking-water-surveillance-program-dwsp-monitoring-results-chloride';
+	globalConfig.ColourReportURL = 'drinking-water-surveillance-program-dwsp-monitoring-results-colour';
+	globalConfig.AlgalToxinsReportURL = 'drinking-water-surveillance-program-dwsp-monitoring-results-algal-toxins';
 }
 globalConfig.TasteOdourLang = 'Taste and Odour';
 globalConfig.ChlorideLang = 'Chloride';
@@ -88,9 +88,9 @@ To learn more about DWSP’s data on water quality at the {DWS_NAME} click below
 [{COLOUR}? ?&nbsp&nbsp&nbsp&nbsp&nbsp<a target='_blank' href='" + globalConfig.ColourReportURL +"?id={DWS_NUM}'>Colour</a><br>]\
 [{ALGAL_TOXINS}? ?&nbsp&nbsp&nbsp&nbsp&nbsp<a target='_blank' href='" + globalConfig.AlgalToxinsReportURL +"?id={DWS_NUM}'>Algal toxins</a>]";
 */
-globalConfig.tabsTemplateContentScientificMonitoring = "The Drinking Water Surveillance Program (DWSP) monitors water quality at a selected number of drinking water systems in Ontario. The DWSP complements the monitoring that municipalities are required to do as part of operating their drinking water systems.<br><br>\
-To learn more about DWSP’s data on water quality at the {DWS_NAME} click below:<br>\
-[{TASTE_AND_ODOUR}? ?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='" + globalConfig.TasteOdourReportURL +"?id={DWS_NUM}'>" + globalConfig.TasteOdourLang + "</a><br>]\
-[{CHLORIDE}? ?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='" + globalConfig.ChlorideReportURL +"?id={DWS_NUM}'>" + globalConfig.ChlorideLang + "</a><br>]\
-[{COLOUR}? ?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='" + globalConfig.ColourReportURL +"?id={DWS_NUM}'>" + globalConfig.ColourLang + "</a><br>]\
-[{ALGAL_TOXINS}? ?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='" + globalConfig.AlgalToxinsReportURL +"?id={DWS_NUM}'>" + globalConfig.AlgalToxinsLang + "</a>]";
+globalConfig.tabsTemplateContentScientificMonitoring = "<p>The Drinking Water Surveillance Program (DWSP) monitors water quality at a selected number of drinking water systems in Ontario. The DWSP complements the monitoring that municipalities are required to do as part of operating their drinking water systems.</p>\
+<p>To learn more about DWSP’s data on water quality at the {DWS_NAME} click below:</p>\
+[{TASTE_AND_ODOUR}? ?<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='" + globalConfig.TasteOdourReportURL +"?id={DWS_NUM}'>" + globalConfig.TasteOdourLang + "</a></p>]\
+[{CHLORIDE}? ?<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='" + globalConfig.ChlorideReportURL +"?id={DWS_NUM}'>" + globalConfig.ChlorideLang + "</a></p>]\
+[{COLOUR}? ?<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='" + globalConfig.ColourReportURL +"?id={DWS_NUM}'>" + globalConfig.ColourLang + "</a></p>]\
+[{ALGAL_TOXINS}? ?<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a target='_blank' href='" + globalConfig.AlgalToxinsReportURL +"?id={DWS_NUM}'>" + globalConfig.AlgalToxinsLang + "</a></p>]";

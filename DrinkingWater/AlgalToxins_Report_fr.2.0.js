@@ -27,3 +27,6 @@ globalConfig.parameters = {
 		maximum: 0.3
 	}
 };
+globalConfig.bottomText = "Remarque : Le seuil minimal de détection du laboratoire a été utilisé pour calculer la valeur médiane lorsque les résultats déclarés sont inférieurs au seuil de détection.";
+				
+				

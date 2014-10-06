@@ -1,34 +1,52 @@
-globalConfig.parameters = {
-	'ANATOXIN-A': {
-		name: 'Anatoxin-A',
-		detectionLimit: 0.02,
-		maximum: 0.05
-	},
-	'MICROCYSTIN-LR': {
-		name: 'Microcystin-LR',
-		detectionLimit: 0.05,
-		OntarioStandard: '1.5 \u03BCg/L',
-		maximum: 3.5
-	},
-	'MICROCYSTIN-RR': {
-		name: 'Microcystin-RR',
-		detectionLimit: 0.05,
-		maximum: 1.2
-	},
-	'MICROCYSTIN-LA': {
-		name: 'Microcystin-LA',
-		detectionLimit: 0.05,
-		maximum: 0.5
-	},
-	'MICROCYSTIN-YR': {
-		name: 'Microcystin-YR',
-		detectionLimit: 0.05,
-		maximum: 0.3
-	}
-};
-
-if(globalConfig.language === "EN") {
-	globalConfig.parametersText = "Algal toxins (or cyanobacterial toxins) are produced by cyanobacteria or blue-green algae. Although many varieties of blue-green algae are harmless, some can produce toxins that are harmful to the health of humans and animals. <br><br>DWSP monitors for several algal toxins at selected municipal drinking water systems. Only one algal toxin, Microcystin-LR, has an Ontario Drinking Water Quality Standard (ODWQS). In Ontario, the maximum acceptable concentration for the algal toxin Microcystin-LR in drinking water is 1.5 ug/L. Refer to the <a target='_blank' href='https://www.ontario.ca/environment-and-energy/technical-support-document-ontario-drinking-water-standards-objectives-and'>Technical Support Document for Ontario Drinking Water Quality Standards, Objectives, and Guidelines</a> for more information. Click <a target='_blank' href='https://www.ontario.ca/environment-and-energy/blue-green-algae'>here</a> to learn more about algal blooms";
-} else {
-	globalConfig.parametersText = "Algal toxins (or cyanobacterial toxins) are produced by cyanobacteria or blue-green algae. Although many varieties of blue-green algae are harmless, some can produce toxins that are harmful to the health of humans and animals. <br><br>DWSP monitors for several algal toxins at selected municipal drinking water systems. Only one algal toxin, Microcystin-LR, has an Ontario Drinking Water Quality Standard (ODWQS). In Ontario, the maximum acceptable concentration for the algal toxin Microcystin-LR in drinking water is 1.5 ug/L. Refer to the <a target='_blank' href='https://www.ontario.ca/environment-and-energy/technical-support-document-ontario-drinking-water-standards-objectives-and'>Technical Support Document for Ontario Drinking Water Quality Standards, Objectives, and Guidelines</a> for more information. Click <a target='_blank' href='https://www.ontario.ca/environment-and-energy/blue-green-algae'>here</a> to learn more about algal blooms";
+if (!('trim' in String.prototype)){   
+	String.prototype.trim = function() { return this.replace(/^\s+|\s+$/g,""); };    
 }
+
+var chartLibraryDeferred = new $.Deferred();
+var chartLibraryPrompt = (chartLibraryDeferred).promise();
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(function () {
+	chartLibraryDeferred.resolve();
+	//PubSub.emit("ChartLibraryAvailable");
+});
+
+var chartDataDeferred = new $.Deferred();
+var chartDataPrompt = (chartDataDeferred).promise();
+globalConfig.dataArray = {};
+globalConfig.layers = [{
+	url: globalConfig.url + "/3",
+	renderTargetDiv: "station_description",
+	event: "TableReady",
+	where: "CASING_ID='" + QueryString.id + "'",
+	outFields: ["CASING_ID", "Month_", "Year_", "AVG_"],
+	processResults: function (fs) {
+		var chartData = _.map(fs, function(feature) {
+			var yearMonth = feature.attributes['Year_'] + (feature.attributes['Month_'] - 0.5)/12;
+			return [yearMonth, feature.attributes['AVG_']];
+		});
+		chartData = [['Water Level', 'Year']].concat(chartData);
+		chartDataDeferred.resolve(chartData);
+		var dws = {
+			//name: globalConfig.wordCapitalize(fs[0].attributes.DWS_NAME),
+			//number: globalConfig.wordCapitalize(fs[0].attributes.DWS_NUMBER)
+		};
+		PubSub.emit(globalConfig.layers[0].event + "Data", {dws: dws});
+	},
+	template: ''
+}];
+
+$.when(chartDataPrompt, chartLibraryPrompt).done(function(chartData) {
+	var options = {
+		title: 'PGMN Monthly Average Water Level',
+		hAxis: {title: 'Year'},
+		vAxis: {title: 'Water Level'},
+		legend: 'none',
+		width:800,
+        height:600,
+		trendlines: { 0: {color: 'green',
+        visibleInLegend: true} }    // Draw a trendline for data series 0.
+	  };
+	  var data = google.visualization.arrayToDataTable(chartData);
+	  var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+	  chart.draw(data, options);
+});

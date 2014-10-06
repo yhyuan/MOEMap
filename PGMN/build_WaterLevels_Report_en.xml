@@ -15,7 +15,6 @@
 				<file name="WaterLevels_Report_en.2.0.js" />
 				<file name="globalConfig.url.js" />
 				<file name="WaterLevels_Report.2.0.js" />
-				<file name="PGMNWaterLevels_Report.2.0.js" />
 			</filelist>
 			<filelist  dir="${MOEMap.src.dir}" >
 				<file name="REPORT_tail.js" />
