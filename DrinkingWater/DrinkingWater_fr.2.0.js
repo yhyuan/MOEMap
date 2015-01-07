@@ -36,7 +36,7 @@ globalConfig.tabsTemplateContentComplianceMonitoring = '<h3>Qualité de l’eau 
 </div>\
 </div>\
 <p>Tous les réseaux résidentiels municipaux sont inspectés au moins une fois par année et une inspection sur trois est menée sans préavis. Les notes d’inspection annuelle encouragent les propriétaires et exploitants des réseaux d’eau potable à viser l’amélioration continue et à atteindre l’objectif à long terme du ministère, soit un taux de conformité de 100 % pour tous les réseaux.</p>\
-<p><a target="_blank" href="http://sb.ene.ontariogovernment.ca/environment-and-energy/how-use-ministry-environment-map#drinkingwaterQA">Pour en savoir plus</a> (Questions et réponses)</p>';
+<p><a target="_blank" href="savoir-utiliser-une-carte-du-ministere-de-lenvironnement#drinkingwaterQA">Pour en savoir plus</a> (Questions et réponses)</p>';
 
 globalConfig.ScientificMonitoringLang = "Surveillance scientifique";
 if (globalConfig.development) {
@@ -48,7 +48,7 @@ if (globalConfig.development) {
 	globalConfig.TasteOdourReportURL = 'resultats-du-programme-de-surveillance-de-leau-potable-psep-gout-et-odeur';
 	globalConfig.ChlorideReportURL = 'resultats-du-programme-de-surveillance-de-leau-potable-psep-chlorure';
 	globalConfig.ColourReportURL = 'resultats-du-programme-de-surveillance-de-leau-potable-psep-couleur';
-	globalConfig.AlgalToxinsReportURL = 'resultats-du-programme-de-surveillance-de-leau-potable-psep-toxines-algaires ';
+	globalConfig.AlgalToxinsReportURL = 'resultats-du-programme-de-surveillance-de-leau-potable-psep-toxines-algaires';
 }
 globalConfig.TasteOdourLang = 'Goût et odeur';
 globalConfig.ChlorideLang = 'Chlorure';

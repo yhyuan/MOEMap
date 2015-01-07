@@ -1,5 +1,5 @@
 globalConfig = {};
-globalConfig.development = false;
+globalConfig.development = true;
 globalConfig.language = "EN";
 globalConfig.otherInfoHTML = '';
 globalConfig.GeneralInformationLang = "General Information";
@@ -42,7 +42,7 @@ The number represents a percentage of all health-related test results that met t
 </div>\
 </div>\
 Every municipal residential drinking water system is inspected at least once a year, with one in three inspections unannounced. Annual inspection ratings encourage owners/operators of drinking water systems to strive for continuous improvement and meet the ministry\'s long-term goal of 100 per cent compliance by all systems.<br>\
-<a target="_blank" href="http://sb.ene.ontariogovernment.ca/environment-and-energy/how-use-ministry-environment-map#drinkingwaterQA">Learn more</a> (Questions and Answers)<br>';
+<a target="_blank" href="how-use-ministry-environment-map#drinkingwaterQA">Learn more</a> (Questions and Answers)<br>';
 */
 globalConfig.tabsTemplateContentComplianceMonitoring = '<h3>Drinking Water Quality:</h3>\
 <div style="padding:10px;">\
@@ -60,7 +60,7 @@ globalConfig.tabsTemplateContentComplianceMonitoring = '<h3>Drinking Water Quali
 </div>\
 </div>\
 <p>Every municipal residential drinking water system is inspected at least once a year, with one in three inspections unannounced. Annual inspection ratings encourage owners/operators of drinking water systems to strive for continuous improvement and meet the ministry\'s long-term goal of 100 per cent compliance by all systems.</p>\
-<p><a target="_blank" href="http://sb.ene.ontariogovernment.ca/environment-and-energy/how-use-ministry-environment-map#drinkingwaterQA">Learn more</a> (Questions and Answers)</p>';
+<p><a target="_blank" href="how-use-ministry-environment-map#drinkingwaterQA">Learn more</a> (Questions and Answers)</p>';
 
 globalConfig.ScientificMonitoringLang = "Scientific Monitoring";
 if (globalConfig.development) {

@@ -19,7 +19,11 @@ $( document ).ready(function() {
 });
 */
 globalConfig.initialization = function() {
-	document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = globalConfig.loadingMessage; //globalConfig.chooseLang("Your report is being generated...", "Le rapport est produit...");
+	if (globalConfig.loadingMessageDivID) {
+		document.getElementById(globalConfig.loadingMessageDivID).innerHTML = globalConfig.loadingMessage; 
+	} else {
+		document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = globalConfig.loadingMessage; //globalConfig.chooseLang("Your report is being generated...", "Le rapport est produit...");
+	}
 	PubSub.emit("DocumentReady");
 };
 if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) { //test for MSIE x.x;
