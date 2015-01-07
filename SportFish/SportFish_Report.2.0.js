@@ -70,7 +70,7 @@ var queryLayers = [{
 },{
 	layerID: "0",
 	where: "WATERBODYC = " + QueryString.id, 
-	outFields: [globalConfig.chooseLang("LOCNAME_EN", "LOCNAME_FR"), globalConfig.chooseLang("GUIDELOC_EN", "GUIDELOC_FR"), "LATITUDE", "LONGITUDE"]
+	outFields: [globalConfig.chooseLang("LOCNAME_EN", "LOCNAME_FR"), globalConfig.chooseLang("GUIDELOC_EN", "GUIDELOC_FR"), "LAT_DISPLAY", "LONG_DISPLAY"]
 },{
 	layerID: "4",
 	where: "GUIDE_WATERBODY_CODE = '" + QueryString.id + "'", 
@@ -102,35 +102,11 @@ $.when.apply($, promises).done(function() {
 	var speciesNames = _.map(arguments[0].features, function(f) {return globalConfig.chooseLang(f.attributes.SPECNAME, f.attributes.NOM_D_ESPECE);});
 	var speciesDict = _.object(speciesCodes, speciesNames);
 	var attrs = arguments[1].features[0].attributes;
-	var deciToDegree = function (degree){
-		if(Math.abs(degree) <= 0.1){
-			return "N/A";
-		}
-		var sym = "N";
-		if(degree<0){
-			degree = -degree;
-			sym = globalConfig.chooseLang("W", "O");
-		}
-		var deg = Math.floor(degree);
-		var temp = (degree - deg)*60;
-		var minute = Math.floor(temp);
-		var second = ((temp- minute)*60).toFixed(0);
-		var res = "";
-		if(second<1){
-			res ="" + deg + "&deg;" + minute + "'";
-		}else if(second>58){
-			res ="" + deg + "&deg;" + (minute+1) + "'";
-		}else{
-			res ="" + deg + "&deg;" + minute + "'" + second + "\"";
-		}
-		return res + sym;
-	};
-	
 	var guideInfo = {
 		LOCNAME: globalConfig.chooseLang(attrs.LOCNAME_EN, attrs.LOCNAME_FR),
 		GUIDELOC: globalConfig.chooseLang(attrs.GUIDELOC_EN, attrs.GUIDELOC_FR),
-		LATITUDE: deciToDegree(attrs.LATITUDE),
-		LONGITUDE: deciToDegree(attrs.LONGITUDE), 
+		LATITUDE: attrs.LAT_DISPLAY.substring(0,2) + "&deg;" + attrs.LAT_DISPLAY.substring(2,4) + "'" +  attrs.LAT_DISPLAY.substring(4,6) + "\"N",
+		LONGITUDE: attrs.LONG_DISPLAY.substring(0,2) + "&deg;" + attrs.LONG_DISPLAY.substring(2,4) + "'" +  attrs.LONG_DISPLAY.substring(4,6) + "\"" + globalConfig.chooseLang("W", "O"),
 		speciesDict: speciesDict
 	};
 	var species = _.uniq(_.map(arguments[2].features, function(f) {
