@@ -265,7 +265,7 @@ globalConfig.postIdentifyCallback = function (queryParams) {
 	//}
 	_.each(queryParams.layerList, function(layer) {
 		var features = layer["result"].features;
-		if (features.length > 0) {
+		if ((features) && (features.length > 0)) {
 			globalConfig.identifyResults[layer.name] = features;
 		}
 		/*

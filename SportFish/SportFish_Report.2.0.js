@@ -1,5 +1,6 @@
 globalConfig.layers = [];
 globalConfig.loadingMessageDivID = 'siteDescription';
+/*
 globalConfig.getSpeciesURL = function(speciesCode) {
 	//console.log(speciesCode);
 	if (speciesCode === "087") {
@@ -50,6 +51,7 @@ globalConfig.getSpeciesURL = function(speciesCode) {
 	}
 	return "";
 };
+*/
 globalConfig.generateLengthRanges = function (start, end, step) {
 	var startArray = _.range(start, end, step);
 	var endArray =  _.range(start + step, end + step, step);

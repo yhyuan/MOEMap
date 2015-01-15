@@ -4,4 +4,6 @@
 
 //globalConfig.url = "http://lrctptvsuaap004/ArcGIS/rest/services/Interactive_Map_Internal/SourceProtectionLocationandPolicySearchMap/MapServer";
 
-globalConfig.url = "http://lrcprrvspaap007/ArcGIS/rest/services/Interactive_Map_Internal/SourceProtectionLocationandPolicySearchMap/MapServer";   //Internal PROD
+//globalConfig.url = "http://lrcprrvspaap007/ArcGIS/rest/services/Interactive_Map_Internal/SourceProtectionLocationandPolicySearchMap/MapServer";   //Internal PROD
+
+globalConfig.url = "http://lrcprrvspaap006:6080/arcgis/rest/services/Interactive_Map_Internal/SourceProtectionLocationandPolicySearchMap/MapServer";
