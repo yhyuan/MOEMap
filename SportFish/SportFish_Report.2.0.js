@@ -66,7 +66,7 @@ globalConfig.generateLengthRanges = function (start, end, step) {
 var queryLayers = [{
 	layerID: "3",
 	where: "1=1", 
-	outFields: ["SPECIES_CODE", "SPECNAME", "NOM_D_ESPECE"]
+	outFields: ["SPECIES_CODE", "SPECNAME", "NOM_D_ESPECE", "SPECIES_URL_EN", "SPECIES_URL_FR"]
 },{
 	layerID: "0",
 	where: "WATERBODYC = " + QueryString.id, 
@@ -100,14 +100,17 @@ promises.push(documentReadyPrompt);
 $.when.apply($, promises).done(function() {
 	var speciesCodes = _.map(arguments[0].features, function(f) {return f.attributes.SPECIES_CODE;});
 	var speciesNames = _.map(arguments[0].features, function(f) {return globalConfig.chooseLang(f.attributes.SPECNAME, f.attributes.NOM_D_ESPECE);});
+	var speciesURLs = _.map(arguments[0].features, function(f) {return globalConfig.chooseLang(f.attributes.SPECIES_URL_EN, f.attributes.SPECIES_URL_FR);});
 	var speciesDict = _.object(speciesCodes, speciesNames);
+	var speciesURLsDict = _.object(speciesCodes, speciesURLs);
 	var attrs = arguments[1].features[0].attributes;
 	var guideInfo = {
 		LOCNAME: globalConfig.chooseLang(attrs.LOCNAME_EN, attrs.LOCNAME_FR),
 		GUIDELOC: globalConfig.chooseLang(attrs.GUIDELOC_EN, attrs.GUIDELOC_FR),
 		LATITUDE: attrs.LAT_DISPLAY.substring(0,2) + "&deg;" + attrs.LAT_DISPLAY.substring(2,4) + "'" +  attrs.LAT_DISPLAY.substring(4,6) + "\"N",
 		LONGITUDE: attrs.LONG_DISPLAY.substring(0,2) + "&deg;" + attrs.LONG_DISPLAY.substring(2,4) + "'" +  attrs.LONG_DISPLAY.substring(4,6) + "\"" + globalConfig.chooseLang("W", "O"),
-		speciesDict: speciesDict
+		speciesDict: speciesDict,
+		speciesURLsDict: speciesURLsDict
 	};
 	var species = _.uniq(_.map(arguments[2].features, function(f) {
 		return f.attributes.SPECIES_CODE;
@@ -120,6 +123,7 @@ $.when.apply($, promises).done(function() {
 			1: obj,
 			2: _.clone(obj)
 		};
+		advCauseBySpecies[spec] = [];
 	});
 	var lengthCategory = {
 		 15:  0,
@@ -137,9 +141,25 @@ $.when.apply($, promises).done(function() {
 		 75:  12
 	};
 	_.each(arguments[2].features, function(f) {
-		advCauseBySpecies[f.attributes.SPECIES_CODE] = f.attributes.ADV_CAUSE_ID;		
+		if (f.attributes.ADV_CAUSE_ID === 51) {
+			advCauseBySpecies[f.attributes.SPECIES_CODE].push(1);
+		} else if (f.attributes.ADV_CAUSE_ID === 52) {
+			advCauseBySpecies[f.attributes.SPECIES_CODE].push(2);
+		} else if (f.attributes.ADV_CAUSE_ID) {
+			advCauseBySpecies[f.attributes.SPECIES_CODE].push(f.attributes.ADV_CAUSE_ID);
+		}
 		advisories[f.attributes.SPECIES_CODE][f.attributes.POPULATION_TYPE_ID][lengthCategory[f.attributes.LENGTH_CATEGORY_ID]] = f.attributes.ADV_LEVEL;
 	});
+	_.each(species, function(spec) {
+		advCauseBySpecies[spec] = _.uniq(advCauseBySpecies[spec]).sort(function compare(a,b) {
+				if (a < b)
+					return -1;
+				if (a > b)
+					return 1;
+				return 0;
+			});
+	});
+	
 	guideInfo.advCauseBySpecies = advCauseBySpecies;
 	guideInfo.advisories = advisories;
 	var template = '<h2><%= LOCNAME %></h2>\
@@ -170,7 +190,7 @@ $.when.apply($, promises).done(function() {
 				return 0;\
 			});\
 			_.each(speciesList,function(speciesCode,key,list){ %>\
-				<h3><%= speciesDict[speciesCode] %><SUP><%= advCauseBySpecies[speciesCode] %></SUP></h3>\
+				<h3><%= speciesDict[speciesCode] %><SUP><%= advCauseBySpecies[speciesCode].join(", ") %></SUP></h3>\
 				<table class="noStripes">\
 					<tbody>\
 						<tr>\
@@ -188,24 +208,24 @@ $.when.apply($, promises).done(function() {
 						<tr>\
 							<th scope="row"><%= globalConfig.chooseLang("General population", "Population g&#233;n&#233;rale") %></th>\
 							<% _.each(advisories[speciesCode][1], function(adv, key, list) { %>\
-								<td><center><%= (adv > 0) ? adv : "" %></center></td>\
+								<td><center><%= (adv >= 0) ? adv : "" %></center></td>\
 							<% }); %>\
 						</tr>\
 						<tr>\
 							<th scope="row"><%= globalConfig.chooseLang("Sensitive population*", "Population sensible*") %></th>\
 							<% _.each(advisories[speciesCode][2], function(adv, key, list) { %>\
-								<td><center><%= (adv > 0) ? adv : "" %></center></td>\
+								<td><center><%= (adv >= 0) ? adv : "" %></center></td>\
 							<% }); %>\
 						</tr>\
 					</tbody>\
 				</table>\
-				<% var speciesURL = globalConfig.getSpeciesURL(speciesCode);\
+				<% var speciesURL = speciesURLsDict[speciesCode];\
 					if (speciesURL.length > 0) {\
 				%>\
-					<p><a href="<%= speciesURL %>"><%= globalConfig.chooseLang("More information about the ", "More information about the ") + speciesDict[speciesCode] %></a></p>\
+					<p><a href="<%= speciesURL %>"><%= globalConfig.chooseLang("More information about the ", "Plus de renseignements sur ") + speciesDict[speciesCode] %></a></p>\
 				<% } %>\
 				<p><%= globalConfig.chooseLang("*Sensitive Population: Women of child-bearing age and children under 15.", "*Population sensible: Femmes en &#226;ge de procr&#233;er et enfants de moins de 15 ans.") %></p>\
-				<p><%= globalConfig.chooseLang("Superscripts: the number identifies the contaminant or group of contaminants for which the fish was tested.", "Indice sup&#233;rieur : le chiffre d&#233;signe le contaminant ou le groupe de contaminants pour lesquels on a analys&#233; le poisson.") %>\
+				<p><%= globalConfig.chooseLang("Superscripts: the number identifies the contaminant or group of contaminants which are causing consumption restrictions.", "Indice sup&#233;rieur : Le chiffre indique le contaminant ou le groupe de contaminants à l’origine des restrictions concernant la consommation pour une espèce ou un lac donnés.") %>\
 				</p>\
 			<% });\
 		%>';
