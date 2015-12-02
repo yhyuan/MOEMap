@@ -1,5 +1,5 @@
 /*
-arcgislink.js (http://google-maps-utility-library-v3.googlecode.com/svn/trunk/arcgislink/)
+arcgislink.js (https://google-maps-utility-library-v3.googlecode.com/svn/trunk/arcgislink/)
 
 arcgislink.js is modified to decrease the number of digitals after the decimal point. Now the 
 latitude and longitude only have six digitals after the decimal point. The length of URL is decreased 

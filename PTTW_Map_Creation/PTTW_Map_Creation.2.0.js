@@ -54,6 +54,8 @@ Label.prototype.draw = function() {
  this.span_.innerHTML = this.get('text').toString();
 };
 
+//var servicesURL = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/";
+var servicesURL = "http://stage.giscoeservices.lrc.gov.on.ca/ArcGIS/rest/services/MOE/";
 
 var isMobile = false;
 var MOEMapGlobalConfig = {
@@ -173,14 +175,14 @@ var MOEMapGlobalConfig = {
         x: -95.29920350,
         y: 48.77505703
     }],
-	GeogTwpService: "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/sportfishservice/MapServer",
+	GeogTwpService: servicesURL + "sportfishservice/MapServer",
 	geogTwpLayerId: 0,
 	lotConLayerId: 1,	
-	MunicipalityService: "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/waste/MapServer",
+	MunicipalityService: servicesURL + "waste/MapServer",
 	MunicipalityDistrictLayerId: 0,
 	MunicipalitySingleLowTierLayerId: 1,
 	MunicipalityUpperTierLayerId: 2,
-	MOERegionService: "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/permitstotakewater/MapServer",	
+	MOERegionService: servicesURL + "permitstotakewater/MapServer",	
 	moeRegionLayerId: 4,	
 	geoNameLayerId: 0,
 	streamNetworkLayerId: 1,

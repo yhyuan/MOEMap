@@ -125,7 +125,7 @@ globalConfig.layers = [{
 		<%\
 			});\
 		%>\
-		<h3><a name="indexOther">Pesticides, Volatile Organic Compounds, and other parameters</a></h3>		\
+		<h3><a name="indexOther"><%= globalConfig.chooseLang("Pesticides, Volatile Organic Compounds, and other parameters", "Pesticides, compos&eacute;s organiques volatils et autres param&egrave;tres") %></a></h3>		\
 		<%\
 			_.each(renderResult.unchartedChemicals,function(chemical,key,list){\
 				var chemicalSamples = renderResult.parameterObject[chemical].sort(globalConfig.sortByDate);\

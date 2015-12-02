@@ -1,7 +1,5 @@
 build_en.bat
 build_fr.bat
-build_Accessible_en.bat
-build_Accessible_fr.bat
 build_SecchiDepth_Report_en.bat
 build_SecchiDepth_Report_fr.bat
 build_TotalPhosphorus_Report_en.bat

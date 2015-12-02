@@ -171,7 +171,7 @@ $.when.apply($, promises).done(function() {
 		%>\
 			<p>Consumption advisories in the tables below represent the maximum number of meals per month recommended for each species/size range indicated.</p>\
 			<P>Consult the help page if you are eating multiple species of fish or fish from multiple locations.</P>\
-			<p>Advisories may be provided for specific species and/or size ranges which are not legal to possess. Learn more about Ontario&#39s <a href="http://www.mnr.gov.on.ca/stdprodconsume/groups/lr/@mnr/@letsfish/documents/document/mnr_e001325.pdf">recreational fishing regulations</a> before going fishing.</p>\
+			<p>Advisories may be provided for specific species and/or size ranges which are not legal to possess. Learn more about Ontario&#39s <a href="https://www.ontario.ca/travel-and-recreation/ontario-fishing-regulations-summary">recreational fishing regulations</a> before going fishing.</p>\
 			<p><a href="http://www.ontario.ca/environment-and-energy/how-use-ministry-environment-map#advisories">Help understanding the fish consumption advisories</a>\
 			</p>\
 		<%\
@@ -179,7 +179,7 @@ $.when.apply($, promises).done(function() {
 		%>\
 			<p>Le tableau ci-dessous contient des mises en garde relatives &#224; la consommation de poisson, c&rsquo;est-&#224;-dire qu&rsquo;il indique la quantit&#233; maximale de repas par mois recommand&#233;e pour chaque esp&#232;ce et fourchette de dimensions de poisson indiqu&#233;e.</p>\
 			<P>Consultez la page d\'aide si vous consommez de multiples esp&#232;ces de poissons ou des poissons en provenance de plusieurs lieux.</P>\
-			<p>Il peut y avoir des mises en garde concernant des esp&#232;ces et des fourchettes de dimensions de poissons que la r&#233;glementation ontarienne en mati&#232;re de p&#234;che interdit de poss&#233;der. Avant d\'aller p&#234;cher, informez-vous plus en d&#233;tail des  <a href="http://www.mnr.gov.on.ca/stdprodconsume/groups/lr/@mnr/@letsfish/documents/document/mnr_f001325.pdf"> r&#232;glements de la p&#234;che sportive</a>.</p>\
+			<p>Il peut y avoir des mises en garde concernant des esp&#232;ces et des fourchettes de dimensions de poissons que la r&#233;glementation ontarienne en mati&#232;re de p&#234;che interdit de poss&#233;der. Avant d\'aller p&#234;cher, informez-vous plus en d&#233;tail des  <a href="https://www.ontario.ca/fr/document/resume-des-reglements-de-la-peche-en-ontario-2015"> r&#232;glements de la p&#234;che sportive</a>.</p>\
 			<p><a href="http://www.ontario.ca/fr/environnement-et-energie/savoir-utiliser-une-carte-du-ministere-de-lenvironnement#advisories">Aide pour l\'interpr&#233;tation des mises en garde relatives &#224; la consommation de poisson</a>\
 			</p>\
 		<%\

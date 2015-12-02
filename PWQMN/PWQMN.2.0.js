@@ -94,7 +94,7 @@ globalConfig.search = function(){
 		var reg = /^\d+$/;
 		if((name.length == 11) && reg.test(name)){
 			queryParams.requireGeocode = false;
-			queryParams.where = "STATION = '" + name.toUpperCase() +  "'";			
+			queryParams.where = "STATION = '" + name.toUpperCase() +  "'";
 			MOEMAP.queryLayersWithConditionsExtent(queryParams);				
 			return true;
 		}else{
@@ -112,7 +112,7 @@ globalConfig.search = function(){
 	queryParams.address = searchString;
 	MOEMAP.queryLayersWithConditionsExtent(queryParams);		
 };
-globalConfig.maxYearCoordinate = 2012;
+globalConfig.maxYearCoordinate = 2014;
 
 var mapConfig = {
 	getChart1: function (data){

@@ -33,7 +33,8 @@ globalConfig.resultFoundSimple = globalConfig.resultFoundSimple || function(quer
 	}
 	var searchString = " ";
 	if (typeof(queryParams.searchString) !== "undefined") {
-		searchString = " " + globalConfig.forLang + " <strong>"  + queryParams.searchString + "</strong> ";
+		//searchString = " " + globalConfig.forLang + " <strong>"  + queryParams.searchString + "</strong> ";
+		searchString = " ";
 	}
 	
 	var message = "";
@@ -77,16 +78,17 @@ globalConfig.queryTableDivId = globalConfig.queryTableDivId || 'query_table';
 if (typeof globalConfig.usejQueryUITable === "undefined"){
 	globalConfig.usejQueryUITable = true;   //whether want to use the predefined multiple tab supports. If it is false, it will only support one tab. 
 }
+var resourceURL = 'https://www.ontario.ca/sites/default/files/moe_mapping/mapping/js/MOEMap/';
 if(globalConfig.usejQueryUITable && (!globalConfig.accessible) && (!!yepnope)){	
 	yepnope({
-		load: "http://files.ontario.ca/moe_mapping/mapping/js/MOEMap/css/jquery.dataTables.css", 
+		load: resourceURL + "css/jquery.dataTables.css", 
 		callback: function () {
 			//console.log("multipletabs.css loaded!");
 		}
 	});
 	
 	yepnope({
-		load: "http://files.ontario.ca/moe_mapping/mapping/js/MOEMap/js/jquery.dataTables.js", 
+		load: resourceURL + "js/jquery.dataTables.js", 
 		callback: function () {
 			//console.log("closure-library-multipletabs-min.js loaded!");
 		}
@@ -100,14 +102,14 @@ if (typeof globalConfig.usePredefinedMultipleTabs === "undefined"){
 }
 if(globalConfig.usePredefinedMultipleTabs && (!globalConfig.accessible) && (!!yepnope)){	
 		yepnope({
-			load: "http://files.ontario.ca/moe_mapping/mapping/js/MOEMap/css/multipletabs.css", 
+			load: resourceURL + "css/multipletabs.css", 
 			callback: function () {
 				//console.log("multipletabs.css loaded!");
 			}
 		});
 		
 		yepnope({
-			load: "http://files.ontario.ca/moe_mapping/mapping/js/MOEMap/js/closure-library-multipletabs-min.js", 
+			load: resourceURL + "js/closure-library-multipletabs-min.js", 
 			callback: function () {
 				//console.log("closure-library-multipletabs-min.js loaded!");
 			}
@@ -118,7 +120,7 @@ if(globalConfig.usePredefinedMultipleTabs && (!globalConfig.accessible) && (!!ye
 		goog.require('goog.ui.TabBar');
 		*/
 }
-globalConfig.searchedLocationIcon = globalConfig.searchedLocationIcon || "http://gmaps-samples.googlecode.com/svn/trunk/markers/blue/blank.png";
+globalConfig.searchedLocationIcon = globalConfig.searchedLocationIcon || "https://gmaps-samples.googlecode.com/svn/trunk/markers/blue/blank.png";
 globalConfig.twpBoundary = globalConfig.twpBoundary || {
 	color: '#8583f3',
 	opacity: 1, 

@@ -92,11 +92,21 @@ globalConfig.layers = [{
 			var dateList = _.uniq(_.map(fs, function(feature) {
 				return feature.attributes.DateofSubmission;
 			}));
+			var substanceList = _.map(dateList, function (dateofSubmission) {
+				return _.map(_.filter(fs, function(feature) {
+					return feature.attributes.DateofSubmission === dateofSubmission;
+				}), function(feature) {
+					return feature.attributes;
+				});
+			});
+			var dateSubstanceObject = _.object(dateList, substanceList);
+			/*
 			var substanceList = new Array(dateList.length).fill([]);
 			var dateSubstanceObject = _.object(dateList, substanceList);
 			_.each(fs, function(feature) {
 				dateSubstanceObject[feature.attributes.DateofSubmission].push(feature.attributes);
 			});
+			*/
 			_.each(dateList, function(date) {
 				dateSubstanceObject[date].sort(function(a,b){
 					if (a.SubstanceName > b.SubstanceName) {
@@ -156,11 +166,20 @@ globalConfig.layers = [{
 			var dateList = _.uniq(_.map(fs, function(feature) {
 				return feature.attributes.DateofSubmission;
 			}));
+			var substanceList = _.map(dateList, function (dateofSubmission) {
+				return _.map(_.filter(fs, function(feature) {
+					return feature.attributes.DateofSubmission === dateofSubmission;
+				}), function(feature) {
+					return feature.attributes;
+				});
+			});
+			var dateSubstanceObject = _.object(dateList, substanceList);
+			/*
 			var substanceList = new Array(dateList.length).fill([]);
 			var dateSubstanceObject = _.object(dateList, substanceList);
 			_.each(fs, function(feature) {
 				dateSubstanceObject[feature.attributes.DateofSubmission].push(feature.attributes);
-			});
+			});*/
 			_.each(dateList, function(date) {
 				dateSubstanceObject[date].sort(function(a,b){
 					if (a.SubstanceName > b.SubstanceName) {

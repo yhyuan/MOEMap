@@ -101,7 +101,7 @@
 	globalConfig.extraImageService = globalConfig.extraImageService || {
 		id: "arcgis",
 		name: "ESRI",
-		url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer',
+		url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer',
 		visible: true
 	};
 	globalConfig.entsub = globalConfig.entsub || function(event){
