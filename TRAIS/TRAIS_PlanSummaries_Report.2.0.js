@@ -16,7 +16,7 @@ globalConfig.createIndexTable = function(substances) {
 		textArray.push("&nbsp;");	
 	}
 	var result = '<table class="noStripes" border="1">' + _.map(_.range(textArray.length/2), function (i) {
-		return "<tr><td width='50%'>" + textArray[2*i] + "</td><td width='50%'>" + textArray[2*i + 1] + "</td></tr>";
+		return "<tr><td width='50%'>&nbsp;" + textArray[2*i] + "&nbsp;</td><td width='50%'>&nbsp;" + textArray[2*i + 1] + "&nbsp;</td></tr>";
 	}).join(" ") + '</table>';
 	return result;
 };
@@ -29,7 +29,6 @@ globalConfig.layers = [{
 	outFields: QueryString.hasOwnProperty("year") ? ["*"] : ["UniqueFacilityID", "ReportingPeriod"],
 	processResults: function (fs) {
 		var calculateRenderResultwithYear = function (fs) {
-			console.log(fs);
 			var attr = fs[0].attributes;
 			var renderResult = {
 				ReportingPeriod: QueryString.year, 
@@ -168,7 +167,7 @@ globalConfig.layers = [{
 				  <tr>\
 					<td rowspan="2"><%= substance.PlanObjectives %></td>\
 					<td><%= globalConfig.chooseLang("Use", "Utilisation") %></td>\
-					<td><%= globalConfig.chooseLang("Reductions: ", "Réductions: ") %><br><br><%= (substance.UseReductionQuantityTargetValu + " " + substance.UseReductionQuantityTargetUnit) %><br><%= globalConfig.chooseLang("Target Timelines: ", "Délai visé: ") %> <%= (substance.UseReductionTimelineTargetYear.length === 0) ? "" : globalConfig.getYears(substance.UseReductionTimelineTargetYear) %><br><%= substance.CreReductionTargetDescription %><br><br></td>\
+					<td><%= globalConfig.chooseLang("Reductions: ", "Réductions: ") %><br><br><%= (substance.UseReductionQuantityTargetValu + " " + substance.UseReductionQuantityTargetUnit) %><br><%= globalConfig.chooseLang("Target Timelines: ", "Délai visé: ") %> <%= (substance.UseReductionTimelineTargetYear.length === 0) ? "" : globalConfig.getYears(substance.UseReductionTimelineTargetYear) %><br><%= substance.UseReductionTargetDescription %><br><br></td>\
 				  </tr>\
 				  <tr>\
 					<td><%= globalConfig.chooseLang("Creation", "Création") %></td>\
