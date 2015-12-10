@@ -3,7 +3,7 @@ globalConfig.chooseLang = function (en, fr) {return (globalConfig.language === "
 
 globalConfig.searchableFieldsList = [{en: "stream", fr: "cours d\u0027eau"}, {en: "station ID", fr: "num\u00e9ro de station"}, {en: "address", fr: "adresse"}];
 globalConfig.otherInfoHTML = globalConfig.chooseLang("Some scientific/monitoring data are only provided in English.", 'Certaines donn&eacute;es scientifiques et de surveillance n&rsquo;existent qu&rsquo;en anglais.');
-//globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/PWQMN/MapServer";
+
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
 globalConfig.usejQueryUITable = true;  //Avoid loading extra javascript files
@@ -20,10 +20,10 @@ globalConfig.displayDisclaimer = true;
 globalConfig.InformationLang = "Information";
 globalConfig.postIdentifyCallbackName = "Wells";
 globalConfig.postConditionsCallbackName = "Wells";
-globalConfig.infoWindowWidth = '470px';
-globalConfig.infoWindowHeight = "240px";
-globalConfig.infoWindowContentHeight = "200px";
-globalConfig.infoWindowContentWidth = "450px";
+globalConfig.infoWindowWidth = '490px';
+globalConfig.infoWindowHeight = "260px";
+globalConfig.infoWindowContentHeight = "210px";
+globalConfig.infoWindowContentWidth = "460px";
 globalConfig.tableSimpleTemplateTitleLang = "";
 globalConfig.fieldNamesList = globalConfig.chooseLang(["Station ID", "Stream", "Location", "Status", "First Year Sampled", "Last Year Sampled", "Latitude", "Longitude"], ["Num\u00e9ro", "Cours d'eau", "Lieu", "Rapport d'\u00e9tape", "Premi\u00e8re ann\u00e9e \u00e9chantillonn\u00e9e", "Derni\u00e8re ann\u00e9e \u00e9chantillonn\u00e9e", "Latitude", "Longitude"]);
 globalConfig.tableFieldList = [
@@ -112,8 +112,8 @@ globalConfig.search = function(){
 	queryParams.address = searchString;
 	MOEMAP.queryLayersWithConditionsExtent(queryParams);		
 };
-globalConfig.maxYearCoordinate = 2014;
-
+globalConfig.maxYearCoordinate = 2015;
+globalConfig.minYearCoordinate = 2000;
 var mapConfig = {
 	getChart1: function (data){
 		var res = mapConfig.getChart(data);
@@ -126,12 +126,15 @@ var mapConfig = {
 	},
 
 	getChart: function (data){
+		//console.log(data);
 		var lines = data.split(";");
+		//console.log(lines.length());
 		var len = lines.length;
 		var maxCorr = -10000;
 		var dataList = new Array();
 		var timeList = new Array();
-		var beginTime = new Date(2002, 0, 1);
+		//var beginTime = new Date(2002, 0, 1);
+		var beginTime = new Date(globalConfig.minYearCoordinate, 0, 1);
 		var endTime = new Date(globalConfig.maxYearCoordinate, 0, 1);
 		var c = (endTime.getTime()-beginTime.getTime())/100;
 		var dateString = "";
@@ -146,7 +149,7 @@ var mapConfig = {
 			var month = parseInt(ds.substring(2,4), '10');
 			var day = parseInt(ds.substring(4), '10');
 			var current = new Date(year+2000, month-1, day);
-			var dayValue = ((current.getTime()-beginTime.getTime())/c).toFixed(2);
+			var dayValue = ((current.getTime()-beginTime.getTime())/c).toFixed(0);
 			dateString = dateString + dayValue + ","
 		}
 		dateString = dateString.substring(0,dateString.length-1)
@@ -157,11 +160,14 @@ var mapConfig = {
 		var c = 100/maxCorr;
 		var dataStr = "";
 		for(var i=0; i < len; i++) {
-			dataStr = dataStr + (dataList[i]*c).toFixed(2) + ",";
+			dataStr = dataStr + (dataList[i]*c).toFixed(0) + ",";
 		}
 		dataStr = dataStr.substring(0,dataStr.length-1);
-		var yearCoordinates = Array.range(2002, globalConfig.maxYearCoordinate).join("|");
-		var res = "http://chart.apis.google.com/chart?cht=s&chd=t:" + dateString + "|"+dataStr+"&chxt=x,y&chs=400x150&chxl=|0:|" + yearCoordinates + "|1:|0|"+midCorr+"|" + maxCorr + "(mg/L";
+		var yearCoordinates = ""; //Array.range(globalConfig.minYearCoordinate, globalConfig.maxYearCoordinate).join("|");
+		for (var i=globalConfig.minYearCoordinate; i <= globalConfig.maxYearCoordinate; i=i+3) {
+			yearCoordinates = yearCoordinates + i + "|";
+		}
+		var res = "https://chart.googleapis.com/chart?cht=s&chd=t:" + dateString + "|"+dataStr+"&chxt=x,y&chs=400x150&chxl=|0:|" + yearCoordinates + "1:|0|"+midCorr+"|" + maxCorr + "(mg/L";
 		//console.log(res.length);
 		return res;
 	},
@@ -203,7 +209,7 @@ var mapConfig = {
 		var median = (stat['Median']*c).toFixed(2);
 		var q1 = (stat['Q1']*c).toFixed(2); 
 		var q3 = (stat['Q3']*c).toFixed(2);
-		var yearStr = "<a target='_blank' href='http://en.wikipedia.org/wiki/Box_plot'>Boxplots</a> in 20" + yearList[0];
+		var yearStr = "<a target='_blank' href='https://en.wikipedia.org/wiki/Box_plot'>Boxplots</a> in 20" + yearList[0];
 		if(yearList.length>1){
 			var loopLength = yearList.length;
 			if(loopLength>4)
@@ -244,15 +250,14 @@ var mapConfig = {
 				}
 			}
 		}
-
-		var str1 ="<img src='http://chart.apis.google.com/chart?chs=";
+		var str1 ="<img src='https://chart.googleapis.com/chart?chs=";
 		var str2 = "x150&cht=lc&chxl=0:|0|"+midCorr+"|"+maxCorr+"&chd=t0:-1," + min + ",-1|-1," + q1 + ",-1|-1," + q3 + ",-1|-1," + max + ",-1|-1," + median + ",-1&chm=F,FF9900,0,1:4,40|H,0CBF0B,0,1:4,1:20|H,000000,4,1:4,1:40|H,0000FF,3,1:4,1:20&chxt=y";
 		var str3 = "&chdl=Max+Value|Candlestick|Median|Min+Value&chco=0000FF,FF9900,000000,0CBF0B'/><br>";
 		yearStr = yearStr + " (from left to right)";
 		if(yearList.length<=4)
 			res = str1 + "350" + str2 + str3  + yearStr;
 		else
-			res = str1 + "250" + str2 + "'/><img src='http://chart.apis.google.com/chart?chs=350x150&cht=lc&chxl=0:|0|"+midCorr+"|"+maxCorr+"&chd=t0:-1," + min2 + ",-1|-1," + q1_2 + ",-1|-1," + q3_2 + ",-1|-1," + max2 + ",-1|-1," + median2 + ",-1&chm=F,FF9900,0,1:4,40|H,0CBF0B,0,1:4,1:20|H,000000,4,1:4,1:40|H,0000FF,3,1:4,1:20&chxt=y"  + str3 + yearStr;
+			res = str1 + "250" + str2 + "'/><img src='https://chart.googleapis.com/chart?chs=350x150&cht=lc&chxl=0:|0|"+midCorr+"|"+maxCorr+"&chd=t0:-1," + min2 + ",-1|-1," + q1_2 + ",-1|-1," + q3_2 + ",-1|-1," + max2 + ",-1|-1," + median2 + ",-1&chm=F,FF9900,0,1:4,40|H,0CBF0B,0,1:4,1:20|H,000000,4,1:4,1:40|H,0000FF,3,1:4,1:20&chxt=y"  + str3 + yearStr;
 		return res;
 	},
 
@@ -292,7 +297,7 @@ var mapConfig = {
 		var median = (stat['Median']*c).toFixed(2);
 		var q1 = (stat['Q1']*c).toFixed(2); 
 		var q3 = (stat['Q3']*c).toFixed(2); 
-		return "<img src='http://chart.apis.google.com/chart?chs=400x225&cht=ls&chxl=0:|0|"+midCorr+"|"+maxCorr+"&chd=t0:-1," + min + ",-1|-1," + q1 + ",-1|-1," + q3 + ",-1|-1," + max + ",-1|-1," + median + ",-1|-1,-1,-1|-1,-1,-1&chm=F,FF9900,0,1:4,40|H,0CBF0B,0,1:4,1:20|H,000000,4,1:4,1:40|H,0000FF,3,1:4,1:20|o,FF0000,5,-1,7|o,FF0000,6,-1,7&chxt=y&chdl=Outliers|Max+Value|Candlestick|Median|Min+Value&chco=FF0000,0000FF,FF9900,000000,0CBF0B'/>";
+		return "<img src='https://chart.googleapis.com/chart?chs=400x225&cht=ls&chxl=0:|0|"+midCorr+"|"+maxCorr+"&chd=t0:-1," + min + ",-1|-1," + q1 + ",-1|-1," + q3 + ",-1|-1," + max + ",-1|-1," + median + ",-1|-1,-1,-1|-1,-1,-1&chm=F,FF9900,0,1:4,40|H,0CBF0B,0,1:4,1:20|H,000000,4,1:4,1:40|H,0000FF,3,1:4,1:20|o,FF0000,5,-1,7|o,FF0000,6,-1,7&chxt=y&chdl=Outliers|Max+Value|Candlestick|Median|Min+Value&chco=FF0000,0000FF,FF9900,000000,0CBF0B'/>";
 	}
 */
 	getStatistics: function (list){
