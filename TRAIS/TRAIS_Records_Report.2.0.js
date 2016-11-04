@@ -16,11 +16,11 @@ globalConfig.convertDateFormat = function(date) {
 		"01": "Jan",
 		"02": "Feb",
 		"03": "Mar",
-		"04": "Apr",		
+		"04": "Apr",
 		"05": "May",
-		"06": "Jun",		
+		"06": "Jun",
 		"07": "Jul",
-		"08": "Aug",		
+		"08": "Aug",
 		"09": "Sep",
 		"10": "Oct",
 		"11": "Nov",
@@ -33,12 +33,20 @@ globalConfig.layers = [{
 	renderTargetDiv: "facilityInfo",
 	event: "facilityInfoReady",
 	where: "UniqueFacilityID = '" + QueryString.id + "'",
-	outFields: globalConfig.facilityInfoFields,
+	outFields: ["*"],//globalConfig.facilityInfoFields,
 	processResults: function (fs) {
+		_.each(fs, function (f) {
+			for (var property in f.attributes) {
+			    if (f.attributes.hasOwnProperty(property) && _.isNull(f.attributes[property])) {
+			        f.attributes[property] = "";
+			    }
+			}
+		});
 		var processFeatures = function (fs) {
+			fs = _.sortBy(fs, function(f){ return -1*parseInt(f.attributes.ReportingYear);});
 			var attr = fs[0].attributes;
 			var renderResult = {
-				ReportingPeriod: QueryString.year, 
+				ReportingPeriod: QueryString.year,
 				FacilityName: attr.FacilityName,
 				CompanyName: attr.OrganizationName,
 				Address: attr.StreetAddressPhysicalAddress + " / " + attr.MunicipalityCityPhysicalAddres,
@@ -52,7 +60,7 @@ globalConfig.layers = [{
 			var NAICSQueryLayer = new gmaps.ags.Layer(globalConfig.url  + "/" + globalConfig.layerIDs.NAICS);
 			NAICSQueryLayer.query({
 				returnGeometry: false,
-				where: "NAICS=" + NAICS,
+				where: "NAICS='" + NAICS + "'",
 				outFields: ["Name"]
 			}, function (rs) {
 				renderResult.Sector = NAICS + " - " + rs.features[0].attributes.Name;
@@ -79,22 +87,30 @@ globalConfig.layers = [{
 				<%= globalConfig.chooseLang("Physical Address", "Adresse") %>: <strong><%= renderResult.Address %></strong><BR>\
 				<%= globalConfig.chooseLang("Sector", "Secteur") %>: <strong><%= renderResult.Sector %></strong><BR>\
 				<%= globalConfig.chooseLang("NPRI ID", "ID INRP") %>: <strong><%= renderResult.NPRIID %></strong><BR>\
-				<%= globalConfig.chooseLang("Public Contact", "Personne-ressource") %>: <strong><%= renderResult.PublicContact %><BR>&nbsp&nbsp&nbsp&nbsp&nbsp<%= renderResult.PublicContactPhone %><BR>&nbsp&nbsp&nbsp&nbsp&nbsp<A HREF=mailto:<%= renderResult.PublicContactEmail %>><%= renderResult.PublicContactEmail %></A></strong>\
+				<%= globalConfig.chooseLang("Public Contact", "Personne-ressource") %>: <strong><%= renderResult.PublicContact %><BR>&nbsp&nbsp&nbsp&nbsp&nbsp<%= renderResult.PublicContactPhone %><BR>&nbsp&nbsp&nbsp&nbsp&nbsp<A HREF=mailto:<%= renderResult.PublicContactEmail %>><%= renderResult.PublicContactEmail %></A></strong><BR>\
+			<strong><%= renderResult.HighestRankingEmployee %></strong>, <%= globalConfig.chooseLang("Highest Ranking Employee", "employ&eacute; le plus &eacute;lev&eacute; hi&eacute;rarchiquement") %><BR><BR>\
 			<P>'
 },{
 	url: globalConfig.url  + "/" + globalConfig.layerIDs.ExitRecords,
 	renderTargetDiv: "exitRecords",
 	event: "exitRecordsReady",
 	where: "UniqueFacilityID = '" + QueryString.id + "'",
-	outFields: ["SubstanceName", "SubstanceCAS", "DateofSubmission", "Reason", "DescriptionofCircumstances"],
+	outFields: ["*"],//["SubstanceName", "SubstanceCAS", "DateofSubmission", "Reason", "DescriptionofCircumstances"],
 	processResults: function (fs) {
 		if ((!!fs) & Array.isArray(fs) & (fs.length > 0)) {
+			_.each(fs, function (f) {
+				for (var property in f.attributes) {
+				    if (f.attributes.hasOwnProperty(property) && _.isNull(f.attributes[property])) {
+				        f.attributes[property] = "";
+				    }
+				}
+			});
 			var dateList = _.uniq(_.map(fs, function(feature) {
-				return feature.attributes.DateofSubmission;
+				return feature.attributes.ReportingYear;
 			}));
 			var substanceList = _.map(dateList, function (dateofSubmission) {
 				return _.map(_.filter(fs, function(feature) {
-					return feature.attributes.DateofSubmission === dateofSubmission;
+					return feature.attributes.ReportingYear === dateofSubmission;
 				}), function(feature) {
 					return feature.attributes;
 				});
@@ -126,30 +142,33 @@ globalConfig.layers = [{
 	},
 	template: '<% if (globalConfig.isEnglish()) {%>\
 				<center><strong>Exit Records - All Years</strong></center><br><br>\
-				The following Exit Records have been submitted by the facility in lieu of an Annual Report for a substance because it did not meet one or more capture criteria set under the <a href="http://www.ene.gov.on.ca/environment/en/subject/toxics/index.htm" target="_blank">Toxics Reduction Act</a>. Facilities that have submitted an exit record are no longer required to account, plan or report for these substances unless they meet the capture criteria again. <br><br>\
+				The following Exit Records have been submitted by the facility in lieu of an Annual Report for a substance because it did not meet one or more capture criteria set under the <a href="https://www.ontario.ca/page/toxics-reduction-program" target="_blank">Toxics Reduction Act</a>. Facilities that have submitted an exit record are no longer required to account, plan or report for these substances unless they meet the capture criteria again. <br><br>\
 			<% } else {%>\
 				<center><strong>Documents de sortie – Toutes les années</strong></center><br><br>\
-				Les documents de sortie suivants ont été présentés par l’installation au lieu d’un rapport annuel concernant une substance donnée du fait que l’installation ne remplissait plus un ou plusieurs des critères d’assujettissement établis par la <a href="http://www.ene.gov.on.ca/environment/fr/subject/toxics/index.htm" target="_blank">Loi sur la réduction des toxiques</a>. Les installations qui ont présenté un document de sortie ne sont plus tenues de comptabiliser, de planifier ou de déclarer ces substances, à moins qu’elles ne remplissent de nouveau les critères d’assujettissement.<br><br>\
+				Les documents de sortie suivants ont été présentés par l’installation au lieu d’un rapport annuel concernant une substance donnée du fait que l’installation ne remplissait plus un ou plusieurs des critères d’assujettissement établis par la <a href="https://www.ontario.ca/fr/page/programme-de-reduction-des-substances-toxiques" target="_blank">Loi sur la réduction des toxiques</a>. Les installations qui ont présenté un document de sortie ne sont plus tenues de comptabiliser, de planifier ou de déclarer ces substances, à moins qu’elles ne remplissent de nouveau les critères d’assujettissement.<br><br>\
 			<% } %>\
 			<TABLE class="noStripes">\
 				<TR>\
-					<TH WIDTH=20%><%= globalConfig.chooseLang("Date", "Date") %></TD>\
-					<TH WIDTH=30%><%= globalConfig.chooseLang("Substances", "Substances") %></TD>\
+					<TH WIDTH=20%><%= globalConfig.chooseLang("Reporting Year", "Reporting Year") %></TD>\
+					<TH WIDTH=20%><%= globalConfig.chooseLang("Substances", "Substances") %></TD>\
 					<TH WIDTH=20%><%= globalConfig.chooseLang("CAS Number", "Numéro CAS") %></TD>\
-					<TH WIDTH=30%><%= globalConfig.chooseLang("Reasons", "Raisons") %></TD>\
+					<TH WIDTH=20%><%= globalConfig.chooseLang("Reasons", "Raisons") %></TD>\
+					<TH WIDTH=20%><%= globalConfig.chooseLang("Description of Circumstances", "Description of Circumstances") %></TD>\
 				</TR>\
 	            <% _.each(_.keys(renderResult.dateSubstanceObject), function(dateofSubmission,key,list){%>\
 					<TR>\
-						<TD WIDTH=20% rowspan="<%= renderResult.dateSubstanceObject[dateofSubmission].length %>"><%= globalConfig.convertDateFormat(dateofSubmission) %></TD>\
-						<TD WIDTH=30%><%= globalConfig.processEmptyValue(renderResult.dateSubstanceObject[dateofSubmission][0].SubstanceName) %></TD>\
+						<TD WIDTH=30% rowspan="<%= renderResult.dateSubstanceObject[dateofSubmission].length %>"><%= (dateofSubmission) %></TD>\
+						<TD WIDTH=20%><%= globalConfig.processEmptyValue(renderResult.dateSubstanceObject[dateofSubmission][0].SubstanceName) %></TD>\
 						<TD WIDTH=20%><%= globalConfig.processEmptyValue(renderResult.dateSubstanceObject[dateofSubmission][0].SubstanceCAS) %></TD>\
-						<TD WIDTH=30%><%= globalConfig.processEmptyValue(renderResult.dateSubstanceObject[dateofSubmission][0].Reason) %></TD>\
+						<TD WIDTH=20%><%= globalConfig.processEmptyValue(renderResult.dateSubstanceObject[dateofSubmission][0].Reason) %></TD>\
+						<TD WIDTH=20%><%= globalConfig.processEmptyValue(renderResult.dateSubstanceObject[dateofSubmission][0].DescriptionofCircumstances) %></TD>\
 					</TR>\
 					<% renderResult.dateSubstanceObject[dateofSubmission].shift();_.each(renderResult.dateSubstanceObject[dateofSubmission], function(attr,key,list){%>\
 						<TR>\
 							<TD WIDTH=30%><%= globalConfig.processEmptyValue(attr.SubstanceName) %></TD>\
 							<TD WIDTH=20%><%= globalConfig.processEmptyValue(attr.SubstanceCAS) %></TD>\
 							<TD WIDTH=30%><%= globalConfig.processEmptyValue(attr.Reason) %></TD>\
+							<TD WIDTH=20%><%= globalConfig.processEmptyValue(attr.DescriptionofCircumstances) %></TD>\
 						</TR>\
 					<%});%>\
 				<%});%>\
@@ -160,15 +179,22 @@ globalConfig.layers = [{
 	renderTargetDiv: "exemptionRecords",
 	event: "exemptionRecordsReady",
 	where: "UniqueFacilityID = '" + QueryString.id + "'",
-	outFields: ["SubstanceName", "DateofSubmission", "RecordRank"],
+	outFields: ["*"],
 	processResults: function (fs) {
 		if ((!!fs) & Array.isArray(fs) & (fs.length > 0)) {
+			_.each(fs, function (f) {
+				for (var property in f.attributes) {
+				    if (f.attributes.hasOwnProperty(property) && _.isNull(f.attributes[property])) {
+				        f.attributes[property] = "";
+				    }
+				}
+			});
 			var dateList = _.uniq(_.map(fs, function(feature) {
-				return feature.attributes.DateofSubmission;
+				return feature.attributes.ReportingPeriod;
 			}));
 			var substanceList = _.map(dateList, function (dateofSubmission) {
 				return _.map(_.filter(fs, function(feature) {
-					return feature.attributes.DateofSubmission === dateofSubmission;
+					return feature.attributes.ReportingPeriod === dateofSubmission;
 				}), function(feature) {
 					return feature.attributes;
 				});
@@ -214,20 +240,23 @@ globalConfig.layers = [{
 			<% } %>\
 			<TABLE class="noStripes">\
 				<TR>\
-					<TH WIDTH=30%><%= globalConfig.chooseLang("Date", "Date") %></TD>\
-					<TH WIDTH=30%><%= globalConfig.chooseLang("Substances", "Substances") %></TD>\
-					<TH WIDTH=30%><%= globalConfig.chooseLang("Record Rank ", "Classement du document selon l’année ") %></TD>\
+					<TH WIDTH=20%><%= globalConfig.chooseLang("Reporting Year", "Reporting Year") %></TD>\
+					<TH WIDTH=50%><%= globalConfig.chooseLang("Substances", "Substances") %></TD>\
+					<TH WIDTH=20%><%= globalConfig.chooseLang("CAS Number", "Numéro CAS") %></TD>\
+					<TH WIDTH=10%><%= globalConfig.chooseLang("Record Rank ", "Classement du document selon l’année ") %></TD>\
 				</TR>\
 	            <% _.each(_.keys(renderResult.dateSubstanceObject), function(dateofSubmission,key,list){%>\
 					<TR>\
-						<TD WIDTH=30% rowspan="<%= renderResult.dateSubstanceObject[dateofSubmission].length %>"><%= globalConfig.convertDateFormat(dateofSubmission) %></TD>\
-						<TD WIDTH=30%><%= globalConfig.processEmptyValue(renderResult.dateSubstanceObject[dateofSubmission][0].SubstanceName) %></TD>\
-						<TD WIDTH=30%><%= globalConfig.processEmptyValue(renderResult.dateSubstanceObject[dateofSubmission][0].RecordRank) %></TD>\
+						<TD WIDTH=20% rowspan="<%= renderResult.dateSubstanceObject[dateofSubmission].length %>"><%= (dateofSubmission) %></TD>\
+						<TD WIDTH=50%><%= globalConfig.processEmptyValue(renderResult.dateSubstanceObject[dateofSubmission][0].SubstanceName) %></TD>\
+						<TD WIDTH=20%><%= globalConfig.processEmptyValue(renderResult.dateSubstanceObject[dateofSubmission][0].SubstanceCAS) %></TD>\
+						<TD WIDTH=10%><%= globalConfig.processEmptyValue(renderResult.dateSubstanceObject[dateofSubmission][0].RecordRank) %></TD>\
 					</TR>\
 					<% renderResult.dateSubstanceObject[dateofSubmission].shift();_.each(renderResult.dateSubstanceObject[dateofSubmission], function(attr,key,list){%>\
 						<TR>\
-							<TD WIDTH=30%><%= globalConfig.processEmptyValue(attr.SubstanceName) %></TD>\
-							<TD WIDTH=30%><%= globalConfig.processEmptyValue(attr.RecordRank) %></TD>\
+							<TD WIDTH=50%><%= globalConfig.processEmptyValue(attr.SubstanceName) %></TD>\
+							<TD WIDTH=20%><%= globalConfig.processEmptyValue(attr.SubstanceCAS) %></TD>\
+							<TD WIDTH=10%><%= globalConfig.processEmptyValue(attr.RecordRank) %></TD>\
 						</TR>\
 					<%});%>\
 				<%});%>\

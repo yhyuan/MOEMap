@@ -12,8 +12,8 @@ globalConfig.processEmptyValue = function(str) {
 };
 globalConfig.createIndexTable = function(substances) {
 	var textArray = _.map(substances, function(substance) {return '<A HREF="#' + substance.Name + '">' + substance.Name + '</A>';});
-	if (textArray.length%2 === 1) {	
-		textArray.push("&nbsp;");	
+	if (textArray.length%2 === 1) {
+		textArray.push("&nbsp;");
 	}
 	var result = '<table class="noStripes" border="1">' + _.map(_.range(textArray.length/2), function (i) {
 		return "<tr><td width='50%'>&nbsp;" + textArray[2*i] + "&nbsp;</td><td width='50%'>&nbsp;" + textArray[2*i + 1] + "&nbsp;</td></tr>";
@@ -28,80 +28,107 @@ globalConfig.layers = [{
 	//outFields: QueryString.hasOwnProperty("year") ? ["FacilityName", "StreetAddressPhysicalAddress", "MunicipalityCityPhysicalAddres", "OrganizationName", "NPRIID", "NAICS", "PublicContactFullName", "PublicContactTelephone", "PublicContactEMail", "HighestRankingEmployee", "SubstanceName", "Units", "VersionofthePlan", "ReasonforNoIntenttoReduceUse ", "ReasonforNoIntenttoReduceCreat", "PlanObjectives", "UseReductionQuantityTargetValu", "UseReductionQuantityTargetUnit", "UseReductionTimelineTargetYear", "UseReductionTargetDescription", "CreReductionQuantityTargetValu", "CreReductionQuantityTargetUnit", "CreReductionTimelineTargetYear", "CreReductionTargetDescription", "ReasonsforUse", "ReasonsforUseSummary", "ReasonsforCreation", "ReasonsforCreationSummary", "StatementNoOptionImplementedYN", "ReasonsNoOptionImplemented", "DescofAnyAdditActionsTaken", "OptionReductionCategory", "ActivityTaken", "DescriptionofOption", "EstUseReduPct", "EstCreReduPct", "EstContainedinProductReduPct", "EstAirReleasesReduPct", "EstWaterReleasesReduPct", "EstLandReleasesReduPct", "EstOnsiteDisposalsReduPct", "EstOffsiteDisposalsReduPct", "EstOffsiteRecyclingReduPct", "AntiTimelinesforAchieReduinUse", "AntiTimelinesforAchieReduinCre"] : ["UniqueFacilityID", "ReportingPeriod"],
 	outFields: QueryString.hasOwnProperty("year") ? ["*"] : ["UniqueFacilityID", "ReportingPeriod"],
 	processResults: function (fs) {
-		var calculateRenderResultwithYear = function (fs) {
-			var attr = fs[0].attributes;
-			var renderResult = {
-				ReportingPeriod: QueryString.year, 
-				FacilityName: attr.FacilityName,
-				CompanyName: attr.OrganizationName,
-				Address: attr.StreetAddressPhysicalAddress + " / " + attr.MunicipalityCityPhysicalAddres,
-				NPRIID: attr.NPRIID,
-				PublicContact: (attr.PublicContactFullName === null) ?  "[<I>" + globalConfig.chooseLang("no name available", "Aucun nom disponible") +  "</I>]" : attr.PublicContactFullName,
-				PublicContactPhone: attr.PublicContactTelephone,
-				PublicContactEMail: attr.PublicContactEMail,
-				HighestRankingEmployee: attr.HighestRankingEmployee
-			};
-			var NAICS = attr.NAICS;
-			if((fs.length > 1) || (fs[0].attributes.SubstanceName  !== null)){
-				var groupbyResults = _.groupBy(_.map(fs, function(feature) {
-						return feature.attributes
-					}), function(attributes){
-						return attributes.SubstanceName;
-				});
-				renderResult.Substances = _.map(_.values(groupbyResults), function(array) {
-					var attr = array[0];
-					return {
-						Name: attr.SubstanceName,
-						Units: attr.Units,
-						VersionofthePlan: attr.VersionofthePlan,
-						ReasonforNoIntenttoReduceUse: attr.ReasonforNoIntenttoReduceUse ,
-						ReasonforNoIntenttoReduceCreat: attr.ReasonforNoIntenttoReduceCreat,
-						PlanObjectives: attr.PlanObjectives,
-						UseReductionQuantityTargetValu: attr.UseReductionQuantityTargetValu,
-						UseReductionQuantityTargetUnit: attr.UseReductionQuantityTargetUnit,
-						UseReductionTimelineTargetYear: attr.UseReductionTimelineTargetYear,
-						UseReductionTargetDescription: attr.UseReductionTargetDescription,
-						CreReductionQuantityTargetValu: attr.CreReductionQuantityTargetValu,
-						CreReductionQuantityTargetUnit: attr.CreReductionQuantityTargetUnit,
-						CreReductionTimelineTargetYear: attr.CreReductionTimelineTargetYear,
-						CreReductionTargetDescription: attr.CreReductionTargetDescription,
-						ReasonsforUse: attr.ReasonsforUse,
-						ReasonsforUseSummary: attr.ReasonsforUseSummary,						
-						ReasonsforCreation: attr.ReasonsforCreation,
-						ReasonsforCreationSummary: attr.ReasonsforCreationSummary,
-						StatementNoOptionImplementedYN: attr.StatementNoOptionImplementedYN,
-						ReasonsNoOptionImplemented: attr.ReasonsNoOptionImplemented,
-						DescofAnyAdditActionsTaken: attr.DescofAnyAdditActionsTaken,
-						options: _.map(array, function(item) {
-							return {
-								OptionReductionCategory: item.OptionReductionCategory,
-								ActivityTaken: item.ActivityTaken,
-								DescriptionofOption: item.DescriptionofOption,
-								EstUseReduPct: item.EstUseReduPct,
-								EstCreReduPct: item.EstCreReduPct,
-								EstContainedinProductReduPct: item.EstContainedinProductReduPct,
-								EstAirReleasesReduPct: item.EstAirReleasesReduPct,
-								EstWaterReleasesReduPct: item.EstWaterReleasesReduPct,
-								EstLandReleasesReduPct: item.EstLandReleasesReduPct,
-								EstOnsiteDisposalsReduPct: item.EstOnsiteDisposalsReduPct,
-								EstOffsiteDisposalsReduPct: item.EstOffsiteDisposalsReduPct,
-								EstOffsiteRecyclingReduPct: item.EstOffsiteRecyclingReduPct,
-								AntiTimelinesforAchieReduinUse: item.AntiTimelinesforAchieReduinUse,
-								AntiTimelinesforAchieReduinCre: item.AntiTimelinesforAchieReduinCre
-							};
-						})
-					}
-				});
+		_.each(fs, function (f) {
+			for (var property in f.attributes) {
+			    if (f.attributes.hasOwnProperty(property) && _.isNull(f.attributes[property])) {
+			        f.attributes[property] = "";
+			    }
 			}
-			var NAICSLayerID = "4";
-			var NAICSQueryLayer = new gmaps.ags.Layer(globalConfig.url  + "/" + NAICSLayerID);
-			NAICSQueryLayer.query({
+		});
+		var calculateRenderResultwithYear = function (fs) {
+			var substancesNameLayerID = "3";
+			var substancesNameQueryLayer = new gmaps.ags.Layer(globalConfig.url  + "/" + substancesNameLayerID);
+			substancesNameQueryLayer.query({
 				returnGeometry: false,
-				where: "NAICS=" + NAICS,
-				outFields: ["Name"]
+				where: "1=1",
+				outFields: (globalConfig.language === "EN") ? ["DISPLAYURL_YN", "URL_EN", "CASNumber"] : ["DISPLAYURL_YN", "URL_FR", "CASNumber"]
 			}, function (rs) {
-				renderResult.Sector = NAICS + " - " + rs.features[0].attributes.Name;
-				PubSub.emit(globalConfig.layers[0].event + "Data", {renderResult: renderResult});
+				var displayedURLs = _.filter(rs.features, function (f) {
+					return f.attributes.DISPLAYURL_YN === "Yes";
+				});
+				var CASNumbers = _.map(displayedURLs, function (f) {return f.attributes.CASNumber;});
+				var URLs = _.map(displayedURLs, function (f) {return (globalConfig.language === "EN") ? f.attributes.URL_EN : f.attributes.URL_FR;});
+				var CASNumbersURLsDict = _.object(CASNumbers, URLs);
+
+				var attr = fs[0].attributes;
+				var renderResult = {
+					ReportingPeriod: QueryString.year,
+					FacilityName: attr.FacilityName,
+					CompanyName: attr.OrganizationName,
+					Address: attr.StreetAddressPhysicalAddress + " / " + attr.MunicipalityCityPhysicalAddres,
+					NPRIID: attr.NPRIID,
+					PublicContact: (attr.PublicContactFullName === null) ?  "[<I>" + globalConfig.chooseLang("no name available", "Aucun nom disponible") +  "</I>]" : attr.PublicContactFullName,
+					PublicContactPhone: attr.PublicContactTelephone,
+					PublicContactEmail: attr.PublicContactEmail,
+					HighestRankingEmployee: attr.HighestRankingEmployee
+				};
+				var NAICS = attr.NAICS;
+				if((fs.length > 1) || (fs[0].attributes.SubstanceName  !== null)){
+					var groupbyResults = _.groupBy(_.map(fs, function(feature) {
+							return feature.attributes
+						}), function(attributes){
+							return attributes.SubstanceName;
+					});
+					renderResult.Substances = _.sortBy(_.map(_.values(groupbyResults), function(array) {
+						var attr = array[0];
+						var substanceURL = CASNumbersURLsDict.hasOwnProperty(attr.SubstanceCAS) ? "<a target='_blank' href='" + CASNumbersURLsDict[attr.SubstanceCAS] + "'>" + globalConfig.chooseLang('Substance Information', "Information sur les substance") + "</a>" : "";
+						return {
+							Name: attr.SubstanceName,
+							CASNumber: attr.SubstanceCAS,
+							substanceURL: substanceURL,
+							Units: attr.Units,
+							VersionofthePlan: attr.VersionofthePlan,
+							ReasonforNoIntenttoReduceUse: attr.ReasonforNoIntenttoReduceUse ,
+							ReasonforNoIntenttoReduceCreat: attr.ReasonforNoIntenttoReduceCreat,
+							PlanObjectives: attr.PlanObjectives,
+							UseReductionQuantityTargetValu: attr.UseReductionQuantityTargetValu,
+							UseReductionQuantityTargetUnit: attr.UseReductionQuantityTargetUnit,
+							UseReductionTimelineTargetYear: attr.UseReductionTimelineTargetYear,
+							UseReductionTargetDescription: attr.UseReductionTargetDescription,
+							CreReductionQuantityTargetValu: attr.CreReductionQuantityTargetValu,
+							CreReductionQuantityTargetUnit: attr.CreReductionQuantityTargetUnit,
+							CreReductionTimelineTargetYear: attr.CreReductionTimelineTargetYear,
+							CreReductionTargetDescription: attr.CreReductionTargetDescription,
+							ReasonsforUse: attr.ReasonsforUse,
+							ReasonsforUseSummary: attr.ReasonsforUseSummary,
+							ReasonsforCreation: attr.ReasonsforCreation,
+							ReasonsforCreationSummary: attr.ReasonsforCreationSummary,
+							StatementNoOptionImplementedYN: attr.StatementNoOptionImplementedYN,
+							ReasonsNoOptionImplemented: attr.ReasonsNoOptionImplemented,
+							DescofAnyAdditActionsTaken: attr.DescofAnyAdditActionsTaken,
+							options: _.sortBy(_.map(array, function(item) {
+								return {
+									OptionReductionCategory: item.OptionReductionCategory,
+									ActivityTaken: item.ActivityTaken,
+									DescriptionofOption: item.DescriptionofOption,
+									EstUseReduPct: item.EstUseReduPct,
+									EstCreReduPct: item.EstCreReduPct,
+									EstContainedinProductReduPct: item.EstContainedinProductReduPct,
+									EstAirReleasesReduPct: item.EstAirReleasesReduPct,
+									EstWaterReleasesReduPct: item.EstWaterReleasesReduPct,
+									EstLandReleasesReduPct: item.EstLandReleasesReduPct,
+									EstOnsiteDisposalsReduPct: item.EstOnsiteDisposalsReduPct,
+									EstOffsiteDisposalsReduPct: item.EstOffsiteDisposalsReduPct,
+									EstOffsiteRecyclingReduPct: item.EstOffsiteRecyclingReduPct,
+									AntiTimelinesforAchieReduinUse: item.AntiTimelinesforAchieReduinUse,
+									AntiTimelinesforAchieReduinCre: item.AntiTimelinesforAchieReduinCre
+								};
+							}), function (item) {return item.OptionReductionCategory;})
+						}
+					}), function (item) {
+						return item.Name;
+					});
+				}
+				var NAICSLayerID = "4";
+				var NAICSQueryLayer = new gmaps.ags.Layer(globalConfig.url  + "/" + NAICSLayerID);
+				NAICSQueryLayer.query({
+					returnGeometry: false,
+					where: "NAICS='" + NAICS + "'",
+					outFields: ["Name"]
+				}, function (rs) {
+					renderResult.Sector = NAICS + " - " + rs.features[0].attributes.Name;
+					PubSub.emit(globalConfig.layers[0].event + "Data", {renderResult: renderResult});
+				});
 			});
 		};
 		var calculateRenderResult = function (fs) {
@@ -111,7 +138,7 @@ globalConfig.layers = [{
 			reportingPeriods.sort();
 			reportingPeriods.reverse();
 			var renderResult = {
-				UniqueFacilityID: QueryString.id, 
+				UniqueFacilityID: QueryString.id,
 				reportingPeriods: reportingPeriods
 			};
 			PubSub.emit(globalConfig.layers[0].event + "Data", {renderResult: renderResult});
@@ -122,8 +149,8 @@ globalConfig.layers = [{
 			calculateRenderResult(fs);
 		}
 		//console.log(renderResult);
-		
-		//document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, {renderResult: renderResult});		
+
+		//document.getElementById(globalConfig.layers[0].renderTargetDiv).innerHTML = _.template(globalConfig.layers[0].template, {renderResult: renderResult});
 	},
 	template: '<%\
 				if (renderResult.hasOwnProperty("reportingPeriods")) {\
@@ -137,7 +164,7 @@ globalConfig.layers = [{
 			<% } else {%>\
 			\
 			<A NAME="top"></A>\
-			<H2><%= globalConfig.chooseLang("Plan Summary " + renderResult.ReportingPeriod, "Sommaires de Plan " + renderResult.ReportingPeriod) %></H2><BR>\
+			<H2><%= globalConfig.chooseLang("Plan Summary Submitted in " + renderResult.ReportingPeriod + "", "Sommaires de Plan Submitted in " + renderResult.ReportingPeriod + "") %></H2><BR>\
 			<%= globalConfig.chooseLang("Facility Name", "Nom de l\'installation") %>: <strong><%= renderResult.FacilityName %></strong><BR>\
 			<%= globalConfig.chooseLang("Company Name", "Nom de l\'entreprise") %>: <strong><%= renderResult.CompanyName %></strong><BR>\
 			<%= globalConfig.chooseLang("Physical Address", "Adresse") %>: <strong><%= renderResult.Address %></strong><BR>\
@@ -153,7 +180,7 @@ globalConfig.layers = [{
             <%\
                 _.each(renderResult.Substances,function(substance,key,list){\
             %>\
-				<A NAME="<%= substance.Name %>"></A><U><B><%= substance.Name %></B></U><P>\
+				<A NAME="<%= substance.Name %>"></A><U><B><%= substance.Name %></B></U> - CAS # <%= substance.CASNumber %> <%= substance.substanceURL %><P>\
 				<%= globalConfig.chooseLang("This plan summary is a reflection of a/an <strong>" + substance.VersionofthePlan + "</strong> based on the <strong>" + renderResult.ReportingPeriod + "</strong> reporting period.", "Ce sommaire de plan refl&egrave;te un plan <strong>" + substance.VersionofthePlan + "</strong> fond&eacute; sur la p&eacute;riode de d&eacute;claration de <strong>" + renderResult.ReportingPeriod + "</strong>.") %>\
 				<br><br><strong><%= globalConfig.chooseLang("Statement of Intent to Reduce Use:", "Déclaration de l’intention de réduire l’utilisation:") %></strong><br>\
 					<%= (substance.ReasonforNoIntenttoReduceUse.length === 0) ? (globalConfig.chooseLang("Toxic Substance Reduction Plan includes a statement to reduce the use of the substance", "Le plan de réduction de substance toxique comprend une déclaration en vue de réduire l’utilisation de la substance")) : (globalConfig.chooseLang("Toxic Substance Reduction Plan does not include a statement to reduce the use of the substance because: <br>", "Le plan de réduction de substance toxique ne comprend pas de déclaration en vue de réduire l’utilisation de la substance du fait que: <br>") + substance.ReasonforNoIntenttoReduceUse) %>\
@@ -184,7 +211,7 @@ globalConfig.layers = [{
 						<th width="15%"><strong><%= globalConfig.chooseLang("Reduction Categories", "Catégories de réduction") %></strong></th>\
 						<th width="15%"><strong><%= globalConfig.chooseLang("Reduction Options", "Options de réduction") %></strong></th>\
 						<th width="15%"><strong><%= globalConfig.chooseLang("Quantification Type", "Type de quantification") %></strong></th>\
-						<th width="15%"><strong><%= globalConfig.chooseLang("Percentage Reductions", "Réductions en pourcentage") %></strong></th>\
+						<th width="15%"><strong><%= globalConfig.chooseLang("Percentage Reductions (%)", "Réductions en pourcentage (%)") %></strong></th>\
 						<th width="20%"><strong><%= globalConfig.chooseLang("Anticipated Timelines for Achieving Reductions in Use", "Délai prévu pour la réduction de l’utilisation") %></strong></th>\
 						<th width="20%"><strong><%= globalConfig.chooseLang("Anticipated Timelines for Achieving Reductions in Creation", "Délai prévu pour la réduction de la création") %></strong></th>\
 					  </tr>\

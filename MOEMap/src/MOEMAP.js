@@ -8,7 +8,7 @@
 /*global TABS_CALCULATOR:false */
 /*global LOCATOR:false */
 /*global window:false */
- 
+
 var globalConfig = globalConfig || {};
 globalConfig.drawingCircleMessage = globalConfig.drawingCircleMessage || function(lat, lng, radius){
 	document.getElementById(globalConfig.informationDivId).innerHTML = globalConfig.searchCenterLang + " (latitude:" + lat.toFixed(6) + ", longitude:" + lng.toFixed(6) + "), " + globalConfig.searchRadiusLang + " (" + radius.toFixed(2) + " " + globalConfig.searchKMLang + ")";
@@ -19,7 +19,7 @@ globalConfig.totalFeatureReturned = globalConfig.totalFeatureReturned || functio
 globalConfig.totalFeatureReturnedOnlyOneDisplayed = globalConfig.totalFeatureReturnedOnlyOneDisplayed || function(count){
 	return globalConfig.totalFeatureReturnedLang + ": <strong>" + count + "</strong>" + globalConfig.only1DisplayedLang;
 };
-globalConfig.maxQueryReturn = globalConfig.maxQueryReturn || 500;	
+globalConfig.maxQueryReturn = globalConfig.maxQueryReturn || 500;
 globalConfig.resultFound = globalConfig.resultFound || function(validCount, totalCount){
 	var queryParams = {totalCount: totalCount};
 	globalConfig.resultFoundSimple (queryParams);
@@ -36,11 +36,11 @@ globalConfig.resultFoundSimple = globalConfig.resultFoundSimple || function(quer
 		//searchString = " " + globalConfig.forLang + " <strong>"  + queryParams.searchString + "</strong> ";
 		searchString = " ";
 	}
-	
+
 	var message = "";
 	if (queryParams.hasOwnProperty("invalidCount") && (queryParams.invalidCount > 0)) {
 		var invalidResultMsg = (queryParams.invalidCount === 1) ? globalConfig.ResultDoesNotHaveValidCoordinates : globalConfig.ResultsDoNotHaveValidCoordinates;
-		
+
 		if(totalCount === 0){
 			message = globalConfig.yourSearchLang + searchString + globalConfig.returnedNoResultLang + regionName + ". " + globalConfig.pleaseRefineSearchLang + ".";
 		} else if(totalCount === 1){
@@ -49,7 +49,7 @@ globalConfig.resultFoundSimple = globalConfig.resultFoundSimple || function(quer
 			message = globalConfig.moreThanLang + " " + globalConfig.maxQueryReturn + " " + globalConfig.resultsFoundLang + searchString + regionName + ". " + globalConfig.onlyLang + " " + globalConfig.maxQueryReturn + " " + globalConfig.returnedLang + ". " + globalConfig.seeHelpLang + "." + globalConfig.AmongReturnedResults + ", " + queryParams.invalidCount + invalidResultMsg;
 		} else {
 			message = totalCount + " " + globalConfig.resultsFoundLang + searchString + regionName + ". " + globalConfig.AmongReturnedResults + ", " + queryParams.invalidCount + invalidResultMsg;
-		}	
+		}
 	} else {
 		if(totalCount === 0){
 			message = globalConfig.yourSearchLang + searchString + globalConfig.returnedNoResultLang + regionName + ". " + globalConfig.pleaseRefineSearchLang + ".";
@@ -62,9 +62,9 @@ globalConfig.resultFoundSimple = globalConfig.resultFoundSimple || function(quer
 		}
 	}
 	document.getElementById(globalConfig.informationDivId).innerHTML ="<i>" + message + "</i>";
-};	
+};
 globalConfig.noResultFound = globalConfig.noResultFound || function(){
-	document.getElementById(globalConfig.informationDivId).innerHTML ="<i>" + globalConfig.noResultFoundMsg + "</i>";	
+	document.getElementById(globalConfig.informationDivId).innerHTML ="<i>" + globalConfig.noResultFoundMsg + "</i>";
 };
 globalConfig.searchInProgress = globalConfig.searchInProgress || function(){
 	document.getElementById(globalConfig.informationDivId).innerHTML = "<i>" + globalConfig.searchingLang + "</i>";
@@ -76,40 +76,40 @@ globalConfig.queryTableDivId = globalConfig.queryTableDivId || 'query_table';
 //globalConfig.queryTableTemplateDivId = globalConfig.queryTableTemplateDivId || 'QueryTableTemplate';
 
 if (typeof globalConfig.usejQueryUITable === "undefined"){
-	globalConfig.usejQueryUITable = true;   //whether want to use the predefined multiple tab supports. If it is false, it will only support one tab. 
+	globalConfig.usejQueryUITable = true;   //whether want to use the predefined multiple tab supports. If it is false, it will only support one tab.
 }
 var resourceURL = 'https://www.ontario.ca/sites/default/files/moe_mapping/mapping/js/MOEMap/';
-if(globalConfig.usejQueryUITable && (!globalConfig.accessible) && (!!yepnope)){	
+if(globalConfig.usejQueryUITable && (!globalConfig.accessible) && (!!yepnope)){
 	yepnope({
-		load: resourceURL + "css/jquery.dataTables.css", 
+		load: resourceURL + "css/jquery.dataTables.css",
 		callback: function () {
 			//console.log("multipletabs.css loaded!");
 		}
 	});
-	
+
 	yepnope({
-		load: resourceURL + "js/jquery.dataTables.js", 
+		load: resourceURL + "js/jquery.dataTables.js",
 		callback: function () {
 			//console.log("closure-library-multipletabs-min.js loaded!");
 		}
 	});
 }
-//globalConfig.supportTableDownload = globalConfig.supportTableDownload || true;	
+//globalConfig.supportTableDownload = globalConfig.supportTableDownload || true;
 
-//whether want to use the predefined multiple tab supports. If it is false, it will only support one tab. 
+//whether want to use the predefined multiple tab supports. If it is false, it will only support one tab.
 if (typeof globalConfig.usePredefinedMultipleTabs === "undefined"){
 	globalConfig.usePredefinedMultipleTabs = true;
 }
-if(globalConfig.usePredefinedMultipleTabs && (!globalConfig.accessible) && (!!yepnope)){	
+if(globalConfig.usePredefinedMultipleTabs && (!globalConfig.accessible) && (!!yepnope)){
 		yepnope({
-			load: resourceURL + "css/multipletabs.css", 
+			load: resourceURL + "css/multipletabs.css",
 			callback: function () {
 				//console.log("multipletabs.css loaded!");
 			}
 		});
-		
+
 		yepnope({
-			load: resourceURL + "js/closure-library-multipletabs-min.js", 
+			load: resourceURL + "js/closure-library-multipletabs-min.js",
 			callback: function () {
 				//console.log("closure-library-multipletabs-min.js loaded!");
 			}
@@ -120,10 +120,10 @@ if(globalConfig.usePredefinedMultipleTabs && (!globalConfig.accessible) && (!!ye
 		goog.require('goog.ui.TabBar');
 		*/
 }
-globalConfig.searchedLocationIcon = globalConfig.searchedLocationIcon || "https://gmaps-samples.googlecode.com/svn/trunk/markers/blue/blank.png";
+globalConfig.searchedLocationIcon = globalConfig.searchedLocationIcon || "https://www.ontario.ca/sites/default/files/moe_mapping/mapping/js/OneSite/Wells/geocode-71.png";
 globalConfig.twpBoundary = globalConfig.twpBoundary || {
 	color: '#8583f3',
-	opacity: 1, 
+	opacity: 1,
 	weight: 4
 };
 globalConfig.pointBuffer = globalConfig.pointBuffer || {
@@ -158,15 +158,16 @@ globalConfig.identifyRadiusZoomLevelList = globalConfig.identifyRadiusZoomLevelL
 };
 
 /*
-	queryParams contains gLatLng, map, preQueryCallback (globalConfig.preIdentifyCallback), 
-	postQueryCallback (globalConfig.postIdentifyCallback), layerList, currentLayerId as its properties. 
+	queryParams contains gLatLng, map, preQueryCallback (globalConfig.preIdentifyCallback),
+	postQueryCallback (globalConfig.postIdentifyCallback), layerList, currentLayerId as its properties.
 */
 globalConfig.preIdentifyCallbackName = globalConfig.preIdentifyCallbackName || "Wells";
 globalConfig.preIdentifyCallbackList = globalConfig.preIdentifyCallbackList || {
 	"Wells": function (queryParams) {
+    //console.log("globalConfig.preIdentifyCallbackName Wells");
 		var radius = globalConfig.identifyRadiusZoomLevelList[queryParams.map.getZoom()];
 		var layerSetting = queryParams.layerList[queryParams.currentLayerId];
-		var circle = globalConfig.calculateCirclePolyline(queryParams.gLatLng, radius*1000);	
+		var circle = globalConfig.calculateCirclePolyline(queryParams.gLatLng, radius*1000);
 		var params = {
 			returnGeometry: false,
 			outFields: layerSetting.outFields,
@@ -185,18 +186,18 @@ globalConfig.preIdentifyCallbackList = globalConfig.preIdentifyCallbackList || {
 		var params = {
 			returnGeometry: layerSetting.hasOwnProperty('returnGeometry') ? layerSetting.returnGeometry : false,
 			geometryType: 'esriGeometryPoint',
-			geometry: queryParams.gLatLng,				
+			geometry: queryParams.gLatLng,
 			outFields: layerSetting.returnFields
-		};			
+		};
 		return params;
-	}	
+	}
 };
 globalConfig.preIdentifyCallback = globalConfig.preIdentifyCallback || globalConfig.preIdentifyCallbackList[globalConfig.preIdentifyCallbackName];
 
 globalConfig.createControllableInfoWindowContent = function (content) {
 	var container = document.createElement('div');
 	container.style.width = globalConfig.infoWindowWidth;
-	if (globalConfig.hasOwnProperty('infoWindowHeight')){ 
+	if (globalConfig.hasOwnProperty('infoWindowHeight')){
 		container.style.height = globalConfig.infoWindowHeight;
 	}
 	container.innerHTML = content;
@@ -220,7 +221,7 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 		MOEMAP.openInfoWindow(queryParams.gLatLng, container);
 	},
 	"SportFish": function (queryParams) {
-		//console.log("In Identify");
+		//console.log("globalConfig.postIdentifyCallbackList SportFish");
 		var features = Array.range(0, queryParams.layerList.length - 1).reduce(function(previousValue, currentValue) {
 			var result = queryParams.layerList[currentValue].result;
 			if (result.hasOwnProperty('features')) {
@@ -257,7 +258,7 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 		}
 	},
 	"SWPLocator": function (queryParams) {
-		MOEMAP.clearOverlays();	
+		MOEMAP.clearOverlays();
 		var layerList = queryParams.layerList;
 		var container = "";
 		if (queryParams.hasOwnProperty('mergeFunction')) {
@@ -271,7 +272,7 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 					}).join("");
 				} else {
 					return "";
-				}			
+				}
 			}).join("");
 		}
 		var identifyMarker = globalConfig.identifyMarkerRedTearDrop ? (new google.maps.Marker({
@@ -279,21 +280,21 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 				draggable: true
 			})) : (new google.maps.Marker({
 				position: queryParams.gLatLng,
-				icon: globalConfig.searchedLocationIcon,				
+				icon: globalConfig.searchedLocationIcon,
 				draggable: true
 			}));
 		MOEMAP.addOverlay(identifyMarker);
 		/*
 		if (globalConfig.identifyMultiplePolygonLayersServicesTemplate.hasOwnProperty('displayResultBelowMap') && (globalConfig.identifyMultiplePolygonLayersServicesTemplate.displayResultBelowMap)) {
 			globalConfig.identifyResults["LatLng"] = queryParams.gLatLng;
-			globalConfig.identifyResults["UTM"] = globalConfig.convertLatLngtoUTM(queryParams.gLatLng.lat(), queryParams.gLatLng.lng());		
+			globalConfig.identifyResults["UTM"] = globalConfig.convertLatLngtoUTM(queryParams.gLatLng.lat(), queryParams.gLatLng.lng());
 			//var template = document.getElementById(globalConfig.queryTableTemplateDivId).innerHTML;
 			document.getElementById(globalConfig.queryTableDivId).innerHTML = _.template(globalConfig.identifyMultiplePolygonLayersServicesTemplate.queryTableTemplate, globalConfig.identifyResults);
 			//console.log(container);
 			container = _.template(globalConfig.identifyMultiplePolygonLayersServicesTemplate.popupTemplate, globalConfig.identifyResults);
 		}*/ //else {
 		container = globalConfig.createControllableInfoWindowContent(container);
-		MOEMAP.openInfoWindow(queryParams.gLatLng, container);	
+		MOEMAP.openInfoWindow(queryParams.gLatLng, container);
 		(function (container, identifyMarker) {
 			google.maps.event.addListener(identifyMarker, 'click', function () {
 				MOEMAP.openInfoWindow(identifyMarker.getPosition(), container);
@@ -321,17 +322,17 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 				} else {
 					alert("Geocode was not successful for the following reason: " + status);
 				}
-			});					
+			});
 
 		});
-		
+
 		for (var i = 0; i<layerList.length; i++) {
 			if (layerList[i].hasOwnProperty('displayPolygon') && (layerList[i].displayPolygon)) {
 				var features = layerList[i]["result"].features;
 				for (var j=0; j<features.length; j++) {
 					var geometryPoly = features[j].geometry[0];
 					geometryPoly.setOptions(layerList[i].style);
-					MOEMAP.addOverlay(geometryPoly);	
+					MOEMAP.addOverlay(geometryPoly);
 				}
 			}
 		}
@@ -346,14 +347,14 @@ globalConfig.postIdentifyCallbackList = globalConfig.postIdentifyCallbackList ||
 		/*
 		if ((typeof(globalConfig.searchHelpTxt)!== "undefined") && globalConfig.testDivExist(globalConfig.informationDivId)){
 			document.getElementById(globalConfig.informationDivId).innerHTML = globalConfig.searchHelpTxt;
-		}*/		
+		}*/
 	}
 };
 globalConfig.postIdentifyCallback = globalConfig.postIdentifyCallback || globalConfig.postIdentifyCallbackList[globalConfig.postIdentifyCallbackName];
 
 /*
-	queryParams contains gLatLng, radius, map, preQueryCallback (globalConfig.preBufferCallback), 
-	postQueryCallback (globalConfig.postBufferCallback), layerList, currentLayerId as its properties. 
+	queryParams contains gLatLng, radius, map, preQueryCallback (globalConfig.preBufferCallback),
+	postQueryCallback (globalConfig.postBufferCallback), layerList, currentLayerId as its properties.
 */
 globalConfig.preBufferCallbackName = globalConfig.preBufferCallbackName || "Wells";
 globalConfig.preBufferCallbackList = globalConfig.preBufferCallbackList || {
@@ -361,21 +362,21 @@ globalConfig.preBufferCallbackList = globalConfig.preBufferCallbackList || {
 		var radius = queryParams.radius;
 		var marker = globalConfig.createMarker(queryParams.gLatLng, "" + queryParams.gLatLng.lat().toFixed(5) + ", " + queryParams.gLatLng.lng().toFixed(5), globalConfig.searchedLocationIcon);
 		MOEMAP.addOverlay(marker);
-		
+
 		var layerSetting = queryParams.layerList[queryParams.currentLayerId];
 		var circle = globalConfig.calculateCirclePolyline(queryParams.gLatLng, radius*1000);
 		var bounds = globalConfig.calculatePolylineBounds(circle);
 		globalConfig.setMapBound(queryParams.map,bounds);
 		MOEMAP.addOverlay(circle);
 		var params = {
-			returnGeometry: true, 
+			returnGeometry: true,
 			outFields: layerSetting.outFields,
 			geometry: new google.maps.Polygon({
 				paths: circle.getPath()
 			}),
 			geometryType: 'esriGeometryPolygon'
 		};
-		
+
 		if (queryParams.hasOwnProperty('where')) {
 			params.where = queryParams.where;
 		}
@@ -397,7 +398,7 @@ globalConfig.postBufferCallbackList = globalConfig.postBufferCallbackList || {
 		}, []);
 		if(features.length === 0) {
 			queryParams.totalCount = 0;
-			globalConfig.resultFoundSimple(queryParams);				
+			globalConfig.resultFoundSimple(queryParams);
 			return;
 		}
 		globalConfig.addMarkers(features, queryParams.layerList[0].tabsTemplate);
@@ -408,7 +409,7 @@ globalConfig.postBufferCallbackList = globalConfig.postBufferCallbackList || {
 		//globalConfig.renderTable(features, queryParams.layerList[0].tableTemplate, queryParams.gLatLng);
 		globalConfig.renderTable(features, templates, queryParams.gLatLng);
 		queryParams.totalCount = features.length;
-		globalConfig.resultFoundSimple(queryParams);		
+		globalConfig.resultFoundSimple(queryParams);
 	}
 };
 globalConfig.postBufferCallback = globalConfig.postBufferCallback || globalConfig.postBufferCallbackList[globalConfig.postBufferCallbackName];
@@ -420,7 +421,7 @@ globalConfig.addMarkers = globalConfig.addMarkers || function(features, tabsTemp
 		var container = globalConfig.calculateMulitpleTabsOneFeature(pointClusters[x].list, tabsTemplate);
 		var marker = new google.maps.Marker({
 			position: gLatLng
-		});		
+		});
 		(function (container, marker) {
 			google.maps.event.addListener(marker, 'click', function () {
 				MOEMAP.openInfoWindow(marker.getPosition(), container);
@@ -438,7 +439,7 @@ globalConfig.addMarkersSimple = globalConfig.addMarkersSimple || function(featur
 		var container = globalConfig.createControllableInfoWindowContent(calculateContents[0].content);
 		var marker = new google.maps.Marker({
 			position: gLatLng
-		});		
+		});
 		(function (container, marker) {
 			google.maps.event.addListener(marker, 'click', function () {
 				MOEMAP.openInfoWindow(marker.getPosition(), container);
@@ -493,7 +494,7 @@ globalConfig.renderTable = function(features, templates, searchCenter){
 	if(globalConfig.usejQueryUITable){
 		var dataTableOptions = {
 			"bJQueryUI": true,
-			"sPaginationType": "full_numbers" 
+			"sPaginationType": "full_numbers"
 			};
 		if (globalConfig.language !== "EN") {
 			dataTableOptions["oLanguage"] = globalConfig.dataTableLang;
@@ -514,20 +515,20 @@ globalConfig.renderTable = function(features, templates, searchCenter){
 		$('#' + globalConfig.noCoordinatesTableID).dataTable(dataTableOptions);
 	}
 };
-	
+
 /*
-	queryParams contains map, preQueryCallback (globalConfig.preConditionsCallback), 
+	queryParams contains map, preQueryCallback (globalConfig.preConditionsCallback),
 	postQueryCallback (globalConfig.postConditionsCallback), layerList, currentLayerId
-	searchString, where, withinExtent, requireGeocode as its properties. 
+	searchString, where, withinExtent, requireGeocode as its properties.
 */
 globalConfig.preConditionsCallbackName = globalConfig.preConditionsCallbackName || "Wells";
 globalConfig.preConditionsCallbackList = globalConfig.preConditionsCallbackList || {
 	"Wells": function (queryParams) {
 		var layerSetting = queryParams.layerList[queryParams.currentLayerId];
 		var params = {
-			returnGeometry: (globalConfig.accessible) ? false : true, 
+			returnGeometry: (globalConfig.accessible) ? false : true,
 			outFields: layerSetting.outFields,
-			where: queryParams.where		
+			where: queryParams.where
 		};
 		if(queryParams.withinExtent) {
 			var getCurrentMapExtent = function(map) {
@@ -538,7 +539,7 @@ globalConfig.preConditionsCallbackList = globalConfig.preConditionsCallbackList 
 				var nwLatLng = new google.maps.LatLng(neLatLng.lat(), swLatLng.lng());
 				return new google.maps.Polygon({
 					paths: [swLatLng, seLatLng, neLatLng, nwLatLng, swLatLng]
-				});	
+				});
 			};
 			params.geometry = getCurrentMapExtent(queryParams.map);
 		}
@@ -555,6 +556,7 @@ globalConfig.postConditionsCallbackName = globalConfig.postConditionsCallbackNam
 globalConfig.postConditionsCallbackList = globalConfig.postConditionsCallbackList || {
 	"Wells": function (queryParams) {
 		//console.log("Wells inside");
+		console.log(queryParams);
 		var features = Array.range(0, queryParams.layerList.length - 1).reduce(function(previousValue, currentValue) {
 			var result = queryParams.layerList[currentValue].result;
 			if (result.hasOwnProperty('features')) {
@@ -565,10 +567,10 @@ globalConfig.postConditionsCallbackList = globalConfig.postConditionsCallbackLis
 		}, []);
 		if(features.length === 0) {
 			queryParams.totalCount = 0;
-			globalConfig.resultFoundSimple(queryParams);		
+			globalConfig.resultFoundSimple(queryParams);
 			if(queryParams.requireGeocode) {
-				MOEMAP.geocodeAddress(queryParams);		
-			}		
+				MOEMAP.geocodeAddress(queryParams);
+			}
 			return;
 		}
 		var featuresValidCoors = features.filter(globalConfig.validFeaturesFilter);
@@ -578,12 +580,12 @@ globalConfig.postConditionsCallbackList = globalConfig.postConditionsCallbackLis
 		queryParams.totalCount = features.length;
 		queryParams.validCount = featuresValidCoors.length;
 		queryParams.invalidCount = featuresInvalidCoors.length;
-		globalConfig.resultFoundSimple(queryParams);		
+		globalConfig.resultFoundSimple(queryParams);
 		//console.log(featuresValidCoors);
-		if((!queryParams.withinExtent) && (featuresValidCoors.length > 0)) {	
+		if((!queryParams.withinExtent) && (featuresValidCoors.length > 0)) {
 			//var bounds = globalConfig.calculatePointsBounds(features);
 			var bounds = globalConfig.calculatePointsBounds(featuresValidCoors);
-			globalConfig.setMapBound(queryParams.map,bounds);	
+			globalConfig.setMapBound(queryParams.map,bounds);
 		}
 		if (globalConfig.usePredefinedMultipleTabs) {
 			//globalConfig.addMarkers(features,queryParams.layerList[0].tabsTemplate);
@@ -613,7 +615,7 @@ globalConfig.postConditionsCallbackList = globalConfig.postConditionsCallbackLis
 			}
 		}, []);
 		queryParams.totalCount = features.length;
-		globalConfig.resultFoundSimple(queryParams);		
+		globalConfig.resultFoundSimple(queryParams);
 		if(features.length === 0) {
 			return;
 		}
@@ -623,7 +625,7 @@ globalConfig.postConditionsCallbackList = globalConfig.postConditionsCallbackLis
 			var str = calculateContents[0].content;
 			if(currentValue%2 === 1) {
 				str = globalConfig.replaceChar(str, "<td>", "<td  class='shaded'>");
-			} 
+			}
 			return previousValue + str;
 		}, "") + tableTemplate.tail;
 		document.getElementById(globalConfig.queryTableDivId).innerHTML = table;
@@ -641,21 +643,21 @@ globalConfig.postConditionsCallbackList = globalConfig.postConditionsCallbackLis
 		}, []);
 		if(features.length === 0) {
 			if(queryParams.requireGeocode) {
-				MOEMAP.geocodeAddress(queryParams);		
+				MOEMAP.geocodeAddress(queryParams);
 			} else {
 				queryParams.totalCount = 0;
-				globalConfig.resultFoundSimple(queryParams);							
+				globalConfig.resultFoundSimple(queryParams);
 			}
 			return;
 		}
 		queryParams.totalCount = features.length;
-		globalConfig.resultFoundSimple(queryParams);				
-		if(!queryParams.withinExtent) {	
+		globalConfig.resultFoundSimple(queryParams);
+		if(!queryParams.withinExtent) {
 			var bounds = globalConfig.calculatePointsBounds(features);
-			globalConfig.setMapBound(queryParams.map,bounds);	
+			globalConfig.setMapBound(queryParams.map,bounds);
 		}
 		globalConfig.addMarkersSimple(features, queryParams.layerList[0].tabsTemplate);
-	}	
+	}
 };
 globalConfig.postConditionsCallback = globalConfig.postConditionsCallback || globalConfig.postConditionsCallbackList[globalConfig.postConditionsCallbackName];
 
@@ -684,8 +686,9 @@ globalConfig.addressGeocodingCallbackList = globalConfig.addressGeocodingCallbac
 				}
 			}
 		}
-		queryParams.totalCount = 1;
-		globalConfig.resultFoundSimple(queryParams);					
+    document.getElementById(globalConfig.informationDivId).innerHTML ="<i>" + globalConfig.geocodingSuccessMessage + "</i>";
+		//queryParams.totalCount = 1;
+		//globalConfig.resultFoundSimple(queryParams);
 	},
 	"SWPLocator": function (queryParams) {
 		var map = queryParams.map;
@@ -695,7 +698,7 @@ globalConfig.addressGeocodingCallbackList = globalConfig.addressGeocodingCallbac
 		var gLatLng = queryParams.gLatLng;
 		//var address = queryParams.address;  //returnedAddress
 		if (queryParams.hasOwnProperty('returnedAddress')) {
-			globalConfig.returnedAddress = queryParams.returnedAddress;			
+			globalConfig.returnedAddress = queryParams.returnedAddress;
 		} else {
 			globalConfig.returnedAddress = queryParams.address;
 		}
@@ -708,7 +711,7 @@ globalConfig.addressGeocodingCallbackList = globalConfig.addressGeocodingCallbac
 			}
 		}
 		MOEMAP.mouseClickHandler({latLng: gLatLng});
-	}	
+	}
 };
 globalConfig.addressGeocodingCallback = globalConfig.addressGeocodingCallback || globalConfig.addressGeocodingCallbackList[globalConfig.addressGeocodingCallbackName];
 
@@ -717,7 +720,7 @@ globalConfig.calculatePointsBounds = globalConfig.calculatePointsBounds || funct
 	var size = features.length;
 	for (var x = 0; x < size; x++) {
 		var gLatLng = features[x].geometry[0].getPosition();
-		bounds.extend(gLatLng);		
+		bounds.extend(gLatLng);
 	}
 	return bounds;
 };
@@ -731,11 +734,11 @@ globalConfig.setMapBound = globalConfig.setMapBound || function (map, bounds){
 	}else if(globalConfig.TWPLotConSearch){
 		maxQueryZoomLevel = globalConfig.maxQueryZoomLevelTWPLotConSearch;
 		globalConfig.TWPLotConSearch = false;
-	}			
+	}
 	if (map.getZoom() > maxQueryZoomLevel) {
 		map.setZoom(maxQueryZoomLevel);
 	}
-};	
+};
 
 globalConfig.calculateClusters = globalConfig.calculateClusters || function (features){
 	var size = features.length;
@@ -753,21 +756,21 @@ globalConfig.calculateClusters = globalConfig.calculateClusters || function (fea
 					(pointClusters[i]).list.push(findResult);
 					foundCluster = true;
 				}
-			}				
+			}
 			if(!foundCluster){
 				var cluster = {gLatLng: gLatLng, list: [findResult]};
 				pointClusters.push(cluster);
-			}				
+			}
 		}
 	}
 	return pointClusters;
 };
-	
+
 /*
-	Usage: Create a marker on a location with pop up content and used icon. 
+	Usage: Create a marker on a location with pop up content and used icon.
 	Called by: queryLayerWithPointBuffer.
-	Rely on: map, openInfoWindow function.  
-*/	
+	Rely on: map, openInfoWindow function.
+*/
 globalConfig.createMarker = globalConfig.createMarker || function (gLatLng, popupContent, icon) {
 	var marker = new google.maps.Marker({
 		position: gLatLng,
@@ -783,23 +786,23 @@ globalConfig.createMarker = globalConfig.createMarker || function (gLatLng, popu
 
 globalConfig.infoWindowWidth = globalConfig.infoWindowWidth || '450px';
 /*
-	Usage: According to the features and the template, generate tab information and finally generate the tabs.  
+	Usage: According to the features and the template, generate tab information and finally generate the tabs.
 	Called by: QUERYLAYER.queryLayer, mouseClickHandler
-*/		
+*/
 globalConfig.calculateMulitpleTabsOneFeature = globalConfig.calculateMulitpleTabsOneFeature || function (features, tabsTemplate){
 	/*
-		Usage: According to the generated tab information, generate the tabs.  
+		Usage: According to the generated tab information, generate the tabs.
 		Called by: calculateMulitpleTabsOneFeature
-	*/	
+	*/
 	var createTabBar = function (tabs){
 		// the following code based on ESRI sample
-		// create and show the info-window with tabs, one for each map service layer		  
+		// create and show the info-window with tabs, one for each map service layer
 		var container = document.createElement('div');
 		container.style.width = globalConfig.infoWindowWidth;
-		if (globalConfig.hasOwnProperty('infoWindowHeight')){ 
+		if (globalConfig.hasOwnProperty('infoWindowHeight')){
 			container.style.height = globalConfig.infoWindowHeight;
 		}
-            // =======START  TAB UI ================             
+            // =======START  TAB UI ================
 		var tabBar = new goog.ui.TabBar();
 		for (var i = 0; i < tabs.length; i++) {
 			var tab = new goog.ui.Tab(tabs[i].label);
@@ -813,17 +816,17 @@ globalConfig.calculateMulitpleTabsOneFeature = globalConfig.calculateMulitpleTab
 		var contentDiv = goog.dom.createDom('div', {
 			'class': 'goog-tab-content'
 		});
-		if (globalConfig.hasOwnProperty('infoWindowContentHeight')){ 
+		if (globalConfig.hasOwnProperty('infoWindowContentHeight')){
 			contentDiv.style.height = globalConfig.infoWindowContentHeight;
 		}
-		if (globalConfig.hasOwnProperty('infoWindowContentWidth')){ 
+		if (globalConfig.hasOwnProperty('infoWindowContentWidth')){
 			contentDiv.style.width = globalConfig.infoWindowContentWidth;
 		}
-		
+
 		//contentDiv.style.width=globalConfig.infoWindowWidth;
 		//contentDiv.style.height=globalConfig.infoWindowWidth;
-		
-		goog.dom.appendChild(container, contentDiv);            
+
+		goog.dom.appendChild(container, contentDiv);
 		goog.events.listen(tabBar, goog.ui.Component.EventType.SELECT, function(e) {
 			contentDiv.innerHTML = e.target.content;
 		});
@@ -831,11 +834,11 @@ globalConfig.calculateMulitpleTabsOneFeature = globalConfig.calculateMulitpleTab
 		return container;
             // =======END  TAB UI ================
 	};
-	
+
 	var count = features.length;
-	//Get the first returned record and generate the content for the pop up window. 
+	//Get the first returned record and generate the content for the pop up window.
 	var tabs = TABS_CALCULATOR.getContent(features[0].attributes, tabsTemplate);
-	//If it is required to display more than one record, the allowMultipleIdentifyResult will be true. 
+	//If it is required to display more than one record, the allowMultipleIdentifyResult will be true.
 	//Then generate the contents for other records and append it to the content in tabs
 	if(globalConfig.allowMultipleIdentifyResult){
 		for (var i = 1; i < count; i++) {
@@ -847,8 +850,8 @@ globalConfig.calculateMulitpleTabsOneFeature = globalConfig.calculateMulitpleTab
 			}
 		}
 	}
-	/*add the head and tail to the content. The length of content is related to the total nubmer of records. 
-		The head and tail parts are always fixed and have nothing to do with the total number of records. 
+	/*add the head and tail to the content. The length of content is related to the total nubmer of records.
+		The head and tail parts are always fixed and have nothing to do with the total number of records.
 	*/
 	for (var k = 0; k < tabs.length; k++) {
 		if(typeof(tabsTemplate[k].head) !== "undefined"){
@@ -856,10 +859,10 @@ globalConfig.calculateMulitpleTabsOneFeature = globalConfig.calculateMulitpleTab
 		}
 		if(typeof(tabsTemplate[k].tail) !== "undefined"){
 			tabs[k].content = tabs[k].content + tabsTemplate[k].tail;
-		}			
+		}
 		//tabs[k].content = tabsTemplate[k].head + tabs[k].content + tabsTemplate[k].tail;
 	}
-	//Add Total features returned to the top to table. 
+	//Add Total features returned to the top to table.
 	if((globalConfig.displayTotalIdentifyCount)&&(count > 1)){
 		if(globalConfig.allowMultipleIdentifyResult){
 			tabs[0].content = globalConfig.totalFeatureReturned(count) + "<br>" + tabs[0].content;
@@ -867,28 +870,28 @@ globalConfig.calculateMulitpleTabsOneFeature = globalConfig.calculateMulitpleTab
 			tabs[0].content = globalConfig.totalFeatureReturnedOnlyOneDisplayed(count) + "<br>" + tabs[0].content;
 		}
 	}
-	//If it do not use the Predefined multiple tabs, it will not need to include some js and css file. 
+	//If it do not use the Predefined multiple tabs, it will not need to include some js and css file.
 	if(globalConfig.usePredefinedMultipleTabs){
 		return createTabBar(tabs);
 	}else{
-		return tabs[0].content;		
+		return tabs[0].content;
 	}
 };
-	
+
 /*
 	Usage: Use the circle center and radius to calculat the vertex array.
-	The calculation is using the geometry library provided by Google Maps. 
+	The calculation is using the geometry library provided by Google Maps.
 	Called by: mouseMoveHandler, queryLayerWithPointBuffer
 */
 globalConfig.calculateCirclePolyline = globalConfig.calculateCirclePolyline || function (gLatLng, radius){
 	var circlePath = [];
 	for(var heading = 0; heading<=360; heading = heading + 10){
-		var latLng = google.maps.geometry.spherical.computeOffset(gLatLng, radius, heading);			
+		var latLng = google.maps.geometry.spherical.computeOffset(gLatLng, radius, heading);
 		circlePath.push(new google.maps.LatLng(latLng.lat().toFixed(5), latLng.lng().toFixed(5)));
 	}
 	var circle = new google.maps.Polyline({
 		path: circlePath,
-		strokeColor: globalConfig.pointBuffer.color,  
+		strokeColor: globalConfig.pointBuffer.color,
 		strokeOpacity: globalConfig.pointBuffer.opacity,
 		strokeWeight: globalConfig.pointBuffer.weight
 	});
@@ -896,7 +899,7 @@ globalConfig.calculateCirclePolyline = globalConfig.calculateCirclePolyline || f
 };
 
 /*
-	Usage: Calculate the bounds for a polyline. 
+	Usage: Calculate the bounds for a polyline.
 	Called by: mouseMoveHandler, queryLayerWithPointBuffer
 */
 globalConfig.calculatePolylineBounds = globalConfig.calculatePolylineBounds || function (polyline){
@@ -914,19 +917,19 @@ MOEMAP = (function () {
 	var map, identifyResults, identifyMarker, infoWindow, gOverlays = [], isCenterSet = false, center, bufferCircle; //, overlays = [], layers;
 
 	/*
-		Usage: If the info window is open, it will be closed. 
+		Usage: If the info window is open, it will be closed.
 		Called by: mouseClickHandler, clearOverlays.
 	*/
 	function closeInfoWindow(){
 		if(infoWindow){
 			infoWindow.setMap(null);
-		}		
-	}	
+		}
+	}
 	/*
-		Usage: Remove the overlays on the map, the buffer circle, and close the infowindow. 
-		Called by: mouseMoveHandler and exposed as public methods. 
-	*/	
-	function clearOverlays() {		
+		Usage: Remove the overlays on the map, the buffer circle, and close the infowindow.
+		Called by: mouseMoveHandler and exposed as public methods.
+	*/
+	function clearOverlays() {
 		if (gOverlays) {
 			for (var i = 0; i < gOverlays.length; i++) {
 				gOverlays[i].setMap(null);
@@ -937,36 +940,36 @@ MOEMAP = (function () {
 			bufferCircle.setMap(null);
 		}
 		closeInfoWindow();
-		if(globalConfig.usejQueryUITable){	
+		if(globalConfig.usejQueryUITable){
 			document.getElementById(globalConfig.queryTableDivId).innerHTML = "";
 		}
 	}
 	/*
-		Usage: Add the polylines overlays on the map. If the LOCATOR module return the result for Township with/without 
-		Lot and Concession, the related polygons will be add to Google Maps by this method. 
-		Called by: queryLayerWithPointBuffer 
-	*/		
+		Usage: Add the polylines overlays on the map. If the LOCATOR module return the result for Township with/without
+		Lot and Concession, the related polygons will be add to Google Maps by this method.
+		Called by: queryLayerWithPointBuffer
+	*/
 	function addPolylinesToMap(polylines){
 		if(typeof(polylines) !== "undefined"){
 			for (var i=0; i<polylines.length; i++){
 				var polygon = polylines[i];
 				var max = polygon.getPaths().getLength();
-				for(var j=0;j<max;j++){		
-					var polyline = new google.maps.Polyline({    
+				for(var j=0;j<max;j++){
+					var polyline = new google.maps.Polyline({
 						path: polygon.getPaths().getAt(j),
-						strokeColor: globalConfig.twpBoundary.color,    
-						strokeOpacity: globalConfig.twpBoundary.opacity,   
+						strokeColor: globalConfig.twpBoundary.color,
+						strokeOpacity: globalConfig.twpBoundary.opacity,
 						strokeWeight: globalConfig.twpBoundary.weight,
 						geodesic: false
-					});		
+					});
 					polyline.setMap(map);
-					gOverlays.push(polyline);		
+					gOverlays.push(polyline);
 				}
 			}
-		}				
-	}	
+		}
+	}
 	/*
-		Usage: If a user is click on the search result or the searched location, a info window will pop up. 
+		Usage: If a user is click on the search result or the searched location, a info window will pop up.
 		Called by: mouseClickHandler,  QUERYLAYER.queryLayer, queryLayerWithPointBuffer.
 	*/
 	function openInfoWindow(latlng, container){
@@ -979,26 +982,26 @@ MOEMAP = (function () {
 			infoWindow.setContent(container);
 			infoWindow.setPosition(latlng);
 		}
-		infoWindow.open(map);		
+		infoWindow.open(map);
 	}
 
 	/*
-		Set up the event handler for mouse move event. This handler needs to handle two situations. The first is to update the 
+		Set up the event handler for mouse move event. This handler needs to handle two situations. The first is to update the
 		coordinates in the bottom of them map. The second is when the user is drawing the circle, try to update the circle when
 		the user move the mouse. Meanwhile, it also give the event handler which will be called once the user finishs the drawing
 		of the circle.
 		call: globalConfig.updateCoordinates, calculateCirclePolyline, globalConfig.drawingCircleMessage
-	*/				
+	*/
 	function mouseMoveHandler(event) {
 		/*Update the Coordinates*/
 		if(globalConfig.isCoordinatesVisible){
 			globalConfig.updateCoordinates(event.latLng.lat(), event.latLng.lng());
 		}
 		/*Make sure the user is in the middle of drawing.*/
-		if(isCenterSet){							
+		if(isCenterSet){
 			if(typeof(event) !== "undefined"){
 				//Calculate the current radius
-				var distance = google.maps.geometry.spherical.computeDistanceBetween(center, event.latLng);								
+				var distance = google.maps.geometry.spherical.computeDistanceBetween(center, event.latLng);
 				//Remove the old circle
 				if(bufferCircle){
 					bufferCircle.setMap(null);
@@ -1006,15 +1009,15 @@ MOEMAP = (function () {
 				bufferCircle = globalConfig.calculateCirclePolyline(center, distance);
 				bufferCircle.setMap(map);
 				google.maps.event.addListener(bufferCircle, 'click', finishBufferSearch);
-				//update the message to give the user the current circle's centre and radius. 
+				//update the message to give the user the current circle's centre and radius.
 				globalConfig.drawingCircleMessage(center.lat(), center.lng(), distance/1000);
 			}
 		}
-	}	
+	}
 
-	function addressBufferCallback (queryParams) {		
+	function addressBufferCallback (queryParams) {
 		if (queryParams.hasOwnProperty('returnedAddress')) {
-			globalConfig.returnedAddress = queryParams.returnedAddress;			
+			globalConfig.returnedAddress = queryParams.returnedAddress;
 		} else {
 			globalConfig.returnedAddress = queryParams.address;
 		}
@@ -1023,8 +1026,8 @@ MOEMAP = (function () {
 		queryParams.postQueryCallback = globalConfig.postBufferCallback;
 		queryParams.layerList = globalConfig.queryLayerList;
 		clearOverlays();
-		addPolylinesToMap(queryParams.polylines);  
-		queryLayer2(queryParams,0);		
+		addPolylinesToMap(queryParams.polylines);
+		queryLayer2(queryParams,0);
 	}
 	function finishBufferSearch (evt) {
 		var distance = google.maps.geometry.spherical.computeDistanceBetween(center, evt.latLng)/1000;
@@ -1034,17 +1037,17 @@ MOEMAP = (function () {
 			map: map,
 			preQueryCallback: globalConfig.preBufferCallback,
 			postQueryCallback: globalConfig.postBufferCallback,
-			layerList: globalConfig.queryLayerList		
+			layerList: globalConfig.queryLayerList
 		};
 		//clear previous search results
 		clearOverlays();
-		//Query the layer							
+		//Query the layer
 		queryLayer2(queryParams,0);
-		//restore the drawing status and the tool status to the original status. 
+		//restore the drawing status and the tool status to the original status.
 		isCenterSet = false;
-		TOOLSLEGEND.setPointBufferTool(false);					
+		TOOLSLEGEND.setPointBufferTool(false);
 	}
-	
+
 	function queryLayer2(queryParams, layerId){
 		if(layerId < queryParams.layerList.length) {
 			queryParams.currentLayerId = layerId;
@@ -1054,17 +1057,18 @@ MOEMAP = (function () {
 			layer.query(params, function (fset) {
 				queryParams.layerList[layerId]["result"] = fset;
 				queryLayer2(queryParams, layerId + 1);
-			});				
+			});
 		} else {
+      //console.log(queryParams);
 			queryParams.postQueryCallback(queryParams);
 		}
-		
+
 	}
 	/*
-		Set up the event handler for mouse click event. This handler needs to handle two situations. If the user has selected the buffer Tool, 
-		the click will be the center of the Circle and the function returns. If not, the function is going to identify the dots on the map. 
+		Set up the event handler for mouse click event. This handler needs to handle two situations. If the user has selected the buffer Tool,
+		the click will be the center of the Circle and the function returns. If not, the function is going to identify the dots on the map.
 		call: TOOLSLEGEND.isPointBufferToolSelected, closeInfoWindow, calculateMulitpleTabsOneFeature, openInfoWindow
-	*/					
+	*/
 	function mouseClickHandler(evt) {
 		if(TOOLSLEGEND.isPointBufferToolSelected()){
 			if(!isCenterSet){
@@ -1074,7 +1078,7 @@ MOEMAP = (function () {
 				finishBufferSearch(evt);
 			}
 			return;
-		}		
+		}
 		//identify
 		closeInfoWindow();
 		var queryParams = {
@@ -1084,6 +1088,7 @@ MOEMAP = (function () {
 			postQueryCallback: globalConfig.postIdentifyCallback,
 			layerList: globalConfig.queryLayerList
 		};
+    //console.log(queryParams);
 		if (globalConfig.hasOwnProperty('mergeFunction')) {
 			queryParams.mergeFunction = globalConfig.mergeFunction;
 		}
@@ -1091,7 +1096,7 @@ MOEMAP = (function () {
 	}
 
 	/*
-		Get the location firstly by using LOCATOR module. Then, use the call back function to do a spatial search with this location. 
+		Get the location firstly by using LOCATOR module. Then, use the call back function to do a spatial search with this location.
 	*/
 	function identifyMultiplePolygonLayersWithLocation(qParams){
 		var queryParams = {};
@@ -1102,9 +1107,9 @@ MOEMAP = (function () {
 			queryParams = {
 				address: qParams,
 				searchString: qParams
-			};		
+			};
 		}
-		
+
 		if (qParams.hasOwnProperty('gLatLng')) {
 			queryParams.map = map;
 			globalConfig.addressGeocodingCallback(queryParams);
@@ -1112,22 +1117,22 @@ MOEMAP = (function () {
 			MOEMAP.geocodeAddress(queryParams);
 		}
 	}
-	
+
 	function showPolygonFeature (layerID, recordID) {
 		var layerSetting = globalConfig.identifyMultiplePolygonLayersServicesTemplate.layerList[layerID];
 		var geometryPoly = layerSetting["result"].features[recordID].geometry[0];
 		geometryPoly.setMap(map);
 		geometryPoly.setOptions(layerSetting.style);
-		gOverlays.push(geometryPoly);			
+		gOverlays.push(geometryPoly);
 	}
-	
+
 	function init(theMap){
 		map = theMap;
 		if (!globalConfig.disallowMouseClick) {
 			google.maps.event.addListener(map, 'click', mouseClickHandler);
 		}
 		google.maps.event.addListener(map, 'mousemove', mouseMoveHandler);
-		google.maps.event.addListener(map, 'zoom_changed', zoom_changedHandler);		
+		google.maps.event.addListener(map, 'zoom_changed', zoom_changedHandler);
 	}
 	function zoom_changedHandler () {
 		if (map.getZoom() > globalConfig.maxMapScale) {
@@ -1138,14 +1143,14 @@ MOEMAP = (function () {
 		}
 	}
 	function addOverlay (overlay) {
-		overlay.setMap(map);	
+		overlay.setMap(map);
 		gOverlays.push(overlay);
 	}
 	function queryLayersWithConditionsExtent (queryParams) {
 		queryParams.map = map;
 		queryParams.preQueryCallback = globalConfig.preConditionsCallback;
 		queryParams.postQueryCallback = globalConfig.postConditionsCallback;
-		queryParams.layerList = globalConfig.queryLayerList;		
+		queryParams.layerList = globalConfig.queryLayerList;
 		queryLayer2(queryParams, 0);
 	}
 	function geocodeAddress (queryParams) {
@@ -1161,7 +1166,7 @@ MOEMAP = (function () {
 		addOverlay: addOverlay,
 		queryLayersWithConditionsExtent: queryLayersWithConditionsExtent,
 		geocodeAddress: geocodeAddress,
-		addPolylinesToMap: addPolylinesToMap, 
+		addPolylinesToMap: addPolylinesToMap,
 		mouseClickHandler: mouseClickHandler,
 		addressBufferCallback: addressBufferCallback,
 		identifyMultiplePolygonLayersWithLocation: identifyMultiplePolygonLayersWithLocation,
@@ -1169,5 +1174,3 @@ MOEMAP = (function () {
     };
     return module;
 })();
-
-

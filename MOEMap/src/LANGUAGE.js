@@ -6,17 +6,17 @@ if (globalConfig.language === "EN"){
 	globalConfig.SearchInteractiveMapLang = globalConfig.SearchInteractiveMapLang || 'Search the map';
 	globalConfig.SearchLang = globalConfig.SearchLang || 'Search';
 	globalConfig.TermLang = globalConfig.TermLang || 'Term';
-	globalConfig.InputBoxSizeLang = globalConfig.InputBoxSizeLang || '415px';	
+	globalConfig.InputBoxSizeLang = globalConfig.InputBoxSizeLang || '415px';
 	globalConfig.degreeSymbolLang = globalConfig.degreeSymbolLang || "&deg;";
 	globalConfig.selectTooltip = globalConfig.selectTooltip || "Select";
 	globalConfig.UTM_ZoneLang = globalConfig.UTM_ZoneLang || "UTM Zone";
 	globalConfig.EastingLang = globalConfig.EastingLang || "Easting";
 	globalConfig.NorthingLang = globalConfig.NorthingLang || "Northing";
-	//globalConfig.designLang = globalConfig.designLang || "This application is designed and implemented by <strong>Ministry of the Environment Environmental Science Facilitation and Reporting Unit</strong> using <strong>MOE Mapping library version 2.0</strong>.";	
+	//globalConfig.designLang = globalConfig.designLang || "This application is designed and implemented by <strong>Ministry of the Environment Environmental Science Facilitation and Reporting Unit</strong> using <strong>MOE Mapping library version 2.0</strong>.";
 	globalConfig.noResultFoundMsg = globalConfig.noResultFoundMsg || "Your search returned no result. Please refine your search.";
 	globalConfig.searchCenterLang = globalConfig.searchCenterLang || "Search center";
 	globalConfig.searchRadiusLang = globalConfig.searchRadiusLang || "search radius";
-	globalConfig.searchKMLang = globalConfig.searchKMLang || "KM";	
+	globalConfig.searchKMLang = globalConfig.searchKMLang || "KM";
 	globalConfig.totalFeatureReturnedLang = globalConfig.totalFeatureReturnedLang || "Total features returned";
 	globalConfig.only1DisplayedLang = globalConfig.only1DisplayedLang || ", only 1 is displayed.";
 	globalConfig.westSymbolLang = globalConfig.westSymbolLang || "W";
@@ -48,6 +48,7 @@ if (globalConfig.language === "EN"){
 	globalConfig.ResultsDoNotHaveValidCoordinates = globalConfig.ResultsDoNotHaveValidCoordinates || " results do not have valid coordinates.";
 	globalConfig.youMaySearchByLang = globalConfig.youMaySearchByLang || "You may search by ";
 	globalConfig.seeHelpForAdvancedOptionsLang = globalConfig.seeHelpForAdvancedOptionsLang || "or see help for advanced options.";
+	globalConfig.geocodingSuccessMessage = globalConfig.geocodingSuccessMessage || "The map has navigated to the location you searched.";
 } else {
 	globalConfig.SearchInteractiveMapFormLang = globalConfig.SearchInteractiveMapFormLang || 'Recherche carte interactive forme';
 	//globalConfig.SearchInteractiveMapLang = globalConfig.SearchInteractiveMapLang || 'Recherche carte interactive';
@@ -60,13 +61,13 @@ if (globalConfig.language === "EN"){
 	globalConfig.UTM_ZoneLang = globalConfig.UTM_ZoneLang || "Zone UTM";
 	globalConfig.EastingLang = globalConfig.EastingLang || "abscisse";
 	globalConfig.NorthingLang = globalConfig.NorthingLang || "ordonn\u00e9e";
-	//globalConfig.designLang = globalConfig.designLang || "Cette application est con\u00e7ue et mise en \u0153uvre par <strong>l\u0027Unit\u00e9 de la facilitation de la gestion de l\u0027information et des rapports \u2013 sciences environnementales du minist\u00e8re de l\u0027Environnement</strong> au moyen de la <strong>cartoth\u00e8que du MEO (version 2.0)</strong>.";	
-	globalConfig.noResultFoundMsg = globalConfig.noResultFoundMsg || "Votre recherche n'a produit aucun r\u00e9sultat. Veuillez affiner la recherche.";	
+	//globalConfig.designLang = globalConfig.designLang || "Cette application est con\u00e7ue et mise en \u0153uvre par <strong>l\u0027Unit\u00e9 de la facilitation de la gestion de l\u0027information et des rapports \u2013 sciences environnementales du minist\u00e8re de l\u0027Environnement</strong> au moyen de la <strong>cartoth\u00e8que du MEO (version 2.0)</strong>.";
+	globalConfig.noResultFoundMsg = globalConfig.noResultFoundMsg || "Votre recherche n'a produit aucun r\u00e9sultat. Veuillez affiner la recherche.";
 	globalConfig.searchCenterLang = globalConfig.searchCenterLang || "Cercle de recherche";
 	globalConfig.searchRadiusLang = globalConfig.searchRadiusLang || "rayon de recherche";
-	globalConfig.searchKMLang = globalConfig.searchKMLang || "km";	
+	globalConfig.searchKMLang = globalConfig.searchKMLang || "km";
 	globalConfig.totalFeatureReturnedLang = globalConfig.totalFeatureReturnedLang || "Nombre total de r\u00e9sultats";
-	globalConfig.only1DisplayedLang = globalConfig.only1DisplayedLang || ", only 1 is displayed.";	
+	globalConfig.only1DisplayedLang = globalConfig.only1DisplayedLang || ", only 1 is displayed.";
 	globalConfig.westSymbolLang = globalConfig.westSymbolLang || "O";
 	globalConfig.distanceLang = globalConfig.distanceLang || "Distance (en km)";
 	globalConfig.searchingLang = globalConfig.searchingLang || "Recherche des r\u00e9sultats ...";
@@ -81,21 +82,22 @@ if (globalConfig.language === "EN"){
 	globalConfig.resultsFoundLang = globalConfig.resultsFoundLang || "r\u00e9sultats";
 	globalConfig.onlyLang = globalConfig.onlyLang || "Seulement";
 	globalConfig.returnedLang = globalConfig.returnedLang || "retourn\u00e9s";
-	globalConfig.seeHelpLang = globalConfig.seeHelpLang || "Consulter l'aide pour affiner votre recherche";	
+	globalConfig.seeHelpLang = globalConfig.seeHelpLang || "Consulter l'aide pour affiner votre recherche";
 	globalConfig.disclaimerLang = globalConfig.disclaimerLang || "<p>Ce site web et toute l&rsquo;information qu&rsquo;il contient sont fournis sans garantie quelconque, expr&egrave;s ou tacite. <a href=\"/environment/fr/resources/collection/data_downloads/STDPROD_078138.html\">Voir l&rsquo;avis de non-responsabilit&eacute;</a>.</p>";
 	globalConfig.InformationLang = globalConfig.InformationLang || "Information";
 	globalConfig.CurrentMapDisplayLang = globalConfig.CurrentMapDisplayLang || '\u00c9tendue de la carte courante';
-	globalConfig.CurrentMapDisplayTitleLang = globalConfig.CurrentMapDisplayTitleLang || 'Afficher la carte : Limiter la recherche \u00e0 la carte donn\u00e9e.';	
+	globalConfig.CurrentMapDisplayTitleLang = globalConfig.CurrentMapDisplayTitleLang || 'Afficher la carte : Limiter la recherche \u00e0 la carte donn\u00e9e.';
 	globalConfig.distanceFieldNote = globalConfig.distanceFieldNote || "La colonne de distance (en km) donne la distance entre le lieu de votre recherche et le lieu du puits dans la rang\u00e9e donn\u00e9e.";
 	globalConfig.noCoordinatesTableTitleLang = globalConfig.noCoordinatesTableTitleLang || "Le tableau suivant contient des données sans coordonnées valides.  <a href='#WhyAmISeeingThis'>Pourquoi cela s’affiche-t-il?</a>";
-	globalConfig.whyAmISeeingThisLang = globalConfig.whyAmISeeingThisLang || "<a id='WhyAmISeeingThis'>Pourquoi cela s’affiche-t-il?</a><br>Les lieux indiqués par des points sur la carte ont été déterminés en fonction d’adresses ou d’autres renseignements servant à calculer un emplacement physique sur la carte. Dans certains cas, ces renseignements étaient incomplets, incorrects ou manquants. Les données fournies dans le deuxième tableau ont été incluses, car il y a une correspondance étroite avec le nom de la ville ou d’autre champ. Ces données peuvent ou non être proches du lieu précisé, et on doit les utiliser avec prudence. Elles ont été incluses seulement parce qu’il peut y avoir une correspondance.";	
+	globalConfig.whyAmISeeingThisLang = globalConfig.whyAmISeeingThisLang || "<a id='WhyAmISeeingThis'>Pourquoi cela s’affiche-t-il?</a><br>Les lieux indiqués par des points sur la carte ont été déterminés en fonction d’adresses ou d’autres renseignements servant à calculer un emplacement physique sur la carte. Dans certains cas, ces renseignements étaient incomplets, incorrects ou manquants. Les données fournies dans le deuxième tableau ont été incluses, car il y a une correspondance étroite avec le nom de la ville ou d’autre champ. Ces données peuvent ou non être proches du lieu précisé, et on doit les utiliser avec prudence. Elles ont été incluses seulement parce qu’il peut y avoir une correspondance.";
 	globalConfig.ThisResultDoesNotHaveValidCoordinates = globalConfig.ThisResultDoesNotHaveValidCoordinates || "This result does not have valid coordinates.";
 	globalConfig.AmongReturnedResults = globalConfig.AmongReturnedResults || "Parmi les résultats obtenus";
 	globalConfig.ResultDoesNotHaveValidCoordinates = globalConfig.ResultDoesNotHaveValidCoordinates || " résultat n’a pas de coordonnées valides.";
 	globalConfig.ResultsDoNotHaveValidCoordinates = globalConfig.ResultsDoNotHaveValidCoordinates || " résultats n’ont pas de coordonnées valides.";
-	
+
 	globalConfig.youMaySearchByLang = globalConfig.youMaySearchByLang || "Vous pouvez rechercher par ";
 	globalConfig.seeHelpForAdvancedOptionsLang = globalConfig.seeHelpForAdvancedOptionsLang || "ou consulter l'aide pour de l'information sur les recherches avanc&eacute;es.";
+	globalConfig.geocodingSuccessMessage = globalConfig.geocodingSuccessMessage || "The map has navigated to the location you searched.";
 	globalConfig.dataTableLang = globalConfig.dataTableLang || {
 		"sProcessing":     "Traitement en cours...",
 		"sSearch":         "Rechercher&nbsp;:",
@@ -121,4 +123,3 @@ if (globalConfig.language === "EN"){
 }
 globalConfig.u2019Lang = "\u2019";
 globalConfig.nbspLang = "&nbsp";
-

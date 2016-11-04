@@ -55,7 +55,8 @@ Label.prototype.draw = function() {
 };
 
 //var servicesURL = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/";
-var servicesURL = "http://stage.giscoeservices.lrc.gov.on.ca/ArcGIS/rest/services/MOE/";
+//var servicesURL = "http://stage.giscoeservices.lrc.gov.on.ca/ArcGIS/rest/services/MOE/";
+var servicesURL = "https://stage.giscoecache.lrc.gov.on.ca/ArcGIS/rest/services/MOE/";
 
 var isMobile = false;
 var MOEMapGlobalConfig = {

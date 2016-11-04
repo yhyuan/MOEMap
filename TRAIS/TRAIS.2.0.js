@@ -8,9 +8,14 @@ globalConfig.searchControlHTML = '<div id="searchTheMap"></div><div id="searchHe
 	<label class="element-invisible" for="search_submit">' + globalConfig.chooseLang('Search', 'Recherche') + '</label>\
 	<input id="search_submit" type="submit" title="' + globalConfig.chooseLang('Search', 'Recherche') + '" onclick="globalConfig.search()" value="' + globalConfig.chooseLang('Search', 'Recherche') + '"></input>\
 	<fieldset>\
-		<input type="radio" id="searchLocation" name="searchGroup" checked="checked" title="' + globalConfig.chooseLang('Search Map Location or Facility', "Recherche par lieu ou par installation") + '" name="location" value="location" onclick="globalConfig.searchChange(\'Location\')"></input>\
-		<span class="tooltip" title="' + globalConfig.chooseLang("Search Map Location or Facility: Enter facility name or street address to find facilities", "Recherche par lieu ou par installation : entrez le nom de l\u0027installation ou son adresse.") + '">\
-		<label class="option" for="searchLocation">' + globalConfig.chooseLang('Search Map Location or Facility', "Recherche par lieu ou par installation") + '</label>\
+		<input type="radio" id="searchFacility" name="searchGroup" title="' + globalConfig.chooseLang('Search Facility / NPRI ID', "Search Facility / NPRI ID") + '" value="facility" onclick="globalConfig.searchChange(\'Facility\')"></input>\
+		<span class="tooltip" title="' + globalConfig.chooseLang("Search Facility: Enter facility name or NPRI ID to find facilities", "Search Facility: Enter facility name or NPRI ID to find facilities.") + '">\
+		<label class="option" for="searchFacility">' + globalConfig.chooseLang('Search Facility / NPRI ID', "Search Facility / NPRI ID") + '</label>\
+		</span>\
+		<br/>\
+		<input type="radio" id="searchLocation" name="searchGroup" checked="checked" title="' + globalConfig.chooseLang('Search Map Location', "Recherche par lieu") + '" name="location" value="location" onclick="globalConfig.searchChange(\'Location\')"></input>\
+		<span class="tooltip" title="' + globalConfig.chooseLang("Search Map Location: Enter street address to find facilities", "Recherche par lieu : entrez le son adresse.") + '">\
+		<label class="option" for="searchLocation">' + globalConfig.chooseLang('Search Map Location', "Recherche par lieu") + '</label>\
 		</span>\
 		<br/>\
 		<input type="radio" id="searchSubstance" name="searchGroup" title="' + globalConfig.chooseLang('Search Substance', "Recherche par substance") + '" value="substance" onclick="globalConfig.searchChange(\'Substance\')"></input>\
@@ -26,16 +31,16 @@ globalConfig.searchControlHTML = '<div id="searchTheMap"></div><div id="searchHe
 		<input id="currentMapExtent" type="checkbox" name="currentExtent" title="' + globalConfig.chooseLang('Current Map Display', "Étendue de la carte courante") + '" /> <label for="currentExtent" class=\'option\'>' + globalConfig.chooseLang('Search current map display only', "\u00c9tendue de la carte courante") + '</label>\
 	</fieldset>\
 	<div id="information"></div>';
-	
+
 //var globalConfig = globalConfig || {};
-	
+
 //globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/TRAIS/MapServer";
 //globalConfig.url = "http://lrcdrrvsdvap002/ArcGIS/rest/services/Interactive_Map_Public/TRAIS/MapServer";
 globalConfig.searchFieldFacilityName = "Facility";
 globalConfig.searchFieldOrganizationName = "Organisation";
-globalConfig.searchFieldSector = "Sector";
-globalConfig.searchFieldNPRI_ID = "NPRI_ID";
-globalConfig.searchFieldSubstance_List = "Substance_List";
+globalConfig.searchFieldSector = "SectorShortID";
+globalConfig.searchFieldNPRI_ID = "NPRIId";
+globalConfig.searchFieldSubstance_List = "SubstanceList";
 
 var sectorNames = [];
 var sectorNameLayerID = "7";
@@ -65,9 +70,6 @@ substancesNameQueryLayer.query({
 	});
 	globalConfig.substancesDict = _.object(substancesNames, codes);
 });
-
-
-
 if (globalConfig.language === "EN") {
 	globalConfig.NoAnnualReportSubmittedLang = "No Annual Report submitted.";
 	globalConfig.NoPlanSummarySubmittedLang = "No Plan Summary submitted.";
@@ -76,8 +78,9 @@ if (globalConfig.language === "EN") {
 	globalConfig.LinktoPlanSummariesLang = "Links to Plan Summaries";
 	globalConfig.LinktoRecordsLang = "Links to Records";
 	globalConfig.OpenNewWindowLang = "These links will open in a new browser window.";
-	//globalConfig.searchHelpTxt = "Search <strong>city</strong>, <strong>facility name</strong>, <strong>company</strong>, <strong>sector</strong>, <strong>substance</strong> or see help for more advanced options.";
-	globalConfig.tabsTemplateContent = "Facility: <b>{Facility}</b><br>Organization: <b>{Organisation}</b><br>Physical Address: <b>{StreetAddress} / {City}</b><br>NPRI ID: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Sector: <b>{mapConfig.displaySector(Sector)}</b><br>Toxic Substances: <b>{NUMsubst}</b><br><br>[{NUMsubst}? " + globalConfig.NoAnnualReportSubmittedLang + " ?<a target='_blank' href='" + globalConfig.annualReportURL + "?id={UniqueID}'>" + globalConfig.LinktoAnnualReportsLang + "</a>]<br>[{NUMPlanSummary}? " + globalConfig.NoPlanSummarySubmittedLang + " ?<a target='_blank' href='" + globalConfig.planSummaryURL + "?id={UniqueID}'>" + globalConfig.LinktoPlanSummariesLang + "</a>]<br>[{NUMRecord}? " + globalConfig.NoRecordSubmittedLang + " ?<a target='_blank' href='" + globalConfig.recordsURL + "?id={UniqueID}'>" + globalConfig.LinktoRecordsLang + "</a>]<br><i>" + globalConfig.OpenNewWindowLang + "</i><br>";
+	globalConfig.tabsTemplateContent = "Facility: <b>{Facility}</b><br>Organization: <b>{Organisation}</b><br>Physical Address: <b>{StreetAddress} / {City}</b><br>NPRI ID: <b>{mapConfig.displayNPRI_ID(NPRIId)}</b><br>Sector: <b>{SectorDesc}</b><br>Toxic Substances: <b>{SubstanceNum}</b><br><br>[{AnnualReport}? " + globalConfig.NoAnnualReportSubmittedLang + " ?<a target='_blank' href='" + globalConfig.annualReportURL + "?id={UniqueID}'>" + globalConfig.LinktoAnnualReportsLang + "</a>]<br>[{PlanSummary}? " + globalConfig.NoPlanSummarySubmittedLang + " ?<a target='_blank' href='" + globalConfig.planSummaryURL + "?id={UniqueID}'>" + globalConfig.LinktoPlanSummariesLang + "</a>]<br>[{NUMRecord}? " + globalConfig.NoRecordSubmittedLang + " ?<a target='_blank' href='" + globalConfig.recordsURL + "?id={UniqueID}'>" + globalConfig.LinktoRecordsLang + "</a>]<br><i>" + globalConfig.OpenNewWindowLang + "</i><br>";
+	globalConfig.resultsFoundLang = "facilities found";
+	globalConfig.oneResultFoundLang = "1 facility found";
 } else {
 	globalConfig.NoAnnualReportSubmittedLang = "Aucun rapport annuel pr&eacute;sent&eacute;.";
 	globalConfig.NoPlanSummarySubmittedLang = "Aucun sommaire de plan pr&eacute;sent&eacute;.";
@@ -85,12 +88,15 @@ if (globalConfig.language === "EN") {
 	globalConfig.LinktoAnnualReportsLang = "Lien aux rapports annuels";
 	globalConfig.LinktoPlanSummariesLang = "Lien aux sommaires de plan";
 	globalConfig.LinktoRecordsLang = "Lien aux documents";
-	globalConfig.OpenNewWindowLang = "En cliquant sur ces liens, vous ouvrirez une nouvelle fen&ecirc;tre dans votre navigateur.";	
+	globalConfig.OpenNewWindowLang = "En cliquant sur ces liens, vous ouvrirez une nouvelle fen&ecirc;tre dans votre navigateur.";
 	//globalConfig.searchHelpTxt = "Rechercher par <strong>ville</strong>, <strong>installation</strong>, <strong>entreprise</strong>, <strong>substance</strong>, <strong>secteur</strong> ou cliquer sur aide pour plus d\u0027information sur la recherche avanc\u00e9e.";
-	globalConfig.tabsTemplateContent = "Installation: <b>{Facility}</b><br>Entreprise: <b>{Organisation}</b><br>Adresse: <b>{StreetAddress} / {City}</b><br>N&deg; INRP: <b>{mapConfig.displayNPRI_ID(NPRI_ID)}</b><br>Secteur: <b>{mapConfig.displaySector(Sector)}</b><br>Substances toxiques: <b>{NUMsubst}</b><br><br>[{NUMsubst}? " + globalConfig.NoAnnualReportSubmittedLang + " ?<a target='_blank' href='" + globalConfig.annualReportURL + "?id={UniqueID}'>" + globalConfig.LinktoAnnualReportsLang + "</a>]<br>[{NUMPlanSummary}? " + globalConfig.NoPlanSummarySubmittedLang + " ?<a target='_blank' href='" + globalConfig.planSummaryURL + "?id={UniqueID}'>" + globalConfig.LinktoPlanSummariesLang + "</a>]<br>[{NUMRecord}? " + globalConfig.NoRecordSubmittedLang + " ?<a target='_blank' href='" + globalConfig.recordsURL + "?id={UniqueID}'>" + globalConfig.LinktoRecordsLang + "</a>]<br><i>" + globalConfig.OpenNewWindowLang + "</i><br>";	
+	globalConfig.tabsTemplateContent = "Installation: <b>{Facility}</b><br>Entreprise: <b>{Organisation}</b><br>Adresse: <b>{StreetAddress} / {City}</b><br>N&deg; INRP: <b>{mapConfig.displayNPRI_ID(NPRIId)}</b><br>Secteur: <b>{SectorDesc}</b><br>Substances toxiques: <b>{SubstanceNum}</b><br><br>[{AnnualReport}? " + globalConfig.NoAnnualReportSubmittedLang + " ?<a target='_blank' href='" + globalConfig.annualReportURL + "?id={UniqueID}'>" + globalConfig.LinktoAnnualReportsLang + "</a>]<br>[{PlanSummary}? " + globalConfig.NoPlanSummarySubmittedLang + " ?<a target='_blank' href='" + globalConfig.planSummaryURL + "?id={UniqueID}'>" + globalConfig.LinktoPlanSummariesLang + "</a>]<br>[{NUMRecord}? " + globalConfig.NoRecordSubmittedLang + " ?<a target='_blank' href='" + globalConfig.recordsURL + "?id={UniqueID}'>" + globalConfig.LinktoRecordsLang + "</a>]<br><i>" + globalConfig.OpenNewWindowLang + "</i><br>";
+	globalConfig.resultsFoundLang = "facilities found";
+	globalConfig.oneResultFoundLang = "1 facility found";
 }
 globalConfig.tableSimpleTemplateTitleLang = globalConfig.chooseLang("Note: Data is in English only.", "\u00c0 noter : les donn\u00e9es sont en anglais seulement.");
-globalConfig.otherInfoHTML = globalConfig.chooseLang("<strong>Note: The information and data reflected in this report is a consolidation of data reported by facilities regulated under Toxics Reduction Act, 2009 and is up to date as of December 20, 2013. The facilities have the opportunity to notify the ministry of errors.</strong>", "<strong>Note : l’information et les donn&eacute;es pr&eacute;sent&eacute;s dans ce rapport est une synth&egrave;se des renseignements d&eacute;clar&eacute;s par les installations et les entreprises  en vertu de la Loi de 2009 sur la r&eacute;duction des toxiques. Ces renseignements &eacute;taient &agrave; jour le 20 d&eacute;cembre, 2013. Les installations et les entreprises peuvent communiquer avec le minist&egrave;re en cas d’erreurs.</strong><br><br>Certaines donn\u00e9es scientifiques et de surveillance n\u0027existent qu\u0027en anglais.");
+
+globalConfig.otherInfoHTML = globalConfig.chooseLang("<img src='https://files.ontario.ca/moe_mapping/mapping/PGMN/greencircle.png' alt='green dot' />Facilities intending to implement at least one toxic substance reduction option (as per current plan summaries)<br/><img src='https://files.ontario.ca/moe_mapping/mapping/PGMN/bluecircle.png' alt='blue dot' />Facilities not intending to implement any toxic substance reduction option (as per current plan summaries) <br><strong>Note: The information and data reflected in this report is a consolidation of data reported by facilities regulated under Toxics Reduction Act, 2009 and is up to date as of 2016-09-15 . The facilities have the opportunity to notify the ministry of errors.</strong>", "<img src='https://files.ontario.ca/moe_mapping/mapping/PGMN/greencircle.png' alt='green dot' />Facilities intending to implement at least one toxic substance reduction option (as per current plan summaries)<br/><img src='https://files.ontario.ca/moe_mapping/mapping/PGMN/bluecircle.png' alt='blue dot' />Facilities not intending to implement any toxic substance reduction option (as per current plan summaries) <br><strong>Note : l’information et les donn&eacute;es pr&eacute;sent&eacute;s dans ce rapport est une synth&egrave;se des renseignements d&eacute;clar&eacute;s par les installations et les entreprises  en vertu de la Loi de 2009 sur la r&eacute;duction des toxiques. Ces renseignements &eacute;taient &agrave; jour le 2016-09-15. Les installations et les entreprises peuvent communiquer avec le minist&egrave;re en cas d’erreurs.</strong><br><br>Certaines donn\u00e9es scientifiques et de surveillance n\u0027existent qu\u0027en anglais.");
 globalConfig.pointBufferTool = {available: false};
 globalConfig.extraImageService = {visible: false};
 //globalConfig.usejQueryUITable = false;  //Avoid loading extra javascript files
@@ -108,24 +114,24 @@ globalConfig.infoWindowHeight = (globalConfig.language === "EN") ? '220px' : '27
 
 if (globalConfig.language === "EN") {
 	globalConfig.fieldNamesList = [
-		"Facility", 
-		"Organization", 
-		"Physical Address", 
-		"NPRI ID", 
-		"Sector", 
-		"Toxic Substances", 
+		"Facility",
+		"Organization",
+		"Physical Address",
+		"NPRI ID",
+		"Sector",
+		"Toxic Substances",
 		"Annual Reports",
 		"Plan Summary",
 		"Record"
 	];
 } else {
 	globalConfig.fieldNamesList = [
-		"Installation", 
-		"Entreprise", 
-		"Adresse", 
-		"N&deg; INRP", 
-		"Secteur", 
-		"Substances toxiques", 
+		"Installation",
+		"Entreprise",
+		"Adresse",
+		"N&deg; INRP",
+		"Secteur",
+		"Substances toxiques",
 		"Rapports annuels",
 		"Sommaires de plan",
 		"Documents"
@@ -135,55 +141,66 @@ if (globalConfig.language === "EN") {
 if (globalConfig.accessible) {
 /*	var reportLang = "";
 	if (globalConfig.language === "EN") {
-		reportLang = "Report";	
+		reportLang = "Report";
 	} else {
 		reportLang = "Signaler";
 	}
 
 	globalConfig.tableFieldList = [
-		{name: globalConfig.fieldNamesList[0], value: "{globalConfig.wordCapitalize(LAKENAME)}"}, 
-		{name: globalConfig.fieldNamesList[1], value: "{STN}"}, 
-		{name: globalConfig.fieldNamesList[2], value: "{SITEID}"}, 
-		{name: globalConfig.fieldNamesList[3], value: "{globalConfig.wordCapitalize(TOWNSHIP)}"}, 
-		{name: globalConfig.fieldNamesList[4], value: "{SITEDESC}"}, 
+		{name: globalConfig.fieldNamesList[0], value: "{globalConfig.wordCapitalize(LAKENAME)}"},
+		{name: globalConfig.fieldNamesList[1], value: "{STN}"},
+		{name: globalConfig.fieldNamesList[2], value: "{SITEID}"},
+		{name: globalConfig.fieldNamesList[3], value: "{globalConfig.wordCapitalize(TOWNSHIP)}"},
+		{name: globalConfig.fieldNamesList[4], value: "{SITEDESC}"},
 		{name: globalConfig.fieldNamesList[5], value: "[{SE_COUNT}?N/A?<a href='{SE_URL_" + globalConfig.language + "}'>" + reportLang + "</a>]"},
 		{name: globalConfig.fieldNamesList[6], value: "[{PH_COUNT}?N/A?<a href='{TP_URL_" + globalConfig.language + "}'>" + reportLang + "</a>]"},
-		{name: globalConfig.fieldNamesList[7], value: "{globalConfig.deciToDegree(LATITUDE)}"}, 
-		{name: globalConfig.fieldNamesList[8], value: "{globalConfig.deciToDegree(LONGITUDE)}"}, 	
+		{name: globalConfig.fieldNamesList[7], value: "{globalConfig.deciToDegree(LATITUDE)}"},
+		{name: globalConfig.fieldNamesList[8], value: "{globalConfig.deciToDegree(LONGITUDE)}"},
 	];
 	globalConfig.queryLayerList = [{
 		url: globalConfig.url + "/0",
 		tableSimpleTemplate: {
-			title: globalConfig.tableSimpleTemplateTitleLang, 
+			title: globalConfig.tableSimpleTemplateTitleLang,
 			content: globalConfig.tableFieldList
-		} 
+		}
 	}];
-	globalConfig.postConditionsCallbackName = "AccessibleWells";*/		
+	globalConfig.postConditionsCallbackName = "AccessibleWells";*/
 } else {
 	globalConfig.tableFieldList = [
-		{name: globalConfig.fieldNamesList[0], value: "{Facility}"}, 
-		{name: globalConfig.fieldNamesList[1], value: "{Organisation}"}, 
-		{name: globalConfig.fieldNamesList[2], value: "{StreetAddress}"}, 
-		{name: globalConfig.fieldNamesList[3], value: "{mapConfig.displayNPRI_ID(NPRI_ID)}"}, 
-		{name: globalConfig.fieldNamesList[4], value: "{mapConfig.displaySector(Sector)}"}, 
-		{name: globalConfig.fieldNamesList[5], value: "{NUMsubst}"},
-		{name: globalConfig.fieldNamesList[6], value: "[{NUMsubst}? N/A ?<a target='_blank' href='" + globalConfig.annualReportURL + "?id={UniqueID}'>" + globalConfig.chooseLang('Link', "Lien") + "</a>]"},
-		{name: globalConfig.fieldNamesList[7], value: "[{NUMPlanSummary}? N/A ?<a target='_blank' href='" + globalConfig.planSummaryURL + "?id={UniqueID}'>" + globalConfig.chooseLang('Link', "Lien") + "</a>]"},
+		{name: globalConfig.fieldNamesList[0], value: "{Facility}"},
+		{name: globalConfig.fieldNamesList[1], value: "{Organisation}"},
+		{name: globalConfig.fieldNamesList[2], value: "{StreetAddress}"},
+		{name: globalConfig.fieldNamesList[3], value: "{mapConfig.displayNPRI_ID(NPRIId)}"},
+		{name: globalConfig.fieldNamesList[4], value: "{SectorDesc}"},
+		//{name: globalConfig.fieldNamesList[4], value: "{mapConfig.displaySector(Sector)}"},
+		{name: globalConfig.fieldNamesList[5], value: "{SubstanceNum}"},
+		{name: globalConfig.fieldNamesList[6], value: "[{AnnualReport}? N/A ?<a target='_blank' href='" + globalConfig.annualReportURL + "?id={UniqueID}'>" + globalConfig.chooseLang('Link', "Lien") + "</a>]"},
+		{name: globalConfig.fieldNamesList[7], value: "[{PlanSummary}? N/A ?<a target='_blank' href='" + globalConfig.planSummaryURL + "?id={UniqueID}'>" + globalConfig.chooseLang('Link', "Lien") + "</a>]"},
 		{name: globalConfig.fieldNamesList[8], value: "[{NUMRecord}? N/A ?<a target='_blank' href='" + globalConfig.recordsURL + "?id={UniqueID}'>" + globalConfig.chooseLang('Link', "Lien") + "</a>]"}
 	];
-	
+
 	globalConfig.queryLayerList = [{
 		url: globalConfig.url + "/0",
 		tabsTemplate: [{
 			label: globalConfig.InformationLang,
 			content:globalConfig.tabsTemplateContent
-		}], 
+		}],
 		tableSimpleTemplate: {
-			title: globalConfig.tableSimpleTemplateTitleLang, 
+			title: globalConfig.tableSimpleTemplateTitleLang,
 			content: globalConfig.tableFieldList
-		} 
+		}
+	},{
+		url: globalConfig.url + "/9",
+		tabsTemplate: [{
+			label: globalConfig.InformationLang,
+			content:globalConfig.tabsTemplateContent
+		}],
+		tableSimpleTemplate: {
+			title: globalConfig.tableSimpleTemplateTitleLang,
+			content: globalConfig.tableFieldList
+		}
 	}];
-	//globalConfig.postConditionsCallbackName = "SportFish";	
+	//globalConfig.postConditionsCallbackName = "SportFish";
 }
 
 globalConfig.search = function(){
@@ -194,27 +211,41 @@ globalConfig.search = function(){
 	MOEMAP.clearOverlays();
 	var queryParams = {
 		searchString: searchString
-	};	
+	};
 	if (!globalConfig.accessible) {
 		queryParams.withinExtent = document.getElementById(globalConfig.currentMapExtentDivId).checked;
 	}
-	
+
 	if(document.getElementById('searchSubstance').checked){
 		mapConfig.searchSubstances(queryParams);
 		return;
 	}else if(document.getElementById('searchSector').checked){
 		mapConfig.searchSector(queryParams);
 		return;
-	}else{		
+	}else if(document.getElementById('searchFacility').checked){
 		var name = searchString.toUpperCase();
 		if(mapConfig.searchNPRI_ID(queryParams)){
 			return;
-		}		
+		}
+		var coorsArray = name.split(/\s+/);
+		var str = coorsArray.join(" ").toUpperCase();
+		queryParams.requireGeocode = false;
+		queryParams.where = "(UPPER(" + globalConfig.searchFieldFacilityName + ") LIKE '%" + str + "%') OR (UPPER(" + globalConfig.searchFieldOrganizationName + ") LIKE '%" + str + "%')";
+		MOEMAP.queryLayersWithConditionsExtent(queryParams);
+		return;
+	}else{
+		/*
+		var name = searchString.toUpperCase();
+		if(mapConfig.searchNPRI_ID(queryParams)){
+			return;
+		}
 		var coorsArray = name.split(/\s+/);
 		var str = coorsArray.join(" ").toUpperCase();
 		queryParams.requireGeocode = true;
 		queryParams.where = "(UPPER(" + globalConfig.searchFieldFacilityName + ") LIKE '%" + str + "%') OR (UPPER(" + globalConfig.searchFieldOrganizationName + ") LIKE '%" + str + "%')";
 		MOEMAP.queryLayersWithConditionsExtent(queryParams);
+		*/
+		MOEMAP.geocodeAddress({searchString: searchString});
 	}
 };
 
@@ -225,11 +256,11 @@ globalConfig.searchChange = function(type){
 			select: function(e, ui) {
 				var queryParams = {
 					searchString: ui.item.value
-				};	
+				};
 				if (!globalConfig.accessible) {
 					queryParams.withinExtent = document.getElementById(globalConfig.currentMapExtentDivId).checked;
 				}
-				MOEMAP.clearOverlays();			
+				MOEMAP.clearOverlays();
 				mapConfig.searchSubstances(queryParams);
 			},
 			disabled: false });
@@ -238,24 +269,25 @@ globalConfig.searchChange = function(type){
 			select: function(e, ui) {
 				var queryParams = {
 					searchString: ui.item.value
-				};	
+				};
 				if (!globalConfig.accessible) {
 					queryParams.withinExtent = document.getElementById(globalConfig.currentMapExtentDivId).checked;
 				}
 				MOEMAP.clearOverlays();
 				mapConfig.searchSector(queryParams);
-			},			
+			},
 			disabled: false });
 	}else{
-		$( "#map_query" ).autocomplete({source: [], 
+		$( "#map_query" ).autocomplete({source: [],
 			disabled: true });
 	}
 };
 
 var mapConfig = {
     searchSector: function (queryParams){
-	
+
 		var arrayName = queryParams.searchString.split(" - ");
+		/*
 		var code = parseInt(arrayName[0]);
 		var max = 0;
 		var min = 0;
@@ -277,17 +309,19 @@ var mapConfig = {
 		}
 		var where = "((" + globalConfig.searchFieldSector + " >= " + min + ") AND (" + globalConfig.searchFieldSector + " <= " + max + "))";
 		queryParams.where = where;
+		*/
+		queryParams.where = "(" + globalConfig.searchFieldSector + "='" + arrayName[0] + "')";
 		queryParams.requireGeocode = false;
-		MOEMAP.queryLayersWithConditionsExtent(queryParams);		
+		MOEMAP.queryLayersWithConditionsExtent(queryParams);
 	},
 	isSector: function (name){
 		var reg = /^\d+$/;
-		if((name.length == 6) && (reg.test(name))){		
+		if((name.length == 6) && (reg.test(name))){
 				return globalConfig.searchFieldSector + " = " + name;
 		}
 		return "";
-	},		
-    searchNPRI_ID: function (queryParams){	
+	},
+    searchNPRI_ID: function (queryParams){
 		var queryString = mapConfig.isNPRI_ID(queryParams.searchString.toUpperCase());
 		if(queryString !== ""){
 			queryParams.where = queryString;
@@ -301,12 +335,13 @@ var mapConfig = {
 	isNPRI_ID: function (name){
 		var reg = /^\d+$/;
 		if(reg.test(name)){
+			/*
 			if(name.length > 10){
 				return ""
 			}
 			while (name.length != 10){
 				name = "0" + name
-			}
+			}*/
 			return globalConfig.searchFieldNPRI_ID + " = '" + name + "'";
 		}
 		return "";
@@ -345,7 +380,7 @@ var mapConfig = {
 		var where = "(UPPER(" + globalConfig.searchFieldSubstance_List + ") LIKE '%" + index + "%')"; // OR (UPPER(Substance_List) LIKE '" + index + "%') OR (UPPER(Substance_List) LIKE '%" + index + "')";
 		queryParams.where = where;
 		queryParams.requireGeocode = false;
-		MOEMAP.queryLayersWithConditionsExtent(queryParams);		
+		MOEMAP.queryLayersWithConditionsExtent(queryParams);
 	},
 	autoCompleteSearch: function(){
 		$("#map_query" ).autocomplete({
@@ -354,7 +389,7 @@ var mapConfig = {
 			}
 		});
 		$( "#map_query" ).autocomplete({ disabled: true });
-	}	
+	}
 };
 
 globalConfig.postInitialize = function () {
@@ -368,4 +403,3 @@ globalConfig.postInitialize = function () {
 $(function() {
 	mapConfig.autoCompleteSearch();
 });
-
