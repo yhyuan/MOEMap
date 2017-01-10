@@ -3,3 +3,4 @@
 //globalConfig.url = "http://www.appliomaps.lrc.gov.on.ca/ArcGIS/rest/services/MOE/TRAIS/MapServer";
 //globalConfig.url = "http://stage.giscoeservices.lrc.gov.on.ca/ArcGIS/rest/services/MOE/TRAIS/MapServer";
 globalConfig.url = 'http://lrcgikdcapmdw30:6080/arcgis/rest/services/Interactive_Map_Public/TRAIS/MapServer';
+//globalConfig.url = 'https://ws.gisdynamic.lrc.gov.on.ca/public/rest/services/MOE/TRAIS/MapServer';

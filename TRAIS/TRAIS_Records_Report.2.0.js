@@ -42,31 +42,47 @@ globalConfig.layers = [{
 			    }
 			}
 		});
-		var processFeatures = function (fs) {
-			fs = _.sortBy(fs, function(f){ return -1*parseInt(f.attributes.ReportingYear);});
-			var attr = fs[0].attributes;
-			var renderResult = {
-				ReportingPeriod: QueryString.year,
-				FacilityName: attr.FacilityName,
-				CompanyName: attr.OrganizationName,
-				Address: attr.StreetAddressPhysicalAddress + " / " + attr.MunicipalityCityPhysicalAddres,
-				NPRIID: attr.NPRIID,
-				PublicContact: (attr.PublicContactFullName === null) ?  "[<I>" + globalConfig.chooseLang("no name available", "Aucun nom disponible") +  "</I>]" : attr.PublicContactFullName,
-				PublicContactPhone: attr.PublicContactTelephone,
-				PublicContactEmail: attr.PublicContactEmail,
-				HighestRankingEmployee: attr.HighestRankingEmployee
-			};
-			var NAICS = attr.NAICS;
-			var NAICSQueryLayer = new gmaps.ags.Layer(globalConfig.url  + "/" + globalConfig.layerIDs.NAICS);
-			NAICSQueryLayer.query({
-				returnGeometry: false,
-				where: "NAICS='" + NAICS + "'",
-				outFields: ["Name"]
-			}, function (rs) {
-				renderResult.Sector = NAICS + " - " + rs.features[0].attributes.Name;
-				PubSub.emit(globalConfig.layers[0].event + "Data", {renderResult: renderResult});
+		var layer = new gmaps.ags.Layer(globalConfig.url  + "/" + globalConfig.layerIDs.ExemptionRecords);
+		layer.query({
+			returnGeometry: false,
+			where: "UniqueFacilityID = '" + QueryString.id + "'",
+			outFields: ["*"] //globalConfig.facilityInfoFields
+		}, function (rs) {
+			//console.log(rs.features);
+			//console.log(fs);
+			//console.log(fs.concat(rs.features));
+			_.each(rs.features, function (f) {
+				f.attributes.ReportingYear = f.attributes.ReportingPeriod;
 			});
-		};
+			var processFeatures = function (fs) {
+				fs = _.sortBy(fs, function(f){ return -1*parseInt(f.attributes.ReportingYear);});
+				var attr = fs[0].attributes;
+				var renderResult = {
+					ReportingPeriod: QueryString.year,
+					FacilityName: attr.FacilityName,
+					CompanyName: attr.OrganizationName,
+					Address: attr.StreetAddressPhysicalAddress + " / " + attr.MunicipalityCityPhysicalAddres,
+					NPRIID: attr.NPRIID,
+					PublicContact: (attr.PublicContactFullName === null) ?  "[<I>" + globalConfig.chooseLang("no name available", "Aucun nom disponible") +  "</I>]" : attr.PublicContactFullName,
+					PublicContactPhone: attr.PublicContactTelephone,
+					PublicContactEmail: attr.PublicContactEmail,
+					HighestRankingEmployee: attr.HighestRankingEmployee
+				};
+				var NAICS = attr.NAICS;
+				var NAICSQueryLayer = new gmaps.ags.Layer(globalConfig.url  + "/" + globalConfig.layerIDs.NAICS);
+				NAICSQueryLayer.query({
+					returnGeometry: false,
+					where: "NAICS='" + NAICS + "'",
+					outFields: ["Name"]
+				}, function (rs) {
+					renderResult.Sector = NAICS + " - " + rs.features[0].attributes.Name;
+					PubSub.emit(globalConfig.layers[0].event + "Data", {renderResult: renderResult});
+				});
+			};
+			processFeatures(fs.concat(rs.features));
+		});
+		/*
+
 		if ((!!fs) & Array.isArray(fs) & (fs.length > 0)) {
 			processFeatures(fs);
 		} else {
@@ -78,7 +94,7 @@ globalConfig.layers = [{
 			}, function (rs) {
 				processFeatures(rs.features);
 			});
-		}
+		}*/
 	},
 	template: '\
 				<A NAME="top"></A>\
@@ -149,11 +165,11 @@ globalConfig.layers = [{
 			<% } %>\
 			<TABLE class="noStripes">\
 				<TR>\
-					<TH WIDTH=20%><%= globalConfig.chooseLang("Reporting Year", "Reporting Year") %></TD>\
+					<TH WIDTH=20%><%= globalConfig.chooseLang("Reporting Year", "Année de déclaration") %></TD>\
 					<TH WIDTH=20%><%= globalConfig.chooseLang("Substances", "Substances") %></TD>\
 					<TH WIDTH=20%><%= globalConfig.chooseLang("CAS Number", "Numéro CAS") %></TD>\
 					<TH WIDTH=20%><%= globalConfig.chooseLang("Reasons", "Raisons") %></TD>\
-					<TH WIDTH=20%><%= globalConfig.chooseLang("Description of Circumstances", "Description of Circumstances") %></TD>\
+					<TH WIDTH=20%><%= globalConfig.chooseLang("Description of Circumstances", "Description des circonstances") %></TD>\
 				</TR>\
 	            <% _.each(_.keys(renderResult.dateSubstanceObject), function(dateofSubmission,key,list){%>\
 					<TR>\

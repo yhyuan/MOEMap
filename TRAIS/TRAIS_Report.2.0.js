@@ -73,7 +73,7 @@ globalConfig.layers = [{
 					});
 					renderResult.Substances = _.sortBy(_.map(_.values(groupbyResults), function(array) {
 						var attr = array[0];
-						var substanceURL = CASNumbersURLsDict.hasOwnProperty(attr.CASNumber) ? "<a target='_blank' href='" + CASNumbersURLsDict[attr.CASNumber] + "'>" + globalConfig.chooseLang('Substance Information', "Information sur les substance") + "</a>" : "";
+						var substanceURL = CASNumbersURLsDict.hasOwnProperty(attr.CASNumber) ? "<a target='_blank' title='" + globalConfig.chooseLang('Substance Information', "Information sur les substance") + " (" + globalConfig.chooseLang('link will open in a new browser window', "s`ouvre dans une nouvelle fenêtre") + ")' href='" + CASNumbersURLsDict[attr.CASNumber] + "'>" + globalConfig.chooseLang('Substance Information', "Information sur les substance") + "</a>" : "";
 						return {
 							Name: attr.SubstanceName,
 							CASNumber: attr.CASNumber,
@@ -321,7 +321,7 @@ globalConfig.layers = [{
 							<TH WIDTH=20%><%= globalConfig.chooseLang("Option Activity", "Activit&eacute; li&eacute;e &agrave; l’option") %></TH>\
 							<TH WIDTH=20%><%= globalConfig.chooseLang("Quantification Type", "Type de quantification") %></TH>\
 							<TH WIDTH=20%><%= globalConfig.chooseLang("Reduction Achieved in " + renderResult.ReportingPeriod + "<br>(" + substance.Units, "R&eacute;duction atteinte en " + renderResult.ReportingPeriod + "<br><br>(" + substance.Units) %>)</TH>\
-							<TH WIDTH=20%><%= globalConfig.chooseLang("Will Planned Timelines for Reduction be Met?", "Will Planned Timelines for Reduction be Met?") %></TH>\
+							<TH WIDTH=20%><%= globalConfig.chooseLang("Will Planned Timelines for Reduction be Met?", "Les échéanciers prévus en matière de réduction seront-ils respectés?") %></TH>\
 						</TR>\
 						<%\
 							_.each(substance.options,function(option,key,list){\

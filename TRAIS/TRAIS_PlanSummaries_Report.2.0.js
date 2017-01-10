@@ -71,7 +71,7 @@ globalConfig.layers = [{
 					});
 					renderResult.Substances = _.sortBy(_.map(_.values(groupbyResults), function(array) {
 						var attr = array[0];
-						var substanceURL = CASNumbersURLsDict.hasOwnProperty(attr.SubstanceCAS) ? "<a target='_blank' href='" + CASNumbersURLsDict[attr.SubstanceCAS] + "'>" + globalConfig.chooseLang('Substance Information', "Information sur les substance") + "</a>" : "";
+						var substanceURL = CASNumbersURLsDict.hasOwnProperty(attr.SubstanceCAS) ? "<a target='_blank' title='" + globalConfig.chooseLang('Substance Information', "Information sur les substance") + " (" + globalConfig.chooseLang('link will open in a new browser window', "s`ouvre dans une nouvelle fenêtre") + ")' href='" + CASNumbersURLsDict[attr.SubstanceCAS] + "'>" + globalConfig.chooseLang('Substance Information', "Information sur les substance") + "</a>" : "";
 						return {
 							Name: attr.SubstanceName,
 							CASNumber: attr.SubstanceCAS,
@@ -164,7 +164,7 @@ globalConfig.layers = [{
 			<% } else {%>\
 			\
 			<A NAME="top"></A>\
-			<H2><%= globalConfig.chooseLang("Plan Summary Submitted in " + renderResult.ReportingPeriod + "", "Sommaires de Plan Submitted in " + renderResult.ReportingPeriod + "") %></H2><BR>\
+			<H2><%= globalConfig.chooseLang("Plan Summary Submitted in " + renderResult.ReportingPeriod + "", "Sommaire des plans soumis en " + renderResult.ReportingPeriod + "") %></H2><BR>\
 			<%= globalConfig.chooseLang("Facility Name", "Nom de l\'installation") %>: <strong><%= renderResult.FacilityName %></strong><BR>\
 			<%= globalConfig.chooseLang("Company Name", "Nom de l\'entreprise") %>: <strong><%= renderResult.CompanyName %></strong><BR>\
 			<%= globalConfig.chooseLang("Physical Address", "Adresse") %>: <strong><%= renderResult.Address %></strong><BR>\
